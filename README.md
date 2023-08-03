@@ -30,7 +30,7 @@
     <td align="center">Ra Hyeon Ji</td>
     <td align="center">Kang Su Ui</td>
     <td align="center">Lee Hyo Jin</td>
-    <td align="center">Jo Man Je</td>
+    <td align="center">Cho Man Je</td>
   </tr>
     <tr>
     <td align="center"><strong>기능</strong></td>
