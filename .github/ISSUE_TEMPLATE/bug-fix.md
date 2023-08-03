@@ -1,7 +1,7 @@
 ---
 name: Bug Fix
 about: 버그 고치기
-title: "[Bug-fix] ()"
+title: "[Bug-fix] 주차 - [도메인]제목"
 labels: ''
 assignees: ''
 
@@ -16,8 +16,23 @@ assignees: ''
 
 ---
 
-## 어떤 문제가 발생했는지
+🗺️Location
+-
+버그 발생 위치
 
-## 어떻게 해결했는지
+🤷WHAT
+-
+어떤 문제가 발생했는지
 
-## 문제 발생 구역
+✏️HOW
+-
+어떻게 해결했는지
+
+✅TODO
+-
+- [ ] todo
+- [ ] todo
+- [ ] todo
+
+🐾ETC
+-
