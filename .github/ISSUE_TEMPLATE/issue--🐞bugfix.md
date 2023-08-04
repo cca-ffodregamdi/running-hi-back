@@ -1,17 +1,8 @@
 ---
 name: Bug Fix
 about: 버그 고치기
-title: "[Bug-fix] 주차 - [도메인]제목"
+title: "[bugfix] 주차 - [도메인]제목"
 labels: "\U0001F41Ebugfix"
-assignees: ''
-
----
-
----
-name: Bug_report
-about: "BUG REPORT"
-title: "[BUG]"
-labels: ""
 assignees: ''
 
 ---

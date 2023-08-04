@@ -1,23 +1,23 @@
 ---
 name: Request
 about: 요청하기
-title: "[Request] ()"
-labels: ''
+title: "[Request] 주차 - [도메인] 제목"
+labels: "\U0001F64Frequest"
 assignees: ''
 
 ---
 
----
-name: Request_feature
-about: "☎ 다른 도메인에 기능 요청"
-title: "[Request]"
-labels: "☎ Request"
-assignees: ''
+🙏필요한 기능 설명
+-
+- todo
+- todo
+- todo
 
----
+⭐필요 도메인
+-
+- todo
+- todo
+- todo
 
-## 필요 기능 설명
-
-## 필요 도메인
-
-## 담당자
+👪담당자
+-
