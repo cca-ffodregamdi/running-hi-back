@@ -1,5 +1,6 @@
 package com.runninghi.user.command.domain.aggregate.entity;
 
+import com.runninghi.common.entity.BaseEntity;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -11,7 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 @Getter
 @Table(name = "TBL_USER")
-public class User {
+public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userNo;
@@ -21,9 +22,10 @@ public class User {
     private String kakaoName;
     private String name; // 나중에 폼 회원가입 받을 때 사용
     private String pw; // 나중에 폼 회원가입 받을 때 사용
-    private String nickName; // 나중에 폼 회원가입 받을 때 사용
-    private int report_count;
-    private boolean blacklist_status;
+    private String nickname; // 나중에 폼 회원가입 받을 때 사용
+    private String location; // 추가로 현 위치 받을 때
+    private int reportCount;
+    private boolean blacklistStatus;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
