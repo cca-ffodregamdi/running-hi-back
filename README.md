@@ -33,12 +33,12 @@
     <td align="center">Cho Man Je</td>
   </tr>
     <tr>
-    <td align="center"><strong>기능</strong></td>
-    <td align="center"><strong>기능</strong></td>
-    <td align="center"><strong>기능</strong></td>
-    <td align="center"><strong>기능</strong></td>
-    <td align="center"><strong>기능</strong></td>
-    <td align="center"><strong>기능</strong></td>
+    <td align="center"><strong>통계, 관리자 게시글, 키워드</strong></td>
+    <td align="center"><strong>댓글, 즐겨찾기</strong></td>
+    <td align="center"><strong>프론트엔드</strong></td>
+    <td align="center"><strong>회원 게시글, 문의사항</strong></td>
+    <td align="center"><strong>신고</strong></td>
+    <td align="center"><strong>회원가입/로그인, 인가</strong></td>
   </tr>
 </table>
 
