@@ -1,6 +1,7 @@
 package com.runninghi.configuration.oauth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.runninghi.configuration.jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
