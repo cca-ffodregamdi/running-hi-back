@@ -1,3 +1,15 @@
+#mybatis:
+#  mapper-locations: classpath:/mybatis/mappers/*.xml // 마이바티스 쓸 때 주석 풀고 경로 설정하세요
+
+server:
+  port: 8080
+  tomcat:
+    uri-encoding: UTF-8
+  servlet:
+    encoding:
+      charset: UTF-8
+      force-response: true
+
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/runninghi?allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=UTF-8&useUnicode=true&serverTimezone=Asia/Seoul
@@ -14,6 +26,7 @@ spring:
     #      naming:
     #        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true
+
     properties:
       hibernate:
         format_sql: true
