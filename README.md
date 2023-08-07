@@ -16,7 +16,7 @@
 
   </tr>
   <tr>
-    <td align="center"><a href="https://github.com/bbbbooo"><b>김종</b></td>
+    <td align="center"><a href="https://github.com/bbbbooo"><b>김종완</b></td>
     <td align="center"><a href="https://github.com/Dylan-SonJungin"><b>손정인</b></td>
     <td align="center"><a href="https://github.com/raxchaz"><b>라현지</b></td>
     <td align="center"><a href="https://github.com/numerical43"><b>강수의</b></td>
