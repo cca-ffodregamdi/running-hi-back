@@ -16,7 +16,7 @@
 
   </tr>
   <tr>
-    <td align="center"><a href="https://github.com/bbbbooo"><b>김종</b></td>
+    <td align="center"><a href="https://github.com/Subak-Uncle"><b>김종완</b></td>
     <td align="center"><a href="https://github.com/Dylan-SonJungin"><b>손정인</b></td>
     <td align="center"><a href="https://github.com/raxchaz"><b>라현지</b></td>
     <td align="center"><a href="https://github.com/numerical43"><b>강수의</b></td>
@@ -33,12 +33,12 @@
     <td align="center">Cho Man Je</td>
   </tr>
     <tr>
-    <td align="center"><strong>기능</strong></td>
-    <td align="center"><strong>기능</strong></td>
-    <td align="center"><strong>기능</strong></td>
-    <td align="center"><strong>기능</strong></td>
-    <td align="center"><strong>기능</strong></td>
-    <td align="center"><strong>기능</strong></td>
+    <td align="center"><strong>통계, 관리자 게시글, 키워드</strong></td>
+    <td align="center"><strong>댓글, 즐겨찾기</strong></td>
+    <td align="center"><strong>프론트엔드</strong></td>
+    <td align="center"><strong>회원 게시글, 문의사항</strong></td>
+    <td align="center"><strong>신고</strong></td>
+    <td align="center"><strong>회원가입/로그인, 인가</strong></td>
   </tr>
 </table>
 
@@ -85,5 +85,9 @@
 | **Remove**      | 파일을 삭제하는 작업만 수행한 경우                                            |
 | **Design**      | CSS 등 사용자 UI 디자인 변경                                            |
 | **Refactor** | 프로덕션 코드 리팩토링                                                   |
+| **API** | 서버 API 통신                                                   |
+| **Deploy** | 배포 관련                                                   |
+| **Setting** | 개발환경 세팅                                                   |
+| **Request** | 기능 요청                                                   |
 
 ---------------------------------------------------

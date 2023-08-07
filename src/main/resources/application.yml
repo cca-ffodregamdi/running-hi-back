@@ -1,36 +1,45 @@
-#mybatis:
-#  mapper-locations: classpath:/mybatis/mappers/*.xml // 마이바티스 쓸 때 주석 풀고 경로 설정하세요
-
 server:
   port: 8080
-  tomcat:
-    uri-encoding: UTF-8
   servlet:
+    session:
+      timeout: 360000s
+    # 인코딩 UTF-8로 설정
     encoding:
       charset: UTF-8
-      force-response: true
+      enabled: true
+      force: true
 
 spring:
-  datasource:
-    url: jdbc:mysql://localhost:3306/runninghi?allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=UTF-8&useUnicode=true&serverTimezone=Asia/Seoul
-    username: runninghi
-    password: runninghi
-    driver-class-name: com.mysql.cj.jdbc.Driver
+  profiles:
+    #운영환경 or 로컬 환경 중에 선택
+    #로컬 = dev, 운영 = prod
+    active: dev
+
 
   jpa:
+    database-platform: org.hibernate.dialect.MySQL57Dialect
+    generate-ddl : true
+    show-sql: true
+    database: mysql
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
     hibernate:
-      ddl-auto: update # create, create-drop, update, validate, none
+      # activate가 dev일때만, create, create-drop
+      ddl-auto: create-drop # create, create-drop, update, validate, none
       # 개발 초기 단계 또는 로컬에서 테스트 : create 또는 update
       # 테스트 서버 : update 또는 validate
       # 스테이징 및 운영 서버 : validate 또는 none
-    #      naming:
-    #        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-    show-sql: true
-
-    properties:
-      hibernate:
-        format_sql: true
-        use_sql_comments: true
+    #      use-new-id-generator-mappings: false
+    defer-datasource-initialization : true
+  sql:
+    init:
+      data-locations: classpath:db/data/data.sql
+      # activate가 dev일때만 always / prod일때는 never
+      mode: always
+      platform: mysql
+      encoding: UTF-8
 
   security:
     oauth2:
