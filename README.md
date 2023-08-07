@@ -16,7 +16,7 @@
 
   </tr>
   <tr>
-    <td align="center"><a href="https://github.com/bbbbooo"><b>김종</b></td>
+    <td align="center"><a href="https://github.com/Subak-Uncle"><b>김종완</b></td>
     <td align="center"><a href="https://github.com/Dylan-SonJungin"><b>손정인</b></td>
     <td align="center"><a href="https://github.com/raxchaz"><b>라현지</b></td>
     <td align="center"><a href="https://github.com/numerical43"><b>강수의</b></td>
@@ -85,5 +85,9 @@
 | **Remove**      | 파일을 삭제하는 작업만 수행한 경우                                            |
 | **Design**      | CSS 등 사용자 UI 디자인 변경                                            |
 | **Refactor** | 프로덕션 코드 리팩토링                                                   |
+| **API** | 서버 API 통신                                                   |
+| **Deploy** | 배포 관련                                                   |
+| **Setting** | 개발환경 세팅                                                   |
+| **Request** | 기능 요청                                                   |
 
 ---------------------------------------------------
