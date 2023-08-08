@@ -1,6 +1,7 @@
 package com.runninghi.comment.command.domain.aggregate.entity;
 
 import com.runninghi.comment.command.domain.aggregate.vo.CommentReportCntVO;
+import com.runninghi.comment.command.domain.aggregate.vo.UserNoVO;
 import lombok.*;
 
 import javax.persistence.*;
@@ -16,8 +17,8 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentNo;
 
-    @Column
-    private Long userNo;
+    @Embedded
+    private UserNoVO userNo;
 
     @Column
     private Long postNo;
