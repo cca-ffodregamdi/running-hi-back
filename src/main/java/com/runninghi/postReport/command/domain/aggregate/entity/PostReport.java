@@ -14,7 +14,6 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "TBL_POST_REPORT")
 @Getter
-@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 public class PostReport {
 
@@ -22,7 +21,7 @@ public class PostReport {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postReportNo;
     @Column
-    int postReportCategoryCode;
+    private int postReportCategoryCode;
     @Column
     private String postReportContent;
     @Column
@@ -33,4 +32,15 @@ public class PostReport {
     private PostReportedUserVO postReportedUserVO;
     @Embedded
     private ReportedPostVO reportedPostVO;
+
+    public PostReport(Long postReportNo, int postReportCategoryCode, String postReportContent, Timestamp postReportedDate, PostReportUserVO postReportUserVO, PostReportedUserVO postReportedUserVO, ReportedPostVO reportedPostVO) {
+        this.postReportNo = postReportNo;
+        this.postReportCategoryCode = postReportCategoryCode;
+        this.postReportContent = postReportContent;
+        this.postReportedDate = postReportedDate;
+        this.postReportUserVO = postReportUserVO;
+        this.postReportedUserVO = postReportedUserVO;
+        this.reportedPostVO = reportedPostVO;
+    }
 }
+

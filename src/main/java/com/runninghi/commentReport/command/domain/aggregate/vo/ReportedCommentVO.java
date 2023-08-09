@@ -1,4 +1,4 @@
-package com.runninghi.postReport.command.domain.aggregate.vo;
+package com.runninghi.commentReport.command.domain.aggregate.vo;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -11,12 +11,12 @@ import java.io.Serializable;
 @Embeddable
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
-public class PostReportUserVO implements Serializable {
+public class ReportedCommentVO implements Serializable {
 
     @Column
-    private Long postReportUserNo;
+    private Long reportedCommentNo;
 
-    public PostReportUserVO(Long postReportUserNo) {
-        this.postReportUserNo = postReportUserNo;
+    public ReportedCommentVO(Long reportedCommentNo) {
+        this.reportedCommentNo = reportedCommentNo;
     }
 }
