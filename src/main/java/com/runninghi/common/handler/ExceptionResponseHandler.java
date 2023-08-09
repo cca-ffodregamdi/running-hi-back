@@ -1,6 +1,6 @@
 package com.runninghi.common.handler;
 
-import com.colabear754.authentication_example_java.dto.ApiResponse;
+import com.runninghi.user.command.application.dto.ApiResponse;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.security.SignatureException;
