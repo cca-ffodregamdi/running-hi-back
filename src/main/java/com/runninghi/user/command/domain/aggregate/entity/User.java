@@ -2,11 +2,12 @@ package com.runninghi.user.command.domain.aggregate.entity;
 
 import com.runninghi.common.entity.BaseEntity;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
@@ -14,18 +15,20 @@ import javax.persistence.*;
 @Table(name = "TBL_USER")
 public class User extends BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userNo;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
-    private String kakaoId;
-    private String email;
-    private String kakaoName;
-    private String name; // 나중에 폼 회원가입 받을 때 사용
-    private String pw; // 나중에 폼 회원가입 받을 때 사용
-    private String nickname; // 나중에 폼 회원가입 받을 때 사용
+    private String account; // 폼 로그인 아이디
+    private String password; // 폼 로그인 비밀번호
+    private String name; // 폼 로그인 이름
     private String location; // 추가로 현 위치 받을 때
-    private int reportCount;
-    private boolean blacklistStatus;
+    private String nickname; // 폼 로그인 닉네임
+    private String kakaoId; // 카카오 고유 아이디
+    private String email; // 카카오 계정에 등록된 이메일
+    private String kakaoName; // 카카오 닉네임
+    private int reportCount; // 신고 횟수
+    private boolean blacklistStatus; // 블랙리스트 상태
+    private boolean status; // 회원 상태 (true = 회원, false = 삭제)
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
