@@ -1,36 +1,42 @@
-#mybatis:
-#  mapper-locations: classpath:/mybatis/mappers/*.xml // \uB9C8\uC774\uBC14\uD2F0\uC2A4 \uC4F8 \uB54C \uC8FC\uC11D \uD480\uACE0 \uACBD\uB85C \uC124\uC815\uD558\uC138\uC694
-
 server:
   port: 8080
-  tomcat:
-    uri-encoding: UTF-8
   servlet:
+    session:
+      timeout: 360000s
+    # 인코딩 UTF-8로 설정
     encoding:
       charset: UTF-8
-      force-response: true
+      enabled: true
+      force: true
 
 spring:
-  datasource:
-    url: jdbc:mysql://localhost:3306/runninghi?allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=UTF-8&useUnicode=true&serverTimezone=Asia/Seoul
-    username: runninghi
-    password: runninghi
-    driver-class-name: com.mysql.cj.jdbc.Driver
+  profiles:
+    #운영환경 or 로컬 환경 중에 선택
+    #로컬 = dev, 운영 = prod
+    active: dev
+
 
   jpa:
-    hibernate:
-      ddl-auto: update # create, create-drop, update, validate, none
-      # \uAC1C\uBC1C \uCD08\uAE30 \uB2E8\uACC4 \uB610\uB294 \uB85C\uCEEC\uC5D0\uC11C \uD14C\uC2A4\uD2B8 : create \uB610\uB294 update
-      # \uD14C\uC2A4\uD2B8 \uC11C\uBC84 : update \uB610\uB294 validate
-      # \uC2A4\uD14C\uC774\uC9D5 \uBC0F \uC6B4\uC601 \uC11C\uBC84 : validate \uB610\uB294 none
-    #      naming:
-    #        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    database-platform: org.hibernate.dialect.MySQL57Dialect
+    generate-ddl : true
     show-sql: true
-
+    database: mysql
     properties:
       hibernate:
+        show_sql: true
         format_sql: true
-        use_sql_comments: true
+    hibernate:
+      # activate가 dev일때만, create, create-drop
+      ddl-auto: create-drop
+    #      use-new-id-generator-mappings: false
+    defer-datasource-initialization : true
+  sql:
+    init:
+      data-locations: classpath:db/data/data.sql
+      # activate가 dev일때만 always / prod일때는 never
+      mode: always
+      platform: mysql
+      encoding: UTF-8
 
   security:
     oauth2:
