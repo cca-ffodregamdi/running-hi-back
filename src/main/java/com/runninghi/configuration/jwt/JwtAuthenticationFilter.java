@@ -1,64 +1,60 @@
 package com.runninghi.configuration.jwt;
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
+import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpHeaders;
+import org.springframework.security.authentication.AbstractAuthenticationToken;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
 
-@Slf4j
-public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
 
-    private final UserService userService;
-    private final long VALID_TIME = 1000L * 60 * 60; // 1시간
-    @Value("${jwt.secret}")
-    private String SECRET_KEY;
-
-    public JwtAuthenticationFilter(UserService userService) {
-        this.userService = userService;
-
-        setFilterProcessesUrl("/api/login");
-    }
+@Order(0)
+@RequiredArgsConstructor
+@Component
+public class JwtAuthenticationFilter extends OncePerRequestFilter {
+    private final TokenProvider tokenProvider;
 
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-
-        log.info("--JWT AUTHENTICATION FILTER--");
-
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
-
-            UserLoginVO creds = new ObjectMapper().readValue(request.getInputStream(), UserLoginVO.class);
-
-            return getAuthenticationManager().authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            creds.getEmail(),
-                            creds.getPassword(),
-                            null
-                    ));
-
+            String token = parseBearerToken(request);
+            User user = parseUserSpecification(token);
+            AbstractAuthenticationToken authenticated = UsernamePasswordAuthenticationToken.authenticated(user, token, user.getAuthorities());
+            authenticated.setDetails(new WebAuthenticationDetails(request));
+            SecurityContextHolder.getContext().setAuthentication(authenticated);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            request.setAttribute("exception", e);
         }
 
+        filterChain.doFilter(request, response);
     }
 
-    @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
-                                            Authentication authResult) throws IOException, ServletException {
-
-        String email = ((PrincipalDetails) authResult.getPrincipal()).getUsername();
-        UserResponse userResponse = userService.findByEmail(email);
-
-        String jwtToken = Jwts.builder()
-                .setSubject(userResponse.getEmail())
-                .setExpiration(new Date(System.currentTimeMillis() + VALID_TIME))
-                .signWith(getSecretKey(), SignatureAlgorithm.HS256)
-                .compact();
-
-        response.addHeader("token", jwtToken);
-        response.addHeader("username", userResponse.getUsername());
+    private String parseBearerToken(HttpServletRequest request) {
+        return Optional.ofNullable(request.getHeader(HttpHeaders.AUTHORIZATION))
+                .filter(token -> token.substring(0, 7).equalsIgnoreCase("Bearer "))
+                .map(token -> token.substring(7))
+                .orElse(null);
     }
 
-    private Key getSecretKey() {
-        byte[] KeyBytes = SECRET_KEY.getBytes();
-        return Keys.hmacShaKeyFor(KeyBytes);
-    }
+    private User parseUserSpecification(String token) {
+        String[] split = Optional.ofNullable(token)
+                .filter(subject -> subject.length() >= 10)
+                .map(tokenProvider::validateTokenAndGetSubject)
+                .orElse("anonymous:anonymous")
+                .split(":");
 
+        return new User(split[0], "", List.of(new SimpleGrantedAuthority(split[1])));
+    }
 }
