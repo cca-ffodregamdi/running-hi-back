@@ -1,6 +1,5 @@
 package com.runninghi.feedback.command.domain.aggregate.entity;
 
-import com.runninghi.feedback.command.domain.aggregate.vo.FeedbackCategoryVO;
 import com.runninghi.feedback.command.domain.aggregate.vo.FeedbackWriterVO;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -40,6 +39,6 @@ public class Feedback {
     @Embedded
     private FeedbackWriterVO feedbackWriterVO;
 
-    @Embedded
-    private FeedbackCategoryVO feedbackCategoryVO;
+    @Enumerated(EnumType.ORDINAL)
+    private FeedbackCategory feedbackCategory;
 }
