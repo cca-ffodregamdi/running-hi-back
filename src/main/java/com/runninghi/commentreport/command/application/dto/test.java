@@ -1,4 +1,4 @@
-package com.runninghi.commentreport.command.application.dto;
+package com.runninghi.commentReport.command.application.dto;
 
 public class test {
 }

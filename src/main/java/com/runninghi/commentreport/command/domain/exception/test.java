@@ -1,4 +1,4 @@
-package com.runninghi.commentreport.command.domain.exception;
+package com.runninghi.commentReport.command.domain.exception;
 
 public class test {
 }
