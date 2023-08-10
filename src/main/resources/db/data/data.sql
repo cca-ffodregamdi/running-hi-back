@@ -1,3 +1,3 @@
 -- dummy data insert
-INSERT INTO TBL_USER(role)
-VALUES('ADMIN');
+INSERT INTO tbl_bookmark(user_no, folder_no, post_no)
+VALUES(1,1,1);
