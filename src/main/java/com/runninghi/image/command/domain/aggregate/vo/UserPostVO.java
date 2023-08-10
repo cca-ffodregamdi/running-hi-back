@@ -1,7 +1,7 @@
 package com.runninghi.image.command.domain.aggregate.vo;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 
 @Embeddable
 public class UserPostVO {
