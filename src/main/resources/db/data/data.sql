@@ -1,3 +1,3 @@
 -- dummy data insert
-INSERT INTO tbl_user(role)
-VALUES ('ADMIN');
+INSERT INTO TBL_USER(role)
+VALUES('ADMIN');
