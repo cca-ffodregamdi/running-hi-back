@@ -12,6 +12,10 @@ on:
     # branches: [ "master" "release" ]
     branches: [ "dev" ]
 
+defaults:
+  run:
+    working-directory: running-hi-back
+
 permissions: write-all
 
 jobs:
@@ -26,6 +30,7 @@ jobs:
         with:
           java-version: '11'
           distribution: 'temurin'
+
 
 
       - name: Setup MySQL
