@@ -27,13 +27,17 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
 
+
+
       - name: Setup MySQL
         uses: samin/mysql-action@v1
         with:
-          character set server: 'utf8'
+          #character set server: 'utf8'
           mysql database: 'runninghi'
           mysql user: ${{ secrets.MYSQL_USERNAME }}
           mysql password: ${{ secrets.MYSQL_PASSWORD }}
+
+
 
       #      - name: make application.yml
       #        run:
@@ -51,6 +55,8 @@ jobs:
       #        run: echo "${{ secrets.APPLICATION_OAUTH }}" > ./src/main/resources/application-oauth.yml
       #        shell: bash
 
+
+
       - name: Add permission
         run: chmod +x gradlew
 
@@ -61,6 +67,7 @@ jobs:
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
           arguments: build
+
 
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
