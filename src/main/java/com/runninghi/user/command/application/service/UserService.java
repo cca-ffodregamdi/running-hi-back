@@ -36,10 +36,10 @@ public class UserService {
     @Transactional
     public UserUpdateResponse updateUser(UUID id, UserUpdateRequest request) {
         return userRepository.findById(id)
-                .filter(member -> encoder.matches(request.password(), member.getPassword()))
-                .map(member -> {
-                    member.update(request, encoder);
-                    return UserUpdateResponse.of(true, member);
+                .filter(user -> encoder.matches(request.password(), user.getPassword()))
+                .map(user -> {
+                    user.update(request, encoder);
+                    return UserUpdateResponse.of(true, user);
                 })
                 .orElseThrow(() -> new IllegalArgumentException("아이디 또는 비밀번호가 일치하지 않습니다."));
     }

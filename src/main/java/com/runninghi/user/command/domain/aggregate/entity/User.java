@@ -20,9 +20,6 @@ import java.util.UUID;
 public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-//    @GeneratedValue(generator = "uuid2")
-//    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-//    @Column(columnDefinition = "BINARY(16)")
     private UUID id;
 
     @Column(nullable = false, scale = 20, unique = true)
@@ -73,9 +70,9 @@ public class User extends BaseEntity {
                 .build();
     }
 
-    public void update(UserUpdateRequest newMember, PasswordEncoder encoder) {
-        this.password = newMember.newPassword() == null || newMember.newPassword().isBlank()
-                ? this.password : encoder.encode(newMember.newPassword());
-        this.name = newMember.name();
+    public void update(UserUpdateRequest newUser, PasswordEncoder encoder) {
+        this.password = newUser.newPassword() == null || newUser.newPassword().isBlank()
+                ? this.password : encoder.encode(newUser.newPassword());
+        this.name = newUser.name();
     }
 }

@@ -21,7 +21,7 @@ public class AdminController {
 
     @Operation(summary = "회원 목록 조회")
     @GetMapping("/users")
-    public ApiResponse getAllMembers() {
+    public ApiResponse getAllUsers() {
         return ApiResponse.success(adminService.getUsers());
     }
 
