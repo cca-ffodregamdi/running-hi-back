@@ -22,6 +22,8 @@ public class SaveNewBookmarkFolderService{
 
         if(folderDTO.getFolderName().length() > 20) {
             throw new IllegalArgumentException("폴더 제목이 20자를 초과하였습니다.");
+        } else if(folderDTO.getFolderName().length() < 1){
+            throw new IllegalArgumentException("폴더 제목이 1자 미만입니다.");
         } else {
             BookmarkFolder newFolder = new BookmarkFolder(folderDTO.getFolderName(), userNo);
             bookmarkFolderRepository.save(newFolder);

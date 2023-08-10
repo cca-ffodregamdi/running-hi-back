@@ -37,7 +37,7 @@ public class SaveNewBookmarkFolderTests {
 
     @Test
     @DisplayName("즐겨찾기 폴더 이름 20자 이상 시 예외처리")
-    void testBookmarkFolderLengthException() {
+    void testBookmarkFolderLengthLongException() {
 
         SaveFolderDTO folderDTO = new SaveFolderDTO("testFoldertestFoldertestFoldertestFoldertestFolder", 1L);
 
@@ -46,6 +46,19 @@ public class SaveNewBookmarkFolderTests {
 
         Assertions.assertThat(thrown)
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("폴더 제목");
+                .hasMessageContaining("폴더 제목","초과");
+    }
+
+    @Test
+    @DisplayName("즐겨찾기 폴더 이름 1자 미만 시 예외처리")
+    void testBookmarkFolderLengthShortException() {
+        SaveFolderDTO folderDTO = new SaveFolderDTO("", 1L);
+
+        Throwable thrown = AssertionsForClassTypes.catchThrowable( ()
+                -> { saveNewBookmarkFolderService.saveNewBookmarkFolder(folderDTO, folderDTO.getUserNo()); });
+
+        Assertions.assertThat(thrown)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("폴더 제목","미만");
     }
 }
