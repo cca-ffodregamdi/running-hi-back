@@ -20,9 +20,14 @@ import java.util.UUID;
 public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+//    @GeneratedValue(generator = "uuid2")
+//    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+//    @Column(columnDefinition = "BINARY(16)")
     private UUID id;
 
+    @Column(nullable = false, scale = 20, unique = true)
     private String account; // 폼 로그인 아이디
+    @Column(nullable = false)
     private String password; // 폼 로그인 비밀번호
     private String name; // 폼 로그인 이름
     private String location; // 추가로 현 위치 받을 때
@@ -42,11 +47,21 @@ public class User extends BaseEntity {
     private String provideId; // 해당 OAuth 의 key(id)
 
     @Builder
-    private User(String account, String password, String name, Integer age, Role role) {
+    public User(String account, String password, String name, String location, String nickname, String kakaoId, String email, String kakaoName, int reportCount, boolean blacklistStatus, boolean status, Role role, String provider, String provideId) {
         this.account = account;
         this.password = password;
         this.name = name;
+        this.location = location;
+        this.nickname = nickname;
+        this.kakaoId = kakaoId;
+        this.email = email;
+        this.kakaoName = kakaoName;
+        this.reportCount = reportCount;
+        this.blacklistStatus = blacklistStatus;
+        this.status = status;
         this.role = role;
+        this.provider = provider;
+        this.provideId = provideId;
     }
 
     public static User from(SignUpRequest request, PasswordEncoder encoder) {
