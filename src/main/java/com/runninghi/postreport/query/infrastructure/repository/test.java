@@ -1,4 +1,4 @@
-package com.runninghi.postReport.query.infrastructure.repository;
+package com.runninghi.postreport.query.infrastructure.repository;
 
 public class test {
 }

@@ -1,4 +1,4 @@
-package com.runninghi.postReport.query.application.dto;
+package com.runninghi.postreport.query.application.dto;
 
 public class test {
 }

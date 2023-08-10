@@ -1,4 +1,4 @@
-package com.runninghi.postReport.command.infrastructure.service;
+package com.runninghi.postreport.command.infrastructure.service;
 
 public class test {
 }

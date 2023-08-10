@@ -1,4 +1,4 @@
-package com.runninghi.postReport.query.application.service;
+package com.runninghi.postreport.query.application.service;
 
 public class test {
 }

@@ -1,4 +1,4 @@
-package com.runninghi.commentReport.command.application.controller;
+package com.runninghi.commentreport.command.application.controller;
 
 public class test {
 }

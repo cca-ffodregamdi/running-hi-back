@@ -1,12 +1,11 @@
-package com.runninghi.commentReport.command.domain.aggregate.entity;
+package com.runninghi.commentreport.command.domain.aggregate.entity;
 
-import com.runninghi.commentReport.command.domain.aggregate.vo.CommentReportUserVO;
-import com.runninghi.commentReport.command.domain.aggregate.vo.CommentReportedUserVO;
-import com.runninghi.commentReport.command.domain.aggregate.vo.ReportedCommentVO;
+import com.runninghi.commentreport.command.domain.aggregate.vo.CommentReportUserVO;
+import com.runninghi.commentreport.command.domain.aggregate.vo.CommentReportedUserVO;
+import com.runninghi.commentreport.command.domain.aggregate.vo.ReportedCommentVO;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -32,14 +31,4 @@ public class CommentReport {
     private CommentReportedUserVO commentReportedUserVO;
     @Embedded
     private ReportedCommentVO reportedCommentVO;
-
-    public CommentReport(Long commentReportNo, int commentReportCategoryCode, String commentReportContent, Timestamp commentReportedDate, CommentReportUserVO commentReportUserVO, CommentReportedUserVO commentReportedUserVO, ReportedCommentVO reportedCommentVO) {
-        this.commentReportNo = commentReportNo;
-        this.commentReportCategoryCode = commentReportCategoryCode;
-        this.commentReportContent = commentReportContent;
-        this.commentReportedDate = commentReportedDate;
-        this.commentReportUserVO = commentReportUserVO;
-        this.commentReportedUserVO = commentReportedUserVO;
-        this.reportedCommentVO = reportedCommentVO;
-    }
 }

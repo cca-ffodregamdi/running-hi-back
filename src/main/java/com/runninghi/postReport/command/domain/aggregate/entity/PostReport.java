@@ -1,8 +1,8 @@
-package com.runninghi.postReport.command.domain.aggregate.entity;
+package com.runninghi.postreport.command.domain.aggregate.entity;
 
-import com.runninghi.postReport.command.domain.aggregate.vo.PostReportUserVO;
-import com.runninghi.postReport.command.domain.aggregate.vo.PostReportedUserVO;
-import com.runninghi.postReport.command.domain.aggregate.vo.ReportedPostVO;
+import com.runninghi.postreport.command.domain.aggregate.vo.PostReportUserVO;
+import com.runninghi.postreport.command.domain.aggregate.vo.PostReportedUserVO;
+import com.runninghi.postreport.command.domain.aggregate.vo.ReportedPostVO;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,15 +32,5 @@ public class PostReport {
     private PostReportedUserVO postReportedUserVO;
     @Embedded
     private ReportedPostVO reportedPostVO;
-
-    public PostReport(Long postReportNo, int postReportCategoryCode, String postReportContent, Timestamp postReportedDate, PostReportUserVO postReportUserVO, PostReportedUserVO postReportedUserVO, ReportedPostVO reportedPostVO) {
-        this.postReportNo = postReportNo;
-        this.postReportCategoryCode = postReportCategoryCode;
-        this.postReportContent = postReportContent;
-        this.postReportedDate = postReportedDate;
-        this.postReportUserVO = postReportUserVO;
-        this.postReportedUserVO = postReportedUserVO;
-        this.reportedPostVO = reportedPostVO;
-    }
 }
 

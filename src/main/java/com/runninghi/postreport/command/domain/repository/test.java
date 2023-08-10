@@ -1,4 +1,4 @@
-package com.runninghi.postReport.command.domain.repository;
+package com.runninghi.postreport.command.domain.repository;
 
 public class test {
 }

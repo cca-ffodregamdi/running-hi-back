@@ -1,4 +1,4 @@
-package com.runninghi.postReport.command.domain.aggregate.vo;
+package com.runninghi.postreport.command.domain.aggregate.vo;
 
 import lombok.AccessLevel;
 import lombok.Getter;

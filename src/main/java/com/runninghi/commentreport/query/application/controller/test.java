@@ -1,4 +1,4 @@
-package com.runninghi.commentReport.query.application.controller;
+package com.runninghi.commentreport.query.application.controller;
 
 public class test {
 }
