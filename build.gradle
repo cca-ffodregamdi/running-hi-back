@@ -8,7 +8,7 @@ group = 'com.runninghi'
 version = '0.0.1-SNAPSHOT'
 
 java {
-    sourceCompatibility = '19'
+    sourceCompatibility = '17'
 }
 
 configurations {
@@ -29,6 +29,7 @@ tasks.withType(JavaCompile) {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.3.1'

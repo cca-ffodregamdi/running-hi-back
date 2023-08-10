@@ -18,7 +18,7 @@ spring:
 
   jpa:
     database-platform: org.hibernate.dialect.MySQL57Dialect
-    generate-ddl : true
+    generate-ddl: true
     show-sql: true
     database: mysql
     properties:
@@ -27,12 +27,12 @@ spring:
         format_sql: true
     hibernate:
       # activate가 dev일때만, create, create-drop
-      ddl-auto: create-drop # create, create-drop, update, validate, none
+      ddl-auto: create # create, create-drop, update, validate, none
       # 개발 초기 단계 또는 로컬에서 테스트 : create 또는 update
       # 테스트 서버 : update 또는 validate
       # 스테이징 및 운영 서버 : validate 또는 none
     #      use-new-id-generator-mappings: false
-    defer-datasource-initialization : true
+    defer-datasource-initialization: true
   sql:
     init:
       data-locations: classpath:db/data/data.sql
@@ -42,6 +42,8 @@ spring:
       encoding: UTF-8
 
   security:
+    user:
+      password: 1
     oauth2:
       client:
         registration:
@@ -84,3 +86,17 @@ spring:
 
             # 스프링 OAuth2-client 라이브러리의 provider 에는 구글,페이스북,트위터가 속해있어 redirect-uri , authorization-grant-type 를 적어주지 않아도 자동으로 고정적으로 등록되어 있다.(적어줘도 된다.) ex) /login/oauth2/facebook, google 로 고정
             # 하지만 네이버나 카카오톡은 Provider 가 아니기 때문에 적어주어야된다. 원하는대로 uri 를 지정할수 있다, 고정되어 있지 않다.
+
+        springdoc:
+          default-consumes-media-type: application/json;charset=UTF-8
+          default-produces-media-type: application/json;charset=UTF-8
+          paths-to-match: /**
+          swagger-ui:
+            path: /
+            display-request-duration: true
+            groups-order: desc
+            operations-sorter: alpha
+            disable-swagger-default-url: true
+          api-docs:
+            groups:
+              enabled: true

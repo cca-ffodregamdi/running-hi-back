@@ -10,9 +10,9 @@ import java.util.UUID;
 public record UserInfoResponse(
         @Schema(description = "회원 고유키", example = "c0a80121-7aeb-4b4b-8b0a-6b1c032f0e4a")
         UUID id,
-        @Schema(description = "회원 아이디", example = "colabear754")
+        @Schema(description = "회원 아이디", example = "qwerty123")
         String account,
-        @Schema(description = "회원 이름", example = "콜라곰")
+        @Schema(description = "회원 이름", example = "qwe")
         String name,
         @Schema(description = "회원 타입", example = "USER")
         Role role,

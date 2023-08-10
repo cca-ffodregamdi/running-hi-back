@@ -8,9 +8,9 @@ import java.util.UUID;
 public record SignUpResponse(
         @Schema(description = "회원 고유키", example = "c0a80121-7aeb-4b4b-8b7a-9b9b9b9b9b9b")
         UUID id,
-        @Schema(description = "회원 아이디", example = "colabear754")
+        @Schema(description = "회원 아이디", example = "qwerty123")
         String account,
-        @Schema(description = "회원 이름", example = "콜라곰")
+        @Schema(description = "회원 이름", example = "qwe")
         String name
 ) {
     public static SignUpResponse from(User user) {
