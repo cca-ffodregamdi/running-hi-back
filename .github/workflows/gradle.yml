@@ -12,6 +12,10 @@ on:
     # branches: [ "master" "release" ]
     branches: [ "dev" ]
 
+defaults:
+  run:
+    working-directory: cca-ffodregamdi
+
 permissions: write-all
 
 jobs:
@@ -67,7 +71,8 @@ jobs:
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
           arguments: build
-#
+
+
 #      - name: Publish Unit Test Results
 #        uses: EnricoMi/publish-unit-test-result-action@v2
 #        if: always()
