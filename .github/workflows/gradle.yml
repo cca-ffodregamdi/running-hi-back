@@ -34,8 +34,8 @@ jobs:
         with:
           #character set server: 'utf8'
           mysql database: 'runninghi'
-          mysql user: ENC(bwC7Vc8llK83tLbW/2KxSYz2vIO5tHhw)
-          mysql password: ENC(G9dX3Hl78E2fd0f/KCycOcaGlxC/V09L)
+          mysql user: ${{ secrets.MYSQL_USERNAME }}
+          mysql password: ${{ secrets.MYSQL_PASSWORD }}
 
 
 
