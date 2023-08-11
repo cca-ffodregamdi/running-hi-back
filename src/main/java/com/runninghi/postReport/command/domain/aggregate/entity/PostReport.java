@@ -1,6 +1,5 @@
 package com.runninghi.postreport.command.domain.aggregate.entity;
 
-import com.runninghi.postreport.command.domain.aggregate.vo.PostReportUserVO;
 import com.runninghi.postreport.command.domain.aggregate.vo.PostReportedUserVO;
 import com.runninghi.postreport.command.domain.aggregate.vo.ReportedPostVO;
 import jakarta.persistence.*;
@@ -25,8 +24,6 @@ public class PostReport {
     private String postReportContent;
     @Column
     private Timestamp postReportedDate;
-    @Embedded
-    private PostReportUserVO postReportUserVO;
     @Embedded
     private PostReportedUserVO postReportedUserVO;
     @Embedded
