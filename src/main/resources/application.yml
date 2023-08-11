@@ -103,5 +103,4 @@ spring:
 
 jasypt:
   encryptor:
-    password: ${ APP_EN }
     bean: jasyptStringEncryptor
