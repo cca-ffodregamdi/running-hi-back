@@ -3,12 +3,11 @@ package com.runninghi.postreport.command.domain.aggregate.entity;
 import com.runninghi.postreport.command.domain.aggregate.vo.PostReportUserVO;
 import com.runninghi.postreport.command.domain.aggregate.vo.PostReportedUserVO;
 import com.runninghi.postreport.command.domain.aggregate.vo.ReportedPostVO;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
-import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
