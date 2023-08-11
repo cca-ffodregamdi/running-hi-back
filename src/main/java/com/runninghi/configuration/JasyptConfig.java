@@ -1,6 +1,7 @@
 package com.runninghi.configuration;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
+import jakarta.annotation.PostConstruct;
 import org.jasypt.encryption.StringEncryptor;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
@@ -17,6 +18,11 @@ public class JasyptConfig {
 
     @Value("${APP_EN}")
     private String appEn;
+
+    @PostConstruct
+    public void init() {
+        System.out.println("AppEn Value: " + appEn);
+    }
 
     @Bean("jasyptStringEncryptor")
     @Primary
