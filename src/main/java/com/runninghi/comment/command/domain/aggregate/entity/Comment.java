@@ -2,9 +2,12 @@ package com.runninghi.comment.command.domain.aggregate.entity;
 
 import com.runninghi.comment.command.domain.aggregate.vo.CommentReportCntVO;
 import com.runninghi.comment.command.domain.aggregate.vo.UserNoVO;
-import lombok.*;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
