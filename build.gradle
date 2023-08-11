@@ -33,6 +33,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.3.1'
+    implementation 'org.testng:testng:7.1.0'
 //    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -52,6 +53,9 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
     // https://mvnrepository.com/artifact/org.assertj/assertj-core
     testImplementation 'org.assertj:assertj-core:3.23.1'
+
+    // jasypt
+    implementation 'com.github.ulisesbocchio:jasypt-spring-boot:3.0.4'
 
 }
 

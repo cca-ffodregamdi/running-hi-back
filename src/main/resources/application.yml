@@ -59,8 +59,8 @@ spring:
           #            redirect-uri: http://localhost:8880/login/oauth2/code/naver
 
           kakao:
-            client-id: 9a41e071dfbe8d7a22335b8e260dc8e8
-            client-secret: NG0BUacgojEc914cdgCA5DdIlX3BQMSZ
+            client-id: ENC(ybsNl19axMPydJ5Fh05A3ju4ZuOUKaY8RjZ9UBEgI8j6tkbKzOcddGKZYft9Xke+)
+            client-secret: ENC(AKR8JtrSzkCXl26Uedif7CDNkAXbdkQU4RSkpOStlLbM8wkRlOL67SkSobWrpnnh)
             scope:
               - profile_nickname
               - profile_image
@@ -100,3 +100,7 @@ spring:
           api-docs:
             groups:
               enabled: true
+
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor

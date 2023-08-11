@@ -1,8 +1,8 @@
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/runninghi?allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=UTF-8&useUnicode=true&serverTimezone=Asia/Seoul
-    username: runninghi
-    password: runninghi
+    username: ENC(bwC7Vc8llK83tLbW/2KxSYz2vIO5tHhw)
+    password: ENC(G9dX3Hl78E2fd0f/KCycOcaGlxC/V09L)
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       auto-commit: true
