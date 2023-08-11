@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Primary;
 public class JasyptConfig {
 
     @Value("${APP_EN}")
-    private  String appEn;
+    private String appEn;
 
     @Bean("jasyptStringEncryptor")
     @Primary
