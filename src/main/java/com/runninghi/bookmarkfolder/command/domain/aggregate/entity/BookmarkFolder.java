@@ -1,9 +1,11 @@
 package com.runninghi.bookmarkfolder.command.domain.aggregate.entity;
 
+
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 
 
 @Entity
@@ -22,5 +24,10 @@ public class BookmarkFolder {
     @Column
     private Long userNo;
 
+    @Builder
+    public BookmarkFolder(String folderName, Long userNo) {
+        this.folderName = folderName;
+        this.userNo = userNo;
+    }
 
 }
