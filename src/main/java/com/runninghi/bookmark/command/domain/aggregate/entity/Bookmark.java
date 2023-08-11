@@ -6,10 +6,12 @@ import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -22,6 +24,9 @@ public class Bookmark implements Serializable {
 
     @Column
     private Long userNo;
+
+    @Column
+    private LocalDate addDate;
 
     public Bookmark(BookmarkVO bookmark) {
         this.bookmark = bookmark;
