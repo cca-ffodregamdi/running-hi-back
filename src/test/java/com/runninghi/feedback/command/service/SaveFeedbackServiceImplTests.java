@@ -14,7 +14,7 @@ import javax.transaction.Transactional;
 
 @SpringBootTest
 @Transactional
-public class FeedbackServiceImplTests {
+public class SaveFeedbackServiceImplTests {
 
     @Autowired
     private FeedbackServiceImpl feedbackServiceImpl;
@@ -65,10 +65,10 @@ public class FeedbackServiceImplTests {
 
     @Test
     @DisplayName("피드백 저장 테스트 : 카테고리 번호가 올바른지 확인")
-    void checkFeedbackCategoryTest() {
+    void checkFeedbackCategoryTest() throws InterruptedException {
         long before = feedbackRepository.count();
-        SaveFeedbackDTO saveFeedbackDTO = new SaveFeedbackDTO("제목", "내용", 1000);
 
+        SaveFeedbackDTO saveFeedbackDTO = new SaveFeedbackDTO("제목", "내용", 1000);
         Assertions.assertThrows(IllegalArgumentException.class, () -> feedbackServiceImpl.saveFeedback(saveFeedbackDTO, 0L));
 
         long after = feedbackRepository.count();
