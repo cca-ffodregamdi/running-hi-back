@@ -11,6 +11,7 @@ import com.runninghi.user.command.domain.repository.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -36,7 +37,8 @@ class SignServiceTest {
     }
 
     @Test
-    void 회원가입() {
+    @DisplayName("회원가입 테스트")
+    void signUpTest() {
         // given
         SignUpRequest request = new SignUpRequest("qwerty1234", "1234", "qweqwe");
         // when
@@ -47,7 +49,8 @@ class SignServiceTest {
     }
 
     @Test
-    void 아이디는_중복될_수_없다() {
+    @DisplayName("아이디 중복 테스트")
+    void duplicateAccountTest() {
         // given
         userRepository.save(User.builder()
                 .account("qwerty1234")
@@ -64,7 +67,8 @@ class SignServiceTest {
     }
 
     @Test
-    void 로그인() {
+    @DisplayName("로그인 테스트")
+    void signInTest() {
         // given
         userRepository.save(User.builder()
                 .account("qwerty1234")
@@ -80,7 +84,8 @@ class SignServiceTest {
     }
 
     @Test
-    void 로그인실패() {
+    @DisplayName("로그인 실패 테스트")
+    void failLoginTest() {
         // given
         userRepository.save(User.builder()
                 .account("qwerty1234")
