@@ -30,7 +30,6 @@ jobs:
           distribution: 'temurin'
 
 
-
       - name: Setup MySQL
         uses: samin/mysql-action@v1
         with:
@@ -64,12 +63,15 @@ jobs:
 
       - name: Test with Gradle
         run: ./gradlew --info test
+        env:
+          APP_EN : ${{ secrets.APP_EN }}
 
       - name: Build with Gradle
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
           arguments: build
-
+        env:
+          APP_EN : ${{ secrets.APP_EN }}
 
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
