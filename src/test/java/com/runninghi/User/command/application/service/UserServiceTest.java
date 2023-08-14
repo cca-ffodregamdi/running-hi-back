@@ -45,7 +45,7 @@ public class UserServiceTest {
 
     @Test
     @DisplayName("회원 조회 테스트")
-    void selectUserTest() {
+    void findUserTest() {
         // given
         User savedUser = userRepository.save(User.builder()
                 .account("qwerty1234")
@@ -107,7 +107,7 @@ public class UserServiceTest {
         // then
         assertThat(result.result()).isEqualTo(true);
         assertThat(result.name()).isEqualTo("qweqwe");
-        User member = userRepository.findAll().get(0);
-        assertThat(encoder.matches("5678", member.getPassword())).isEqualTo(true);
+        User user = userRepository.findAll().get(0);
+        assertThat(encoder.matches("5678", user.getPassword())).isEqualTo(true);
     }
 }
