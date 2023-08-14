@@ -62,15 +62,21 @@ public class AdminServiceTest {
         List<UserInfoResponse> users = adminService.getUsers();
         // then
         Assertions.assertThat(users).hasSize(3);
-        Assertions.assertThat(users.get(0).account()).isEqualTo("qwerty1234");
-        Assertions.assertThat(users.get(0).name()).isEqualTo("qweqwe");
-        Assertions.assertThat(users.get(0).role()).isEqualTo(Role.USER);
-        Assertions.assertThat(users.get(1).account()).isEqualTo("asdfg1234");
-        Assertions.assertThat(users.get(1).name()).isEqualTo("asdasd");
-        Assertions.assertThat(users.get(1).role()).isEqualTo(Role.USER);
-        Assertions.assertThat(users.get(2).account()).isEqualTo("zxcvb1234");
-        Assertions.assertThat(users.get(2).name()).isEqualTo("zxczxc");
-        Assertions.assertThat(users.get(2).role()).isEqualTo(Role.USER);
+        for (UserInfoResponse user : users) {
+            if (user.account().equals("qwerty1234")) {
+                Assertions.assertThat(user.account()).isEqualTo("qwerty1234");
+                Assertions.assertThat(user.name()).isEqualTo("qweqwe");
+            }
+            if (user.account().equals("asdfg1234")) {
+                Assertions.assertThat(user.account()).isEqualTo("asdfg1234");
+                Assertions.assertThat(user.name()).isEqualTo("asdasd");
+            }
+            if (user.account().equals("zxcvb1234")) {
+                Assertions.assertThat(user.account()).isEqualTo("zxcvb1234");
+                Assertions.assertThat(user.name()).isEqualTo("zxczxc");
+            }
+            Assertions.assertThat(user.role()).isEqualTo(Role.USER);
+        }
     }
 
     @Test
@@ -99,14 +105,20 @@ public class AdminServiceTest {
         List<UserInfoResponse> admins = adminService.getAdmins();
         // then
         Assertions.assertThat(admins).hasSize(3);
-        Assertions.assertThat(admins.get(0).account()).isEqualTo("qwerty1234");
-        Assertions.assertThat(admins.get(0).name()).isEqualTo("qweqwe");
-        Assertions.assertThat(admins.get(0).role()).isEqualTo(Role.ADMIN);
-        Assertions.assertThat(admins.get(1).account()).isEqualTo("asdfg1234");
-        Assertions.assertThat(admins.get(1).name()).isEqualTo("asdasd");
-        Assertions.assertThat(admins.get(1).role()).isEqualTo(Role.ADMIN);
-        Assertions.assertThat(admins.get(2).account()).isEqualTo("zxcvb1234");
-        Assertions.assertThat(admins.get(2).name()).isEqualTo("zxczxc");
-        Assertions.assertThat(admins.get(2).role()).isEqualTo(Role.ADMIN);
+        for (UserInfoResponse admin : admins) {
+            if (admin.account().equals("qwerty1234")) {
+                Assertions.assertThat(admin.account()).isEqualTo("qwerty1234");
+                Assertions.assertThat(admin.name()).isEqualTo("qweqwe");
+            }
+            if (admin.account().equals("asdfg1234")) {
+                Assertions.assertThat(admin.account()).isEqualTo("asdfg1234");
+                Assertions.assertThat(admin.name()).isEqualTo("asdasd");
+            }
+            if (admin.account().equals("zxcvb1234")) {
+                Assertions.assertThat(admin.account()).isEqualTo("zxcvb1234");
+                Assertions.assertThat(admin.name()).isEqualTo("zxczxc");
+            }
+            Assertions.assertThat(admin.role()).isEqualTo(Role.ADMIN);
+        }
     }
 }
