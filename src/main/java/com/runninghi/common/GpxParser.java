@@ -122,13 +122,21 @@ public class GpxParser {
 
             if (childNode.getNodeName().equals("ele") && !childNode.getTextContent().equals("")) {
                 String eleStr = childNode.getTextContent();
-                if (checkValidParseDouble(eleStr)) {
-                    double ele = Double.parseDouble(eleStr);
-                    return ele;
-                }
+                double ele = parseDoubleElevation(eleStr);
+                return ele;
             }
         }
 
+        return 0;
+    }
+
+    // 설명. 고도 double로 추출
+    private double parseDoubleElevation(String eleStr) {
+
+        if (checkValidParseDouble(eleStr)) {
+            double ele = Double.parseDouble(eleStr);
+            return ele;
+        }
         return 0;
     }
 
