@@ -1,5 +1,7 @@
 package com.runninghi.feedback.command.domain.aggregate.entity;
 
+import com.runninghi.feedback.command.domain.exception.customException.IllegalArgumentException;
+
 public enum FeedbackCategory {
 
     INQUIRY(0),
@@ -24,7 +26,7 @@ public enum FeedbackCategory {
                 return feedbackCategory;
             }
         }
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("카테고리 번호가 올바르지않습니다.");
     }
 
     @Override
@@ -42,6 +44,7 @@ public enum FeedbackCategory {
                 return "게시글 내용 오류";
         }
 
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("피드백 카테고리가 올바르지않습니다.");
     }
+
 }
