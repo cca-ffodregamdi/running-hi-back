@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
-@AllArgsConstructor
 @Table(name = "TBL_KEYWORD_OF_POST")
 public class KeywordOfPost {
 

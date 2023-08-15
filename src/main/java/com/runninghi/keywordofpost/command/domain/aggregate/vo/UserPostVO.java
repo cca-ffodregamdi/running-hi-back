@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 
 @Embeddable
 @Getter
@@ -15,5 +17,5 @@ import lombok.NoArgsConstructor;
 public class UserPostVO {
 
     @Column
-    private Long userNo;
+    private UUID userNo;
 }
