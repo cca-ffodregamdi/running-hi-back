@@ -33,7 +33,7 @@ jobs:
           #character set server: 'utf8'
           mysql database: 'runninghi'
           mysql user: ${{secrets.MYSQL_USERNAME}}
-          mysql password: ${{secrets_MYSQL_PASSWORD}}
+          mysql password: ${{secrets.MYSQL_PASSWORD}}
 
       - name: Add permission
         run: chmod +x gradlew
