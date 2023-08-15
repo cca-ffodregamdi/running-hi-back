@@ -16,6 +16,7 @@ spring:
     active: dev
   cloud:
     config:
-      uri: http://192.168.0.46:8888/
+      uri: http://192.168.0.46:8001/
       name: application
+      fail-fast: true
 #      import: "optional:configserver:http://192.168.0.46:8888/application.dev"
