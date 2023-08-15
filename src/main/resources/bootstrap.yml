@@ -1,8 +1,8 @@
 server:
   port: 8080
   servlet:
-    session:
-      timeout: 360000s
+#    session:
+#      timeout: 360000s
     # 인코딩 UTF-8로 설정
     encoding:
       charset: UTF-8
