@@ -18,7 +18,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    env: 
+      APP_EN: ${{APP_EN}}
+    
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 17
@@ -26,7 +28,6 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-
 
 
       - name: Setup MySQL
@@ -62,12 +63,15 @@ jobs:
 
       - name: Test with Gradle
         run: ./gradlew --info test
+        env:
+          APP_EN : ${{ secrets.APP_EN }}
 
       - name: Build with Gradle
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
           arguments: build
-
+        env:
+          APP_EN : ${{ secrets.APP_EN }}
 
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
