@@ -5,6 +5,7 @@ import com.runninghi.postreport.command.domain.aggregate.vo.PostReportedUserVO;
 import com.runninghi.postreport.command.domain.aggregate.vo.ReportedPostVO;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import java.sql.Timestamp;
@@ -30,5 +31,16 @@ public class PostReport {
     private PostReportedUserVO postReportedUserVO;
     @Embedded
     private ReportedPostVO reportedPostVO;
+
+    @Builder
+    public PostReport(Long postReportNo, int postReportCategoryCode, String postReportContent, Timestamp postReportedDate, PostReportUserVO postReportUserVO, PostReportedUserVO postReportedUserVO, ReportedPostVO reportedPostVO) {
+        this.postReportNo = postReportNo;
+        this.postReportCategoryCode = postReportCategoryCode;
+        this.postReportContent = postReportContent;
+        this.postReportedDate = postReportedDate;
+        this.postReportUserVO = postReportUserVO;
+        this.postReportedUserVO = postReportedUserVO;
+        this.reportedPostVO = reportedPostVO;
+    }
 }
 
