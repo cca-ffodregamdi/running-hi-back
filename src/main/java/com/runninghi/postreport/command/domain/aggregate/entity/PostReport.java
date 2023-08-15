@@ -4,16 +4,16 @@ import com.runninghi.postreport.command.domain.aggregate.vo.PostReportUserVO;
 import com.runninghi.postreport.command.domain.aggregate.vo.PostReportedUserVO;
 import com.runninghi.postreport.command.domain.aggregate.vo.ReportedPostVO;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
 import java.sql.Timestamp;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "TBL_POST_REPORT")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
+@ToString
 public class PostReport {
 
     @Id
@@ -24,7 +24,7 @@ public class PostReport {
     @Column
     private String postReportContent;
     @Column
-    private Timestamp postReportedDate;
+    private LocalDate postReportedDate;
     @Embedded
     private PostReportUserVO postReportUserVO;
     @Embedded
@@ -33,7 +33,7 @@ public class PostReport {
     private ReportedPostVO reportedPostVO;
 
     @Builder
-    public PostReport(Long postReportNo, int postReportCategoryCode, String postReportContent, Timestamp postReportedDate, PostReportUserVO postReportUserVO, PostReportedUserVO postReportedUserVO, ReportedPostVO reportedPostVO) {
+    public PostReport(Long postReportNo, int postReportCategoryCode, String postReportContent, LocalDate postReportedDate, PostReportUserVO postReportUserVO, PostReportedUserVO postReportedUserVO, ReportedPostVO reportedPostVO) {
         this.postReportNo = postReportNo;
         this.postReportCategoryCode = postReportCategoryCode;
         this.postReportContent = postReportContent;
