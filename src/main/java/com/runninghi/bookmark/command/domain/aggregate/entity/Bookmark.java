@@ -1,12 +1,15 @@
 package com.runninghi.bookmark.command.domain.aggregate.entity;
 
 import com.runninghi.bookmark.command.domain.aggregate.vo.BookmarkVO;
+import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -28,7 +31,8 @@ public class Bookmark implements Serializable {
     public Bookmark(BookmarkVO bookmark) {
         this.bookmark = bookmark;
     }
-    public Bookmark(Long folderNo, Long postNo){
+
+    public Bookmark(Long folderNo, Long postNo) {
         this.bookmark = new BookmarkVO(folderNo, postNo);
     }
 }

@@ -1,11 +1,11 @@
 package com.runninghi.feedback.command.domain.aggregate.entity;
 
 import com.runninghi.feedback.command.domain.aggregate.vo.FeedbackWriterVO;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.util.Date;
 
 @Entity

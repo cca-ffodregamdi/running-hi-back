@@ -1,15 +1,15 @@
 package com.runninghi.bookmarkfolder.command.application.service;
 
-import org.assertj.core.api.Assertions;
-import org.assertj.core.api.AssertionsForClassTypes;
 import com.runninghi.bookmarkfolder.command.application.dto.SaveFolderDTO;
 import com.runninghi.bookmarkfolder.command.domain.repository.BookmarkFolderRepository;
+import jakarta.transaction.Transactional;
+import org.assertj.core.api.Assertions;
+import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.transaction.Transactional;
 
 @SpringBootTest
 @Transactional
@@ -41,12 +41,14 @@ public class SaveNewBookmarkFolderTests {
 
         SaveFolderDTO folderDTO = new SaveFolderDTO("testFoldertestFoldertestFoldertestFoldertestFolder", 1L);
 
-        Throwable thrown = AssertionsForClassTypes.catchThrowable( ()
-        -> { saveNewBookmarkFolderService.saveNewBookmarkFolder(folderDTO, folderDTO.getUserNo()); });
+        Throwable thrown = AssertionsForClassTypes.catchThrowable(()
+                -> {
+            saveNewBookmarkFolderService.saveNewBookmarkFolder(folderDTO, folderDTO.getUserNo());
+        });
 
         Assertions.assertThat(thrown)
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("폴더 제목","초과");
+                .hasMessageContaining("폴더 제목", "초과");
     }
 
     @Test
@@ -54,11 +56,13 @@ public class SaveNewBookmarkFolderTests {
     void testBookmarkFolderLengthShortException() {
         SaveFolderDTO folderDTO = new SaveFolderDTO("", 1L);
 
-        Throwable thrown = AssertionsForClassTypes.catchThrowable( ()
-                -> { saveNewBookmarkFolderService.saveNewBookmarkFolder(folderDTO, folderDTO.getUserNo()); });
+        Throwable thrown = AssertionsForClassTypes.catchThrowable(()
+                -> {
+            saveNewBookmarkFolderService.saveNewBookmarkFolder(folderDTO, folderDTO.getUserNo());
+        });
 
         Assertions.assertThat(thrown)
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("폴더 제목","미만");
+                .hasMessageContaining("폴더 제목", "미만");
     }
 }

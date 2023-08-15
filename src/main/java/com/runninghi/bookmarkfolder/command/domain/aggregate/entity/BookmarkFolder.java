@@ -1,16 +1,18 @@
 package com.runninghi.bookmarkfolder.command.domain.aggregate.entity;
 
-import lombok.*;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 
 @Entity
 @Getter
 @Table(name = "TBL_BOOKMARK_FOLDER")
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
-public class BookmarkFolder{
+public class BookmarkFolder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

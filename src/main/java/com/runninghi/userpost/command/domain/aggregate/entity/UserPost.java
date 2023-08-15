@@ -1,11 +1,11 @@
 package com.runninghi.userpost.command.domain.aggregate.entity;
 
 import com.runninghi.userpost.command.domain.aggregate.vo.UserVO;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.util.Date;
 
 @Entity
