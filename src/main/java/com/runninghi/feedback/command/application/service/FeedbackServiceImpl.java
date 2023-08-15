@@ -114,4 +114,30 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     }
 
+    // 피드백 답변 수정
+    @Override
+    @Transactional
+    public Long modifyFeedbackReply(FeedbackReplyDTO feedbackReplyDTO) {
+
+        Feedback feedback = feedbackRepository.findByFeedbackNo(feedbackReplyDTO.getFeedbackNo())
+                .orElseThrow(() -> new NotFoundException("존재하지않는 피드백입니다."));
+
+        Feedback modifyFeedback = new Feedback.Builder()
+                .feedbackNo(feedback.getFeedbackNo())
+                .feedbackTitle(feedback.getFeedbackTitle())
+                .feedbackContent(feedback.getFeedbackContent())
+                .feedbackDate(feedback.getFeedbackDate())
+                .feedbackWriterVO(feedback.getFeedbackWriterVO())
+                .feedbackCategory(feedback.getFeedbackCategory())
+                .feedbackStatus(true)
+                .feedbackReply(feedbackReplyDTO.getFeedbackReply())
+                .feedbackReplyDate(new Date())
+                .build();
+
+        feedbackRepository.save(modifyFeedback);
+
+        return modifyFeedback.getFeedbackNo();
+
+    }
+
 }

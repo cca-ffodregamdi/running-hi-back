@@ -17,4 +17,8 @@ public interface FeedbackService {
     // 피드백 답변 삭제
     @Transactional
     Long deleteFeedbackReply(FeedbackNoDTO feedbackNoDTO);
+
+    // 피드백 답변 수정
+    @Transactional
+    Long modifyFeedbackReply(FeedbackReplyDTO feedbackReplyDTO);
 }
