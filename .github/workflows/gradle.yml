@@ -47,6 +47,12 @@ jobs:
         with:
           arguments: build
 
+      - name: Build and run Spring Cloud Config Server
+        working-directory: https://github.com/cca-ffodregamdi/running-hi-cloud-server.git
+        run: |
+          ./gradlew clean build
+          java -jar build/libs/running-hi-cloud-server.jar
+
 
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2

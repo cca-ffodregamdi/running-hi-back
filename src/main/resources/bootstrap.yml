@@ -10,13 +10,17 @@ server:
       force: true
 
 spring:
+  application:
+    name: application
   profiles:
-    #운영환경 or 로컬 환경 중에 선택
-    #로컬 = dev, 운영 = prod
+  #운영환경 or 로컬 환경 중에 선택
+  #로컬 = dev, 운영 = prod
     active: dev
   cloud:
     config:
-      uri: http://192.168.0.28:8888/
-      name: application
-#      fail-fast: false
-#      import: "optional:configserver:http://192.168.0.46:8888/application.dev"
+      uri: http://192.168.0.2:8888/
+
+management:
+  endpoint:
+    refresh:
+      enabled: true
