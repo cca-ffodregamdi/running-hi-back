@@ -16,7 +16,10 @@ permissions: write-all
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
+    #    env:
+    #      APP_EN: ${{APP_EN}}
     
     steps:
       - uses: actions/checkout@v3
@@ -32,22 +35,48 @@ jobs:
         with:
           #character set server: 'utf8'
           mysql database: 'runninghi'
-          mysql user: ${{secrets.MYSQL_USERNAME}}
-          mysql password: ${{secrets.MYSQL_PASSWORD}}
+          mysql user: ${{ secrets.MYSQL_USERNAME }}
+          mysql password: ${{ secrets.MYSQL_PASSWORD }}
+
+
+
+      #      - name: make application.yml
+      #        run:
+      #          touch ./src/main/resources/application.yml
+      #        shell: bash
+      #      - name: deliver application.yml
+      #        run: echo "${{ secrets.APPLICATION }}" > ./src/main/resources/application.yml
+      #        shell: bash
+      #
+      #      - name: make application-oauth.yml
+      #        run:
+      #          touch ./src/main/resources/application-oauth.yml
+      #        shell: bash
+      #      - name: deliver application-oauth.yml
+      #        run: echo "${{ secrets.APPLICATION_OAUTH }}" > ./src/main/resources/application-oauth.yml
+      #        shell: bash
+
+
 
       - name: Add permission
         run: chmod +x gradlew
 
       - name: Test with Gradle
         run: ./gradlew --info test
+      #        env:
+      #          APP_EN : ${{ secrets.APP_EN }}
+
 
       - name: Build with Gradle
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
           arguments: build
+      #        env:
+      #          APP_EN : ${{ secrets.APP_EN }}
 
-#      - name: Publish Unit Test Results
-#        uses: EnricoMi/publish-unit-test-result-action@v2
-#        if: always()
-#        with:
-#          junit_files: build/test-results/test/**/*.xml
+
+      - name: Publish Unit Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          junit_files: build/test-results/test/**/*.xml
