@@ -35,6 +35,11 @@ jobs:
           mysql user: ${{ secrets.MYSQL_USERNAME }}
           mysql password: ${{ secrets.MYSQL_PASSWORD }}
 
+      - name: Set up Proxy
+        run: |
+          export http_proxy="http://192.168.0.46:8888"
+          export https_proxy="http://192.168.0.46:8888"
+          export no_proxy="github.com"  # Exclude GitHub from proxy
 
 
       - name: Add permission
