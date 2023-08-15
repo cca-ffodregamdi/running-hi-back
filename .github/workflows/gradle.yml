@@ -19,7 +19,7 @@ jobs:
 
     runs-on: ubuntu-latest
     env: 
-      APP_EN: ${{APP_EN}}
+      APP_EN: ${{secrets.APP_EN}}
     
     steps:
       - uses: actions/checkout@v3
