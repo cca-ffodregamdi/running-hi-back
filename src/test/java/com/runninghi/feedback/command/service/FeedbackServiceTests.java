@@ -1,9 +1,9 @@
 package com.runninghi.feedback.command.service;
 
 import com.runninghi.feedback.command.application.dto.SaveFeedbackDTO;
-import com.runninghi.feedback.command.application.service.FeedbackServiceImpl;
 import com.runninghi.feedback.command.domain.exception.customException.IllegalArgumentException;
 import com.runninghi.feedback.command.domain.repository.FeedbackRepository;
+import com.runninghi.feedback.command.domain.service.FeedbackService;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -14,10 +14,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 @Transactional
-public class FeedbackServiceImplTests {
+public class FeedbackServiceTests {
 
     @Autowired
-    private FeedbackServiceImpl feedbackServiceImpl;
+    private FeedbackService feedbackService;
 
     @Autowired
     private FeedbackRepository feedbackRepository;
@@ -28,7 +28,7 @@ public class FeedbackServiceImplTests {
         long before = feedbackRepository.count();
         SaveFeedbackDTO saveFeedbackDTO = new SaveFeedbackDTO("제목", "내용", 0);
 
-        feedbackServiceImpl.saveFeedback(saveFeedbackDTO, 0L);
+        feedbackService.saveFeedback(saveFeedbackDTO, 0L);
 
         long after = feedbackRepository.count();
 
@@ -43,7 +43,7 @@ public class FeedbackServiceImplTests {
         long before = feedbackRepository.count();
         SaveFeedbackDTO saveFeedbackDTO = new SaveFeedbackDTO(str, "내용", 0);
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> feedbackServiceImpl.saveFeedback(saveFeedbackDTO, 0L));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> feedbackService.saveFeedback(saveFeedbackDTO, 0L));
 
         long after = feedbackRepository.count();
         Assertions.assertEquals(before, after);
@@ -57,7 +57,7 @@ public class FeedbackServiceImplTests {
         long before = feedbackRepository.count();
         SaveFeedbackDTO saveFeedbackDTO = new SaveFeedbackDTO("제목", str, 0);
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> feedbackServiceImpl.saveFeedback(saveFeedbackDTO, 0L));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> feedbackService.saveFeedback(saveFeedbackDTO, 0L));
 
         long after = feedbackRepository.count();
         Assertions.assertEquals(before, after);
@@ -69,7 +69,7 @@ public class FeedbackServiceImplTests {
         long before = feedbackRepository.count();
 
         SaveFeedbackDTO saveFeedbackDTO = new SaveFeedbackDTO("제목", "내용", 1000);
-        Assertions.assertThrows(IllegalArgumentException.class, () -> feedbackServiceImpl.saveFeedback(saveFeedbackDTO, 0L));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> feedbackService.saveFeedback(saveFeedbackDTO, 0L));
 
         long after = feedbackRepository.count();
         Assertions.assertEquals(before, after);

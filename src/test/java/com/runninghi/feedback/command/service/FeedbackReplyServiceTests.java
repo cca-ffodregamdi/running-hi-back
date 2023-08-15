@@ -2,12 +2,12 @@ package com.runninghi.feedback.command.service;
 
 import com.runninghi.feedback.command.application.dto.FeedbackNoDTO;
 import com.runninghi.feedback.command.application.dto.FeedbackReplyDTO;
-import com.runninghi.feedback.command.application.service.FeedbackReplyServiceImpl;
 import com.runninghi.feedback.command.domain.aggregate.entity.Feedback;
 import com.runninghi.feedback.command.domain.aggregate.entity.FeedbackCategory;
 import com.runninghi.feedback.command.domain.aggregate.vo.FeedbackWriterVO;
 import com.runninghi.feedback.command.domain.exception.customException.NotFoundException;
 import com.runninghi.feedback.command.domain.repository.FeedbackRepository;
+import com.runninghi.feedback.command.domain.service.FeedbackReplyService;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +24,7 @@ import java.util.Optional;
 public class FeedbackReplyServiceTests {
 
     @Autowired
-    private FeedbackReplyServiceImpl feedbackReplyServiceImpl;
+    private FeedbackReplyService feedbackReplyService;
 
     @Autowired
     private FeedbackRepository feedbackRepository;
@@ -56,7 +56,7 @@ public class FeedbackReplyServiceTests {
 
         String feedbackReply = "피드백 답변";
         FeedbackReplyDTO feedbackReplyDTO = new FeedbackReplyDTO(setUpFeedback.getFeedbackNo(), feedbackReply);
-        Long saveFeedbackNo = feedbackReplyServiceImpl.saveFeedbackReply(feedbackReplyDTO);
+        Long saveFeedbackNo = feedbackReplyService.saveFeedbackReply(feedbackReplyDTO);
 
         Optional<Feedback> feedbackOptional = feedbackRepository.findByFeedbackNo(saveFeedbackNo);
         Feedback feedback = feedbackOptional.get();
@@ -73,7 +73,7 @@ public class FeedbackReplyServiceTests {
         String feedbackReply = "피드백 답변";
         FeedbackReplyDTO feedbackReplyDTO = new FeedbackReplyDTO(setUpFeedback.getFeedbackNo() + 1, feedbackReply);
 
-        Assertions.assertThrows(NotFoundException.class, () -> feedbackReplyServiceImpl.saveFeedbackReply(feedbackReplyDTO));
+        Assertions.assertThrows(NotFoundException.class, () -> feedbackReplyService.saveFeedbackReply(feedbackReplyDTO));
 
     }
 
@@ -86,7 +86,7 @@ public class FeedbackReplyServiceTests {
         FeedbackReplyDTO feedbackReplyDTO = new FeedbackReplyDTO(setUpFeedback.getFeedbackNo(), feedbackReply);
 
         Thread.sleep(1000);
-        Long modifyFeedbackNo = feedbackReplyServiceImpl.modifyFeedbackReply(feedbackReplyDTO);
+        Long modifyFeedbackNo = feedbackReplyService.modifyFeedbackReply(feedbackReplyDTO);
 
         Feedback modifyFeedback = feedbackRepository.findByFeedbackNo(modifyFeedbackNo ).get();
 
@@ -101,7 +101,7 @@ public class FeedbackReplyServiceTests {
         String feedbackReply = "피드백 답변";
         FeedbackReplyDTO feedbackReplyDTO = new FeedbackReplyDTO(setUpFeedback.getFeedbackNo() + 1, feedbackReply);
 
-        Assertions.assertThrows(NotFoundException.class, () -> feedbackReplyServiceImpl.modifyFeedbackReply(feedbackReplyDTO));
+        Assertions.assertThrows(NotFoundException.class, () -> feedbackReplyService.modifyFeedbackReply(feedbackReplyDTO));
     }
 
     @Test
@@ -110,7 +110,7 @@ public class FeedbackReplyServiceTests {
 
         FeedbackNoDTO feedbackNoDTO = new FeedbackNoDTO(setUpFeedback.getFeedbackNo());
 
-        feedbackReplyServiceImpl.deleteFeedbackReply(feedbackNoDTO);
+        feedbackReplyService.deleteFeedbackReply(feedbackNoDTO);
 
         Feedback feedback = feedbackRepository.findByFeedbackNo(setUpFeedback.getFeedbackNo()).get();
 
@@ -126,6 +126,6 @@ public class FeedbackReplyServiceTests {
 
         FeedbackNoDTO feedbackNoDTO = new FeedbackNoDTO(before + 1);
 
-        Assertions.assertThrows(NotFoundException.class, () -> feedbackReplyServiceImpl.deleteFeedbackReply(feedbackNoDTO));
+        Assertions.assertThrows(NotFoundException.class, () -> feedbackReplyService.deleteFeedbackReply(feedbackNoDTO));
     }
 }
