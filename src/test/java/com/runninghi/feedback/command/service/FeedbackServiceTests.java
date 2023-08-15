@@ -66,7 +66,7 @@ public class FeedbackServiceTests {
 
     @Test
     @DisplayName("피드백 저장 테스트 : 카테고리 번호가 올바른지 확인")
-    void checkFeedbackCategoryTest() throws InterruptedException {
+    void checkFeedbackCategoryTest() {
         long before = feedbackRepository.count();
 
         SaveFeedbackDTO saveFeedbackDTO = new SaveFeedbackDTO("제목", "내용", 1000);
