@@ -14,7 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 @Transactional
-public class SaveFeedbackServiceImplTests {
+public class FeedbackServiceImplTests {
 
     @Autowired
     private FeedbackServiceImpl feedbackServiceImpl;
