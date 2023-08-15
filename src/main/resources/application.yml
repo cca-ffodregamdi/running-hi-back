@@ -13,6 +13,8 @@ spring:
   cloud:
     config:
       import: "optional:configserver:http://192.168.0.46:8888/application/default,dev"
+  application:
+    name: runninghi
   profiles:
     #운영환경 or 로컬 환경 중에 선택
     #로컬 = dev, 운영 = prod
