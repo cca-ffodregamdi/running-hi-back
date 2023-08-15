@@ -35,8 +35,8 @@ jobs:
         with:
           #character set server: 'utf8'
           mysql database: 'runninghi'
-          mysql user: ${spring.datasource.username}
-          mysql password: ${spring.datasource.password}
+          mysql user: ${secrets.MYSQL_USERNAME}
+          mysql password: ${secrets_MYSQL_PASSWORD}
 
 
 
