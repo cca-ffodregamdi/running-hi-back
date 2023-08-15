@@ -1,5 +1,6 @@
 package com.runninghi.feedback.command.domain.service;
 
+import com.runninghi.feedback.command.application.dto.FeedbackReplyDTO;
 import com.runninghi.feedback.command.application.dto.SaveFeedbackDTO;
 import jakarta.transaction.Transactional;
 
@@ -9,4 +10,6 @@ public interface FeedbackService {
     @Transactional
     Long saveFeedback(SaveFeedbackDTO feedbackDTO, Long userNo);
 
+    @Transactional
+    Long saveFeedbackReply(FeedbackReplyDTO feedbackReplyDTO);
 }
