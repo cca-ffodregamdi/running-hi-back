@@ -4,13 +4,12 @@ import com.runninghi.feedback.command.application.dto.SaveFeedbackDTO;
 import com.runninghi.feedback.command.application.service.FeedbackServiceImpl;
 import com.runninghi.feedback.command.domain.exception.customException.IllegalArgumentException;
 import com.runninghi.feedback.command.domain.repository.FeedbackRepository;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import javax.transaction.Transactional;
 
 @SpringBootTest
 @Transactional
