@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.UUID;
 
 @SpringBootTest
 @Transactional
@@ -28,7 +29,7 @@ public class FeedbackServiceTests {
         long before = feedbackRepository.count();
         SaveFeedbackDTO saveFeedbackDTO = new SaveFeedbackDTO("제목", "내용", 0);
 
-        feedbackService.saveFeedback(saveFeedbackDTO, 0L);
+        feedbackService.saveFeedback(saveFeedbackDTO, UUID.randomUUID());
 
         long after = feedbackRepository.count();
 
@@ -43,7 +44,7 @@ public class FeedbackServiceTests {
         long before = feedbackRepository.count();
         SaveFeedbackDTO saveFeedbackDTO = new SaveFeedbackDTO(str, "내용", 0);
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> feedbackService.saveFeedback(saveFeedbackDTO, 0L));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> feedbackService.saveFeedback(saveFeedbackDTO, UUID.randomUUID()));
 
         long after = feedbackRepository.count();
         Assertions.assertEquals(before, after);
@@ -57,7 +58,7 @@ public class FeedbackServiceTests {
         long before = feedbackRepository.count();
         SaveFeedbackDTO saveFeedbackDTO = new SaveFeedbackDTO("제목", str, 0);
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> feedbackService.saveFeedback(saveFeedbackDTO, 0L));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> feedbackService.saveFeedback(saveFeedbackDTO, UUID.randomUUID()));
 
         long after = feedbackRepository.count();
         Assertions.assertEquals(before, after);
@@ -69,7 +70,7 @@ public class FeedbackServiceTests {
         long before = feedbackRepository.count();
 
         SaveFeedbackDTO saveFeedbackDTO = new SaveFeedbackDTO("제목", "내용", 1000);
-        Assertions.assertThrows(IllegalArgumentException.class, () -> feedbackService.saveFeedback(saveFeedbackDTO, 0L));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> feedbackService.saveFeedback(saveFeedbackDTO, UUID.randomUUID()));
 
         long after = feedbackRepository.count();
         Assertions.assertEquals(before, after);

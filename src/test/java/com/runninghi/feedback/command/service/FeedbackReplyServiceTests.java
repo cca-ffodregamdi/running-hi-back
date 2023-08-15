@@ -18,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Date;
 import java.util.Optional;
+import java.util.UUID;
 
 @SpringBootTest
 @Transactional
@@ -33,7 +34,7 @@ public class FeedbackReplyServiceTests {
 
     @BeforeEach
     public void setUp() {
-        FeedbackWriterVO feedbackWriterVO = new FeedbackWriterVO(1L);
+        FeedbackWriterVO feedbackWriterVO = new FeedbackWriterVO(UUID.randomUUID());
         FeedbackCategory feedbackCategory = FeedbackCategory.fromValue(2);
 
         Feedback feedback = new Feedback.Builder()

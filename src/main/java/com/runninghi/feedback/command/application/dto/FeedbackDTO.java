@@ -4,6 +4,7 @@ import com.runninghi.feedback.command.domain.aggregate.entity.FeedbackCategory;
 import lombok.*;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -17,16 +18,16 @@ public class FeedbackDTO {
     String feedbackTitle;
     String feedbackCategory;
     Date feedbackDate;
-    Long userNo;
+    UUID userId;
     String nickName;
 
     public FeedbackDTO(Long feedbackNo, Date feedbackDate, String feedbackTitle, FeedbackCategory feedbackCategory,
-                       Long userNo, String nickName) {
+                       UUID userId, String nickName) {
         this.feedbackNo = feedbackNo;
         this.feedbackDate = feedbackDate;
         this.feedbackTitle = feedbackTitle;
         this.feedbackCategory = feedbackCategory.toString();
-        this.userNo = userNo;
+        this.userId = userId;
         this.nickName = nickName;
     }
 

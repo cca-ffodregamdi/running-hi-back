@@ -11,6 +11,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 
 @Service
 @RequiredArgsConstructor
@@ -21,9 +23,9 @@ public class FeedbackServiceImpl implements FeedbackService {
     // 피드백 저장
     @Override
     @Transactional
-    public Long saveFeedback(SaveFeedbackDTO feedbackDTO, Long userNo) {
+    public Long saveFeedback(SaveFeedbackDTO feedbackDTO, UUID userId) {
 
-//        User writer = userRepository.findById(userNo)
+//        User writer = userRepository.findById(userId)
 //                .orElseThrow(() -> new NotFoundException("존재하지않는 회원입니다."));
 
         if (feedbackDTO.getFeedbackTitle().length() > 500) {
@@ -39,7 +41,7 @@ public class FeedbackServiceImpl implements FeedbackService {
         }
 
         // 작성자 vo 생성
-        FeedbackWriterVO feedbackWriterVO = new FeedbackWriterVO(userNo);
+        FeedbackWriterVO feedbackWriterVO = new FeedbackWriterVO(userId);
 
         Feedback feedback = new Feedback.Builder()
                 .feedbackTitle(feedbackDTO.getFeedbackTitle())
