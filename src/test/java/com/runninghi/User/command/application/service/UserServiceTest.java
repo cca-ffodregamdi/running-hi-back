@@ -64,7 +64,7 @@ public class UserServiceTest {
 
     @Test
     @DisplayName("존재하지 않는 회원 예외 테스트")
-    void noUserTest() {
+    void doesNotExistUserTest() {
         // given
         // when
         // then
