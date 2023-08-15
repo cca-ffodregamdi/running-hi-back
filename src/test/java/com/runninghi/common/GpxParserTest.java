@@ -13,7 +13,6 @@ import java.io.File;
 @SpringBootTest
 class GpxParserTest {
 
-
     GpxParser gpxParser = new GpxParser();
 
     @DisplayName("gpx parser 테스트")
