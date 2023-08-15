@@ -1,5 +1,6 @@
 package com.runninghi.feedback.command.application.service;
 
+import com.runninghi.feedback.command.application.dto.FeedbackNoDTO;
 import com.runninghi.feedback.command.application.dto.FeedbackReplyDTO;
 import com.runninghi.feedback.command.application.dto.SaveFeedbackDTO;
 import com.runninghi.feedback.command.domain.aggregate.entity.Feedback;
@@ -78,6 +79,33 @@ public class FeedbackServiceImpl implements FeedbackService {
                 .feedbackStatus(true)
                 .feedbackReply(feedbackReplyDTO.getFeedbackReply())
                 .feedbackReplyDate(new Date())
+                .build();
+
+        feedbackRepository.save(modifyFeedback);
+
+        return modifyFeedback.getFeedbackNo();
+
+    }
+
+    // 피드백 답변 삭제
+    @Override
+    @Transactional
+    public Long deleteFeedbackReply(FeedbackNoDTO feedbackNoDTO) {
+
+        Feedback feedback = feedbackRepository.findByFeedbackNo(feedbackNoDTO.getFeedbackNo())
+                .orElseThrow(() -> new NotFoundException("존재하지않는 피드백입니다."));
+
+        Feedback modifyFeedback = new Feedback.Builder()
+                .feedbackNo(feedback.getFeedbackNo())
+                .feedbackNo(feedback.getFeedbackNo())
+                .feedbackTitle(feedback.getFeedbackTitle())
+                .feedbackContent(feedback.getFeedbackContent())
+                .feedbackDate(feedback.getFeedbackDate())
+                .feedbackCategory(feedback.getFeedbackCategory())
+                .feedbackWriterVO(feedback.getFeedbackWriterVO())
+                .feedbackStatus(false)
+                .feedbackReply(null)
+                .feedbackReplyDate(null)
                 .build();
 
         feedbackRepository.save(modifyFeedback);
