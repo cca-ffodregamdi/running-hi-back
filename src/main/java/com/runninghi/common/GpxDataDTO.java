@@ -16,7 +16,7 @@ public class GpxDataDTO {
     private double longitude;
     private double elevation;
     private double distance;
-    private double slopre;
+    private double slope;
     private String measureTime;
-    private int timeDiff;
+    private int timeDifference;
 }
