@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<gpx creator="Ramblr - http://www.ramblr.com" version="1.1" xmlns="http://www.topografix.com/GPX/1/1">
+<gpx creator="RUNNIN HI - http://www.ramblr.com" version="1.1" xmlns="http://www.topografix.com/GPX/1/1">
 <metadata>
 <name>230805_바농오름</name>
-<desc>Bientus, Inc. - www.ramblr.com - Share your outdoor stories on a map!</desc>
 <author>
 <name></name>
 </author>
-<link href="https://www.ramblr.com/web/mymap/trip/621999/5855488"></link>
 <time>2023-08-05T06:36:14Z</time>
 </metadata>
 <trk>
@@ -20,7 +18,7 @@
 </trkseg>
 <trkseg>
 <trkpt lon="126.978774" lat="37.575813"><ele>40.5r</ele><time>2023-05-11T16:17:13.657Z</time></trkpt>
-<trkpt lon="126.978723" lat="37.575806"><ele>40.4</ele><time>2023-05-11T16:17:14.657Z</time></trkpt>
+<trkpt lon="126.978723" lat="37.575806"><ele>40.4</ele><time></time></trkpt>
 <trkpt lon="126.978676" lat="37.575794"><ele>40.3</ele><time>2023-05-11T16:17:15.657Z</time></trkpt>
 <trkpt lon="126.978621" lat="37.575798"><ele>40.2</ele><time>2023-05-11T16:17:16.657Z</time></trkpt>
 <trkpt lon="126.978565" lat="37.575803"><ele>40</ele><time>2023-05-11T16:17:17.657Z</time></trkpt>
