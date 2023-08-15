@@ -16,6 +16,6 @@ spring:
     active: dev
   cloud:
     config:
-      uri: http://192.168.0.46:8888/
+#      uri: http://localhost:8888/
       name: application
-#      import: "optional:configserver:http://192.168.0.46:8888/application.dev"
+      import: "optional:configserver:http://192.168.0.46:8888/application.dev"
