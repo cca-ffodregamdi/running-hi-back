@@ -14,9 +14,15 @@ spring:
     #운영환경 or 로컬 환경 중에 선택
     #로컬 = dev, 운영 = prod
     active: dev
+  application:
+    name: application
   cloud:
     config:
       uri: http://192.168.0.46:8888/
-      name: application
-      fail-fast: false
+#      fail-fast: false
 #      import: "optional:configserver:http://192.168.0.46:8888/application.dev"
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh
