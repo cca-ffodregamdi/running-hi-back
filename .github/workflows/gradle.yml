@@ -36,8 +36,9 @@ jobs:
         run: |
           chmod +x ./build/libs/running-hi-cloud-server-0.0.1-SNAPSHOT.jar
           java -jar ./build/libs/running-hi-cloud-server-0.0.1-SNAPSHOT.jar
+          JAR_PID=$!
           sleep 180
-          pkill -f "java -jar ./build/libs/running-hi-cloud-server-0.0.1-SNAPSHOT.jar"
+          kill $JAR_PID
 
   client:
     runs-on: ubuntu-latest
