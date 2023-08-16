@@ -50,13 +50,6 @@ jobs:
           mysql-user: ${{ secrets.MYSQL_USERNAME }}
           mysql-password: ${{ secrets.MYSQL_PASSWORD }}
 
-      - name: Checkout Cloud Config Client
-        uses: actions/checkout@v3
-        with:
-          repository: cca-ffodregamdi/running-hi-cloud-client
-          token: ${{ secrets.GH_PAT }}
-          ref: dev
-
       - name: Build and Test with Gradle
         run: |
           cd running-hi-cloud-client
