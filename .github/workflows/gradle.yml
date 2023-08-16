@@ -1,5 +1,6 @@
 name: Java CI with Gradle
 
+# dev 브랜치에 pr 시 actions 실행
 on:
   pull_request:
     branches:
@@ -9,55 +10,67 @@ permissions: write-all
 
 jobs:
 
+  # ! spring cloud config server
   cloud:
     runs-on: ubuntu-latest
 
+    # spring cloud config server repository로 checkout
     steps:
       - name: Checkout Cloud Config Server
         uses: actions/checkout@v3
         with:
           repository: cca-ffodregamdi/running-hi-cloud-server
-          token: ${{ secrets.GH_PAT }}
-          ref: master
+          token: ${{ secrets.GH_PAT }}    # private repository이므로 토큰을 이용해 접근
+          ref: master   # master branch 설정
 
+      # jdk 설정
       - name: Set up JDK 17 in Cloud Config Server
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
 
+      # build
       - name: Build Spring Cloud Config Server
         run: |
           chmod +x gradlew
           ./gradlew clean build
           ls ./build/libs
 
+      # jar 파일 실행
       - name: Run Spring Cloud Config Server
+        # 백그라운드에서 실행 -> 180초 기다린 뒤 종료
         run: |
           chmod +x ./build/libs/running-hi-cloud-server-0.0.1-SNAPSHOT.jar
-          java -jar ./build/libs/running-hi-cloud-server-0.0.1-SNAPSHOT.jar &
+          java -jar ./build/libs/running-hi-cloud-server-0.0.1-SNAPSHOT.jar & 
           JAR_PID=$!
           sleep 180
           kill $JAR_PID
+  
 
+  # ! application server
   client:
     runs-on: ubuntu-latest
 
+    # running-hi-back repository로 checkout
     steps:
       - name: checkout repository
         uses: actions/checkout@v3
         with:
           repository: cca-ffodregamdi/running-hi-back
 
+      # cloud config server가 실행될 때까지 60초 기다림
       - name: Wait for cloud to run
         run: sleep 60
 
+      # jdk 설정
       - name: Set up JDK 17 in Client
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
 
+      # mysql 설정
       - name: Setup MySQL
         uses: samin/mysql-action@v1
         with:
@@ -65,17 +78,20 @@ jobs:
           mysql user: ${{ secrets.MYSQL_USERNAME }}
           mysql password: ${{ secrets.MYSQL_PASSWORD }}
 
+      # test 실행
       - name: Build and Test with Gradle
         run: |
           chmod +x gradlew
           ls ./gradlew
           ./gradlew --info test
 
+      # build
       - name: Build with Gradle
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
           arguments: build
 
+      # test 결과 출력
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
