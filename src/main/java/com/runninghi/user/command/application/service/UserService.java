@@ -19,6 +19,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder encoder;
 
+    // 회원 정보 조회
     @Transactional(readOnly = true)
     public UserInfoResponse getUserInfo(UUID id) {
         return userRepository.findById(id)
@@ -26,6 +27,7 @@ public class UserService {
                 .orElseThrow(() -> new NoSuchElementException("존재하지 않는 회원입니다."));
     }
 
+    // 회원 탈퇴
     @Transactional
     public UserDeleteResponse deleteUser(UUID id) {
         if (!userRepository.existsById(id)) return new UserDeleteResponse(false);
@@ -33,6 +35,7 @@ public class UserService {
         return new UserDeleteResponse(true);
     }
 
+    // 회원 정보 수정
     @Transactional
     public UserUpdateResponse updateUser(UUID id, UserUpdateRequest request) {
         return userRepository.findById(id)

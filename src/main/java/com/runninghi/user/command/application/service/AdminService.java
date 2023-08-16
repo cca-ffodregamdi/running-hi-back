@@ -14,6 +14,7 @@ import java.util.List;
 public class AdminService {
     private final UserRepository userRepository;
 
+    // 전체 유저 정보 조회
     @Transactional(readOnly = true)
     public List<UserInfoResponse> getUsers() {
         return userRepository.findAllByRole(Role.USER).stream()
@@ -21,6 +22,7 @@ public class AdminService {
                 .toList();
     }
 
+    // 전체 관리자 정보 조회
     @Transactional(readOnly = true)
     public List<UserInfoResponse> getAdmins() {
         return userRepository.findAllByRole(Role.ADMIN).stream()
