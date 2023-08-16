@@ -32,8 +32,7 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew clean build
-          java -jar build/libs/running-hi-cloud-server.jar &
-        background: true
+          java -jar build/libs/running-hi-cloud-server.jar
 
   client:
     # ubuntu(linux) 환경
