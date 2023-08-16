@@ -5,11 +5,14 @@ import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import java.io.Serializable;
 
 @Embeddable
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
+@ToString
 public class ReportedPostVO implements Serializable {
 
     @Column
