@@ -12,7 +12,7 @@ permissions: write-all
 jobs:
   cloud:
     runs-on: ubuntu-latest
-    step:
+    steps:
       # cloud config server repository로 checkout
       - name: checkout repository to Cloud Config Server
         uses: actions/checkout@v3
