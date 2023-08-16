@@ -12,7 +12,7 @@ java {
 }
 
 springBoot {
-    mainClass = 'com.runninghi.RunninghiApplication'
+    mainClass = 'com.runninghi.runninghicloudserver.RunningHiCloudServerApplication'
 }
 
 configurations {
