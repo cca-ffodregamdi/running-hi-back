@@ -11,6 +11,10 @@ java {
     sourceCompatibility = '17'
 }
 
+springBoot {
+    mainClass = 'com.runninghi.RunninghiApplication'
+}
+
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
