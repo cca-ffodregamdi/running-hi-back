@@ -28,7 +28,7 @@ jobs:
           chmod +x running-hi-cloud-server/gradlew
           cd running-hi-cloud-server
           ./gradlew clean build
-          java -jar build/libs/running-hi-cloud-server.jar
+          java -jar build/libs/*.jar
 
       - name: Run Spring Cloud Config Server
         run: java -jar running-hi-cloud-server/build/libs/running-hi-cloud-server.jar
