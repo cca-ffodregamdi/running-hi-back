@@ -1,82 +1,75 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
-
 name: Java CI with Gradle
 
 on:
   pull_request:
-    # branches: [ "master" "release" ]
-    branches: [ "dev" ]
+    branches:
+      - dev
 
 permissions: write-all
 
 jobs:
-  build:
 
+  cloud:
     runs-on: ubuntu-latest
-    #    env:
-    #      APP_EN: ${{APP_EN}}
-    
+
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up JDK 17
+      - name: Checkout Cloud Config Server
+        uses: actions/checkout@v3
+        with:
+          repository: cca-ffodregamdi/running-hi-cloud-server
+          token: ${{ secrets.GH_PAT }}
+          path: master
+
+      - name: Set up JDK 17 in Cloud Config Server
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Build Spring Cloud Config Server
+        run: |
+          cd running-hi-cloud-server
+          ./gradlew clean build
+        working-directory: running-hi-cloud-server
+
+      - name: Run Spring Cloud Config Server
+        run: java -jar running-hi-cloud-server/build/libs/running-hi-cloud-server.jar
+        working-directory: running-hi-cloud-server
+
+
+  client:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up JDK 17 in Client
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
 
       - name: Setup MySQL
         uses: samin/mysql-action@v1
         with:
-          #character set server: 'utf8'
-          mysql database: 'runninghi'
-          mysql user: ${{ secrets.MYSQL_USERNAME }}
-          mysql password: ${{ secrets.MYSQL_PASSWORD }}
+          mysql-database: 'runninghi'
+          mysql-user: ${{ secrets.MYSQL_USERNAME }}
+          mysql-password: ${{ secrets.MYSQL_PASSWORD }}
 
-
-
-      #      - name: make application.yml
-      #        run:
-      #          touch ./src/main/resources/application.yml
-      #        shell: bash
-      #      - name: deliver application.yml
-      #        run: echo "${{ secrets.APPLICATION }}" > ./src/main/resources/application.yml
-      #        shell: bash
-      #
-      #      - name: make application-oauth.yml
-      #        run:
-      #          touch ./src/main/resources/application-oauth.yml
-      #        shell: bash
-      #      - name: deliver application-oauth.yml
-      #        run: echo "${{ secrets.APPLICATION_OAUTH }}" > ./src/main/resources/application-oauth.yml
-      #        shell: bash
-
-
-
-      - name: Add permission
-        run: chmod +x gradlew
-
-      - name: Test with Gradle
-        run: ./gradlew --info test
-      #        env:
-      #          APP_EN : ${{ secrets.APP_EN }}
-
-
-      - name: Build with Gradle
-        uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
+      - name: Checkout Cloud Config Client
+        uses: actions/checkout@v3
         with:
-          arguments: build
-      #        env:
-      #          APP_EN : ${{ secrets.APP_EN }}
+          repository: cca-ffodregamdi/running-hi-cloud-client
+          token: ${{ secrets.GH_PAT }}
+          ref: dev
 
+      - name: Build and Test with Gradle
+        run: |
+          cd running-hi-cloud-client
+          chmod +x gradlew
+          ./gradlew --info test
+        working-directory: running-hi-cloud-client
 
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
-          junit_files: build/test-results/test/**/*.xml
+          junit_files: running-hi-cloud-client/build/test-results/test/**/*.xml
