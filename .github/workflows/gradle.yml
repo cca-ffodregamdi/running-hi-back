@@ -28,7 +28,6 @@ jobs:
 
       - name: Build Spring Cloud Config Server
         run: |
-          cd running-hi-cloud-server
           ./gradlew clean build
         working-directory: running-hi-cloud-server
 
