@@ -32,7 +32,9 @@ jobs:
           ./gradlew build
 
       - name: Run Spring Cloud Config Server
-        run: java -jar running-hi-cloud-server/build/libs/running-hi-cloud-server.jar
+        run: |
+          chmod +x gradlew
+          java -jar running-hi-cloud-server/build/libs/running-hi-cloud-server.jar
 
 
   client:
