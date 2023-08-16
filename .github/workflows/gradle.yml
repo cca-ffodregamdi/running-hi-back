@@ -36,14 +36,8 @@ jobs:
         run: |
           chmod +x ./build/libs/running-hi-cloud-server-0.0.1-SNAPSHOT.jar
           java -jar ./build/libs/running-hi-cloud-server-0.0.1-SNAPSHOT.jar
-
-      - name: Wait for client to complete
-        run: sleep 180
-
-      - name: Stop running Spring Cloud Config Server
-        run: |
+          sleep 180
           pkill -f "java -jar ./build/libs/running-hi-cloud-server-0.0.1-SNAPSHOT.jar"
-
 
   client:
     runs-on: ubuntu-latest
