@@ -11,10 +11,6 @@ java {
     sourceCompatibility = '17'
 }
 
-springBoot {
-    mainClass = 'com.runninghi.runninghicloudserver.RunningHiCloudServerApplication'
-}
-
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
