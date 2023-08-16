@@ -37,6 +37,7 @@ jobs:
         working-directory: running-hi-cloud-server
 
 
+
   client:
     runs-on: ubuntu-latest
 
@@ -54,19 +55,15 @@ jobs:
           mysql-user: ${{ secrets.MYSQL_USERNAME }}
           mysql-password: ${{ secrets.MYSQL_PASSWORD }}
 
-      - name: Checkout Cloud Config Client
-        uses: actions/checkout@v3
-        with:
-          repository: cca-ffodregamdi/running-hi-cloud-client
-          token: ${{ secrets.GH_PAT }}
-          ref: dev
-
       - name: Build and Test with Gradle
         run: |
-          cd running-hi-cloud-client
           chmod +x gradlew
           ./gradlew --info test
-        working-directory: running-hi-cloud-client
+
+      - name: Build with Gradle
+        uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
+        with:
+          arguments: build
 
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
