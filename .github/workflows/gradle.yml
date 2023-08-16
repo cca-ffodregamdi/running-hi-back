@@ -1,32 +1,53 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
-
 name: Java CI with Gradle
 
+# dev 브랜치에 pr이 들어오면 git actions 실행
 on:
   pull_request:
-    # branches: [ "master" "release" ]
     branches: [ "dev" ]
 
 permissions: write-all
 
+# actions job
+
 jobs:
-  build:
+  cloud:
     runs-on: ubuntu-latest
-    
-    steps:
-      - uses: actions/checkout@v3
-      - name: Set up JDK 17
+    step:
+      # cloud config server repository로 checkout
+      - name: checkout repository to Cloud Config Server
+        uses: actions/checkout@v3
+        with:
+          repository: cca-ffodrefamdi/running-hi-cloud-server
+          token: ${{ secretes.GH_PAT }}
+
+      # cloud config server에 jdk 17 설정
+      - name: Set up JDK 17 in Cloud Config Server
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
 
+      # cloud config server를 build 한 후 jar 파일 실행
+      - name: Build and run Spring Cloud Config Server
+        run: |
+          chmod +x gradlew
+          ./gradlew clean build
+          java -jar build/libs/running-hi-cloud-server.jar &
+        background: true
 
+  client:
+    # ubuntu(linux) 환경
+    runs-on: ubuntu-latest
+
+    steps:
+      # runninghi에 jdk 17 설정
+      - name: Set up JDK 17 in Dev
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      # mysql 설정
       - name: Setup MySQL
         uses: samin/mysql-action@v1
         with:
@@ -35,25 +56,19 @@ jobs:
           mysql user: ${{ secrets.MYSQL_USERNAME }}
           mysql password: ${{ secrets.MYSQL_PASSWORD }}
 
+      # 터미널에서 gradle을 빌드하기 위한 권한 설정
       - name: Add permission
         run: chmod +x gradlew
 
-      - name: Build and run Spring Cloud Config Server
-        working-directory: https://github.com/cca-ffodregamdi/running-hi-cloud-server.git
-        run: |
-          ./gradlew clean build
-          java -jar build/libs/running-hi-cloud-server.jar
-
       - name: Test with Gradle
         run: ./gradlew --info test
-
 
       - name: Build with Gradle
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
           arguments: build
 
-
+      # 테스트 결과 출력
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
