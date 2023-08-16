@@ -42,6 +42,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: checkout repository
+        uses: actions/checkout@v3
+        with:
+          repository: cca-ffodregamdi/running-hi-back
+
       - name: Set up JDK 17 in Client
         uses: actions/setup-java@v3
         with:
@@ -58,6 +63,7 @@ jobs:
       - name: Build and Test with Gradle
         run: |
           chmod +x gradlew
+          ls ./gradlew
           ./gradlew --info test
 
       - name: Build with Gradle

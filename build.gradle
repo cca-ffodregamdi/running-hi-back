@@ -63,6 +63,5 @@ test {
 }
 
 bootJar {
-    enable = true
     duplicatesStrategy = 'exclude'
 }
