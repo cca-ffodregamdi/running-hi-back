@@ -18,7 +18,7 @@ jobs:
         with:
           repository: cca-ffodregamdi/running-hi-cloud-server
           token: ${{ secrets.GH_PAT }}
-          path: master
+          ref: master
 
       - name: Set up JDK 17 in Cloud Config Server
         uses: actions/setup-java@v3
@@ -27,7 +27,9 @@ jobs:
           distribution: 'temurin'
 
       - name: Build Spring Cloud Config Server
-        run: ./gradlew clean build
+        run: |
+          chmod +x gradlew
+          gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
 
       - name: Run Spring Cloud Config Server
         run: java -jar running-hi-cloud-server/build/libs/running-hi-cloud-server.jar
