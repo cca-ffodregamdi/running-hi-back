@@ -38,7 +38,7 @@ jobs:
           java -jar ./build/libs/running-hi-cloud-server-0.0.1-SNAPSHOT.jar
 
       - name: Wait for client to complete
-        run: sleep 300
+        run: sleep 180
 
       - name: Stop running Spring Cloud Config Server
         run: |
@@ -53,6 +53,9 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: cca-ffodregamdi/running-hi-back
+
+      - name: Wait for cloud to run
+        run: sleep 60
 
       - name: Set up JDK 17 in Client
         uses: actions/setup-java@v3
