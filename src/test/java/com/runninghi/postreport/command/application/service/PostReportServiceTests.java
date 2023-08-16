@@ -83,14 +83,14 @@ public class PostReportServiceTests {
     }
 
     @Test
-    @DisplayName("게시글 신고 저장 테스트 - 신고 내용 null일 시 저장 안하는지 확인")
+    @DisplayName("게시글 신고 저장 테스트 - 신고 내용 공백일 시 저장 안하는지 확인")
     void checkPostReportContentTest() {
 
         //given
         Long before = postReportRepository.count();
 
         RequestPostReportDTO requestPostReportDTO =
-                new RequestPostReportDTO(1, null);
+                new RequestPostReportDTO(1, "");
 
         //when
         Assertions.assertThrows(IllegalArgumentException.class, () -> postReportService.savePostReport(requestPostReportDTO));
