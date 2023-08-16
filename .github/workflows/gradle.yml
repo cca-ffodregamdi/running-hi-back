@@ -14,9 +14,8 @@ jobs:
       - name: Checkout Cloud Config Server
         uses: actions/checkout@v3
         with:
-          repository: cca-ffodregamdi/running-hi-cloud-server
           token: ${{ secrets.GH_PAT }}
-          ref: main
+          submodules: true
 
       - name: Set up JDK 17 in Cloud Config Server
         uses: actions/setup-java@v3
