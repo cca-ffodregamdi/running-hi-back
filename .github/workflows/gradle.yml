@@ -96,4 +96,4 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
-          junit_files: running-hi-cloud-client/build/test-results/test/**/*.xml
+          junit_files: build/test-results/test/**/*.xml
