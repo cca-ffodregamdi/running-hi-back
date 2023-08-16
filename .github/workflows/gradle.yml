@@ -19,6 +19,7 @@ jobs:
         with:
           repository: cca-ffodrefamdi/running-hi-cloud-server
           token: ${{ secrets.GH_PAT }}
+          ref: main
 
       # cloud config server에 jdk 17 설정
       - name: Set up JDK 17 in Cloud Config Server
