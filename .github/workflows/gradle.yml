@@ -17,7 +17,7 @@ jobs:
       - name: checkout repository to Cloud Config Server
         uses: actions/checkout@v3
         with:
-          repository: cca-ffodrefamdi/running-hi-cloud-server
+          repository: cca-ffodregamdi/running-hi-cloud-server
           token: ${{ secrets.GH_PAT }}
           ref: main
 
