@@ -34,8 +34,8 @@ jobs:
 
       - name: Run Spring Cloud Config Server
         run: |
-          chmod +x ./build/libs/running-hi-cloud-server.jar
-          java -jar ./build/libs/running-hi-cloud-server.jar
+          chmod +x ./build/libs/running-hi-cloud-server-0.0.1-SNAPSHOT.jar
+          java -jar ./build/libs/running-hi-cloud-server-0.0.1-SNAPSHOT.jar
 
 
   client:
