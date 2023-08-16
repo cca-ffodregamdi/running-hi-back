@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Cloud Config Server
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: cca-ffodregamdi/running-hi-cloud-server
           token: ${{ secrets.GH_PAT }}
@@ -38,7 +38,7 @@ jobs:
 
     steps:
       - name: Set up JDK 17 in Client
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v3
         with:
           java-version: '17'
 
@@ -50,7 +50,7 @@ jobs:
           mysql-password: ${{ secrets.MYSQL_PASSWORD }}
 
       - name: Checkout Cloud Config Client
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: cca-ffodregamdi/running-hi-cloud-client
           token: ${{ secrets.GH_PAT }}
