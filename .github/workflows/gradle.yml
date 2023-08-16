@@ -27,7 +27,9 @@ jobs:
           distribution: 'temurin'
 
       - name: Build Spring Cloud Config Server
-        run: chmod +x running-hi-cloud-server/gradlew && running-hi-cloud-server/gradlew clean build
+        run: |
+          chmod +x gradlew
+          ./gradlew build
 
       - name: Run Spring Cloud Config Server
         run: java -jar running-hi-cloud-server/build/libs/running-hi-cloud-server.jar
