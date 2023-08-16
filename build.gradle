@@ -11,12 +11,6 @@ java {
     sourceCompatibility = '17'
 }
 
-jar {
-    manifest {
-        attributes 'Main-Class': 'com.runninghi.runninghicloudserver.RunningHiCloudServerApplication'  // Replace with your actual main class
-    }
-}
-
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
