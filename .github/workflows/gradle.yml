@@ -28,19 +28,35 @@ jobs:
       - name: Build and run Spring Cloud Config Server
         working-directory:
         run: |
-          chmod +x running-hi-cloud-server/gradlew
-          cd running-hi-cloud-server
+          chmod +x gradlew
           ./gradlew clean build
+          ls ./build/libs
 
       - name: Run Spring Cloud Config Server
-        run: java -jar running-hi-cloud-server/build/libs/*.jar
-
-
+          # 백그라운드에서 실행 -> 180초 기다린 뒤 종료
+        run: |
+          chmod +x ./build/libs/running-hi-cloud-server-0.0.1-SNAPSHOT.jar
+          java -jar ./build/libs/running-hi-cloud-server-0.0.1-SNAPSHOT.jar & 
+          JAR_PID=$!
+          sleep 180
+          kill $JAR_PID
+  
+  
+  
 
   client:
     runs-on: ubuntu-latest
 
     steps:
+      - name: checkout repository
+        uses: actions/checkout@v3
+        with:
+          repository: cca-ffodregamdi/running-hi-back
+
+      # cloud config server가 실행될 때까지 60초 기다림
+      - name: Wait for cloud to run
+        run: sleep 60
+
       - name: Set up JDK 17 in Client
         uses: actions/setup-java@v3
         with:
@@ -53,6 +69,18 @@ jobs:
           mysql-database: 'runninghi'
           mysql-user: ${{ secrets.MYSQL_USERNAME }}
           mysql-password: ${{ secrets.MYSQL_PASSWORD }}
+
+      - name: Add permission
+        run: chmod +x gradlew
+
+      - name: Test with Gradle
+        run: ./gradlew --info test
+
+#      - name: Build and Test with Gradle
+#        run: |
+#          chmod +x gradlew
+#          ls ./gradlew
+#          ./gradlew --info test
 
       - name: Build with Gradle
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1

@@ -83,3 +83,7 @@ dependencyManagement {
 test {
     useJUnitPlatform()
 }
+
+bootJar {
+    duplicatesStrategy = 'exclude'
+}
