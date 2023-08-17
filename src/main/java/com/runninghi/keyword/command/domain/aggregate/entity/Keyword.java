@@ -1,15 +1,11 @@
 package com.runninghi.keyword.command.domain.aggregate.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
-@AllArgsConstructor
 @Table(name = "TBL_KEYWORD")
 public class Keyword {
 
@@ -19,4 +15,10 @@ public class Keyword {
 
     @Column
     private String keywordName;
+
+    @Builder
+    public Keyword(Long keywordNo, String keywordName) {
+        this.keywordNo = keywordNo;
+        this.keywordName = keywordName;
+    }
 }
