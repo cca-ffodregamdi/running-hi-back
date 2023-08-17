@@ -16,5 +16,5 @@ public interface FeedbackReplyService {
 
     // 피드백 답변 수정
     @Transactional
-    Long modifyFeedbackReply(FeedbackReplyDTO feedbackReplyDTO);
+    Long updateFeedbackReply(FeedbackReplyDTO feedbackReplyDTO);
 }

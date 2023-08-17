@@ -80,29 +80,29 @@ public class FeedbackReplyServiceTests {
 
     @Test
     @DisplayName("피드백 답변 수정 테스트 : success")
-    void modifyFeedbackReplyTest() throws InterruptedException {
+    void updateFeedbackReplyTest() throws InterruptedException {
 
         String feedbackReply = "피드백 답변 수정 수정";
         Date date = setUpFeedback.getFeedbackReplyDate();
         FeedbackReplyDTO feedbackReplyDTO = new FeedbackReplyDTO(setUpFeedback.getFeedbackNo(), feedbackReply);
 
         Thread.sleep(1000);
-        Long modifyFeedbackNo = feedbackReplyService.modifyFeedbackReply(feedbackReplyDTO);
+        Long updateFeedbackNo = feedbackReplyService.updateFeedbackReply(feedbackReplyDTO);
 
-        Feedback modifyFeedback = feedbackRepository.findByFeedbackNo(modifyFeedbackNo ).get();
+        Feedback updateFeedback = feedbackRepository.findByFeedbackNo(updateFeedbackNo ).get();
 
-        Assertions.assertEquals(feedbackReply, modifyFeedback.getFeedbackReply());
-        Assertions.assertNotEquals(date, modifyFeedback.getFeedbackReplyDate());
+        Assertions.assertEquals(feedbackReply, updateFeedback.getFeedbackReply());
+        Assertions.assertNotEquals(date, updateFeedback.getFeedbackReplyDate());
     }
 
     @Test
     @DisplayName("피드백 답변 수정 테스트 : 피드백 없음")
-    void checkFeedbackExistInModifyFeedbackReplyTest() {
+    void checkFeedbackExistInupdateFeedbackReplyTest() {
 
         String feedbackReply = "피드백 답변";
         FeedbackReplyDTO feedbackReplyDTO = new FeedbackReplyDTO(setUpFeedback.getFeedbackNo() + 1, feedbackReply);
 
-        Assertions.assertThrows(NotFoundException.class, () -> feedbackReplyService.modifyFeedbackReply(feedbackReplyDTO));
+        Assertions.assertThrows(NotFoundException.class, () -> feedbackReplyService.updateFeedbackReply(feedbackReplyDTO));
     }
 
     @Test

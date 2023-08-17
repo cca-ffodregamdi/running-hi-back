@@ -26,7 +26,7 @@ public class FeedbackReplyServiceImpl implements FeedbackReplyService {
         Feedback feedback = feedbackRepository.findByFeedbackNo(feedbackReplyDTO.getFeedbackNo())
                 .orElseThrow(() -> new NotFoundException("존재하지않는 피드백입니다."));
 
-        Feedback modifyFeedback = new Feedback.Builder()
+        Feedback updateFeedback = new Feedback.Builder()
                 .feedbackNo(feedback.getFeedbackNo())
                 .feedbackNo(feedback.getFeedbackNo())
                 .feedbackTitle(feedback.getFeedbackTitle())
@@ -39,9 +39,9 @@ public class FeedbackReplyServiceImpl implements FeedbackReplyService {
                 .feedbackReplyDate(new Date())
                 .build();
 
-        feedbackRepository.save(modifyFeedback);
+        feedbackRepository.save(updateFeedback);
 
-        return modifyFeedback.getFeedbackNo();
+        return updateFeedback.getFeedbackNo();
 
     }
 
@@ -53,7 +53,7 @@ public class FeedbackReplyServiceImpl implements FeedbackReplyService {
         Feedback feedback = feedbackRepository.findByFeedbackNo(feedbackNoDTO.getFeedbackNo())
                 .orElseThrow(() -> new NotFoundException("존재하지않는 피드백입니다."));
 
-        Feedback modifyFeedback = new Feedback.Builder()
+        Feedback updateFeedback = new Feedback.Builder()
                 .feedbackNo(feedback.getFeedbackNo())
                 .feedbackNo(feedback.getFeedbackNo())
                 .feedbackTitle(feedback.getFeedbackTitle())
@@ -66,21 +66,21 @@ public class FeedbackReplyServiceImpl implements FeedbackReplyService {
                 .feedbackReplyDate(null)
                 .build();
 
-        feedbackRepository.save(modifyFeedback);
+        feedbackRepository.save(updateFeedback);
 
-        return modifyFeedback.getFeedbackNo();
+        return updateFeedback.getFeedbackNo();
 
     }
 
     // 피드백 답변 수정
     @Override
     @Transactional
-    public Long modifyFeedbackReply(FeedbackReplyDTO feedbackReplyDTO) {
+    public Long updateFeedbackReply(FeedbackReplyDTO feedbackReplyDTO) {
 
         Feedback feedback = feedbackRepository.findByFeedbackNo(feedbackReplyDTO.getFeedbackNo())
                 .orElseThrow(() -> new NotFoundException("존재하지않는 피드백입니다."));
 
-        Feedback modifyFeedback = new Feedback.Builder()
+        Feedback updateFeedback = new Feedback.Builder()
                 .feedbackNo(feedback.getFeedbackNo())
                 .feedbackTitle(feedback.getFeedbackTitle())
                 .feedbackContent(feedback.getFeedbackContent())
@@ -92,9 +92,9 @@ public class FeedbackReplyServiceImpl implements FeedbackReplyService {
                 .feedbackReplyDate(new Date())
                 .build();
 
-        feedbackRepository.save(modifyFeedback);
+        feedbackRepository.save(updateFeedback);
 
-        return modifyFeedback.getFeedbackNo();
+        return updateFeedback.getFeedbackNo();
 
     }
 
