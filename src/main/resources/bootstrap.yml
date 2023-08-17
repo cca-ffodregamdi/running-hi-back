@@ -18,7 +18,7 @@ spring:
     active: dev
   cloud:
     config:
-      uri: http://192.168.0.28:8888
+      uri: ${GITHUB_ENV}
 
 management:
   endpoint:
