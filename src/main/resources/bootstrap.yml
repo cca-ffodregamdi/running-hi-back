@@ -18,7 +18,7 @@ spring:
     active: dev
   cloud:
     config:
-      uri: ${CONFIG_SERVER_ADDRESS}
+      uri: http://192.168.0.28:8888
 
 management:
   endpoint:
