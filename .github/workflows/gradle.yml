@@ -25,7 +25,7 @@ jobs:
 
       - name: Print Config Server Address
         run: |
-          CONFIG_SERVER_ADDRESS="http://$(curl -s curlmyip.com):8888"
+          CONFIG_SERVER_ADDRESS="http://$(curl -s ifconfig.me):8888"
           echo "CONFIG_SERVER_ADDRESS=$CONFIG_SERVER_ADDRESS" >> $GITHUB_ENV
 
       # jdk 설정
