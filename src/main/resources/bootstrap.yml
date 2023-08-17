@@ -1,0 +1,28 @@
+#bootstrap.yml (client)
+
+server:
+  port: 8080
+  servlet:
+    #    session:
+    #      timeout: 360000s
+    # 인코딩 UTF-8로 설정
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+spring:
+  application:
+    name: application
+  profiles:
+    #운영환경 or 로컬 환경 중에 선택
+    #로컬 = dev, 운영 = prod
+    active: dev
+  cloud:
+    config:
+      uri: http://localhost:8888/
+
+management:
+  endpoint:
+    refresh:
+      enabled: true
