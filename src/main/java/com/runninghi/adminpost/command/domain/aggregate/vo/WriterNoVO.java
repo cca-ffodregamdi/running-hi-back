@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 @AllArgsConstructor
@@ -14,5 +16,5 @@ import lombok.NoArgsConstructor;
 public class WriterNoVO {
 
     @Column
-    private Long writerNo;
+    private UUID writerNo;
 }
