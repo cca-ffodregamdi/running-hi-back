@@ -10,8 +10,10 @@ permissions: write-all
 
 jobs:
 
-  # ! spring cloud config server
-  cloud:
+
+
+  # ! application server
+  client:
     runs-on: ubuntu-latest
 
     # spring cloud config server repository로 checkout
@@ -44,24 +46,14 @@ jobs:
           chmod +x ./build/libs/running-hi-cloud-server-0.0.1-SNAPSHOT.jar
           java -jar ./build/libs/running-hi-cloud-server-0.0.1-SNAPSHOT.jar & 
           JAR_PID=$!
-          sleep 180
+          sleep 300
           kill $JAR_PID
-  
 
-  # ! application server
-  client:
-    runs-on: ubuntu-latest
-
-    # running-hi-back repository로 checkout
-    steps:
-      - name: Checkout repository
+      # running-hi-back repository로 checkout
+      - name: checkout repository
         uses: actions/checkout@v3
         with:
           repository: cca-ffodregamdi/running-hi-back
-
-      # cloud config server가 실행될 때까지 60초 기다림
-      - name: Wait for cloud to run
-        run: sleep 60
 
       # jdk 설정
       - name: Set up JDK 17 in Client
