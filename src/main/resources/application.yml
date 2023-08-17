@@ -1,20 +1,70 @@
-#server:
-#  port: 8080
-#  servlet:
-#    session:
-#      timeout: 360000s
-#    # 인코딩 UTF-8로 설정
-#    encoding:
-#      charset: UTF-8
-#      enabled: true
-#      force: true
-#
-#spring:
-#  cloud:
-#    config:
-#      uri: http://192.168.0.40:8888
-#    #import: "optional:configserver:http://192.168.0.46:8888/application/dev"
-#  profiles:
-#    #운영환경 or 로컬 환경 중에 선택
-#    #로컬 = dev, 운영 = prod
-#    active: dev
+spring:
+  security:
+    oauth2:
+      client:
+        springdoc:
+          swagger-ui:
+            path: /
+            disable-swagger-default-url: 'true'
+            operations-sorter: alpha
+            groups-order: desc
+            display-request-duration: 'true'
+          default-consumes-media-type: application/json;charset=UTF-8
+          api-docs:
+            groups:
+              enabled: 'true'
+          paths-to-match: /**
+          default-produces-media-type: application/json;charset=UTF-8
+        registration:
+          kakao:
+            client-secret: NG0BUacgojEc914cdgCA5DdIlX3BQMSZ
+            redirect-uri: http://localhost:8080/login/oauth2/code/kakao
+            authorization-grant-type: authorization_code
+            client-id: 9a41e071dfbe8d7a22335b8e260dc8e8
+            scope: profile_nickname, profile_image, account_email
+            client-name: kakao
+            client-authentication-method: POST
+        provider:
+          kakao:
+            user-name-attribute: id
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+    user:
+      password: '1'
+  jpa:
+    generate-ddl: 'true'
+    hibernate:
+      ddl-auto: create
+    database-platform: org.hibernate.dialect.MySQL57Dialect
+    properties:
+      hibernate:
+        format_sql: 'true'
+        show_sql: 'true'
+    database: mysql
+    defer-datasource-initialization: 'true'
+    show-sql: 'true'
+  sql:
+    init:
+      data-locations: classpath:db/data/data.sql
+      mode: always
+      platform: mysql
+      encoding: UTF-8
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      auto-commit: 'true'
+    password: runninghi
+    username: runninghi
+    url: jdbc:mysql://localhost:3306/runninghi?allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=UTF-8&useUnicode=true&serverTimezone=Asia/Seoul
+  profiles:
+    active: dev
+server:
+  servlet:
+    encoding:
+      enabled: 'true'
+      force: 'true'
+      charset: UTF-8
+    session:
+      timeout: 360000s
+  port: '8080'

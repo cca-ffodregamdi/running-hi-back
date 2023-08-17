@@ -1,102 +1,58 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
+
 name: Java CI with Gradle
 
-# dev 브랜치에 pr 시 actions 실행
 on:
   pull_request:
-    branches:
-      - dev
+    branches: [ "dev" ]
 
 permissions: write-all
 
 jobs:
+  build:
 
-  # ! spring cloud config server
-  cloud:
     runs-on: ubuntu-latest
 
-    # spring cloud config server repository로 checkout
     steps:
-      - name: Checkout Cloud Config Server
-        uses: actions/checkout@v3
-        with:
-          repository: cca-ffodregamdi/running-hi-cloud-server
-          token: ${{ secrets.GH_PAT }}    # private repository이므로 토큰을 이용해 접근
-          ref: master   # master branch 설정
-
-      - name: Print Config Server Address
-        run: |
-          CONFIG_SERVER_ADDRESS="http://$(curl -s ifconfig.me):8888"
-          echo "CONFIG_SERVER_ADDRESS=$CONFIG_SERVER_ADDRESS" >> $GITHUB_ENV
-
-      # jdk 설정
-      - name: Set up JDK 17 in Cloud Config Server
+      - uses: actions/checkout@v3
+      - name: Set up JDK 11
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
+          java-version: '11'
           distribution: 'temurin'
 
-      # build
-      - name: Build Spring Cloud Config Server
-        run: |
-          chmod +x gradlew
-          ./gradlew clean build
-          ls ./build/libs
-
-      # jar 파일 실행
-      - name: Run Spring Cloud Config Server
-        # 백그라운드에서 실행 -> 180초 기다린 뒤 종료
-        run: |
-          chmod +x ./build/libs/running-hi-cloud-server-0.0.1-SNAPSHOT.jar
-          java -jar ./build/libs/running-hi-cloud-server-0.0.1-SNAPSHOT.jar & 
-          JAR_PID=$!
-          sleep 180
-          kill $JAR_PID
-  
-
-  # ! application server
-  client:
-    runs-on: ubuntu-latest
-
-    # running-hi-back repository로 checkout
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          repository: cca-ffodregamdi/running-hi-back
-
-      # cloud config server가 실행될 때까지 60초 기다림
-      - name: Wait for cloud to run
-        run: sleep 60
-
-      # jdk 설정
-      - name: Set up JDK 17 in Client
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-
-      # mysql 설정
       - name: Setup MySQL
         uses: samin/mysql-action@v1
         with:
+          character set server: 'utf8'
           mysql database: 'runninghi'
           mysql user: ${{ secrets.MYSQL_USERNAME }}
           mysql password: ${{ secrets.MYSQL_PASSWORD }}
 
-      # test 실행
-      - name: Build and Test with Gradle
-        run: |
-          chmod +x gradlew
-          ls ./gradlew
-          ./gradlew --info test
+      - name: make application.yml
+        run:
+          touch ./src/main/resources/application.yml
+        shell: bash
+      - name: deliver application.yml
+        run: echo "${{ secrets.APPLICATION_DEV }}" > ./src/main/resources/application.yml
+        shell: bash
 
-      # build
+      - name: Add permission
+        run: chmod +x gradlew
+
+      - name: Test with Gradle
+        run: ./gradlew --info test
+
       - name: Build with Gradle
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
           arguments: build
 
-      # test 결과 출력
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
