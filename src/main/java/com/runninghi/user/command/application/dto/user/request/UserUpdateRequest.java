@@ -1,4 +1,4 @@
-package com.runninghi.user.command.application.dto.request;
+package com.runninghi.user.command.application.dto.user.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

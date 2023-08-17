@@ -1,4 +1,4 @@
-package com.runninghi.user.command.application.dto.response;
+package com.runninghi.user.command.application.dto.user.response;
 
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import io.swagger.v3.oas.annotations.media.Schema;
