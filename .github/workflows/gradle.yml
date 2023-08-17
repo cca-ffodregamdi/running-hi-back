@@ -10,10 +10,8 @@ permissions: write-all
 
 jobs:
 
-
-
-  # ! application server
-  client:
+  # ! spring cloud config server
+  cloud:
     runs-on: ubuntu-latest
 
     # spring cloud config server repository로 checkout
@@ -24,6 +22,11 @@ jobs:
           repository: cca-ffodregamdi/running-hi-cloud-server
           token: ${{ secrets.GH_PAT }}    # private repository이므로 토큰을 이용해 접근
           ref: master   # master branch 설정
+
+      - name: Print Config Server Address
+        run: |
+          CONFIG_SERVER_ADDRESS="http://$(curl -s curlmyip.com):8888"
+          echo "CONFIG_SERVER_ADDRESS=$CONFIG_SERVER_ADDRESS" >> $GITHUB_ENV
 
       # jdk 설정
       - name: Set up JDK 17 in Cloud Config Server
@@ -46,14 +49,24 @@ jobs:
           chmod +x ./build/libs/running-hi-cloud-server-0.0.1-SNAPSHOT.jar
           java -jar ./build/libs/running-hi-cloud-server-0.0.1-SNAPSHOT.jar & 
           JAR_PID=$!
-          sleep 300
+          sleep 180
           kill $JAR_PID
+  
 
-      # running-hi-back repository로 checkout
-      - name: checkout repository
+  # ! application server
+  client:
+    runs-on: ubuntu-latest
+
+    # running-hi-back repository로 checkout
+    steps:
+      - name: Checkout repository
         uses: actions/checkout@v3
         with:
           repository: cca-ffodregamdi/running-hi-back
+
+      # cloud config server가 실행될 때까지 60초 기다림
+      - name: Wait for cloud to run
+        run: sleep 60
 
       # jdk 설정
       - name: Set up JDK 17 in Client
