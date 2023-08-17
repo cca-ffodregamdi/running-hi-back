@@ -2,7 +2,7 @@ package com.runninghi.bookmarkfolder.command.application.service;
 
 import com.runninghi.bookmarkfolder.command.application.dto.SaveFolderDTO;
 import com.runninghi.bookmarkfolder.command.domain.aggregate.entity.BookmarkFolder;
-import com.runninghi.bookmarkfolder.command.domain.repository.BookmarkFolderRepository;
+import com.runninghi.bookmarkfolder.command.domain.repository.SaveFolderRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -10,14 +10,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class SaveNewBookmarkFolderService {
 
-    private final BookmarkFolderRepository bookmarkFolderRepository;
+    private final SaveFolderRepository bookmarkFolderRepository;
 
-    public SaveNewBookmarkFolderService(BookmarkFolderRepository bookmarkFolderRepository) {
+    public SaveNewBookmarkFolderService(SaveFolderRepository bookmarkFolderRepository) {
         this.bookmarkFolderRepository = bookmarkFolderRepository;
     }
 
     @Transactional
-    public void saveNewBookmarkFolder(SaveFolderDTO folderDTO, Long userNo) {
+    public BookmarkFolder saveNewBookmarkFolder(SaveFolderDTO folderDTO, Long userNo) {
         //userNo 받아옴
 
         if (folderDTO.getFolderName().length() > 20) {
@@ -26,7 +26,7 @@ public class SaveNewBookmarkFolderService {
             throw new IllegalArgumentException("폴더 제목이 1자 미만입니다.");
         } else {
             BookmarkFolder newFolder = new BookmarkFolder(folderDTO.getFolderName(), userNo);
-            bookmarkFolderRepository.save(newFolder);
+            return bookmarkFolderRepository.save(newFolder);
         }
     }
 

@@ -1,7 +1,7 @@
 package com.runninghi.bookmarkfolder.command.application.service;
 
 import com.runninghi.bookmarkfolder.command.application.dto.SaveFolderDTO;
-import com.runninghi.bookmarkfolder.command.domain.repository.BookmarkFolderRepository;
+import com.runninghi.bookmarkfolder.command.domain.repository.SaveFolderRepository;
 import jakarta.transaction.Transactional;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.AssertionsForClassTypes;
@@ -19,7 +19,7 @@ public class SaveNewBookmarkFolderTests {
     private SaveNewBookmarkFolderService saveNewBookmarkFolderService;
 
     @Autowired
-    private BookmarkFolderRepository bookmarkFolderRepository;
+    private SaveFolderRepository bookmarkFolderRepository;
 
     @Test
     @DisplayName("즐겨찾기 폴더 추가 기능 테스트")
