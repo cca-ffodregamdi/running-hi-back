@@ -36,6 +36,9 @@ public class Feedback {
     @Column
     private Date feedbackReplyDate;
 
+    @Column
+    private int feedbackReportCnt;
+
     @Embedded
     private FeedbackWriterVO feedbackWriterVO;
 
@@ -52,6 +55,7 @@ public class Feedback {
         this.feedbackReplyDate = builder.feedbackReplyDate;
         this.feedbackWriterVO = builder.feedbackWriterVO;
         this.feedbackCategory = builder.feedbackCategory;
+        this.feedbackReportCnt = builder.feedbackReportCnt;
     }
 
     public static class Builder {
@@ -62,6 +66,7 @@ public class Feedback {
         private Boolean feedbackStatus;
         private String feedbackReply;
         private Date feedbackReplyDate;
+        private int feedbackReportCnt;
         private FeedbackWriterVO feedbackWriterVO;
         private FeedbackCategory feedbackCategory;
 
@@ -97,6 +102,11 @@ public class Feedback {
 
         public Builder feedbackReplyDate (Date feedbackReplyDate) {
             this.feedbackReplyDate = feedbackReplyDate;
+            return this;
+        }
+
+        public Builder feedbackReportCnt (int feedbackReportCnt) {
+            this.feedbackReportCnt = feedbackReportCnt;
             return this;
         }
 
