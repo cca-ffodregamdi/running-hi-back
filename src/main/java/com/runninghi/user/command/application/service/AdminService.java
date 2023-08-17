@@ -1,6 +1,6 @@
 package com.runninghi.user.command.application.service;
 
-import com.runninghi.user.command.application.dto.response.UserInfoResponse;
+import com.runninghi.user.command.application.dto.user.response.UserInfoResponse;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
 import com.runninghi.user.command.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
