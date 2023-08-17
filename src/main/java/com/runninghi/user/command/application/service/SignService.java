@@ -36,7 +36,7 @@ public class SignService {
     }
 
     // 로그인
-    @Transactional(readOnly = true)
+    @Transactional
     public SignInResponse signIn(SignInRequest request) {
         User user = userRepository.findByAccount(request.account())
                 .filter(it -> encoder.matches(request.password(), it.getPassword()))
