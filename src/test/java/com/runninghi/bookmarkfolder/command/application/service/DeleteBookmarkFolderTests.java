@@ -19,17 +19,15 @@ import java.util.UUID;
 @Transactional
 public class DeleteBookmarkFolderTests {
 
-    private final DeleteBookmarkFolderService deleteBookmarkFolder;
+    @Autowired
+    private DeleteBookmarkFolderService deleteBookmarkFolder;
 
     @Autowired
-    BookmarkFolderRepository folderRepository;
+    private BookmarkFolderRepository folderRepository;
 
     @Autowired
-    FindBookmarkFolderService findBookmarkFolder;
+    private FindBookmarkFolderService findBookmarkFolder;
 
-    public DeleteBookmarkFolderTests(DeleteBookmarkFolderService deleteBookmarkFolder) {
-        this.deleteBookmarkFolder = deleteBookmarkFolder;
-    }
 
     @Test
     @DisplayName("즐겨찾기 폴더 삭제 기능 테스트")

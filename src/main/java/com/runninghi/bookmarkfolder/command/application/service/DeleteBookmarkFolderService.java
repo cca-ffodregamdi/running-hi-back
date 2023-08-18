@@ -13,7 +13,8 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-public class DeleteBookmarkFolderService implements BookmarkFolderDomainService {
+@Service
+public class DeleteBookmarkFolderService {
 
     private final BookmarkFolderRepository folderRepository;
 
