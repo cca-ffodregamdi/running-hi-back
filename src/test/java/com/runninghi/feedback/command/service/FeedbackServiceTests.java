@@ -108,6 +108,5 @@ public class FeedbackServiceTests {
 
         long after = feedbackRepository.count();
         Assertions.assertEquals(before, after);
-
     }
 }
