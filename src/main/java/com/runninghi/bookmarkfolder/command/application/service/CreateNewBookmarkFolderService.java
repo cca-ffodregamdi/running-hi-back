@@ -3,15 +3,16 @@ package com.runninghi.bookmarkfolder.command.application.service;
 import com.runninghi.bookmarkfolder.command.application.dto.request.CreateFolderRequest;
 import com.runninghi.bookmarkfolder.command.domain.aggregate.entity.BookmarkFolder;
 import com.runninghi.bookmarkfolder.command.domain.repository.BookmarkFolderRepository;
+import com.runninghi.bookmarkfolder.command.domain.service.BookmarkFolderDomainService;
 import com.runninghi.common.annotation.DomainService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
 @RequiredArgsConstructor
-@DomainService
-public class CreateNewBookmarkFolderService {
+public class CreateNewBookmarkFolderService implements BookmarkFolderDomainService {
 
     private final BookmarkFolderRepository folderRepository;
 

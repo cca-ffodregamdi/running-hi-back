@@ -3,6 +3,7 @@ package com.runninghi.bookmarkfolder.command.application.service;
 import com.runninghi.bookmarkfolder.command.application.dto.request.DeleteFolderRequest;
 import com.runninghi.bookmarkfolder.command.domain.aggregate.entity.BookmarkFolder;
 import com.runninghi.bookmarkfolder.command.domain.repository.BookmarkFolderRepository;
+import com.runninghi.bookmarkfolder.command.domain.service.BookmarkFolderDomainService;
 import com.runninghi.common.annotation.DomainService;
 import com.runninghi.feedback.command.domain.exception.customException.NotFoundException;
 import jakarta.transaction.Transactional;
@@ -12,8 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-@DomainService
-public class DeleteBookmarkFolderService {
+public class DeleteBookmarkFolderService implements BookmarkFolderDomainService {
 
     private final BookmarkFolderRepository folderRepository;
 

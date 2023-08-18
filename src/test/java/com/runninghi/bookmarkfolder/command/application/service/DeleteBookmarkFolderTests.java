@@ -3,7 +3,6 @@ package com.runninghi.bookmarkfolder.command.application.service;
 import com.runninghi.bookmarkfolder.command.application.dto.request.DeleteFolderRequest;
 import com.runninghi.bookmarkfolder.command.domain.aggregate.entity.BookmarkFolder;
 import com.runninghi.bookmarkfolder.command.domain.repository.BookmarkFolderRepository;
-import com.runninghi.bookmarkfolder.command.domain.service.FindBookmarkFolder;
 import com.runninghi.bookmarkfolder.query.application.dto.request.FindFolderRequest;
 import com.runninghi.bookmarkfolder.query.application.service.FindBookmarkFolderService;
 import com.runninghi.feedback.command.domain.exception.customException.NotFoundException;
