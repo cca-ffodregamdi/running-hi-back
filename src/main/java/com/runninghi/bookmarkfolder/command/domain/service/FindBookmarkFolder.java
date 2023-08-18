@@ -1,4 +1,4 @@
 package com.runninghi.bookmarkfolder.command.domain.service;
 
-public class test {
+public class FindBookmarkFolder {
 }
