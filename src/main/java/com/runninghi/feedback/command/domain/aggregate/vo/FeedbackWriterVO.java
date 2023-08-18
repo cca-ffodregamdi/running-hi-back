@@ -7,12 +7,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Getter
 @Embeddable
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class FeedbackWriterVO {
 
-    @Column
-    private Long feedbackWriterNo;
+    @Column(columnDefinition = "BINARY(16)")
+    private UUID feedbackWriterId;
 }

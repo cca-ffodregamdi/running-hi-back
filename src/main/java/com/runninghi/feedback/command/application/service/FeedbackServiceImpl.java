@@ -1,15 +1,21 @@
 package com.runninghi.feedback.command.application.service;
 
-import com.runninghi.feedback.command.application.dto.SaveFeedbackDTO;
+import com.runninghi.feedback.command.application.dto.request.FeedbackCreateRequest;
+import com.runninghi.feedback.command.application.dto.response.FeedbackResponse;
 import com.runninghi.feedback.command.domain.aggregate.entity.Feedback;
 import com.runninghi.feedback.command.domain.aggregate.entity.FeedbackCategory;
 import com.runninghi.feedback.command.domain.aggregate.vo.FeedbackWriterVO;
 import com.runninghi.feedback.command.domain.exception.customException.IllegalArgumentException;
+import com.runninghi.feedback.command.domain.exception.customException.NotFoundException;
 import com.runninghi.feedback.command.domain.repository.FeedbackRepository;
 import com.runninghi.feedback.command.domain.service.FeedbackService;
+import com.runninghi.user.command.domain.aggregate.entity.User;
+import com.runninghi.user.command.domain.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 
 @Service
@@ -17,41 +23,42 @@ import org.springframework.stereotype.Service;
 public class FeedbackServiceImpl implements FeedbackService {
 
     private final FeedbackRepository feedbackRepository;
+    private final UserRepository userRepository;
 
     // 피드백 저장
     @Override
     @Transactional
-    public Long saveFeedback(SaveFeedbackDTO feedbackDTO, Long userNo) {
+    public FeedbackResponse createFeedback(FeedbackCreateRequest feedbackCreateRequest, UUID userId) {
 
-//        User writer = userRepository.findById(userNo)
-//                .orElseThrow(() -> new NotFoundException("존재하지않는 회원입니다."));
+        User writer = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("존재하지않는 회원입니다."));
 
-        if (feedbackDTO.getFeedbackTitle().length() > 500) {
+        if (feedbackCreateRequest.feedbackTitle().length() > 500) {
             throw new IllegalArgumentException("제목은 500자를 넘을 수 없습니다.");
         }
 
-        if (feedbackDTO.getFeedbackTitle().length() == 0) {
+        if (feedbackCreateRequest.feedbackTitle().length() == 0) {
             throw new IllegalArgumentException("제목은 1글자 이상이어야 합니다.");
         }
 
-        if (feedbackDTO.getFeedbackContent().length() == 0) {
+        if (feedbackCreateRequest.feedbackContent().length() == 0) {
             throw new IllegalArgumentException("내용은 1글자 이상이어야 합니다.");
         }
 
         // 작성자 vo 생성
-        FeedbackWriterVO feedbackWriterVO = new FeedbackWriterVO(userNo);
+        FeedbackWriterVO feedbackWriterVO = new FeedbackWriterVO(userId);
 
         Feedback feedback = new Feedback.Builder()
-                .feedbackTitle(feedbackDTO.getFeedbackTitle())
-                .feedbackContent(feedbackDTO.getFeedbackContent())
+                .feedbackTitle(feedbackCreateRequest.feedbackTitle())
+                .feedbackContent(feedbackCreateRequest.feedbackContent())
                 .feedbackWriterVO(feedbackWriterVO)
-                .feedbackCategory(FeedbackCategory.fromValue(feedbackDTO.getFeedbackCategory()))
+                .feedbackCategory(FeedbackCategory.fromValue(feedbackCreateRequest.feedbackCategory()))
                 .build();
 
         // 피드백 저장
-        feedbackRepository.save(feedback);
+        Feedback savedFeedback = feedbackRepository.save(feedback);
 
-        return feedback.getFeedbackNo();
+        return FeedbackResponse.from(savedFeedback);
 
     }
 
