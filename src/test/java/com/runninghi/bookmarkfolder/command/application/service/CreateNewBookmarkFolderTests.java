@@ -16,12 +16,14 @@ import java.util.UUID;
 @SpringBootTest
 @Transactional
 public class CreateNewBookmarkFolderTests {
-
-    @Autowired
-    private CreateNewBookmarkFolderService createNewBookmarkFolderService;
+    private final CreateNewBookmarkFolderService createNewBookmarkFolderService;
 
     @Autowired
     private BookmarkFolderRepository bookmarkFolderRepository;
+
+    public CreateNewBookmarkFolderTests(CreateNewBookmarkFolderService createNewBookmarkFolderService) {
+        this.createNewBookmarkFolderService = createNewBookmarkFolderService;
+    }
 
     @Test
     @DisplayName("즐겨찾기 폴더 추가 기능 테스트")
