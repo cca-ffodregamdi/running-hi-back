@@ -1,7 +1,9 @@
 package com.runninghi.feedback.command.application.service;
 
-import com.runninghi.feedback.command.application.dto.FeedbackNoDTO;
-import com.runninghi.feedback.command.application.dto.FeedbackReplyDTO;
+import com.runninghi.feedback.command.application.dto.request.FeedbackReplyCreateRequest;
+import com.runninghi.feedback.command.application.dto.request.FeedbackReplyDeleteRequest;
+import com.runninghi.feedback.command.application.dto.request.FeedbackReplyUpdateRequest;
+import com.runninghi.feedback.command.application.dto.response.FeedbackResponse;
 import com.runninghi.feedback.command.domain.aggregate.entity.Feedback;
 import com.runninghi.feedback.command.domain.exception.customException.NotFoundException;
 import com.runninghi.feedback.command.domain.repository.FeedbackRepository;
@@ -21,9 +23,9 @@ public class FeedbackReplyServiceImpl implements FeedbackReplyService {
     // 피드백 답변 저장
     @Override
     @Transactional
-    public Long saveFeedbackReply(FeedbackReplyDTO feedbackReplyDTO) {
+    public FeedbackResponse createFeedbackReply(FeedbackReplyCreateRequest feedbackReplyCreateRequest) {
 
-        Feedback feedback = feedbackRepository.findByFeedbackNo(feedbackReplyDTO.getFeedbackNo())
+        Feedback feedback = feedbackRepository.findByFeedbackNo(feedbackReplyCreateRequest.feedbackNo())
                 .orElseThrow(() -> new NotFoundException("존재하지않는 피드백입니다."));
 
         Feedback updateFeedback = new Feedback.Builder()
@@ -35,22 +37,22 @@ public class FeedbackReplyServiceImpl implements FeedbackReplyService {
                 .feedbackWriterVO(feedback.getFeedbackWriterVO())
                 .feedbackCategory(feedback.getFeedbackCategory())
                 .feedbackStatus(true)
-                .feedbackReply(feedbackReplyDTO.getFeedbackReply())
+                .feedbackReply(feedbackReplyCreateRequest.feedbackReply())
                 .feedbackReplyDate(new Date())
                 .build();
 
-        feedbackRepository.save(updateFeedback);
+        Feedback result = feedbackRepository.save(updateFeedback);
 
-        return updateFeedback.getFeedbackNo();
+        return FeedbackResponse.from(result);
 
     }
 
     // 피드백 답변 삭제
     @Override
     @Transactional
-    public Long deleteFeedbackReply(FeedbackNoDTO feedbackNoDTO) {
+    public FeedbackResponse deleteFeedbackReply(FeedbackReplyDeleteRequest feedbackReplyDeleteRequest) {
 
-        Feedback feedback = feedbackRepository.findByFeedbackNo(feedbackNoDTO.getFeedbackNo())
+        Feedback feedback = feedbackRepository.findByFeedbackNo(feedbackReplyDeleteRequest.feedbackNo())
                 .orElseThrow(() -> new NotFoundException("존재하지않는 피드백입니다."));
 
         Feedback updateFeedback = new Feedback.Builder()
@@ -66,18 +68,18 @@ public class FeedbackReplyServiceImpl implements FeedbackReplyService {
                 .feedbackReplyDate(null)
                 .build();
 
-        feedbackRepository.save(updateFeedback);
+        Feedback result = feedbackRepository.save(updateFeedback);
 
-        return updateFeedback.getFeedbackNo();
+        return FeedbackResponse.from(result);
 
     }
 
     // 피드백 답변 수정
     @Override
     @Transactional
-    public Long updateFeedbackReply(FeedbackReplyDTO feedbackReplyDTO) {
+    public FeedbackResponse updateFeedbackReply(FeedbackReplyUpdateRequest feedbackReplyUpdateRequest) {
 
-        Feedback feedback = feedbackRepository.findByFeedbackNo(feedbackReplyDTO.getFeedbackNo())
+        Feedback feedback = feedbackRepository.findByFeedbackNo(feedbackReplyUpdateRequest.feedbackNo())
                 .orElseThrow(() -> new NotFoundException("존재하지않는 피드백입니다."));
 
         Feedback updateFeedback = new Feedback.Builder()
@@ -88,13 +90,13 @@ public class FeedbackReplyServiceImpl implements FeedbackReplyService {
                 .feedbackWriterVO(feedback.getFeedbackWriterVO())
                 .feedbackCategory(feedback.getFeedbackCategory())
                 .feedbackStatus(true)
-                .feedbackReply(feedbackReplyDTO.getFeedbackReply())
+                .feedbackReply(feedbackReplyUpdateRequest.feedbackReply())
                 .feedbackReplyDate(new Date())
                 .build();
 
-        feedbackRepository.save(updateFeedback);
+        Feedback result = feedbackRepository.save(updateFeedback);
 
-        return updateFeedback.getFeedbackNo();
+        return FeedbackResponse.from(result);
 
     }
 

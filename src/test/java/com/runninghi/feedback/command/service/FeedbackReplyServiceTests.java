@@ -1,7 +1,9 @@
 package com.runninghi.feedback.command.service;
 
-import com.runninghi.feedback.command.application.dto.FeedbackNoDTO;
-import com.runninghi.feedback.command.application.dto.FeedbackReplyDTO;
+import com.runninghi.feedback.command.application.dto.request.FeedbackReplyCreateRequest;
+import com.runninghi.feedback.command.application.dto.request.FeedbackReplyDeleteRequest;
+import com.runninghi.feedback.command.application.dto.request.FeedbackReplyUpdateRequest;
+import com.runninghi.feedback.command.application.dto.response.FeedbackResponse;
 import com.runninghi.feedback.command.domain.aggregate.entity.Feedback;
 import com.runninghi.feedback.command.domain.aggregate.entity.FeedbackCategory;
 import com.runninghi.feedback.command.domain.aggregate.vo.FeedbackWriterVO;
@@ -34,7 +36,8 @@ public class FeedbackReplyServiceTests {
 
     @BeforeEach
     public void setUp() {
-        FeedbackWriterVO feedbackWriterVO = new FeedbackWriterVO(UUID.randomUUID());
+
+        FeedbackWriterVO feedbackWriterVO = new FeedbackWriterVO(UUID.fromString("ac60fb25-b40b-4308-827a-5aba81860fcb"));
         FeedbackCategory feedbackCategory = FeedbackCategory.fromValue(2);
 
         Feedback feedback = new Feedback.Builder()
@@ -49,6 +52,7 @@ public class FeedbackReplyServiceTests {
                 .build();
 
         setUpFeedback = feedbackRepository.save(feedback);
+
     }
 
     @Test
@@ -56,10 +60,10 @@ public class FeedbackReplyServiceTests {
     void saveFeedbackReplyTest() {
 
         String feedbackReply = "피드백 답변";
-        FeedbackReplyDTO feedbackReplyDTO = new FeedbackReplyDTO(setUpFeedback.getFeedbackNo(), feedbackReply);
-        Long saveFeedbackNo = feedbackReplyService.saveFeedbackReply(feedbackReplyDTO);
+        FeedbackReplyCreateRequest feedbackReplyCreateRequest = new FeedbackReplyCreateRequest(setUpFeedback.getFeedbackNo(), feedbackReply);
+        FeedbackResponse feedbackResponse = feedbackReplyService.createFeedbackReply(feedbackReplyCreateRequest);
 
-        Optional<Feedback> feedbackOptional = feedbackRepository.findByFeedbackNo(saveFeedbackNo);
+        Optional<Feedback> feedbackOptional = feedbackRepository.findByFeedbackNo(feedbackResponse.feedbackNo());
         Feedback feedback = feedbackOptional.get();
 
         Assertions.assertEquals(feedbackReply, feedback.getFeedbackReply());
@@ -72,9 +76,9 @@ public class FeedbackReplyServiceTests {
     void checkFeedbackExistInSaveFeedbackReplyTest() {
 
         String feedbackReply = "피드백 답변";
-        FeedbackReplyDTO feedbackReplyDTO = new FeedbackReplyDTO(setUpFeedback.getFeedbackNo() + 1, feedbackReply);
+        FeedbackReplyCreateRequest feedbackReplyCreateRequest = new FeedbackReplyCreateRequest(setUpFeedback.getFeedbackNo() + 1, feedbackReply);
 
-        Assertions.assertThrows(NotFoundException.class, () -> feedbackReplyService.saveFeedbackReply(feedbackReplyDTO));
+        Assertions.assertThrows(NotFoundException.class, () -> feedbackReplyService.createFeedbackReply(feedbackReplyCreateRequest));
 
     }
 
@@ -84,15 +88,16 @@ public class FeedbackReplyServiceTests {
 
         String feedbackReply = "피드백 답변 수정 수정";
         Date date = setUpFeedback.getFeedbackReplyDate();
-        FeedbackReplyDTO feedbackReplyDTO = new FeedbackReplyDTO(setUpFeedback.getFeedbackNo(), feedbackReply);
+        FeedbackReplyUpdateRequest feedbackReplyUpdateRequest = new FeedbackReplyUpdateRequest(setUpFeedback.getFeedbackNo(), feedbackReply);
 
         Thread.sleep(1000);
-        Long updateFeedbackNo = feedbackReplyService.updateFeedbackReply(feedbackReplyDTO);
+        FeedbackResponse feedbackResponse = feedbackReplyService.updateFeedbackReply(feedbackReplyUpdateRequest);
 
-        Feedback updateFeedback = feedbackRepository.findByFeedbackNo(updateFeedbackNo ).get();
+        Feedback updateFeedback = feedbackRepository.findByFeedbackNo(feedbackResponse.feedbackNo()).get();
 
         Assertions.assertEquals(feedbackReply, updateFeedback.getFeedbackReply());
         Assertions.assertNotEquals(date, updateFeedback.getFeedbackReplyDate());
+
     }
 
     @Test
@@ -100,18 +105,19 @@ public class FeedbackReplyServiceTests {
     void checkFeedbackExistInupdateFeedbackReplyTest() {
 
         String feedbackReply = "피드백 답변";
-        FeedbackReplyDTO feedbackReplyDTO = new FeedbackReplyDTO(setUpFeedback.getFeedbackNo() + 1, feedbackReply);
+        FeedbackReplyUpdateRequest feedbackReplyUpdateRequest = new FeedbackReplyUpdateRequest(setUpFeedback.getFeedbackNo() + 1, feedbackReply);
 
-        Assertions.assertThrows(NotFoundException.class, () -> feedbackReplyService.updateFeedbackReply(feedbackReplyDTO));
+        Assertions.assertThrows(NotFoundException.class, () -> feedbackReplyService.updateFeedbackReply(feedbackReplyUpdateRequest));
+
     }
 
     @Test
     @DisplayName("피드백 답변 삭제 테스트 : success")
     void deleteFeedbackReplyTest() {
 
-        FeedbackNoDTO feedbackNoDTO = new FeedbackNoDTO(setUpFeedback.getFeedbackNo());
+        FeedbackReplyDeleteRequest feedbackReplyDeleteRequest = new FeedbackReplyDeleteRequest(setUpFeedback.getFeedbackNo());
 
-        feedbackReplyService.deleteFeedbackReply(feedbackNoDTO);
+        feedbackReplyService.deleteFeedbackReply(feedbackReplyDeleteRequest);
 
         Feedback feedback = feedbackRepository.findByFeedbackNo(setUpFeedback.getFeedbackNo()).get();
 
@@ -123,10 +129,12 @@ public class FeedbackReplyServiceTests {
     @Test
     @DisplayName("피드백 답변 삭제 테스트 : 피드백 없음")
     void checkFeedbackExistInDeleteFeedbackReplyTest() {
+
         long before = feedbackRepository.count();
 
-        FeedbackNoDTO feedbackNoDTO = new FeedbackNoDTO(before + 1);
+        FeedbackReplyDeleteRequest feedbackReplyDeleteRequest = new FeedbackReplyDeleteRequest(before + 1);
 
-        Assertions.assertThrows(NotFoundException.class, () -> feedbackReplyService.deleteFeedbackReply(feedbackNoDTO));
+        Assertions.assertThrows(NotFoundException.class, () -> feedbackReplyService.deleteFeedbackReply(feedbackReplyDeleteRequest));
+
     }
 }
