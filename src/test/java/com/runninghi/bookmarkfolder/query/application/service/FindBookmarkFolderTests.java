@@ -44,8 +44,8 @@ public class FindBookmarkFolderTests {
     }
 
     @Test
-    @DisplayName("즐겨찾기 폴더번호 없을 시 예외처리")
-    void testFolderNoDoesntExist() {
+    @DisplayName("조회: 즐겨찾기 폴더번호 없을 시 예외처리")
+    void testFindFolderNoDoesntExist() {
         FindFolderRequest folderRequest = new FindFolderRequest(0L);
 
         Assertions.assertThrows(NotFoundException.class, () -> {
