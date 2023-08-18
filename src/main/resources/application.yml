@@ -92,7 +92,7 @@ spring:
           default-produces-media-type: application/json;charset=UTF-8
           paths-to-match: /**
           swagger-ui:
-            path: /
+            path: /swagger/runninghi
             display-request-duration: true
             groups-order: desc
             operations-sorter: alpha
