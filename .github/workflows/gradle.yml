@@ -42,6 +42,14 @@ jobs:
         run: echo "${{ secrets.APPLICATION_DEV }}" > ./src/main/resources/application.yml
         shell: bash
 
+      - name: make jwt.yml
+        run:
+          touch ./src/main/resources/jwt.yml
+        shell: bash
+      - name: deliver jwt.yml
+        run: echo "${{ secrets.JWT }}" > ./src/main/resources/jwt.yml
+        shell: bash
+
       - name: Add permission
         run: chmod +x gradlew
 
