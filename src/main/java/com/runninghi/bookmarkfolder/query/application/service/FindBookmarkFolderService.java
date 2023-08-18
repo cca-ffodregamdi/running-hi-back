@@ -18,14 +18,11 @@ public class FindBookmarkFolderService {
     private final FindFolderRepository findFolderRepository;
 
     @Transactional(readOnly=true)
-    public Optional<BookmarkFolder> findBookmarkFolder(FindFolderRequest folderRequest) {
+    public BookmarkFolder findBookmarkFolder(FindFolderRequest folderRequest) {
 
-        Optional<BookmarkFolder> bookmarkFolder = findFolderRepository.findById(folderRequest.folderNo());
+        BookmarkFolder bookmarkFolder = findFolderRepository.findById(folderRequest.folderNo())
+                .orElseThrow(() -> new NotFoundException("존재하지 않는 폴더입니다."));
 
-        if(!bookmarkFolder.isPresent()) {
-            throw new NotFoundException("해당 폴더가 존재하지 않습니다.");
-        } else {
-            return bookmarkFolder;
-        }
+        return bookmarkFolder;
     }
 }

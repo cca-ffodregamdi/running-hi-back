@@ -22,7 +22,7 @@ public class DeleteBookmarkFolderService {
     public void deleteBookmarkFolder(DeleteFolderRequest folderDTO) {
 
         BookmarkFolder folder = folderRepository.findById(folderDTO.folderNo())
-                .orElseThrow(() -> new NotFoundException("존재하지않는 회원입니다."));
+                .orElseThrow(() -> new NotFoundException("존재하지 않는 폴더입니다."));
 
         folderRepository.deleteById(folder.getFolderNo());
 
