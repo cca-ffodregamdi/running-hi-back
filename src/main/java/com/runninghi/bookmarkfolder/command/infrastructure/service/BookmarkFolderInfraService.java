@@ -4,11 +4,12 @@ import com.runninghi.bookmarkfolder.command.domain.repository.BookmarkFolderRepo
 import com.runninghi.bookmarkfolder.command.domain.service.BookmarkFolderDomainService;
 import com.runninghi.common.annotation.InfraService;
 import com.runninghi.feedback.command.domain.exception.customException.NotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @InfraService
 public class BookmarkFolderInfraService implements BookmarkFolderDomainService {
+    BookmarkFolderRepository folderRepository;
 
-    private final BookmarkFolderRepository folderRepository;
     public BookmarkFolderInfraService(BookmarkFolderRepository folderRepository) {
         this.folderRepository = folderRepository;
     }

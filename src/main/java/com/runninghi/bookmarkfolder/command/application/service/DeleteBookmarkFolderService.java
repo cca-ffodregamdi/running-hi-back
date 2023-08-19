@@ -17,13 +17,13 @@ import java.util.Optional;
 @Service
 public class DeleteBookmarkFolderService {
 
-    private final BookmarkFolderRepository folderRepository;
-    private final BookmarkFolderInfraService infraService;
+    BookmarkFolderRepository folderRepository;
+    BookmarkFolderDomainService domainService;
 
     @Transactional
     public void deleteBookmarkFolder(DeleteFolderRequest folderDTO) {
 
-        infraService.validateFolderExist(folderDTO.folderNo());
+        domainService.validateFolderExist(folderDTO.folderNo());
         folderRepository.deleteById(folderDTO.folderNo());
 
     }
