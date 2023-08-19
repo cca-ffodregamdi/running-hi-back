@@ -16,14 +16,14 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class CreateBookmarkService {
 
-    BookmarkRepository bookmarkRepository;
-    BookmarkDomainService bookmarkDomainService;
+    private final BookmarkRepository bookmarkRepository;
+    private final BookmarkDomainService domainService;
 
     @Transactional
     public Bookmark createBookmark(CreateBookmarkRequest bookmarkDTO) {
 
         //infraService.validatePostExist(bookmarkDTO.bookmarkVO().getPostNo());
-        bookmarkDomainService.validateFolderExist(bookmarkDTO.bookmarkVO().getFolderNo());
+        domainService.validateFolderExist(bookmarkDTO.bookmarkVO().getFolderNo());
 
         return bookmarkRepository.save(Bookmark.builder()
                 .bookmarkVO(bookmarkDTO.bookmarkVO())
