@@ -1,15 +1,15 @@
-package com.runninghi.feedback.command.service;
+package com.runninghi.feedback.command.application.service;
 
 import com.runninghi.feedback.command.application.dto.request.FeedbackReplyCreateRequest;
 import com.runninghi.feedback.command.application.dto.request.FeedbackReplyDeleteRequest;
 import com.runninghi.feedback.command.application.dto.request.FeedbackReplyUpdateRequest;
 import com.runninghi.feedback.command.application.dto.response.FeedbackResponse;
+import com.runninghi.feedback.command.application.service.FeedbackReplyService;
 import com.runninghi.feedback.command.domain.aggregate.entity.Feedback;
 import com.runninghi.feedback.command.domain.aggregate.entity.FeedbackCategory;
 import com.runninghi.feedback.command.domain.aggregate.vo.FeedbackWriterVO;
 import com.runninghi.feedback.command.domain.exception.customException.NotFoundException;
 import com.runninghi.feedback.command.domain.repository.FeedbackRepository;
-import com.runninghi.feedback.command.domain.service.FeedbackReplyService;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

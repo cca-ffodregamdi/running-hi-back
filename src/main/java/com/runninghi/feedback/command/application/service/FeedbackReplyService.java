@@ -7,7 +7,6 @@ import com.runninghi.feedback.command.application.dto.response.FeedbackResponse;
 import com.runninghi.feedback.command.domain.aggregate.entity.Feedback;
 import com.runninghi.feedback.command.domain.exception.customException.NotFoundException;
 import com.runninghi.feedback.command.domain.repository.FeedbackRepository;
-import com.runninghi.feedback.command.domain.service.FeedbackReplyService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,12 +15,11 @@ import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
-public class FeedbackReplyServiceImpl implements FeedbackReplyService {
+public class FeedbackReplyService {
 
     private final FeedbackRepository feedbackRepository;
 
     // 피드백 답변 저장
-    @Override
     @Transactional
     public FeedbackResponse createFeedbackReply(FeedbackReplyCreateRequest feedbackReplyCreateRequest) {
 
@@ -48,7 +46,6 @@ public class FeedbackReplyServiceImpl implements FeedbackReplyService {
     }
 
     // 피드백 답변 삭제
-    @Override
     @Transactional
     public FeedbackResponse deleteFeedbackReply(FeedbackReplyDeleteRequest feedbackReplyDeleteRequest) {
 
@@ -75,7 +72,6 @@ public class FeedbackReplyServiceImpl implements FeedbackReplyService {
     }
 
     // 피드백 답변 수정
-    @Override
     @Transactional
     public FeedbackResponse updateFeedbackReply(FeedbackReplyUpdateRequest feedbackReplyUpdateRequest) {
 

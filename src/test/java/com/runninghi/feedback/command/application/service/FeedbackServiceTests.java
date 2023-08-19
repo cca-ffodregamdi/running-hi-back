@@ -1,9 +1,9 @@
-package com.runninghi.feedback.command.service;
+package com.runninghi.feedback.command.application.service;
 
 import com.runninghi.feedback.command.application.dto.request.FeedbackCreateRequest;
+import com.runninghi.feedback.command.application.service.FeedbackService;
 import com.runninghi.feedback.command.domain.exception.customException.IllegalArgumentException;
 import com.runninghi.feedback.command.domain.repository.FeedbackRepository;
-import com.runninghi.feedback.command.domain.service.FeedbackService;
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
 import com.runninghi.user.command.domain.repository.UserRepository;

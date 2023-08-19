@@ -8,7 +8,6 @@ import com.runninghi.feedback.command.domain.aggregate.vo.FeedbackWriterVO;
 import com.runninghi.feedback.command.domain.exception.customException.IllegalArgumentException;
 import com.runninghi.feedback.command.domain.exception.customException.NotFoundException;
 import com.runninghi.feedback.command.domain.repository.FeedbackRepository;
-import com.runninghi.feedback.command.domain.service.FeedbackService;
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -20,13 +19,12 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class FeedbackServiceImpl implements FeedbackService {
+public class FeedbackService {
 
     private final FeedbackRepository feedbackRepository;
     private final UserRepository userRepository;
 
     // 피드백 저장
-    @Override
     @Transactional
     public FeedbackResponse createFeedback(FeedbackCreateRequest feedbackCreateRequest, UUID userId) {
 
