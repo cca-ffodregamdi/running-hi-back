@@ -28,6 +28,9 @@ public class CreateBookmarkTests {
     @Autowired
     BookmarkRepository bookmarkRepository;
 
+    @Autowired
+    CreateNewBookmarkFolderService createNewBookmarkFolderService;
+
     @Test
     @DisplayName("생성: 즐겨찾기 추가 기능")
     void testCreateBookmark() {
