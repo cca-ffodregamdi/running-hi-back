@@ -16,9 +16,7 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class CreateBookmarkService {
 
-    @Autowired
     BookmarkRepository bookmarkRepository;
-    @Autowired
     BookmarkDomainService bookmarkDomainService;
 
     @Transactional
