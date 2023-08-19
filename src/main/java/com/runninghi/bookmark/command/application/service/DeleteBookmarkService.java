@@ -17,7 +17,7 @@ public class DeleteBookmarkService {
     @Transactional
     public void deleteBookmark(DeleteBookmarkRequest bookmarkDTO) {
 
-
+        domainService.validateFolderExist(bookmarkDTO.bookmarkVO().getFolderNo());
 
         bookmarkRepository.deleteById(bookmarkDTO.bookmarkVO());
     }

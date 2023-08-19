@@ -20,13 +20,11 @@ import java.util.UUID;
 public class CreateBookmarkTests {
 
     @Autowired
-    CreateBookmarkService createBookmarkService;
+    private CreateBookmarkService createBookmarkService;
 
     @Autowired
-    BookmarkRepository bookmarkRepository;
+    private BookmarkRepository bookmarkRepository;
 
-    @Autowired
-    CreateNewBookmarkFolderService createNewBookmarkFolderService;
 
     @Test
     @DisplayName("생성: 즐겨찾기 추가 기능")
