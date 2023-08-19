@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 
 @Entity
 @Getter
@@ -22,10 +24,11 @@ public class BookmarkFolder {
     private String folderName;
 
     @Column
-    private Long userNo;
+    private UUID userNo;
 
     @Builder
-    public BookmarkFolder(String folderName, Long userNo) {
+    public BookmarkFolder(Long folderNo, String folderName, UUID userNo) {
+        this.folderNo = folderNo;
         this.folderName = folderName;
         this.userNo = userNo;
     }
