@@ -30,7 +30,7 @@ public class DeleteBookmarkFolderTests {
 
 
     @Test
-    @DisplayName("즐겨찾기 폴더 삭제 기능 테스트")
+    @DisplayName("삭제: 즐겨찾기 폴더 삭제 기능 테스트")
     void testDeleteBookmarkFolder() {
 
         BookmarkFolder folder = folderRepository.save(BookmarkFolder.builder()
