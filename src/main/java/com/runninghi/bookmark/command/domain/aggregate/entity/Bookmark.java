@@ -9,6 +9,7 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -17,21 +18,18 @@ import java.time.LocalDate;
 public class Bookmark implements Serializable {
 
     @EmbeddedId
-    private BookmarkVO bookmark;
+    private BookmarkVO bookmarkVO;
 
     @Column
-    private Long userId;
+    private UUID userNo;
 
     @Column
     private LocalDate addDate;
 
     @Builder
-    public Bookmark(BookmarkVO bookmark) {
-        this.bookmark = bookmark;
-    }
-
-    @Builder
-    public Bookmark(Long folderNo, Long postNo) {
-        this.bookmark = new BookmarkVO(folderNo, postNo);
+    public Bookmark(BookmarkVO bookmarkVO, UUID userNo, LocalDate addDate) {
+        this.bookmarkVO = bookmarkVO;
+        this.userNo = userNo;
+        this.addDate = addDate;
     }
 }
