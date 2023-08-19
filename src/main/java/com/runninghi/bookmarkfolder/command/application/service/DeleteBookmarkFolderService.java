@@ -17,8 +17,8 @@ import java.util.Optional;
 @Service
 public class DeleteBookmarkFolderService {
 
-    BookmarkFolderRepository folderRepository;
-    BookmarkFolderDomainService domainService;
+    private final BookmarkFolderRepository folderRepository;
+    private final BookmarkFolderDomainService domainService;
 
     @Transactional
     public void deleteBookmarkFolder(DeleteFolderRequest folderDTO) {

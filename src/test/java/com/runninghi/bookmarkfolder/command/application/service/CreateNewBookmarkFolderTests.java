@@ -3,8 +3,6 @@ package com.runninghi.bookmarkfolder.command.application.service;
 import com.runninghi.bookmarkfolder.command.application.dto.request.CreateFolderRequest;
 import com.runninghi.bookmarkfolder.command.domain.repository.BookmarkFolderRepository;
 import jakarta.transaction.Transactional;
-import org.assertj.core.api.Assertions;
-import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

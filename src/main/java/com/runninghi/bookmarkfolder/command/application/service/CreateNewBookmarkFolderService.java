@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class CreateNewBookmarkFolderService {
 
-    BookmarkFolderRepository folderRepository;
-    BookmarkFolderDomainService domainService;
+    private final BookmarkFolderRepository folderRepository;
+    private final BookmarkFolderDomainService domainService;
     public void createNewBookmarkFolder(CreateFolderRequest folderDTO) {
 
         domainService.validateFolderName(folderDTO.folderName());

@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UpdateBookmarkFolderService {
 
-    BookmarkFolderRepository folderRepository;
-    BookmarkFolderDomainService domainService;
+    private final BookmarkFolderRepository folderRepository;
+    private final BookmarkFolderDomainService domainService;
 
     @Transactional
     public BookmarkFolder updateBookmarkFolder(UpdateFolderRequest folderDTO) {
