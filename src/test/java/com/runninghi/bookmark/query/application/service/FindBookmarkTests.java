@@ -41,6 +41,18 @@ public class FindBookmarkTests {
         Assertions.assertEquals(bookmark, findBookmarkService.findBookmark(findRequest));
     }
 
+    @Test
+    @DisplayName("조회: 폴더 번호가 없을 시 예외발생")
+    void testFolderNoDoesntExist() {
+
+        BookmarkVO bookmarkVO = new BookmarkVO(0L, 2L);
+        FindBookmarkRequest findRequest = new FindBookmarkRequest(bookmarkVO);
+
+        Assertions.assertThrows(NotFoundException.class, () -> {
+            findBookmarkService.findBookmark(findRequest);
+        });
+    }
+
 
 
 }
