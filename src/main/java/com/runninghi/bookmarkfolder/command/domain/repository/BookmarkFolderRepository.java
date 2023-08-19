@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SaveFolderRepository extends JpaRepository<BookmarkFolder, Long> {
+public interface BookmarkFolderRepository extends JpaRepository<BookmarkFolder, Long> {
 
 }

@@ -1,9 +1,9 @@
 package com.runninghi.bookmarkfolder.query.application.service;
 
-import com.runninghi.bookmarkfolder.command.application.dto.SaveFolderDTO;
-import com.runninghi.bookmarkfolder.command.application.service.SaveNewBookmarkFolderService;
+import com.runninghi.bookmarkfolder.command.application.dto.request.CreateFolderRequest;
 import com.runninghi.bookmarkfolder.command.domain.aggregate.entity.BookmarkFolder;
-import com.runninghi.bookmarkfolder.query.infrastructure.repository.FindFolderRepository;
+import com.runninghi.bookmarkfolder.command.domain.repository.BookmarkFolderRepository;
+import com.runninghi.bookmarkfolder.query.application.dto.request.FindFolderRequest;
 import com.runninghi.feedback.command.domain.exception.customException.NotFoundException;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
@@ -12,42 +12,44 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.Optional;
+import java.util.UUID;
 
 @SpringBootTest
 @Transactional
 public class FindBookmarkFolderTests {
 
     @Autowired
-    private FindBookmarkFolderImpl findBookmarkFolderImpl;
+    private FindBookmarkFolderService findBookmarkFolder;
 
     @Autowired
-    private SaveNewBookmarkFolderService saveNewBookmarkFolderService;
-
-    @Autowired
-    private FindFolderRepository findFolderRepository;
+    private BookmarkFolderRepository folderRepository;
 
     @Test
     @DisplayName("즐겨찾기 폴더 조회 기능 테스트")
     void testFindBookmarkFolderByNo() {
-        SaveFolderDTO folderDTO = new SaveFolderDTO("testFind", 1L);
-        BookmarkFolder folder = saveNewBookmarkFolderService.saveNewBookmarkFolder(folderDTO, 1L);
+        CreateFolderRequest folderDTO = new CreateFolderRequest("testFind", UUID.randomUUID());
 
-        long folderNo = folder.getFolderNo();
+        BookmarkFolder folder = folderRepository.save(BookmarkFolder.builder()
+                .folderName(folderDTO.folderName())
+                .userNo(folderDTO.getUserNo())
+                .folderNo(1L)
+                .build());
 
-        findBookmarkFolderImpl.findBookmarkFolder(folderNo).ifPresent(actualFolder -> {
-            Assertions.assertEquals(folderDTO.getFolderName(), actualFolder.getFolderName());
+        FindFolderRequest folderRequest = new FindFolderRequest(folder.getFolderNo());
+
+        findBookmarkFolder.findBookmarkFolder(folderRequest).ifPresent(actualFolder -> {
+            Assertions.assertEquals(folderDTO.folderName(), actualFolder.getFolderName());
             Assertions.assertEquals(folderDTO.getUserNo(), actualFolder.getUserNo());
         });
     }
 
     @Test
-    @DisplayName("즐겨찾기 폴더번호 없을 시 예외처리")
-    void testFolderNoDoesntExist() {
-        long folderNo = 0L;
+    @DisplayName("조회: 즐겨찾기 폴더번호 없을 시 예외처리")
+    void testFindFolderNoDoesntExist() {
+        FindFolderRequest folderRequest = new FindFolderRequest(0L);
 
         Assertions.assertThrows(NotFoundException.class, () -> {
-            findBookmarkFolderImpl.findBookmarkFolder(folderNo);
+            findBookmarkFolder.findBookmarkFolder(folderRequest);
         });
     }
 }

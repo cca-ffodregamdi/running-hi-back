@@ -1,7 +1,7 @@
 package com.runninghi.bookmarkfolder.command.application.service;
 
-import com.runninghi.bookmarkfolder.command.application.dto.SaveFolderDTO;
-import com.runninghi.bookmarkfolder.command.domain.repository.SaveFolderRepository;
+import com.runninghi.bookmarkfolder.command.application.dto.request.CreateFolderRequest;
+import com.runninghi.bookmarkfolder.command.domain.repository.BookmarkFolderRepository;
 import jakarta.transaction.Transactional;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.AssertionsForClassTypes;
@@ -10,25 +10,28 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.UUID;
+
 
 @SpringBootTest
 @Transactional
-public class SaveNewBookmarkFolderTests {
+public class CreateNewBookmarkFolderTests {
 
     @Autowired
-    private SaveNewBookmarkFolderService saveNewBookmarkFolderService;
+    private CreateNewBookmarkFolderService createNewBookmarkFolderService;
 
     @Autowired
-    private SaveFolderRepository bookmarkFolderRepository;
+    private BookmarkFolderRepository bookmarkFolderRepository;
+
 
     @Test
     @DisplayName("즐겨찾기 폴더 추가 기능 테스트")
-    void testSaveNewBookmarkFolder() {
+    void testCreateNewBookmarkFolder() {
 
         long beforeSize = bookmarkFolderRepository.count();
 
-        SaveFolderDTO folderDTO = new SaveFolderDTO("testFolder", 1L);
-        saveNewBookmarkFolderService.saveNewBookmarkFolder(folderDTO, folderDTO.getUserNo());
+        CreateFolderRequest folderDTO = new CreateFolderRequest("testFolder", UUID.randomUUID());
+        createNewBookmarkFolderService.createNewBookmarkFolder(folderDTO, folderDTO.getUserNo());
 
         long afterSize = bookmarkFolderRepository.count();
 
@@ -39,11 +42,11 @@ public class SaveNewBookmarkFolderTests {
     @DisplayName("즐겨찾기 폴더 이름 20자 이상 시 예외처리")
     void testBookmarkFolderLengthLongException() {
 
-        SaveFolderDTO folderDTO = new SaveFolderDTO("testFoldertestFoldertestFoldertestFoldertestFolder", 1L);
+        CreateFolderRequest folderDTO = new CreateFolderRequest("testFoldertestFoldertestFoldertestFoldertestFolder", UUID.randomUUID());
 
         Throwable thrown = AssertionsForClassTypes.catchThrowable(()
                 -> {
-            saveNewBookmarkFolderService.saveNewBookmarkFolder(folderDTO, folderDTO.getUserNo());
+            createNewBookmarkFolderService.createNewBookmarkFolder(folderDTO, folderDTO.getUserNo());
         });
 
         Assertions.assertThat(thrown)
@@ -54,11 +57,11 @@ public class SaveNewBookmarkFolderTests {
     @Test
     @DisplayName("즐겨찾기 폴더 이름 1자 미만 시 예외처리")
     void testBookmarkFolderLengthShortException() {
-        SaveFolderDTO folderDTO = new SaveFolderDTO("", 1L);
+        CreateFolderRequest folderDTO = new CreateFolderRequest("", UUID.randomUUID());
 
         Throwable thrown = AssertionsForClassTypes.catchThrowable(()
                 -> {
-            saveNewBookmarkFolderService.saveNewBookmarkFolder(folderDTO, folderDTO.getUserNo());
+            createNewBookmarkFolderService.createNewBookmarkFolder(folderDTO, folderDTO.getUserNo());
         });
 
         Assertions.assertThat(thrown)
