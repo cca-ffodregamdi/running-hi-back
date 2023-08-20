@@ -23,7 +23,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class KeywordController {
 
-    private final QueryKeywordService queryKeywordService;
     private final KeywordService keywordService;
 
     @Operation(description = "키워드 생성")
@@ -35,13 +34,6 @@ public class KeywordController {
         KeywordCreateResponse keyword = keywordService.createKeyword(request);
 
         return ResponseEntity.ok(ApiResponse.success("성공적으로 등록되었습니다.", keyword));
-    }
-
-    @Operation(description = "전체 키워드 목록 조회")
-    @GetMapping
-    public ResponseEntity<List<GetKeywordListResponse>> findKeywordList() {
-        List<GetKeywordListResponse> keywordList = queryKeywordService.getKeywordList();
-        return ResponseEntity.ok(keywordList);
     }
 
 }
