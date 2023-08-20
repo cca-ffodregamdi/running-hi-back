@@ -3,12 +3,9 @@ package com.runninghi.bookmark.command.application.service;
 import com.runninghi.bookmark.command.application.dto.request.CreateBookmarkRequest;
 import com.runninghi.bookmark.command.domain.aggregate.vo.BookmarkVO;
 import com.runninghi.bookmark.command.domain.repository.BookmarkRepository;
-import com.runninghi.bookmarkfolder.command.application.dto.request.CreateFolderRequest;
 import com.runninghi.bookmarkfolder.command.application.service.CreateNewBookmarkFolderService;
-import com.runninghi.bookmarkfolder.command.domain.repository.BookmarkFolderRepository;
 import com.runninghi.feedback.command.domain.exception.customException.NotFoundException;
 import jakarta.transaction.Transactional;
-import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,13 +20,11 @@ import java.util.UUID;
 public class CreateBookmarkTests {
 
     @Autowired
-    CreateBookmarkService createBookmarkService;
+    private CreateBookmarkService createBookmarkService;
 
     @Autowired
-    BookmarkRepository bookmarkRepository;
+    private BookmarkRepository bookmarkRepository;
 
-    @Autowired
-    CreateNewBookmarkFolderService createNewBookmarkFolderService;
 
     @Test
     @DisplayName("생성: 즐겨찾기 추가 기능")
@@ -56,7 +51,7 @@ public class CreateBookmarkTests {
 
         org.assertj.core.api.Assertions.assertThatThrownBy(() -> createBookmarkService.createBookmark(bookmarkRequest))
                 .isInstanceOf(NotFoundException.class)
-                .hasMessage("존재하지 않는 폴더입니다.");
+                .hasMessage("해당 폴더가 존재하지 않습니다.");
     }
 
     @Test
