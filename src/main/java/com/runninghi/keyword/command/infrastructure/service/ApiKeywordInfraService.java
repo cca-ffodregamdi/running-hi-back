@@ -3,7 +3,7 @@ package com.runninghi.keyword.command.infrastructure.service;
 import com.runninghi.common.annotation.InfraService;
 import com.runninghi.keyword.command.application.dto.response.UserCheckResponse;
 import com.runninghi.keyword.command.domain.service.ApiKeywordDomainService;
-import com.runninghi.user.command.application.dto.response.UserInfoResponse;
+import com.runninghi.user.command.application.dto.user.response.UserInfoResponse;
 import com.runninghi.user.command.application.service.UserService;
 import lombok.RequiredArgsConstructor;
 

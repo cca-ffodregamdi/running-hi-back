@@ -18,11 +18,11 @@ public class QueryKeywordController {
 
     private final QueryKeywordService queryKeywordService;
 
-    @Operation(description = "전체 키워드 목록 조회")
-    @GetMapping
+    @Operation(summary = "전체 키워드 목록 조회")
+    @GetMapping("keyword")
     public ResponseEntity<List<GetKeywordListResponse>> findKeywordList() {
         List<GetKeywordListResponse> keywordList = queryKeywordService.getKeywordList();
         return ResponseEntity.ok(keywordList);
-
     }
+
 }

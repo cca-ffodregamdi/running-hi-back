@@ -28,9 +28,9 @@ public class KeywordService {
     }
 
     @Transactional
-    public KeywordCreateResponse createKeyword(KeywordCreateRequest request) {
+    public KeywordCreateResponse createKeyword(String keywordName) {
         Keyword result = keywordRepository.save(Keyword.builder()
-                .keywordName(request.keywordName())
+                .keywordName(keywordName)
                 .build());
         return KeywordCreateResponse.of(result.getKeywordNo(), result.getKeywordName());
     }

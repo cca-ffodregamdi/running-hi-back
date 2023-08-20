@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -25,13 +26,13 @@ public class KeywordController {
 
     private final KeywordService keywordService;
 
-    @Operation(description = "키워드 생성")
-    @PostMapping
+    @Operation(summary = "키워드 생성")
+    @PostMapping("keyword")
     public ResponseEntity<ApiResponse> createKeyword(KeywordCreateRequest request) {
         Optional.ofNullable(request.userKey())
                 .orElseThrow( () -> new NullPointerException("로그인 후 이용해주세요."));
         keywordService.checkAdminByUserKey(request.userKey());  // 관리자 아닐 시 예외
-        KeywordCreateResponse keyword = keywordService.createKeyword(request);
+        KeywordCreateResponse keyword = keywordService.createKeyword(request.keywordName());
 
         return ResponseEntity.ok(ApiResponse.success("성공적으로 등록되었습니다.", keyword));
     }

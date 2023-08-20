@@ -1,7 +1,5 @@
 package com.runninghi.keyword.command.application.dto.response;
 
-import com.runninghi.user.command.application.dto.response.UserInfoResponse;
-import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
 import io.swagger.v3.oas.annotations.media.Schema;
 
