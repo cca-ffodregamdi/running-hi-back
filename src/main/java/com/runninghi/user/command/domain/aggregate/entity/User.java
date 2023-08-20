@@ -20,15 +20,15 @@ import java.util.UUID;
 public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private UUID id; // 회원 고유 값
 
     @Column(nullable = false, scale = 20, unique = true)
     private String account; // 폼 로그인 아이디
     @Column(nullable = false)
     private String password; // 폼 로그인 비밀번호
     private String name; // 폼 로그인 이름
-    private String location; // 추가로 현 위치 받을 때
     private String nickname; // 폼 로그인 닉네임
+    private String location; // 추가로 현 위치 받을 때
     private String kakaoId; // 카카오 고유 아이디
     private String email; // 카카오 계정에 등록된 이메일
     private String kakaoName; // 카카오 닉네임
