@@ -1,8 +1,5 @@
 package com.runninghi.comment.command.application.service;
 
-import com.runninghi.bookmarkfolder.command.application.dto.request.CreateFolderRequest;
-import com.runninghi.bookmarkfolder.command.application.service.CreateNewBookmarkFolderService;
-import com.runninghi.bookmarkfolder.command.domain.repository.BookmarkFolderRepository;
 import com.runninghi.comment.command.application.dto.request.CreateCommentRequest;
 import com.runninghi.comment.command.domain.repository.CommentRepository;
 import jakarta.transaction.Transactional;
@@ -11,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDate;
 import java.util.UUID;
 
 

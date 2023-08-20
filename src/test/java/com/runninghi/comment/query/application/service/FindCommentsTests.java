@@ -1,10 +1,5 @@
 package com.runninghi.comment.query.application.service;
 
-import com.runninghi.bookmarkfolder.command.application.dto.request.CreateFolderRequest;
-import com.runninghi.bookmarkfolder.command.domain.aggregate.entity.BookmarkFolder;
-import com.runninghi.bookmarkfolder.command.domain.repository.BookmarkFolderRepository;
-import com.runninghi.bookmarkfolder.query.application.dto.request.FindFolderRequest;
-import com.runninghi.bookmarkfolder.query.application.service.FindBookmarkFolderService;
 import com.runninghi.comment.command.application.dto.request.CreateCommentRequest;
 import com.runninghi.comment.command.application.service.CreateCommentService;
 import com.runninghi.comment.command.domain.aggregate.entity.Comment;
