@@ -1,6 +1,5 @@
 package com.runninghi.comment.command.domain.aggregate.entity;
 
-import com.runninghi.comment.command.domain.aggregate.vo.CommentReportCntVO;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -24,7 +23,7 @@ public class Comment {
     private UUID userNo;
 
     @Column
-    private Long postNo;
+    private Long userPostNo;
 
     @Column
     private LocalDate commentDate;
@@ -32,6 +31,6 @@ public class Comment {
     @Column
     private String commentContent;
 
-    @Embedded
-    private CommentReportCntVO commentReportCnt;
+    @Column
+    private int commentReportCnt;
 }
