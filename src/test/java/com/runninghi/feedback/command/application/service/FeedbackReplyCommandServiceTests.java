@@ -4,17 +4,13 @@ import com.runninghi.feedback.command.application.dto.request.FeedbackReplyCreat
 import com.runninghi.feedback.command.application.dto.request.FeedbackReplyDeleteRequest;
 import com.runninghi.feedback.command.application.dto.request.FeedbackReplyUpdateRequest;
 import com.runninghi.feedback.command.application.dto.response.FeedbackResponse;
-import com.runninghi.feedback.command.application.service.FeedbackReplyService;
 import com.runninghi.feedback.command.domain.aggregate.entity.Feedback;
 import com.runninghi.feedback.command.domain.aggregate.entity.FeedbackCategory;
 import com.runninghi.feedback.command.domain.aggregate.vo.FeedbackWriterVO;
-import com.runninghi.feedback.command.domain.exception.customException.NotFoundException;
+import com.runninghi.common.handler.feedback.customException.NotFoundException;
 import com.runninghi.feedback.command.domain.repository.FeedbackRepository;
 import jakarta.transaction.Transactional;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -24,15 +20,21 @@ import java.util.UUID;
 
 @SpringBootTest
 @Transactional
-public class FeedbackReplyServiceTests {
+public class FeedbackReplyCommandServiceTests {
 
     @Autowired
-    private FeedbackReplyService feedbackReplyService;
+    private FeedbackReplyCommandService feedbackReplyCommandService;
 
     @Autowired
     private FeedbackRepository feedbackRepository;
 
     private Feedback setUpFeedback;
+
+    @BeforeEach
+    @AfterEach
+    void clear() {
+        feedbackRepository.deleteAll();
+    }
 
     @BeforeEach
     public void setUp() {
@@ -61,7 +63,7 @@ public class FeedbackReplyServiceTests {
 
         String feedbackReply = "피드백 답변";
         FeedbackReplyCreateRequest feedbackReplyCreateRequest = new FeedbackReplyCreateRequest(setUpFeedback.getFeedbackNo(), feedbackReply);
-        FeedbackResponse feedbackResponse = feedbackReplyService.createFeedbackReply(feedbackReplyCreateRequest);
+        FeedbackResponse feedbackResponse = feedbackReplyCommandService.createFeedbackReply(feedbackReplyCreateRequest);
 
         Optional<Feedback> feedbackOptional = feedbackRepository.findByFeedbackNo(feedbackResponse.feedbackNo());
         Feedback feedback = feedbackOptional.get();
@@ -78,7 +80,7 @@ public class FeedbackReplyServiceTests {
         String feedbackReply = "피드백 답변";
         FeedbackReplyCreateRequest feedbackReplyCreateRequest = new FeedbackReplyCreateRequest(setUpFeedback.getFeedbackNo() + 1, feedbackReply);
 
-        Assertions.assertThrows(NotFoundException.class, () -> feedbackReplyService.createFeedbackReply(feedbackReplyCreateRequest));
+        Assertions.assertThrows(NotFoundException.class, () -> feedbackReplyCommandService.createFeedbackReply(feedbackReplyCreateRequest));
 
     }
 
@@ -91,7 +93,7 @@ public class FeedbackReplyServiceTests {
         FeedbackReplyUpdateRequest feedbackReplyUpdateRequest = new FeedbackReplyUpdateRequest(setUpFeedback.getFeedbackNo(), feedbackReply);
 
         Thread.sleep(1000);
-        FeedbackResponse feedbackResponse = feedbackReplyService.updateFeedbackReply(feedbackReplyUpdateRequest);
+        FeedbackResponse feedbackResponse = feedbackReplyCommandService.updateFeedbackReply(feedbackReplyUpdateRequest);
 
         Feedback updateFeedback = feedbackRepository.findByFeedbackNo(feedbackResponse.feedbackNo()).get();
 
@@ -102,12 +104,12 @@ public class FeedbackReplyServiceTests {
 
     @Test
     @DisplayName("피드백 답변 수정 테스트 : 피드백 없음")
-    void checkFeedbackExistInupdateFeedbackReplyTest() {
+    void checkFeedbackExistInuUpdateFeedbackReplyTest() {
 
         String feedbackReply = "피드백 답변";
         FeedbackReplyUpdateRequest feedbackReplyUpdateRequest = new FeedbackReplyUpdateRequest(setUpFeedback.getFeedbackNo() + 1, feedbackReply);
 
-        Assertions.assertThrows(NotFoundException.class, () -> feedbackReplyService.updateFeedbackReply(feedbackReplyUpdateRequest));
+        Assertions.assertThrows(NotFoundException.class, () -> feedbackReplyCommandService.updateFeedbackReply(feedbackReplyUpdateRequest));
 
     }
 
@@ -117,7 +119,7 @@ public class FeedbackReplyServiceTests {
 
         FeedbackReplyDeleteRequest feedbackReplyDeleteRequest = new FeedbackReplyDeleteRequest(setUpFeedback.getFeedbackNo());
 
-        feedbackReplyService.deleteFeedbackReply(feedbackReplyDeleteRequest);
+        feedbackReplyCommandService.deleteFeedbackReply(feedbackReplyDeleteRequest);
 
         Feedback feedback = feedbackRepository.findByFeedbackNo(setUpFeedback.getFeedbackNo()).get();
 
@@ -134,7 +136,7 @@ public class FeedbackReplyServiceTests {
 
         FeedbackReplyDeleteRequest feedbackReplyDeleteRequest = new FeedbackReplyDeleteRequest(before + 1);
 
-        Assertions.assertThrows(NotFoundException.class, () -> feedbackReplyService.deleteFeedbackReply(feedbackReplyDeleteRequest));
+        Assertions.assertThrows(NotFoundException.class, () -> feedbackReplyCommandService.deleteFeedbackReply(feedbackReplyDeleteRequest));
 
     }
 }

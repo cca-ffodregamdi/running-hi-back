@@ -5,8 +5,10 @@ import com.runninghi.feedback.command.application.dto.request.FeedbackReplyDelet
 import com.runninghi.feedback.command.application.dto.request.FeedbackReplyUpdateRequest;
 import com.runninghi.feedback.command.application.dto.response.FeedbackResponse;
 import com.runninghi.feedback.command.domain.aggregate.entity.Feedback;
-import com.runninghi.feedback.command.domain.exception.customException.NotFoundException;
+import com.runninghi.common.handler.feedback.customException.NotFoundException;
 import com.runninghi.feedback.command.domain.repository.FeedbackRepository;
+import com.runninghi.user.command.domain.aggregate.entity.User;
+import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,7 +17,7 @@ import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
-public class FeedbackReplyService {
+public class FeedbackReplyCommandService {
 
     private final FeedbackRepository feedbackRepository;
 
@@ -93,6 +95,13 @@ public class FeedbackReplyService {
         Feedback result = feedbackRepository.save(updateFeedback);
 
         return FeedbackResponse.from(result);
+
+    }
+
+    // 요청자가 관리자인지 확인
+    private boolean isAdminRole(User user) {
+
+        return user.getRole().equals(Role.ADMIN);
 
     }
 
