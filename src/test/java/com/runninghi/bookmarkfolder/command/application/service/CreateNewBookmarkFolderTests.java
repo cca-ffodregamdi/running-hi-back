@@ -3,8 +3,6 @@ package com.runninghi.bookmarkfolder.command.application.service;
 import com.runninghi.bookmarkfolder.command.application.dto.request.CreateFolderRequest;
 import com.runninghi.bookmarkfolder.command.domain.repository.BookmarkFolderRepository;
 import jakarta.transaction.Transactional;
-import org.assertj.core.api.Assertions;
-import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +23,13 @@ public class CreateNewBookmarkFolderTests {
 
 
     @Test
-    @DisplayName("즐겨찾기 폴더 추가 기능 테스트")
+    @DisplayName("생성: 즐겨찾기 폴더 추가 기능 테스트")
     void testCreateNewBookmarkFolder() {
 
         long beforeSize = bookmarkFolderRepository.count();
 
         CreateFolderRequest folderDTO = new CreateFolderRequest("testFolder", UUID.randomUUID());
-        createNewBookmarkFolderService.createNewBookmarkFolder(folderDTO, folderDTO.getUserNo());
+        createNewBookmarkFolderService.createNewBookmarkFolder(folderDTO);
 
         long afterSize = bookmarkFolderRepository.count();
 
@@ -39,33 +37,23 @@ public class CreateNewBookmarkFolderTests {
     }
 
     @Test
-    @DisplayName("즐겨찾기 폴더 이름 20자 이상 시 예외처리")
+    @DisplayName("생성: 폴더 이름 20자 초과 시 예외처리")
     void testBookmarkFolderLengthLongException() {
 
         CreateFolderRequest folderDTO = new CreateFolderRequest("testFoldertestFoldertestFoldertestFoldertestFolder", UUID.randomUUID());
 
-        Throwable thrown = AssertionsForClassTypes.catchThrowable(()
-                -> {
-            createNewBookmarkFolderService.createNewBookmarkFolder(folderDTO, folderDTO.getUserNo());
-        });
-
-        Assertions.assertThat(thrown)
+        org.assertj.core.api.Assertions.assertThatThrownBy(() -> createNewBookmarkFolderService.createNewBookmarkFolder(folderDTO))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("폴더 제목", "초과");
+                .hasMessage("폴더 제목이 20자를 초과하였습니다.");
     }
 
     @Test
-    @DisplayName("즐겨찾기 폴더 이름 1자 미만 시 예외처리")
+    @DisplayName("생성: 폴더 이름 1자 미만 시 예외처리")
     void testBookmarkFolderLengthShortException() {
         CreateFolderRequest folderDTO = new CreateFolderRequest("", UUID.randomUUID());
 
-        Throwable thrown = AssertionsForClassTypes.catchThrowable(()
-                -> {
-            createNewBookmarkFolderService.createNewBookmarkFolder(folderDTO, folderDTO.getUserNo());
-        });
-
-        Assertions.assertThat(thrown)
+        org.assertj.core.api.Assertions.assertThatThrownBy(() -> createNewBookmarkFolderService.createNewBookmarkFolder(folderDTO))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("폴더 제목", "미만");
+                .hasMessage("폴더 제목이 1자 미만입니다.");
     }
 }

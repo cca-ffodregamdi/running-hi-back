@@ -37,10 +37,9 @@ public class FindBookmarkFolderTests {
 
         FindFolderRequest folderRequest = new FindFolderRequest(folder.getFolderNo());
 
-        findBookmarkFolder.findBookmarkFolder(folderRequest).ifPresent(actualFolder -> {
-            Assertions.assertEquals(folderDTO.folderName(), actualFolder.getFolderName());
-            Assertions.assertEquals(folderDTO.getUserNo(), actualFolder.getUserNo());
-        });
+        BookmarkFolder findFolder = findBookmarkFolder.findBookmarkFolder(folderRequest);
+
+        Assertions.assertEquals(findFolder, folder);
     }
 
     @Test
