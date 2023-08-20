@@ -1,4 +1,4 @@
-package com.runninghi.feedback.command.domain.exception.customException;
+package com.runninghi.common.handler.feedback.customException;
 
 public class NotFoundException extends RuntimeException {
 
