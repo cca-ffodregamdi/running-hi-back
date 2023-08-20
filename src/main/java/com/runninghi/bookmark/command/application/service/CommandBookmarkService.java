@@ -4,7 +4,7 @@ import com.runninghi.bookmark.command.application.dto.request.CreateBookmarkRequ
 import com.runninghi.bookmark.command.application.dto.request.DeleteBookmarkRequest;
 import com.runninghi.bookmark.command.domain.aggregate.entity.Bookmark;
 import com.runninghi.bookmark.command.domain.repository.BookmarkRepository;
-import com.runninghi.bookmark.command.domain.service.BookmarkDomainService;
+import com.runninghi.bookmark.command.domain.service.CommandBookmarkDomainService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import java.time.LocalDate;
 public class CommandBookmarkService {
 
     private final BookmarkRepository bookmarkRepository;
-    private final BookmarkDomainService domainService;
+    private final CommandBookmarkDomainService domainService;
 
     @Transactional
     public Bookmark createBookmark(CreateBookmarkRequest bookmarkDTO) {

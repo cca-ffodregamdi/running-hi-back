@@ -1,6 +1,6 @@
 package com.runninghi.comment.query.application.service;
 
-import com.runninghi.bookmark.command.domain.service.BookmarkDomainService;
+import com.runninghi.bookmark.command.domain.service.CommandBookmarkDomainService;
 import com.runninghi.comment.command.domain.aggregate.entity.Comment;
 import com.runninghi.comment.command.domain.repository.CommentRepository;
 import com.runninghi.comment.query.application.dto.request.FindAllCommentsRequest;
@@ -16,7 +16,7 @@ import java.util.List;
 public class FindCommentService {
 
     private final CommentRepository commentRepository;
-    private final BookmarkDomainService domainService;
+    private final CommandBookmarkDomainService domainService;
 
     public List<Comment> findAllComments(FindAllCommentsRequest commentDTO) {
 
