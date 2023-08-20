@@ -54,7 +54,7 @@ public class TokenProvider {
                 .setSubject(userSpecification)
                 .setIssuer(issuer)
                 .setIssuedAt(Timestamp.valueOf(LocalDateTime.now()))
-                .setExpiration(Date.from(Instant.now().plus(expirationMinutes, ChronoUnit.HOURS)))
+                .setExpiration(Date.from(Instant.now().plus(expirationMinutes, ChronoUnit.MINUTES)))
                 .compact();
     }
 
