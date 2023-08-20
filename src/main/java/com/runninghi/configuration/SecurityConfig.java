@@ -1,4 +1,4 @@
-package com.runninghi.configuration.oauth;
+package com.runninghi.configuration;
 
 import com.runninghi.configuration.jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
