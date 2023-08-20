@@ -30,7 +30,7 @@ public class QueryCommentServiceTests {
     private CommandCommentService createCommentService;
 
     @Test
-    @DisplayName("조회: 댓글 전체 조회 기능 테스트")
+    @DisplayName("댓글 전체 조회 테스트 : success")
     void testFindCommentsByPostNo() {
         Long userPostNo = 999L;
 
@@ -47,7 +47,7 @@ public class QueryCommentServiceTests {
     }
 
     @Test
-    @DisplayName("조회: 특정 댓글 조회 기능 테스트")
+    @DisplayName("특정 댓글 조회 테스트 : success")
     void testFindCommentByCommentNo() {
 
         CreateCommentRequest commentRequest = new CreateCommentRequest(UUID.randomUUID(), 1L, "댓글 생성 테스트");
@@ -58,7 +58,7 @@ public class QueryCommentServiceTests {
     }
 
     @Test
-    @DisplayName("조회: 댓글 없을 시 예외처리")
+    @DisplayName("댓글 조회 테스트: 댓글 없을 시 예외처리")
     void testCommentNoDoesntExist() {
 
         FindCommentRequest commentRequest = new FindCommentRequest(0L);
@@ -70,7 +70,7 @@ public class QueryCommentServiceTests {
     }
 
     @Test
-    @DisplayName("조회: 게시글 없을 시 예외처리")
+    @DisplayName("댓글 조회 테스트: 게시글 없을 시 예외처리")
     void testPostNoDoesntExist() {
 
         //존재하지 않는 게시물일시 NotFoundException 처리

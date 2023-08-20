@@ -63,7 +63,7 @@ public class FeedbackServiceTests {
     }
 
     @Test
-    @DisplayName("피드백 저장 테스트 : 제목 500자 제한 확인")
+    @DisplayName("피드백 저장 테스트 : 제목 500자 초과 시 예외처리")
     void checkFeedbackTitleTest() {
 
         String userId = "ac60fb25-b40b-4308-827a-5aba81860fcb";
@@ -80,7 +80,7 @@ public class FeedbackServiceTests {
     }
 
     @Test
-    @DisplayName("피드백 저장 테스트 : 내용 null 제한 확인")
+    @DisplayName("피드백 저장 테스트 : 내용 null 일 시 예외처리")
     void checkFeedbackContentTest() {
 
         String userId = "ac60fb25-b40b-4308-827a-5aba81860fcb";
@@ -97,7 +97,7 @@ public class FeedbackServiceTests {
     }
 
     @Test
-    @DisplayName("피드백 저장 테스트 : 카테고리 번호가 올바른지 확인")
+    @DisplayName("피드백 저장 테스트 : 카테고리 번호가 틀리면 예외처리")
     void checkFeedbackCategoryTest() {
 
         String userId = "ac60fb25-b40b-4308-827a-5aba81860fcb";

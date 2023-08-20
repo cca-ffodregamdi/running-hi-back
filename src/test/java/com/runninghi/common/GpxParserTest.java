@@ -24,7 +24,7 @@ class GpxParserTest {
         );
     }
 
-    @DisplayName("gpx parser 테스트 : 파일 내 기록에 이상한 값이 들어가있을 때도 저장이 되는지")
+    @DisplayName("gpx parser 테스트 : 파일 내 기록에 이상한 값이 들어갔을 시 예외처리")
     @Test
     void testWrongGPXparser() {
 

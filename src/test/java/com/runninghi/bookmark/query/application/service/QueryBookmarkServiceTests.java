@@ -27,7 +27,7 @@ public class QueryBookmarkServiceTests {
     QueryBookmarkService queryBookmarkService;
 
     @Test
-    @DisplayName("즐겨찾기 조회 기능 테스트")
+    @DisplayName("즐겨찾기 조회 테스트 : success")
     void testFindBookmark() {
 
         BookmarkVO bookmarkVO = new BookmarkVO(1L, 2L);
@@ -40,7 +40,7 @@ public class QueryBookmarkServiceTests {
     }
 
     @Test
-    @DisplayName("조회: 폴더 번호가 없을 시 예외발생")
+    @DisplayName("즐겨찾기 조회 테스트: 폴더 번호가 없을 시 예외발생")
     void testFolderNoDoesntExist() {
 
         BookmarkVO bookmarkVO = new BookmarkVO(0L, 2L);

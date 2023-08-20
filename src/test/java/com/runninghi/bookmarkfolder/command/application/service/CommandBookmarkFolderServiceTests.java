@@ -33,7 +33,7 @@ public class CommandBookmarkFolderServiceTests {
 
 
     @Test
-    @DisplayName("생성: 즐겨찾기 폴더 추가 기능 테스트")
+    @DisplayName("즐겨찾기 폴더 추가 테스트 : success")
     void testCreateNewBookmarkFolder() {
 
         long beforeSize = bookmarkFolderRepository.count();
@@ -47,7 +47,7 @@ public class CommandBookmarkFolderServiceTests {
     }
 
     @Test
-    @DisplayName("생성: 폴더 이름 20자 초과 시 예외처리")
+    @DisplayName("즐겨찾기 폴더 추가 테스트: 폴더 이름 20자 초과 시 예외처리")
     void testBookmarkFolderLengthLongException() {
 
         CreateFolderRequest folderDTO = new CreateFolderRequest("testFoldertestFoldertestFoldertestFoldertestFolder", UUID.randomUUID());
@@ -58,7 +58,7 @@ public class CommandBookmarkFolderServiceTests {
     }
 
     @Test
-    @DisplayName("생성: 폴더 이름 1자 미만 시 예외처리")
+    @DisplayName("즐겨찾기 폴더 추가 테스트: 폴더 이름 1자 미만 시 예외처리")
     void testBookmarkFolderLengthShortException() {
         CreateFolderRequest folderDTO = new CreateFolderRequest("", UUID.randomUUID());
 
@@ -76,7 +76,7 @@ public class CommandBookmarkFolderServiceTests {
     }
 
     @Test
-    @DisplayName("수정: 즐겨찾기 폴더 수정 기능 테스트")
+    @DisplayName("즐겨찾기 폴더 수정 테스트 : success")
     void testUpdateBookmarkFolder() {
 
         BookmarkFolder folder = createBookmarkFolder();
@@ -91,7 +91,7 @@ public class CommandBookmarkFolderServiceTests {
     }
 
     @Test
-    @DisplayName("수정: 즐겨찾기 폴더번호 없을 시 예외처리")
+    @DisplayName("즐겨찾기 폴더 수정 테스트: 즐겨찾기 폴더번호 없을 시 예외처리")
     void testUpdateFolderDoesntExist() {
 
         UpdateFolderRequest updateFolder = new UpdateFolderRequest(0L, "NotFound",UUID.randomUUID());
@@ -104,7 +104,7 @@ public class CommandBookmarkFolderServiceTests {
 
 
     @Test
-    @DisplayName("수정: 폴더 이름 1자 미만 시 예외처리")
+    @DisplayName("즐겨찾기 폴더 수정 테스트: 폴더 이름 1자 미만 시 예외처리")
     void testUpdateFolderLengthShortException() {
 
         BookmarkFolder folder = createBookmarkFolder();
@@ -117,7 +117,7 @@ public class CommandBookmarkFolderServiceTests {
     }
 
     @Test
-    @DisplayName("수정: 폴더 이름 20자 초과 시 예외처리")
+    @DisplayName("즐겨찾기 폴더 수정 테스트: 폴더 이름 20자 초과 시 예외처리")
     void testUpdateFolderLengthLongException() {
 
         BookmarkFolder folder = createBookmarkFolder();
@@ -130,7 +130,7 @@ public class CommandBookmarkFolderServiceTests {
     }
 
     @Test
-    @DisplayName("삭제: 즐겨찾기 폴더 삭제 기능 테스트")
+    @DisplayName("즐겨찾기 폴더 삭제 테스트 : success")
     void testDeleteBookmarkFolder() {
 
         BookmarkFolder folder = bookmarkFolderRepository.save(BookmarkFolder.builder()
@@ -150,7 +150,7 @@ public class CommandBookmarkFolderServiceTests {
     }
 
     @Test
-    @DisplayName("삭제: 즐겨찾기 폴더번호 없을 시 예외처리")
+    @DisplayName("즐겨찾기 폴더 삭제 테스트: 즐겨찾기 폴더번호 없을 시 예외처리")
     public void testDeleteFolderNoDoesntExist() {
 
         DeleteFolderRequest folderRequest = new DeleteFolderRequest(0L);

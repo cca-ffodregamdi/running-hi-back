@@ -32,7 +32,7 @@ public class CommandBookmarkServiceTests {
 
 
     @Test
-    @DisplayName("생성: 즐겨찾기 추가 기능")
+    @DisplayName("즐겨찾기 추가 테스트 : success")
     void testCreateBookmark() {
 
         Long beforeSize = bookmarkRepository.count();
@@ -48,7 +48,7 @@ public class CommandBookmarkServiceTests {
     }
 
     @Test
-    @DisplayName("생성: 존재하지 않는 즐겨찾기 폴더 번호 예외처리")
+    @DisplayName("즐겨찾기 추가 테스트: 존재하지 않는 즐겨찾기 폴더 번호 예외처리")
     void testFolderNoDoesntExist() {
 
         BookmarkVO bookmarkVO = new BookmarkVO(0L, 1L);
@@ -60,7 +60,7 @@ public class CommandBookmarkServiceTests {
     }
 
     @Test
-    @DisplayName("생성: 존재하지 않는 게시물 번호 예외처리")
+    @DisplayName("즐겨찾기 추가 테스트: 존재하지 않는 게시물 번호 예외처리")
     void testPostNoDoesntExist() {
 
 //        BookmarkVO bookmarkVO = new BookmarkVO(1L, 0L);
@@ -72,7 +72,7 @@ public class CommandBookmarkServiceTests {
     }
 
     @Test
-    @DisplayName("삭제: 즐겨찾기 삭제 기능")
+    @DisplayName("즐겨찾기 삭제 테스트 : success")
     void testDeleteBookmark() {
         BookmarkVO bookmarkVO = new BookmarkVO(1L, 2L);
         CreateBookmarkRequest createRequest = new CreateBookmarkRequest(bookmarkVO, UUID.randomUUID());
@@ -88,7 +88,7 @@ public class CommandBookmarkServiceTests {
     }
 
     @Test
-    @DisplayName("삭제: 즐겨찾기 폴더번호 없을 시 예외처리")
+    @DisplayName("즐겨찾기 삭제 테스트: 즐겨찾기 폴더번호 없을 시 예외처리")
     public void testDeleteFolderNoDoesntExist() {
 
         DeleteBookmarkRequest deleteRequest = new DeleteBookmarkRequest(new BookmarkVO(0L, 1L));

@@ -37,7 +37,7 @@ public class AdminServiceTest {
     }
 
     @Test
-    @DisplayName("모든 회원 정보 조회 테스트")
+    @DisplayName("모든 회원 정보 조회 테스트 : success")
     void findAllUserTest() {
         // given
         userRepository.save(User.builder()
@@ -80,7 +80,7 @@ public class AdminServiceTest {
     }
 
     @Test
-    @DisplayName("모든 관리자 정보 조회 테스트")
+    @DisplayName("모든 관리자 정보 조회 테스트 : success")
     void findAllAdminTest() {
         // given
         userRepository.save(User.builder()
