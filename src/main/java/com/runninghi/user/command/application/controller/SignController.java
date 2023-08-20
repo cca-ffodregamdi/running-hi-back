@@ -1,7 +1,7 @@
 package com.runninghi.user.command.application.controller;
 
 
-import com.runninghi.user.command.application.dto.ApiResponse;
+import com.runninghi.common.response.ApiResponse;
 import com.runninghi.user.command.application.dto.sign_in.request.SignInRequest;
 import com.runninghi.user.command.application.dto.sign_up.request.SignUpRequest;
 import com.runninghi.user.command.application.service.SignService;
