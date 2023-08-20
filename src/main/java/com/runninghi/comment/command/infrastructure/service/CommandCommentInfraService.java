@@ -1,12 +1,12 @@
 package com.runninghi.comment.command.infrastructure.service;
 
-import com.runninghi.comment.command.domain.service.CommentDomainService;
+import com.runninghi.comment.command.domain.service.CommandCommentDomainService;
 import com.runninghi.common.annotation.InfraService;
 
 import java.util.UUID;
 
 @InfraService
-public class CommentInfraService implements CommentDomainService {
+public class CommandCommentInfraService implements CommandCommentDomainService {
     @Override
     public void validateCommentContentNull(String commentContent) {
         if (commentContent == null || commentContent.trim().isEmpty()) {

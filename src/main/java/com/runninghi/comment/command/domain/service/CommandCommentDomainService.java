@@ -5,7 +5,7 @@ import com.runninghi.common.annotation.DomainService;
 import java.util.UUID;
 
 @DomainService
-public interface CommentDomainService {
+public interface CommandCommentDomainService {
     void validateCommentContentNull(String commentContent);
     void validateUser(UUID userNo);
     void validateUserPost(Long userPostNo);

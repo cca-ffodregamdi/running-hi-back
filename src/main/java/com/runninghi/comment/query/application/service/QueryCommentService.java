@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class FindCommentService {
+public class QueryCommentService {
 
     private final CommentRepository commentRepository;
     private final CommandBookmarkDomainService domainService;

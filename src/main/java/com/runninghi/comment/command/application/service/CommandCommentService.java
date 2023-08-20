@@ -1,10 +1,9 @@
 package com.runninghi.comment.command.application.service;
 
-import com.runninghi.bookmark.command.domain.aggregate.entity.Bookmark;
 import com.runninghi.comment.command.application.dto.request.CreateCommentRequest;
 import com.runninghi.comment.command.domain.aggregate.entity.Comment;
 import com.runninghi.comment.command.domain.repository.CommentRepository;
-import com.runninghi.comment.command.domain.service.CommentDomainService;
+import com.runninghi.comment.command.domain.service.CommandCommentDomainService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,10 +12,10 @@ import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
-public class CreateCommentService {
+public class CommandCommentService {
 
     private final CommentRepository commentRepository;
-    private final CommentDomainService domainService;
+    private final CommandCommentDomainService domainService;
 
     @Transactional
     public Comment createComment(CreateCommentRequest commentDTO) {

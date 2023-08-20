@@ -1,7 +1,7 @@
 package com.runninghi.comment.query.application.service;
 
 import com.runninghi.comment.command.application.dto.request.CreateCommentRequest;
-import com.runninghi.comment.command.application.service.CreateCommentService;
+import com.runninghi.comment.command.application.service.CommandCommentService;
 import com.runninghi.comment.command.domain.aggregate.entity.Comment;
 import com.runninghi.comment.command.domain.repository.CommentRepository;
 import com.runninghi.comment.query.application.dto.request.FindAllCommentsRequest;
@@ -18,16 +18,16 @@ import java.util.UUID;
 
 @SpringBootTest
 @Transactional
-public class FindCommentsTests {
+public class QueryCommentServiceTests {
 
     @Autowired
     private CommentRepository commentRepository;
 
     @Autowired
-    private FindCommentService findCommentService;
+    private QueryCommentService queryCommentService;
 
     @Autowired
-    private CreateCommentService createCommentService;
+    private CommandCommentService createCommentService;
 
     @Test
     @DisplayName("조회: 댓글 전체 조회 기능 테스트")
@@ -42,7 +42,7 @@ public class FindCommentsTests {
                 .userPostNo(userPostNo)
                 .build());
 
-        Assertions.assertEquals(2, findCommentService.findAllComments(new FindAllCommentsRequest(userPostNo)).size());
+        Assertions.assertEquals(2, queryCommentService.findAllComments(new FindAllCommentsRequest(userPostNo)).size());
 
     }
 
@@ -53,7 +53,7 @@ public class FindCommentsTests {
         CreateCommentRequest commentRequest = new CreateCommentRequest(UUID.randomUUID(), 1L, "댓글 생성 테스트");
         Comment comment = createCommentService.createComment(commentRequest);
 
-        Assertions.assertEquals(comment, findCommentService.findComment(new FindCommentRequest(comment.getCommentNo())));
+        Assertions.assertEquals(comment, queryCommentService.findComment(new FindCommentRequest(comment.getCommentNo())));
 
     }
 
@@ -64,7 +64,7 @@ public class FindCommentsTests {
         FindCommentRequest commentRequest = new FindCommentRequest(0L);
 
         Assertions.assertThrows(NotFoundException.class, () -> {
-            findCommentService.findComment(commentRequest);
+            queryCommentService.findComment(commentRequest);
         });
 
     }
