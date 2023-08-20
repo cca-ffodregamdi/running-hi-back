@@ -4,33 +4,25 @@ import com.runninghi.bookmarkfolder.command.application.dto.request.CreateFolder
 import com.runninghi.bookmarkfolder.command.domain.aggregate.entity.BookmarkFolder;
 import com.runninghi.bookmarkfolder.command.domain.repository.BookmarkFolderRepository;
 import com.runninghi.bookmarkfolder.command.domain.service.BookmarkFolderDomainService;
+import com.runninghi.bookmarkfolder.command.infrastructure.service.BookmarkFolderInfraService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
-public class CreateNewBookmarkFolderService{
+public class CreateNewBookmarkFolderService {
 
     private final BookmarkFolderRepository folderRepository;
+    private final BookmarkFolderDomainService domainService;
+    public void createNewBookmarkFolder(CreateFolderRequest folderDTO) {
 
-    @Transactional
-    public BookmarkFolder createNewBookmarkFolder(CreateFolderRequest folderDTO, UUID userNo) {
-        //userNo 받아옴
+        domainService.validateFolderName(folderDTO.folderName());
 
-        if (folderDTO.getFolderName().length() > 20) {
-            throw new IllegalArgumentException("폴더 제목이 20자를 초과하였습니다.");
-        } else if (folderDTO.getFolderName().length() < 1) {
-            throw new IllegalArgumentException("폴더 제목이 1자 미만입니다.");
-        } else {
-            return folderRepository.save(BookmarkFolder.builder().
-                    folderName(folderDTO.folderName()).
-                    userNo(userNo).
-                    build());
-        }
+        folderRepository.save(BookmarkFolder.builder().
+                folderName(folderDTO.folderName()).
+                userNo(folderDTO.getUserNo()).
+                build());
     }
-
 
 }
