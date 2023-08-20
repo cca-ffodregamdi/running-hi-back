@@ -98,6 +98,7 @@ public class TokenProvider {
         validateAndParseToken(refreshToken);
         String userId = decodeJwtPayloadSubject(oldAccessToken).split(":")[0];
         userRefreshTokenRepository.findByUserIdAndReissueCountLessThan(UUID.fromString(userId), reissueLimit)
+                .filter(userRefreshToken -> userRefreshToken.validateRefreshToken(refreshToken))
                 .orElseThrow(() -> new ExpiredJwtException(null, null, "Refresh token expired."));
     }
 
