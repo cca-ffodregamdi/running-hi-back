@@ -72,7 +72,7 @@ public class FeedbackReplyServiceTests {
     }
 
     @Test
-    @DisplayName("피드백 답변 저장 테스트 : 피드백 없음")
+    @DisplayName("피드백 답변 저장 테스트 : 피드백 없을 시 예외처리")
     void checkFeedbackExistInSaveFeedbackReplyTest() {
 
         String feedbackReply = "피드백 답변";
@@ -101,7 +101,7 @@ public class FeedbackReplyServiceTests {
     }
 
     @Test
-    @DisplayName("피드백 답변 수정 테스트 : 피드백 없음")
+    @DisplayName("피드백 답변 수정 테스트 : 피드백 없을 시 예외처리")
     void checkFeedbackExistInupdateFeedbackReplyTest() {
 
         String feedbackReply = "피드백 답변";
@@ -127,7 +127,7 @@ public class FeedbackReplyServiceTests {
     }
 
     @Test
-    @DisplayName("피드백 답변 삭제 테스트 : 피드백 없음")
+    @DisplayName("피드백 답변 삭제 테스트 : 피드백 없을 시 예외처리")
     void checkFeedbackExistInDeleteFeedbackReplyTest() {
 
         long before = feedbackRepository.count();

@@ -25,7 +25,7 @@ public class QueryBookmarkFolderServiceTests {
     private BookmarkFolderRepository folderRepository;
 
     @Test
-    @DisplayName("즐겨찾기 폴더 조회 기능 테스트")
+    @DisplayName("즐겨찾기 폴더 조회 테스트 : success")
     void testFindBookmarkFolderByNo() {
         CreateFolderRequest folderDTO = new CreateFolderRequest("testFind", UUID.randomUUID());
 
@@ -43,7 +43,7 @@ public class QueryBookmarkFolderServiceTests {
     }
 
     @Test
-    @DisplayName("조회: 즐겨찾기 폴더번호 없을 시 예외처리")
+    @DisplayName("즐겨찾기 폴더 조회 테스트: 즐겨찾기 폴더번호 없을 시 예외처리")
     void testFindFolderNoDoesntExist() {
         FindFolderRequest folderRequest = new FindFolderRequest(0L);
 

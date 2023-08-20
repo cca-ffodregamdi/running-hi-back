@@ -41,7 +41,7 @@ class SignServiceTest {
     }
 
     @Test
-    @DisplayName("회원가입 테스트")
+    @DisplayName("회원가입 테스트 : success")
     void signUpTest() {
         // given
         SignUpRequest request = new SignUpRequest("qwerty1234", "1234", "qweqwe");
@@ -53,7 +53,7 @@ class SignServiceTest {
     }
 
     @Test
-    @DisplayName("아이디 중복 테스트")
+    @DisplayName("회원가입 테스트 : 아이디 중복 시 예외처리")
     void duplicateAccountTest() {
         // given
         userRepository.save(User.builder()
@@ -71,7 +71,7 @@ class SignServiceTest {
     }
 
     @Test
-    @DisplayName("로그인 테스트")
+    @DisplayName("로그인 테스트 : success")
     void signInTest() {
         // given
         userRepository.save(User.builder()
@@ -88,7 +88,7 @@ class SignServiceTest {
     }
 
     @Test
-    @DisplayName("로그인 실패 테스트")
+    @DisplayName("로그인 테스트 : 아이디/비밀번호 불일치 시 예외처리")
     void failLoginTest() {
         // given
         userRepository.save(User.builder()

@@ -23,7 +23,7 @@ public class CommandCommentServiceTests {
 
 
     @Test
-    @DisplayName("생성: 댓글 추가 기능 테스트")
+    @DisplayName("댓글 생성 테스트 : success")
     void testCreateComment() {
 
         long beforeSize = commentRepository.count();
@@ -37,7 +37,7 @@ public class CommandCommentServiceTests {
     }
 
     @Test
-    @DisplayName("생성: 댓글 내용 공백일 때 예외처리")
+    @DisplayName("댓글 생성 테스트: 댓글 내용 공백일 때 예외처리")
     void testCommentIsBlank() {
 
         CreateCommentRequest commentRequest = new CreateCommentRequest(UUID.randomUUID(), 1L, "         ");
@@ -47,7 +47,7 @@ public class CommandCommentServiceTests {
     }
 
     @Test
-    @DisplayName("생성: 댓글 내용 null일 때 예외처리")
+    @DisplayName("댓글 생성 테스트: 댓글 내용 null일 때 예외처리")
     void testCommentIsNull() {
 
         CreateCommentRequest commentRequest = new CreateCommentRequest(UUID.randomUUID(), 1L, null);

@@ -35,7 +35,7 @@ public class JwtExceptionResponseTest {
     }
 
     @Test
-    @DisplayName("토큰이 없는 경우 테스트")
+    @DisplayName("토큰 요청 테스트 : 토큰 없을 경우 접근거부")
     void doesNotExistTokenTest() throws Exception {
         // given
         // when
@@ -48,7 +48,7 @@ public class JwtExceptionResponseTest {
     }
 
     @Test
-    @DisplayName("토큰 만료된 경우 테스트")
+    @DisplayName("토큰 요청 테스트 : 만료된 토큰인 경우 권한제한")
     void expiredTokenTest() throws Exception {
         // given
         // when
@@ -61,7 +61,7 @@ public class JwtExceptionResponseTest {
     }
 
     @Test
-    @DisplayName("토큰 변조된 경우 테스트")
+    @DisplayName("토큰 요청 테스트 : 변조된 토큰인 경우 권한제한")
     void tamperedTokenTest() throws Exception {
         // given
         // when
@@ -74,7 +74,7 @@ public class JwtExceptionResponseTest {
     }
 
     @Test
-    @DisplayName("잘못된 토큰인 경우 테스트")
+    @DisplayName("토큰 요청 테스트 : 잘못된 토큰인 경우 권한제한")
     void invalidTokenTest() throws Exception {
         // given
         // when
