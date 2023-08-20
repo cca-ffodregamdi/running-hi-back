@@ -1,6 +1,6 @@
 package com.runninghi.keyword.query.application.controller;
 
-import com.runninghi.keyword.query.application.dto.GetKeywordListResponse;
+import com.runninghi.keyword.query.application.dto.response.GetKeywordListResponse;
 import com.runninghi.keyword.query.application.service.QueryKeywordService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

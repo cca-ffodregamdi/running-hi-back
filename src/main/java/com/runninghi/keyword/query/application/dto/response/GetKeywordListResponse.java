@@ -1,4 +1,4 @@
-package com.runninghi.keyword.query.application.dto;
+package com.runninghi.keyword.query.application.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

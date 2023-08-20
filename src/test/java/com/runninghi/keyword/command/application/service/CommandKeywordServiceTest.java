@@ -46,7 +46,6 @@ class CommandKeywordServiceTest {
         // when & then
         Assertions.assertThatCode(
                 () -> commandKeywordService.checkAdminByUserKey(admin.getId())
-
                 ).doesNotThrowAnyException();
     }
 
