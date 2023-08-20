@@ -20,7 +20,6 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
     @Query(value = "SELECT f.*" +
             "FROM tbl_feedback f " +
             "JOIN tbl_user u ON f.feedback_writer_id = u.id",
-            countQuery = "SELECT COUNT(*) FROM feedback f INNER JOIN user u ON f.feedback_writer_id = u.id",
             nativeQuery = true)
     Page<Feedback> findAllFeedback(Pageable pageable);
 

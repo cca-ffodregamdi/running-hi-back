@@ -125,4 +125,5 @@ public class FeedbackQueryServiceTests {
         Assertions.assertEquals(setUpFeedback1.getFeedbackTitle(), feedbackPage.getContent().get(0).feedbackTitle());
 
     }
+
 }
