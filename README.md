@@ -57,6 +57,8 @@
 ## 🧱 5. 프로젝트 아키텍처
 <!-- 모놀리식 아키텍처 -->
 ![마이크로서비스_모놀리식서비스_다이어그램](https://github.com/cca-ffodregamdi/running-hi-back/assets/98208452/20724af9-66cb-42bf-9550-f29235839dcc)
+> 출처: https://library.gabia.com/contents/infrahosting/9154/
+
 
 
 <br>
