@@ -1,6 +1,6 @@
-package com.runninghi.common.handler;
+package com.runninghi.common.exception;
 
-import com.runninghi.user.command.application.dto.ApiResponse;
+import com.runninghi.common.response.ApiResponse;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.security.SignatureException;
@@ -17,6 +17,11 @@ public class ExceptionResponseHandler {
     @ExceptionHandler({IllegalArgumentException.class, NoSuchElementException.class})
     public ResponseEntity<ApiResponse> handleCommonException(Exception e) {
         return ResponseEntity.badRequest().body(ApiResponse.error(e.getMessage()));
+    }
+
+    @ExceptionHandler(NullPointerException.class)
+    public ResponseEntity<ApiResponse> handleNullPointerException(NullPointerException e) {
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(ApiResponse.error(e.getMessage()));
     }
 
     @ExceptionHandler(AccessDeniedException.class)
