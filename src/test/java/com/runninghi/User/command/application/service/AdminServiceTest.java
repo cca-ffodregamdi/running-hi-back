@@ -1,7 +1,7 @@
 package com.runninghi.User.command.application.service;
 
 
-import com.runninghi.user.command.application.dto.response.UserInfoResponse;
+import com.runninghi.user.command.application.dto.user.response.UserInfoResponse;
 import com.runninghi.user.command.application.service.AdminService;
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;

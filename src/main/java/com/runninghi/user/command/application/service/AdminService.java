@@ -1,6 +1,6 @@
 package com.runninghi.user.command.application.service;
 
-import com.runninghi.user.command.application.dto.response.UserInfoResponse;
+import com.runninghi.user.command.application.dto.user.response.UserInfoResponse;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
 import com.runninghi.user.command.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +14,7 @@ import java.util.List;
 public class AdminService {
     private final UserRepository userRepository;
 
+    // 전체 유저 정보 조회
     @Transactional(readOnly = true)
     public List<UserInfoResponse> getUsers() {
         return userRepository.findAllByRole(Role.USER).stream()
@@ -21,6 +22,7 @@ public class AdminService {
                 .toList();
     }
 
+    // 전체 관리자 정보 조회
     @Transactional(readOnly = true)
     public List<UserInfoResponse> getAdmins() {
         return userRepository.findAllByRole(Role.ADMIN).stream()
