@@ -6,8 +6,11 @@ import com.runninghi.bookmarkfolder.command.domain.repository.BookmarkFolderRepo
 import com.runninghi.bookmarkfolder.query.application.dto.request.FindFolderRequest;
 import com.runninghi.bookmarkfolder.query.application.service.FindBookmarkFolderService;
 import com.runninghi.comment.command.application.dto.request.CreateCommentRequest;
+import com.runninghi.comment.command.application.service.CreateCommentService;
 import com.runninghi.comment.command.domain.aggregate.entity.Comment;
 import com.runninghi.comment.command.domain.repository.CommentRepository;
+import com.runninghi.comment.query.application.dto.request.FindAllCommentsRequest;
+import com.runninghi.comment.query.application.dto.request.FindCommentRequest;
 import com.runninghi.feedback.command.domain.exception.customException.NotFoundException;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
@@ -25,9 +28,15 @@ public class FindCommentsTests {
     @Autowired
     private CommentRepository commentRepository;
 
+    @Autowired
+    private FindCommentService findCommentService;
+
+    @Autowired
+    private CreateCommentService createCommentService;
+
     @Test
     @DisplayName("조회: 댓글 전체 조회 기능 테스트")
-    void testFindBookmarkFolderByNo() {
+    void testFindCommentsByPostNo() {
         Long userPostNo = 999L;
 
         commentRepository.save(Comment.builder()
@@ -38,7 +47,30 @@ public class FindCommentsTests {
                 .userPostNo(userPostNo)
                 .build());
 
-        Assertions.assertEquals(2, commentRepository.findAllByUserPostNo(userPostNo).size());
+        Assertions.assertEquals(2, findCommentService.findAllComments(new FindAllCommentsRequest(userPostNo)).size());
+
+    }
+
+    @Test
+    @DisplayName("조회: 특정 댓글 조회 기능 테스트")
+    void testFindCommentByCommentNo() {
+
+        CreateCommentRequest commentRequest = new CreateCommentRequest(UUID.randomUUID(), 1L, "댓글 생성 테스트");
+        Comment comment = createCommentService.createComment(commentRequest);
+
+        Assertions.assertEquals(comment, findCommentService.findComment(new FindCommentRequest(comment.getCommentNo())));
+
+    }
+
+    @Test
+    @DisplayName("조회: 댓글 없을 시 예외처리")
+    void testCommentNoDoesntExist() {
+
+        FindCommentRequest commentRequest = new FindCommentRequest(0L);
+
+        Assertions.assertThrows(NotFoundException.class, () -> {
+            findCommentService.findComment(commentRequest);
+        });
 
     }
 
