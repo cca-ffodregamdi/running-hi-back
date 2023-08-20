@@ -8,7 +8,7 @@ public record ApiResponse(
         String message,
         Object data
 ) {
-    public static ApiResponse success(Object data, String message) {
+    public static ApiResponse success(String message, Object data) {
         return new ApiResponse(ApiStatus.SUCCESS, message, data);
     }
 

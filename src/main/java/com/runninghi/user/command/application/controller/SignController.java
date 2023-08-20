@@ -23,12 +23,12 @@ public class SignController {
     @Operation(summary = "회원 가입")
     @PostMapping("/sign-up")
     public ApiResponse signUp(@RequestBody SignUpRequest request) {
-        return ApiResponse.success(signService.registUser(request));
+        return ApiResponse.success("성공적으로 가입되었습니다.", signService.registUser(request));
     }
 
     @Operation(summary = "로그인")
     @PostMapping("/sign-in")
     public ApiResponse signIn(@RequestBody SignInRequest request) {
-        return ApiResponse.success(signService.signIn(request));
+        return ApiResponse.success("성공적으로 로그인되었습니다.", signService.signIn(request));
     }
 }

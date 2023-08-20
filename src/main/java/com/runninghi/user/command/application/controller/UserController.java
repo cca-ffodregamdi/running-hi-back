@@ -24,18 +24,18 @@ public class UserController {
     @Operation(summary = "회원 정보 조회")
     @GetMapping
     public ApiResponse getUserInfo(@AuthenticationPrincipal User user) {
-        return ApiResponse.success(userService.getUserInfo(UUID.fromString(user.getUsername())));
+        return ApiResponse.success("조회 성공", userService.getUserInfo(UUID.fromString(user.getUsername())));
     }
 
     @Operation(summary = "회원 탈퇴")
     @DeleteMapping
     public ApiResponse deleteUser(@AuthenticationPrincipal User user) {
-        return ApiResponse.success(userService.deleteUser(UUID.fromString(user.getUsername())));
+        return ApiResponse.success( "성공적으로 탈퇴되었습니다.", userService.deleteUser(UUID.fromString(user.getUsername())));
     }
 
     @Operation(summary = "회원 정보 수정")
     @PutMapping
     public ApiResponse updateUser(@AuthenticationPrincipal User user, @RequestBody UserUpdateRequest request) {
-        return ApiResponse.success(userService.updateUser(UUID.fromString(user.getUsername()), request));
+        return ApiResponse.success("성공적으로 수정되었습니다.", userService.updateUser(UUID.fromString(user.getUsername()), request));
     }
 }
