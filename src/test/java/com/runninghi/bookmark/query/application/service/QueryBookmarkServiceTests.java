@@ -1,12 +1,10 @@
 package com.runninghi.bookmark.query.application.service;
 
 import com.runninghi.bookmark.command.application.dto.request.CreateBookmarkRequest;
-import com.runninghi.bookmark.command.application.service.CreateBookmarkService;
+import com.runninghi.bookmark.command.application.service.CommandBookmarkService;
 import com.runninghi.bookmark.command.domain.aggregate.entity.Bookmark;
 import com.runninghi.bookmark.command.domain.aggregate.vo.BookmarkVO;
-import com.runninghi.bookmark.command.domain.repository.BookmarkRepository;
 import com.runninghi.bookmark.query.application.dto.FindBookmarkRequest;
-import com.runninghi.bookmarkfolder.command.application.service.CreateNewBookmarkFolderService;
 import com.runninghi.feedback.command.domain.exception.customException.NotFoundException;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
@@ -20,13 +18,13 @@ import java.util.UUID;
 
 @SpringBootTest
 @Transactional
-public class FindBookmarkTests {
+public class QueryBookmarkServiceTests {
 
     @Autowired
-    CreateBookmarkService createBookmarkService;
+    CommandBookmarkService createBookmarkService;
 
     @Autowired
-    FindBookmarkService findBookmarkService;
+    QueryBookmarkService queryBookmarkService;
 
     @Test
     @DisplayName("즐겨찾기 조회 기능 테스트")
@@ -38,7 +36,7 @@ public class FindBookmarkTests {
 
         FindBookmarkRequest findRequest = new FindBookmarkRequest(bookmarkVO);
 
-        Assertions.assertEquals(bookmark, findBookmarkService.findBookmark(findRequest));
+        Assertions.assertEquals(bookmark, queryBookmarkService.findBookmark(findRequest));
     }
 
     @Test
@@ -49,7 +47,7 @@ public class FindBookmarkTests {
         FindBookmarkRequest findRequest = new FindBookmarkRequest(bookmarkVO);
 
         Assertions.assertThrows(NotFoundException.class, () -> {
-            findBookmarkService.findBookmark(findRequest);
+            queryBookmarkService.findBookmark(findRequest);
         });
     }
 
