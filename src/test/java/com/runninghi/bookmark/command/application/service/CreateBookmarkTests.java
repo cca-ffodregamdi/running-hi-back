@@ -51,7 +51,7 @@ public class CreateBookmarkTests {
 
         org.assertj.core.api.Assertions.assertThatThrownBy(() -> createBookmarkService.createBookmark(bookmarkRequest))
                 .isInstanceOf(NotFoundException.class)
-                .hasMessage("존재하지 않는 폴더입니다.");
+                .hasMessage("해당 폴더가 존재하지 않습니다.");
     }
 
     @Test

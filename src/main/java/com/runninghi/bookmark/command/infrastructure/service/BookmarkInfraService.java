@@ -24,6 +24,6 @@ public class BookmarkInfraService implements BookmarkDomainService {
     @Override
     public void validateFolderExist(Long folderNo) {
         findBookmarkFolderService.findBookmarkFolder(new FindFolderRequest(folderNo))
-                .orElseThrow(() -> new NotFoundException("존재하지 않는 폴더입니다."));
+                .orElseThrow(() -> new NotFoundException("해당 폴더가 존재하지 않습니다."));
     }
 }
