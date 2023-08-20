@@ -45,23 +45,31 @@
 <br>
 
 ## ⚒️ 3. 기술 스택
-
+<img src="https://img.shields.io/badge/Java-007396?style=flat-square&logo=Java&logoColor=white"/> <img src="https://img.shields.io/badge/Mysql-4479A1?style=flat-square&logo=Mysql&logoColor=white"> <img src="https://img.shields.io/badge/Spring-6DB33F?style=flat-square&logo=Spring&logoColor=white"> <img src="https://img.shields.io/badge/Springboot-6DB33F?style=flat-square&logo=Springboot&logoColor=white">
 
 <br>
 
+## ✨ 4. 협업 도구
+<img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white"/> <img src="https://img.shields.io/badge/Notion-000000?style=flat-square&logo=Notion&logoColor=white"/> <img src="https://img.shields.io/badge/Swagger-85EA2D?style=flat-square&logo=Swagger&logoColor=black"/> <img src="https://img.shields.io/badge/Figma-F24E1E?style=flat-square&logo=Figma&logoColor=white"/> <img src="https://img.shields.io/badge/Miro-F7DF1E?style=flat-square&logo=Miro&logoColor=black"/>
 
-## 🧱 4. 프로젝트 아키텍처
+<br>
+
+## 🧱 5. 프로젝트 아키텍처
 <!-- 모놀리식 아키텍처 -->
+![마이크로서비스_모놀리식서비스_다이어그램](https://github.com/cca-ffodregamdi/running-hi-back/assets/98208452/20724af9-66cb-42bf-9550-f29235839dcc)
+> 출처: https://library.gabia.com/contents/infrahosting/9154/
+
+
 
 <br>
 
-## 🗒️ 5. 요구 사항
+## 🗒️ 6. 요구 사항
 - 기능별로 각각의 상황을 테스트하는 코드를 구현한다.
 - 새로운 기능, 버그 fix 등의 코드 수정이 있다면 이슈를 작성한다.
 
 <br>
 
-## 📌 6. 기능 소개
+## 📌 7. 기능 소개
 
 
 -----------------------------------
