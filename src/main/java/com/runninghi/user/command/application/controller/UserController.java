@@ -2,7 +2,7 @@ package com.runninghi.user.command.application.controller;
 
 import com.runninghi.common.annotation.UserAuthorize;
 import com.runninghi.user.command.application.dto.ApiResponse;
-import com.runninghi.user.command.application.dto.request.UserUpdateRequest;
+import com.runninghi.user.command.application.dto.user.request.UserUpdateRequest;
 import com.runninghi.user.command.application.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
