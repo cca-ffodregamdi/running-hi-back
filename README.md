@@ -1,10 +1,25 @@
-# 🏃RUNNING HI 러닝하이 : Backend
+<div align="center">
 
+## 🏃RUNNING HI 러닝하이 : Backend
+
+<Br>
+
+<img width="250" alt="image" src="https://github.com/cca-ffodregamdi/.github/assets/119282494/ff52abf3-6873-4f68-8d35-c2ed0e5102e4">
+
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fcca-ffodregamdi%2Frunning-hi-back&count_bg=%23FFA49F&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=views&edge_flat=false)](https://hits.seeyoufarm.com)
+
+</div>
 
 
 <br>
 
-## 👋 2. 팀원 소개
+## Plus Repository
+> ⚙️ **[FrontEnd Repository](https://github.com/cca-ffodregamdi/running-hi-frontend)** <Br>
+> ⚙️ **[Team Notion](https://www.notion.so/hammang/adff9907f8244768b9c080bc519b3a1f?pvs=4)**
+
+<br>
+
+## 👋 팀원 소개
 <table>
   <tr>
     <td align="center"><a href="https://github.com/Subak-Uncle"><img src="https://avatars.githubusercontent.com/Subak-Uncle" width="150px;" alt="">
@@ -44,7 +59,7 @@
 
 <br>
 
-## ⚒️ 3. 기술 스택
+## ⚒️ 기술 스택
 ![Java](https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white)
 ![MYSQL](https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
 ![Spring](https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=Spring&logoColor=white)
@@ -53,12 +68,12 @@
 
 <br>
 
-## ✨ 4. 협업 도구
+## ✨ 협업 도구
 <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white"/> <img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=Notion&logoColor=white"/> <img src="https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=Swagger&logoColor=black"/> <img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=Figma&logoColor=white"/> <img src="https://img.shields.io/badge/Miro-F7DF1E?style=for-the-badge&logo=Miro&logoColor=black"/>
 
 <br>
 
-## 🧱 5. 프로젝트 아키텍처
+## 🧱 프로젝트 아키텍처
 <!-- 모놀리식 아키텍처 -->
 ![마이크로서비스_모놀리식서비스_다이어그램](https://github.com/cca-ffodregamdi/running-hi-back/assets/98208452/20724af9-66cb-42bf-9550-f29235839dcc)
 > 출처: https://library.gabia.com/contents/infrahosting/9154/
@@ -97,8 +112,13 @@
 <br>
 -->
 
-## 📌 6. 컨벤션
-### 6-1 커뮤니케이션 컨벤션
+## 📌 컨벤션
+
+<br>
+
+### 커뮤니케이션 컨벤션
+
+<br>
 
 - 하루에 한 번, **개발 타임라인**에 당일 처리한 일(한 일)과 다음 일정을 업데이트 해주세요.
 - 모여서 회의가 불가능할 경우 **Discord**를 통해 회의합니다.
@@ -107,7 +127,8 @@
 
 <br>
 
-### 6-2. 코드 컨벤션
+### 코드 컨벤션
+<br>
 
 #### 🎉 코드 컨벤션의 중요성
 
@@ -117,6 +138,7 @@
 
 우리가 공통된 코드 컨벤션을 정의함으로써, 개별 스타일의 장점을 유지하면서도 모두가 쉽게 이해할 수 있는 코드를 작성할 수 있을 것입니다. 이러한 노력은 결국 프로젝트의 효율성과 품질을 높여주며, 우수한 결과물을 창출할 것으로 기대합니다!
 
+<br>
 
 #### 🎉 클래스 명칭
 
@@ -124,6 +146,8 @@
 ```
 🐤 [ 도메인 이름 ] + [ Command / Query ] + [ Domain / Infra ] + [ Controller / Service / Repository]
 ```
+
+<br>
 
 #### 🎉 메소드 명칭
 
@@ -139,6 +163,8 @@ D : delete + [ 명사 ]
 
 메소드 명은 🐫(Camel Case)로 표기할 것!
 
+<br>
+
 #### 🎉 API 응답
 
 ![image](https://github.com/cca-ffodregamdi/running-hi-back/assets/115992753/4dd76c8d-dcc3-486d-830c-cda93a5ecb39)
@@ -148,6 +174,7 @@ D : delete + [ 명사 ]
 
 응답의 형태는 Common 패키지에서 공용으로 사용되며 공통 양식을 유지할 것!
 
+<br>
 
 #### 🎉 예외 처리
 
@@ -179,11 +206,14 @@ Common 패키지에서 Exception Response Handler 클래스를 생성하여 전�
 - Not Match Writer : 작성자가 본인이 아닐 때
 - UnauthorizedAccess : 본인이거나 관리자가 아닐 때, 즉 권한이 없을 때
 
+<br>
+
 #### 🎉 DTO
 
 
 DTO(Data Transfer Object)를 request와 response로 나누어 제작할 것!
 
+<br>
 
 #### 🎉 Test Code
 
@@ -196,7 +226,7 @@ ex) `키워드 생성 테스트 : success`
 
 <br>
 
-## 3. GitHub : PR & Commit  컨벤션
+## GitHub : PR & Commit  컨벤션
 
 #### ✅ **Git Convention**
 | **Convention**  | **내용**                                                         |
@@ -215,6 +245,11 @@ ex) `키워드 생성 테스트 : success`
 | **Request** | 기능 요청                                                   |
 
 ---------------------------------------------------
+
+#### ✅ **Branch 명칭**
+```
+🧸 [ Commit 이름 ] / [ 도메인 이름 ] / [ 구현 기능 ]
+```
 
 #### ✅ **PR 제목**
 
@@ -242,3 +277,4 @@ ex) [Feature] - {ADMIN} 컴포넌트 제작
 - 두 명 이상의 PR 승인이 이루어져야 Merge 가능.
 - Action이 통과해야만 Merge 가능.
 - Action 실패 시 원인 파악 및 테스트 성공 시까지 수정.
+
