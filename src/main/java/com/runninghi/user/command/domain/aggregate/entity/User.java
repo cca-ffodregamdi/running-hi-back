@@ -38,11 +38,10 @@ public class User extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Role role;
-
+    private Role role; // ADMIN or USER
     private String provider; // 어떤 OAuth인지 (google, naver 등)
     private String provideId; // 해당 OAuth 의 key(id)
-
+    
     @Builder
     public User(String account, String password, String name, String location, String nickname, String kakaoId, String email, String kakaoName, int reportCount, boolean blacklistStatus, boolean status, Role role, String provider, String provideId) {
         this.account = account;
