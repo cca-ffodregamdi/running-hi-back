@@ -1,5 +1,6 @@
 package com.runninghi.common;
 
+import com.runninghi.common.gpx.GpxParser;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

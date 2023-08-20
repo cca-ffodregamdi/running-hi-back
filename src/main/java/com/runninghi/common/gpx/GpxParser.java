@@ -1,4 +1,4 @@
-package com.runninghi.common;
+package com.runninghi.common.gpx;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
