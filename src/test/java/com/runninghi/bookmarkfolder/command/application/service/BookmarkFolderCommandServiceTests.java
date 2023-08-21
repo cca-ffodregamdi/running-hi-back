@@ -7,7 +7,7 @@ import com.runninghi.bookmarkfolder.command.domain.aggregate.entity.BookmarkFold
 import com.runninghi.bookmarkfolder.command.domain.repository.BookmarkFolderRepository;
 import com.runninghi.bookmarkfolder.query.application.dto.request.FindFolderRequest;
 import com.runninghi.bookmarkfolder.query.application.service.BookmarkFolderQueryService;
-import com.runninghi.feedback.command.domain.exception.customException.NotFoundException;
+import com.runninghi.common.handler.feedback.customException.NotFoundException;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
