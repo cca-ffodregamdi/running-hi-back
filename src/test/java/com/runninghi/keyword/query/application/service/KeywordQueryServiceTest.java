@@ -1,8 +1,8 @@
 package com.runninghi.keyword.query.application.service;
 
-import com.runninghi.keyword.command.domain.repository.CommandKeywordRepository;
+import com.runninghi.keyword.command.domain.repository.KeywordCommandRepository;
 import com.runninghi.keyword.query.application.dto.response.GetKeywordListResponse;
-import com.runninghi.keyword.query.infrastructure.repository.QueryKeywordRepository;
+import com.runninghi.keyword.query.infrastructure.repository.KeywordQueryRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,14 +13,14 @@ import java.util.List;
 
 @SpringBootTest
 @Transactional
-class QueryKeywordServiceTest {
+class KeywordQueryServiceTest {
 
     @Autowired
-    private CommandKeywordRepository commandKeywordRepository;
+    private KeywordCommandRepository keywordCommandRepository;
     @Autowired
-    private QueryKeywordService queryKeywordService;
+    private KeywordQueryService keywordQueryService;
     @Autowired
-    private QueryKeywordRepository queryKeywordRepository;
+    private KeywordQueryRepository keywordQueryRepository;
 
 //    @BeforeEach
 //    void example() {
@@ -41,7 +41,7 @@ class QueryKeywordServiceTest {
     void testGetKeywordList () {
 
         // when
-        List<GetKeywordListResponse> keywordList = queryKeywordService.getKeywordList();
+        List<GetKeywordListResponse> keywordList = keywordQueryService.getKeywordList();
 
         // then
         Assertions.assertThat(keywordList)
@@ -53,10 +53,10 @@ class QueryKeywordServiceTest {
     void testGetKeywordListFail () {
 
         // given
-        commandKeywordRepository.deleteAll();
+        keywordCommandRepository.deleteAll();
 
         // when & then
-        Assertions.assertThatThrownBy(() -> queryKeywordService.getKeywordList())
+        Assertions.assertThatThrownBy(() -> keywordQueryService.getKeywordList())
                 .isInstanceOf(NullPointerException.class);
     }
 }

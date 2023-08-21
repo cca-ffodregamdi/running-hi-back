@@ -1,7 +1,7 @@
 package com.runninghi.keyword.command.application.service;
 
 import com.runninghi.keyword.command.application.dto.response.KeywordCreateResponse;
-import com.runninghi.keyword.command.domain.repository.CommandKeywordRepository;
+import com.runninghi.keyword.command.domain.repository.KeywordCommandRepository;
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
 import com.runninghi.user.command.domain.repository.UserRepository;
@@ -15,12 +15,12 @@ import org.assertj.core.api.Assertions;
 
 @SpringBootTest
 @Transactional
-class CommandKeywordServiceTest {
+class KeywordCommandServiceTest {
 
     @Autowired
-    private CommandKeywordService commandKeywordService;
+    private KeywordCommandService keywordCommandService;
     @Autowired
-    private CommandKeywordRepository commandKeywordRepository;
+    private KeywordCommandRepository keywordCommandRepository;
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -45,7 +45,7 @@ class CommandKeywordServiceTest {
 
         // when & then
         Assertions.assertThatCode(
-                () -> commandKeywordService.checkAdminByUserKey(admin.getId())
+                () -> keywordCommandService.checkAdminByUserKey(admin.getId())
                 ).doesNotThrowAnyException();
     }
 
@@ -62,7 +62,7 @@ class CommandKeywordServiceTest {
                 .build());
 
         // when & then
-        Assertions.assertThatThrownBy(() -> commandKeywordService.checkAdminByUserKey(admin.getId()))
+        Assertions.assertThatThrownBy(() -> keywordCommandService.checkAdminByUserKey(admin.getId()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("관리자만 생성이 가능합니다.");
     }
@@ -73,11 +73,11 @@ class CommandKeywordServiceTest {
     void createKeyword() {
 
         // given
-        Long beforeSize = commandKeywordRepository.count();
+        Long beforeSize = keywordCommandRepository.count();
 
         // when
-        KeywordCreateResponse  insertedKeyword = commandKeywordService.createKeyword("낮과 밤");
-        Long afterSize = commandKeywordRepository.count();
+        KeywordCreateResponse  insertedKeyword = keywordCommandService.createKeyword("낮과 밤");
+        Long afterSize = keywordCommandRepository.count();
 
         // then
         Assertions.assertThat(afterSize)
