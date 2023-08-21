@@ -6,7 +6,7 @@ import com.runninghi.bookmarkfolder.command.application.dto.request.UpdateFolder
 import com.runninghi.bookmarkfolder.command.domain.aggregate.entity.BookmarkFolder;
 import com.runninghi.bookmarkfolder.command.domain.repository.BookmarkFolderRepository;
 import com.runninghi.bookmarkfolder.query.application.dto.request.FindFolderRequest;
-import com.runninghi.bookmarkfolder.query.application.service.QueryBookmarkFolderService;
+import com.runninghi.bookmarkfolder.query.application.service.BookmarkFolderQueryService;
 import com.runninghi.feedback.command.domain.exception.customException.NotFoundException;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
@@ -23,10 +23,10 @@ import java.util.UUID;
 public class CommandBookmarkFolderServiceTests {
 
     @Autowired
-    private CommandBookmarkFolderService commandBookmarkFolderService;
+    private BookmarkFolderCommandService commandBookmarkFolderService;
 
     @Autowired
-    private QueryBookmarkFolderService queryBookmarkFolderService;
+    private BookmarkFolderQueryService queryBookmarkFolderService;
 
     @Autowired
     private BookmarkFolderRepository bookmarkFolderRepository;

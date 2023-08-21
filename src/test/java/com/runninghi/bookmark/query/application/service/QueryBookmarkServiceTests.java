@@ -24,7 +24,7 @@ public class QueryBookmarkServiceTests {
     CommandBookmarkService createBookmarkService;
 
     @Autowired
-    QueryBookmarkService queryBookmarkService;
+    BookmarkQueryService queryBookmarkService;
 
     @Test
     @DisplayName("즐겨찾기 조회 테스트 : success")

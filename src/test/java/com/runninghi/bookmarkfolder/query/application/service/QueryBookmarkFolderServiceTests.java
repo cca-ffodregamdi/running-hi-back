@@ -19,7 +19,7 @@ import java.util.UUID;
 public class QueryBookmarkFolderServiceTests {
 
     @Autowired
-    private QueryBookmarkFolderService findBookmarkFolder;
+    private BookmarkFolderQueryService findBookmarkFolder;
 
     @Autowired
     private BookmarkFolderRepository folderRepository;
