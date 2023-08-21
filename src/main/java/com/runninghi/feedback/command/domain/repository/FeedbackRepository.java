@@ -17,10 +17,7 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
     Optional<Feedback> findByFeedbackNo(Long feedbackNo);
 
     // 피드백 목록 전체 조회
-    @Query(value = "SELECT f.*" +
-            "FROM tbl_feedback f " +
-            "JOIN tbl_user u ON f.feedback_writer_id = u.id",
-            nativeQuery = true)
+    @Query(value = "SELECT f.* FROM tbl_feedback f ", nativeQuery = true)
     Page<Feedback> findAllFeedback(Pageable pageable);
 
     // 피드백 카테고리로 필터링해서 전체 조회
