@@ -6,6 +6,7 @@ import com.runninghi.postreport.command.domain.aggregate.entity.PostReport;
 import com.runninghi.postreport.command.domain.repository.PostReportCommandRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class PostReportQueryService {
     private PostReportCommandRepository postReportCommandRepository;
 
     // 설명. 게시글 신고 상세 조회
+    @Transactional
     public PostReportResponse findPostReport(Long postReportNo) {
 
         // 설명. findById는 Optional<PostReport> 형태로 객체 반환.
@@ -30,6 +32,7 @@ public class PostReportQueryService {
     }
 
     // 설명. 모든 게시글 신고 조회
+    @Transactional
     public List<PostReportResponse> findAllPostReports() {
 
         List<PostReportResponse> postReportList = postReportCommandRepository.findAll().stream()
