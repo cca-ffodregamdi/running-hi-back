@@ -63,6 +63,7 @@ class SignServiceTest {
                 .nickname("qwe")
                 .email("qwe@qwe.qw")
                 .role(Role.USER)
+                .status(true)
                 .build());
         SignUpRequest request = new SignUpRequest("qwerty1234", "1234", "김철수", "qwe", "qwe@qwe.qw");
         // when
@@ -83,6 +84,7 @@ class SignServiceTest {
                 .nickname("qwe")
                 .email("qwe@qwe.qw")
                 .role(Role.USER)
+                .status(true)
                 .build());
         // when
         SignInResponse response = signService.signIn(new SignInRequest("qwerty1234", "1234"));
@@ -102,6 +104,7 @@ class SignServiceTest {
                 .nickname("qwe")
                 .email("qwe@qwe.qw")
                 .role(Role.USER)
+                .status(true)
                 .build());
         // when
         // then
