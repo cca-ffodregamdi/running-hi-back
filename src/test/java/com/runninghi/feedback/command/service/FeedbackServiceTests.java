@@ -40,8 +40,11 @@ public class FeedbackServiceTests {
         user = userRepository.save(User.builder()
                 .account("qwerty1234")
                 .password(encoder.encode("1234"))
-                .name("qweqwe")
+                .name("김철수")
+                .nickname("qwe")
+                .email("qwe@qwe.qw")
                 .role(Role.USER)
+                .status(true)
                 .build());
 
     }
