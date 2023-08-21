@@ -1,9 +1,9 @@
 package com.runninghi.User.command.application.service;
 
-import com.runninghi.user.command.application.dto.request.UserUpdateRequest;
-import com.runninghi.user.command.application.dto.response.UserDeleteResponse;
-import com.runninghi.user.command.application.dto.response.UserInfoResponse;
-import com.runninghi.user.command.application.dto.response.UserUpdateResponse;
+import com.runninghi.user.command.application.dto.user.request.UserUpdateRequest;
+import com.runninghi.user.command.application.dto.user.response.UserDeleteResponse;
+import com.runninghi.user.command.application.dto.user.response.UserInfoResponse;
+import com.runninghi.user.command.application.dto.user.response.UserUpdateResponse;
 import com.runninghi.user.command.application.service.UserService;
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
@@ -44,7 +44,7 @@ public class UserServiceTest {
     }
 
     @Test
-    @DisplayName("회원 조회 테스트")
+    @DisplayName("회원 조회 테스트 : success")
     void findUserTest() {
         // given
         User savedUser = userRepository.save(User.builder()
@@ -63,7 +63,7 @@ public class UserServiceTest {
     }
 
     @Test
-    @DisplayName("존재하지 않는 회원 예외 테스트")
+    @DisplayName("회원 조회 테스트 : 존재하지 않는 회원 예외처리")
     void doesNotExistUserTest() {
         // given
         // when
@@ -74,7 +74,7 @@ public class UserServiceTest {
     }
 
     @Test
-    @DisplayName("회원 탈퇴 테스트")
+    @DisplayName("회원 탈퇴 테스트 : success")
     void deleteUserTest() {
         // given
         User savedUser = userRepository.save(User.builder()
@@ -92,7 +92,7 @@ public class UserServiceTest {
     }
 
     @Test
-    @DisplayName("회원 정보 수정 테스트")
+    @DisplayName("회원 정보 수정 테스트 : success")
     void updateUserTest() {
         // given
         User savedUser = userRepository.save(User.builder()

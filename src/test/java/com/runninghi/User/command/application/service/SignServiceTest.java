@@ -8,6 +8,7 @@ import com.runninghi.user.command.application.service.SignService;
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
 import com.runninghi.user.command.domain.repository.UserRepository;
+import com.runninghi.user.query.infrastructure.repository.UserRefreshTokenRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,23 +22,26 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 class SignServiceTest {
     private final SignService signService;
     private final UserRepository userRepository;
+    private final UserRefreshTokenRepository userRefreshTokenRepository;
     private final PasswordEncoder encoder;
 
     @Autowired
-    SignServiceTest(SignService signService, UserRepository userRepository, PasswordEncoder encoder) {
+    SignServiceTest(SignService signService, UserRepository userRepository, UserRefreshTokenRepository userRefreshTokenRepository, PasswordEncoder encoder) {
         this.signService = signService;
         this.userRepository = userRepository;
+        this.userRefreshTokenRepository = userRefreshTokenRepository;
         this.encoder = encoder;
     }
 
     @BeforeEach
     @AfterEach
     void clear() {
-        userRepository.deleteAll();
+        userRefreshTokenRepository.deleteAllInBatch();
+        userRepository.deleteAllInBatch();
     }
 
     @Test
-    @DisplayName("회원가입 테스트")
+    @DisplayName("회원가입 테스트 : success")
     void signUpTest() {
         // given
         SignUpRequest request = new SignUpRequest("qwerty1234", "1234", "qweqwe");
@@ -49,7 +53,7 @@ class SignServiceTest {
     }
 
     @Test
-    @DisplayName("아이디 중복 테스트")
+    @DisplayName("회원가입 테스트 : 아이디 중복 시 예외처리")
     void duplicateAccountTest() {
         // given
         userRepository.save(User.builder()
@@ -67,7 +71,7 @@ class SignServiceTest {
     }
 
     @Test
-    @DisplayName("로그인 테스트")
+    @DisplayName("로그인 테스트 : success")
     void signInTest() {
         // given
         userRepository.save(User.builder()
@@ -84,7 +88,7 @@ class SignServiceTest {
     }
 
     @Test
-    @DisplayName("로그인 실패 테스트")
+    @DisplayName("로그인 테스트 : 아이디/비밀번호 불일치 시 예외처리")
     void failLoginTest() {
         // given
         userRepository.save(User.builder()

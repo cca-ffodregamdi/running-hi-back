@@ -17,6 +17,7 @@ public class AdminInitializer implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
+//        System.out.println(RandomStringUtils.randomAlphanumeric(128));
         userRepository.save(User.builder()
                 .account("admin")
                 .password(encoder.encode("admin"))

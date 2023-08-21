@@ -1,30 +1,25 @@
 package com.runninghi.comment.command.domain.aggregate.entity;
 
-import com.runninghi.comment.command.domain.aggregate.vo.CommentReportCntVO;
-import com.runninghi.comment.command.domain.aggregate.vo.UserNoVO;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
-@AllArgsConstructor
 @Table(name = "TBL_COMMENT")
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentNo;
 
-    @Embedded
-    private UserNoVO userNo;
+    @Column
+    private UUID userNo;
 
     @Column
-    private Long postNo;
+    private Long userPostNo;
 
     @Column
     private LocalDate commentDate;
@@ -32,6 +27,16 @@ public class Comment {
     @Column
     private String commentContent;
 
-    @Embedded
-    private CommentReportCntVO commentReportCnt;
+    @Column
+    private int commentReportCnt;
+
+    @Builder
+    public Comment(Long commentNo, UUID userNo, Long userPostNo, LocalDate commentDate, String commentContent, int commentReportCnt) {
+        this.commentNo = commentNo;
+        this.userNo = userNo;
+        this.userPostNo = userPostNo;
+        this.commentDate = commentDate;
+        this.commentContent = commentContent;
+        this.commentReportCnt = commentReportCnt;
+    }
 }

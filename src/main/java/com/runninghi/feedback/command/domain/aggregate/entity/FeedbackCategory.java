@@ -1,6 +1,6 @@
 package com.runninghi.feedback.command.domain.aggregate.entity;
 
-import com.runninghi.feedback.command.domain.exception.customException.IllegalArgumentException;
+import com.runninghi.common.handler.feedback.customException.IllegalArgumentException;
 
 public enum FeedbackCategory {
 
