@@ -1,15 +1,15 @@
 package com.runninghi.bookmarkfolder.command.infrastructure.service;
 
 import com.runninghi.bookmarkfolder.command.domain.repository.BookmarkFolderRepository;
-import com.runninghi.bookmarkfolder.command.domain.service.CommandFolderDomainService;
+import com.runninghi.bookmarkfolder.command.domain.service.FolderCommandDomainService;
 import com.runninghi.common.annotation.InfraService;
 import com.runninghi.feedback.command.domain.exception.customException.NotFoundException;
 
 @InfraService
-public class CommandFolderInfraService implements CommandFolderDomainService {
+public class FolderCommandInfraService implements FolderCommandDomainService {
     BookmarkFolderRepository folderRepository;
 
-    public CommandFolderInfraService(BookmarkFolderRepository folderRepository) {
+    public FolderCommandInfraService(BookmarkFolderRepository folderRepository) {
         this.folderRepository = folderRepository;
     }
     @Override

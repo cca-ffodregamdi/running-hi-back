@@ -1,7 +1,7 @@
 package com.runninghi.comment.query.application.service;
 
 import com.runninghi.comment.command.application.dto.request.CreateCommentRequest;
-import com.runninghi.comment.command.application.service.CommandCommentService;
+import com.runninghi.comment.command.application.service.CommentCommandService;
 import com.runninghi.comment.command.domain.aggregate.entity.Comment;
 import com.runninghi.comment.command.domain.repository.CommentRepository;
 import com.runninghi.comment.query.application.dto.request.FindAllCommentsRequest;
@@ -13,25 +13,29 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.UUID;
 
 @SpringBootTest
 @Transactional
-public class QueryCommentServiceTests {
+public class CommentQueryServiceTests {
 
     @Autowired
     private CommentRepository commentRepository;
 
     @Autowired
-    private QueryCommentService queryCommentService;
+    private CommentQueryService queryCommentService;
 
     @Autowired
-    private CommandCommentService createCommentService;
+    private CommentCommandService createCommentService;
 
     @Test
     @DisplayName("댓글 전체 조회 테스트 : success")
     void testFindCommentsByPostNo() {
+
         Long userPostNo = 999L;
 
         commentRepository.save(Comment.builder()
@@ -42,7 +46,10 @@ public class QueryCommentServiceTests {
                 .userPostNo(userPostNo)
                 .build());
 
-        Assertions.assertEquals(2, queryCommentService.findAllComments(new FindAllCommentsRequest(userPostNo)).size());
+        Pageable pageable = PageRequest.of(0, 10);      //추후 수정 필요
+        Page<Comment> commentsPage = queryCommentService.findAllComments(new FindAllCommentsRequest(userPostNo), pageable);
+
+        Assertions.assertEquals(2, commentsPage.getTotalElements());
 
     }
 

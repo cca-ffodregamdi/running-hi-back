@@ -18,13 +18,13 @@ import java.util.UUID;
 
 @SpringBootTest
 @Transactional
-public class QueryBookmarkServiceTests {
+public class BookmarkQueryServiceTests {
 
     @Autowired
     CommandBookmarkService createBookmarkService;
 
     @Autowired
-    QueryBookmarkService queryBookmarkService;
+    BookmarkQueryService queryBookmarkService;
 
     @Test
     @DisplayName("즐겨찾기 조회 테스트 : success")
