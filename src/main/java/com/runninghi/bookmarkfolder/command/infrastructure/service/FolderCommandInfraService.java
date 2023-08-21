@@ -3,7 +3,7 @@ package com.runninghi.bookmarkfolder.command.infrastructure.service;
 import com.runninghi.bookmarkfolder.command.domain.repository.BookmarkFolderRepository;
 import com.runninghi.bookmarkfolder.command.domain.service.FolderCommandDomainService;
 import com.runninghi.common.annotation.InfraService;
-import com.runninghi.feedback.command.domain.exception.customException.NotFoundException;
+import com.runninghi.common.handler.feedback.customException.NotFoundException;
 
 @InfraService
 public class FolderCommandInfraService implements FolderCommandDomainService {
