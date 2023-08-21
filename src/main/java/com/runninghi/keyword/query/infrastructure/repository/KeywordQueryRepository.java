@@ -11,7 +11,7 @@ public interface KeywordQueryRepository extends JpaRepository<Keyword, Long> {
 
     @Query(value = "SELECT KEYWORD_NO," +
                     "      KEYWORD_NAME " +
-                    " FROM TBL_KEYWORD " +
+                    " FROM tbl_keyword " +
                     "WHERE KEYWORD_NAME = :keywordName", nativeQuery = true)
     Optional<Keyword> findKeywordByKeywordName(@Param("keywordName") String keywordName);
 }
