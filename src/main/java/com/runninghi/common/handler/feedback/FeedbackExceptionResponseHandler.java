@@ -4,7 +4,7 @@ import com.runninghi.common.handler.feedback.customException.IllegalArgumentExce
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
 import com.runninghi.common.handler.feedback.customException.NotMatchWriterException;
 import com.runninghi.common.handler.feedback.customException.UnauthorizedAccessException;
-import com.runninghi.user.command.application.dto.ApiResponse;
+import com.runninghi.common.response.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

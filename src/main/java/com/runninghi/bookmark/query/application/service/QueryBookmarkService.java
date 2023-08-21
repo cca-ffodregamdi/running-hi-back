@@ -3,7 +3,7 @@ package com.runninghi.bookmark.query.application.service;
 import com.runninghi.bookmark.command.domain.aggregate.entity.Bookmark;
 import com.runninghi.bookmark.command.domain.repository.BookmarkRepository;
 import com.runninghi.bookmark.query.application.dto.FindBookmarkRequest;
-import com.runninghi.feedback.command.domain.exception.customException.NotFoundException;
+import com.runninghi.common.handler.feedback.customException.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

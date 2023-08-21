@@ -1,9 +1,8 @@
 package com.runninghi.feedback.command.service;
 
 import com.runninghi.feedback.command.application.dto.request.FeedbackCreateRequest;
-import com.runninghi.feedback.command.domain.exception.customException.IllegalArgumentException;
+import com.runninghi.feedback.command.application.service.FeedbackCommandService;
 import com.runninghi.feedback.command.domain.repository.FeedbackRepository;
-import com.runninghi.feedback.command.domain.service.FeedbackService;
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
 import com.runninghi.user.command.domain.repository.UserRepository;
@@ -18,10 +17,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootTest
 @Transactional
-public class FeedbackServiceTests {
+public class FeedbackCommandServiceTests {
 
     @Autowired
-    private FeedbackService feedbackService;
+    private FeedbackCommandService feedbackCommandService;
 
     @Autowired
     private FeedbackRepository feedbackRepository;
@@ -54,7 +53,7 @@ public class FeedbackServiceTests {
 
         FeedbackCreateRequest feedbackCreateRequest = new FeedbackCreateRequest("제목", "내용", 0);
 
-        feedbackService.createFeedback(feedbackCreateRequest, user.getId());
+        feedbackCommandService.createFeedback(feedbackCreateRequest, user.getId());
 
         long after = feedbackRepository.count();
 
@@ -63,7 +62,7 @@ public class FeedbackServiceTests {
     }
 
     @Test
-    @DisplayName("피드백 저장 테스트 : 제목 500자 초과 시 예외처리")
+    @DisplayName("피드백 저장 테스트 : 제목 500자 제한 확인")
     void checkFeedbackTitleTest() {
 
         String userId = "ac60fb25-b40b-4308-827a-5aba81860fcb";
@@ -72,7 +71,7 @@ public class FeedbackServiceTests {
         long before = feedbackRepository.count();
         FeedbackCreateRequest feedbackCreateRequest = new FeedbackCreateRequest(str, "내용", 0);
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> feedbackService.createFeedback(feedbackCreateRequest, user.getId()));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> feedbackCommandService.createFeedback(feedbackCreateRequest, user.getId()));
 
         long after = feedbackRepository.count();
         Assertions.assertEquals(before, after);
@@ -80,7 +79,7 @@ public class FeedbackServiceTests {
     }
 
     @Test
-    @DisplayName("피드백 저장 테스트 : 내용 null 일 시 예외처리")
+    @DisplayName("피드백 저장 테스트 : 내용 null 제한 확인")
     void checkFeedbackContentTest() {
 
         String userId = "ac60fb25-b40b-4308-827a-5aba81860fcb";
@@ -89,7 +88,7 @@ public class FeedbackServiceTests {
         long before = feedbackRepository.count();
         FeedbackCreateRequest feedbackCreateRequest = new FeedbackCreateRequest("제목", str, 0);
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> feedbackService.createFeedback(feedbackCreateRequest, user.getId()));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> feedbackCommandService.createFeedback(feedbackCreateRequest, user.getId()));
 
         long after = feedbackRepository.count();
         Assertions.assertEquals(before, after);
@@ -97,14 +96,14 @@ public class FeedbackServiceTests {
     }
 
     @Test
-    @DisplayName("피드백 저장 테스트 : 카테고리 번호가 틀리면 예외처리")
+    @DisplayName("피드백 저장 테스트 : 카테고리 번호가 올바른지 확인")
     void checkFeedbackCategoryTest() {
 
         String userId = "ac60fb25-b40b-4308-827a-5aba81860fcb";
         long before = feedbackRepository.count();
 
         FeedbackCreateRequest feedbackCreateRequest = new FeedbackCreateRequest("제목", "내용", 1000);
-        Assertions.assertThrows(IllegalArgumentException.class, () -> feedbackService.createFeedback(feedbackCreateRequest, user.getId()));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> feedbackCommandService.createFeedback(feedbackCreateRequest, user.getId()));
 
         long after = feedbackRepository.count();
         Assertions.assertEquals(before, after);
