@@ -7,7 +7,7 @@ public record UserUpdateRequest(
         String password,
         @Schema(description = "회원 새 비밀번호", example = "12345")
         String newPassword,
-        @Schema(description = "회원 이름", example = "qwe")
-        String name
+        @Schema(description = "회원 닉네임", example = "qwe")
+        String nickname
 ) {
 }
