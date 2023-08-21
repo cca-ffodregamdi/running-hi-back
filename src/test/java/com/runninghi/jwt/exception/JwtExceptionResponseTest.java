@@ -1,6 +1,6 @@
 package com.runninghi.jwt.exception;
 
-import com.runninghi.user.command.domain.aggregate.entity.enumtype.ApiStatus;
+import com.runninghi.common.response.enumtype.ApiStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

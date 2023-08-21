@@ -2,7 +2,7 @@ package com.runninghi.user.command.application.controller;
 
 
 import com.runninghi.common.annotation.AdminAuthorize;
-import com.runninghi.user.command.application.dto.ApiResponse;
+import com.runninghi.common.response.ApiResponse;
 import com.runninghi.user.command.application.service.AdminService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,12 +22,11 @@ public class AdminController {
     @Operation(summary = "회원 목록 조회")
     @GetMapping("/users")
     public ApiResponse getAllUsers() {
-        return ApiResponse.success(adminService.getUsers());
+        return ApiResponse.success("조회 성공", adminService.getUsers());
     }
 
     @Operation(summary = "관리자 목록 조회")
     @GetMapping("/admins")
     public ApiResponse getAllAdmins() {
-        return ApiResponse.success(adminService.getAdmins());
-    }
+        return ApiResponse.success("조회 성공", adminService.getAdmins());}
 }
