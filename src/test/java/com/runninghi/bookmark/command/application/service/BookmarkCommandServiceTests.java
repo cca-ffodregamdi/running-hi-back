@@ -19,7 +19,7 @@ import java.util.UUID;
 
 @SpringBootTest
 @Transactional
-public class CommandBookmarkServiceTests {
+public class BookmarkCommandServiceTests {
 
     @Autowired
     private CommandBookmarkService commandBookmarkService;

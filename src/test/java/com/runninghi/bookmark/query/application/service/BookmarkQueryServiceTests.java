@@ -18,7 +18,7 @@ import java.util.UUID;
 
 @SpringBootTest
 @Transactional
-public class QueryBookmarkServiceTests {
+public class BookmarkQueryServiceTests {
 
     @Autowired
     CommandBookmarkService createBookmarkService;

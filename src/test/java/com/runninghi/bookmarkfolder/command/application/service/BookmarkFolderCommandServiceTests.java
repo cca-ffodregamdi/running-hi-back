@@ -20,7 +20,7 @@ import java.util.UUID;
 
 @SpringBootTest
 @Transactional
-public class CommandBookmarkFolderServiceTests {
+public class BookmarkFolderCommandServiceTests {
 
     @Autowired
     private BookmarkFolderCommandService commandBookmarkFolderService;
