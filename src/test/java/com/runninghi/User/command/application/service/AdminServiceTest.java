@@ -33,7 +33,7 @@ public class AdminServiceTest {
     @BeforeEach
     @AfterEach
     void clear() {
-        userRepository.deleteAll();
+        userRepository.deleteAllInBatch();
     }
 
     @Test

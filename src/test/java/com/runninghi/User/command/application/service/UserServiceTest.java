@@ -40,7 +40,7 @@ public class UserServiceTest {
     @BeforeEach
     @AfterEach
     void clear() {
-        userRepository.deleteAll();
+        userRepository.deleteAllInBatch();
     }
 
     @Test
