@@ -43,20 +43,29 @@ public class AdminServiceTest {
         userRepository.save(User.builder()
                 .account("qwerty1234")
                 .password(encoder.encode("1234"))
-                .name("qweqwe")
+                .name("김철수")
+                .nickname("qwe")
+                .email("qwe@qwe.qw")
                 .role(Role.USER)
+                .status(true)
                 .build());
         userRepository.save(User.builder()
                 .account("asdfg1234")
                 .password(encoder.encode("1234"))
-                .name("asdasd")
+                .name("나철수")
+                .nickname("asd")
+                .email("asd@asd.as")
                 .role(Role.USER)
+                .status(true)
                 .build());
         userRepository.save(User.builder()
                 .account("zxcvb1234")
                 .password(encoder.encode("1234"))
-                .name("zxczxc")
+                .name("박철수")
+                .nickname("zxc")
+                .email("zxc@zxc.zx")
                 .role(Role.USER)
+                .status(true)
                 .build());
         // when
         List<UserInfoResponse> users = adminService.getUsers();
@@ -65,15 +74,18 @@ public class AdminServiceTest {
         for (UserInfoResponse user : users) {
             if (user.account().equals("qwerty1234")) {
                 Assertions.assertThat(user.account()).isEqualTo("qwerty1234");
-                Assertions.assertThat(user.name()).isEqualTo("qweqwe");
+                Assertions.assertThat(user.name()).isEqualTo("김철수");
+                Assertions.assertThat(user.nickname()).isEqualTo("qwe");
             }
             if (user.account().equals("asdfg1234")) {
                 Assertions.assertThat(user.account()).isEqualTo("asdfg1234");
-                Assertions.assertThat(user.name()).isEqualTo("asdasd");
+                Assertions.assertThat(user.name()).isEqualTo("나철수");
+                Assertions.assertThat(user.nickname()).isEqualTo("asd");
             }
             if (user.account().equals("zxcvb1234")) {
                 Assertions.assertThat(user.account()).isEqualTo("zxcvb1234");
-                Assertions.assertThat(user.name()).isEqualTo("zxczxc");
+                Assertions.assertThat(user.name()).isEqualTo("박철수");
+                Assertions.assertThat(user.nickname()).isEqualTo("zxc");
             }
             Assertions.assertThat(user.role()).isEqualTo(Role.USER);
         }
@@ -86,20 +98,29 @@ public class AdminServiceTest {
         userRepository.save(User.builder()
                 .account("qwerty1234")
                 .password(encoder.encode("1234"))
-                .name("qweqwe")
+                .name("김철수")
+                .nickname("qwe")
+                .email("qwe@qwe.qw")
                 .role(Role.ADMIN)
+                .status(true)
                 .build());
         userRepository.save(User.builder()
                 .account("asdfg1234")
                 .password(encoder.encode("1234"))
-                .name("asdasd")
+                .name("나철수")
+                .nickname("asd")
+                .email("asd@asd.as")
                 .role(Role.ADMIN)
+                .status(true)
                 .build());
         userRepository.save(User.builder()
                 .account("zxcvb1234")
                 .password(encoder.encode("1234"))
-                .name("zxczxc")
+                .name("박철수")
+                .nickname("zxc")
+                .email("zxc@zxc.zx")
                 .role(Role.ADMIN)
+                .status(true)
                 .build());
         // when
         List<UserInfoResponse> admins = adminService.getAdmins();
@@ -108,15 +129,18 @@ public class AdminServiceTest {
         for (UserInfoResponse admin : admins) {
             if (admin.account().equals("qwerty1234")) {
                 Assertions.assertThat(admin.account()).isEqualTo("qwerty1234");
-                Assertions.assertThat(admin.name()).isEqualTo("qweqwe");
+                Assertions.assertThat(admin.name()).isEqualTo("김철수");
+                Assertions.assertThat(admin.name()).isEqualTo("qwe");
             }
             if (admin.account().equals("asdfg1234")) {
                 Assertions.assertThat(admin.account()).isEqualTo("asdfg1234");
-                Assertions.assertThat(admin.name()).isEqualTo("asdasd");
+                Assertions.assertThat(admin.name()).isEqualTo("나철수");
+                Assertions.assertThat(admin.name()).isEqualTo("asd");
             }
             if (admin.account().equals("zxcvb1234")) {
                 Assertions.assertThat(admin.account()).isEqualTo("zxcvb1234");
-                Assertions.assertThat(admin.name()).isEqualTo("zxczxc");
+                Assertions.assertThat(admin.name()).isEqualTo("박철수");
+                Assertions.assertThat(admin.name()).isEqualTo("zxc");
             }
             Assertions.assertThat(admin.role()).isEqualTo(Role.ADMIN);
         }
