@@ -117,7 +117,7 @@ public class FeedbackCommandServiceTests {
     }
 
     @Test
-    @DisplayName("피드백 저장 테스트 : 제목 500자 제한 확인")
+    @DisplayName("피드백 저장 테스트 : 제목 500자를 초과면 예외처리")
     void checkFeedbackTitleTest() {
 
         String str = "a".repeat(501);
@@ -132,7 +132,7 @@ public class FeedbackCommandServiceTests {
     }
 
     @Test
-    @DisplayName("피드백 저장 테스트 : 내용 null 제한 확인")
+    @DisplayName("피드백 저장 테스트 : 내용 null이면 예외처리")
     void checkFeedbackContentTest() {
 
         String str = "";
@@ -147,7 +147,7 @@ public class FeedbackCommandServiceTests {
     }
 
     @Test
-    @DisplayName("피드백 저장 테스트 : 카테고리 번호가 올바른지 확인")
+    @DisplayName("피드백 저장 테스트 : 카테고리 번호가 올바르지않으면 예외처리")
     void checkFeedbackCategoryTest() {
 
         long before = feedbackRepository.count();
@@ -178,7 +178,7 @@ public class FeedbackCommandServiceTests {
     }
 
     @Test
-    @DisplayName("피드백 수정 테스트 : 작성자 불일치")
+    @DisplayName("피드백 수정 테스트 : 작성자 불일치 시 예외처리")
     void checkWriterFeedbackUpdateTest() {
 
         String title = "제목 수정해주세요";
@@ -207,7 +207,7 @@ public class FeedbackCommandServiceTests {
     }
 
     @Test
-    @DisplayName("피드백 삭제 테스트 : 작성자 불일치")
+    @DisplayName("피드백 삭제 테스트 : 작성자 불일치 시 예외처리")
     void checkWriterFeedbackDeleteTest() {
 
         FeedbackDeleteRequest feedbackDeleteRequest = new FeedbackDeleteRequest(setUpFeedback1.getFeedbackNo());
