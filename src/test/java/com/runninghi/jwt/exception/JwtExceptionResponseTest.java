@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 public class JwtExceptionResponseTest {
-    private static final String EXPIRED_TOKEN = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjYTQwYWI4NS01NGVmLTQzZTYtYmJmOS1kMzljYzI5Y2Q5MWY6QURNSU4iLCJpc3MiOiJjb2xhYmVhcjc1NCIsImlhdCI6MTY4NTAyNDI2MywiZXhwIjoxNjg1MDI0MjY2fQ.FoDD9P-YXqAFebYDHcHKLQhH3UZgZnoPkcoXuShQDEqhQ_vAuq80MWHsRvvbvuBbms_Q3SweUNPDFFPtNZTR8w";
+    private static final String EXPIRED_TOKEN = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlOWQ1YTE4MC04NDNhLTQwNTQtYThiZC0xZDFhODE2Yjc4ZjE6VVNFUiIsImlzcyI6InF3ZXJ0eTEyMzQiLCJpYXQiOjE2OTI1NTE1NzAsImV4cCI6MTY5MjU1MzM3MH0.KL93J_wXcGa_yYHAqLJTiXlRVHzTdYAlCzO20GilHdYE-hFFPQ1oqy7OTO17kLuSDxkGUYIU2sLVDltL4vfp5w";
     private static final String TAMPERED_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmMGY3YmZkNS0zYmMxLTRmYTctYTkzMi03NjMyNDRjMzkzYjk6QURNSU4iLCJpc3MiOiJjb2xhYmVhcjc1NCIsImlhdCI6MTY4NTAyNDMxM30.f0Puq1FE-68kvjGnejs_wjKdWdfQLWiHqHQBWi1INUc";
     private static final String MALFORMED_TOKEN = "1234567890";
 
