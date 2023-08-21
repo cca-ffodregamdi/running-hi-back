@@ -10,7 +10,7 @@ import java.util.UUID;
 public record PostReportResponse (
         @Schema(description = "게시글 신고 번호", example = "1L")
         Long postReportNo,
-        @Schema(description = "게시글 신고 카테고리", example = "1")
+        @Schema(description = "게시글 신고 카테고리 번호", example = "1")
         int postReportCategoryCode,
         @Schema(description = "게시글 신고 내용", example = "욕설")
         String postReportContent,
