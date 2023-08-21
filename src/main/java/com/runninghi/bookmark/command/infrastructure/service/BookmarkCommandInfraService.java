@@ -1,16 +1,16 @@
 package com.runninghi.bookmark.command.infrastructure.service;
 
-import com.runninghi.bookmark.command.domain.service.CommandBookmarkDomainService;
+import com.runninghi.bookmark.command.domain.service.BookmarkCommandDomainService;
 import com.runninghi.bookmarkfolder.query.application.dto.request.FindFolderRequest;
-import com.runninghi.bookmarkfolder.query.application.service.QueryBookmarkFolderService;
+import com.runninghi.bookmarkfolder.query.application.service.BookmarkFolderQueryService;
 import com.runninghi.common.annotation.InfraService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @InfraService
-public class CommandBookmarkInfraService implements CommandBookmarkDomainService {
-    private final QueryBookmarkFolderService findBookmarkFolderService;
+public class BookmarkCommandInfraService implements BookmarkCommandDomainService {
+    private final BookmarkFolderQueryService findBookmarkFolderService;
     @Autowired
-    public CommandBookmarkInfraService(QueryBookmarkFolderService findBookmarkFolderService) {
+    public BookmarkCommandInfraService(BookmarkFolderQueryService findBookmarkFolderService) {
         this.findBookmarkFolderService = findBookmarkFolderService;
     }
 

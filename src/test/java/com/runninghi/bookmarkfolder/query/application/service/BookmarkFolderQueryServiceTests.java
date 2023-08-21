@@ -16,10 +16,10 @@ import java.util.UUID;
 
 @SpringBootTest
 @Transactional
-public class QueryBookmarkFolderServiceTests {
+public class BookmarkFolderQueryServiceTests {
 
     @Autowired
-    private QueryBookmarkFolderService findBookmarkFolder;
+    private BookmarkFolderQueryService findBookmarkFolder;
 
     @Autowired
     private BookmarkFolderRepository folderRepository;

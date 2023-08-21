@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class QueryBookmarkService {
+public class BookmarkQueryService {
 
     private final BookmarkRepository bookmarkRepository;
     @Transactional(readOnly=true)

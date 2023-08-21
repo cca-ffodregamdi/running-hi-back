@@ -13,10 +13,10 @@ import java.util.UUID;
 
 @SpringBootTest
 @Transactional
-public class CommandCommentServiceTests {
+public class CommentCommandServiceTests {
 
     @Autowired
-    private CommandCommentService commandCommentService;
+    private CommentCommandService commandCommentService;
 
     @Autowired
     private CommentRepository commentRepository;

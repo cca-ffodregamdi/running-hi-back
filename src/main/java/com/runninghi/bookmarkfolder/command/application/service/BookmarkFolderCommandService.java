@@ -5,17 +5,17 @@ import com.runninghi.bookmarkfolder.command.application.dto.request.DeleteFolder
 import com.runninghi.bookmarkfolder.command.application.dto.request.UpdateFolderRequest;
 import com.runninghi.bookmarkfolder.command.domain.aggregate.entity.BookmarkFolder;
 import com.runninghi.bookmarkfolder.command.domain.repository.BookmarkFolderRepository;
-import com.runninghi.bookmarkfolder.command.domain.service.CommandFolderDomainService;
+import com.runninghi.bookmarkfolder.command.domain.service.FolderCommandDomainService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class CommandBookmarkFolderService {
+public class BookmarkFolderCommandService {
 
     private final BookmarkFolderRepository folderRepository;
-    private final CommandFolderDomainService domainService;
+    private final FolderCommandDomainService domainService;
     @Transactional
     public void createNewBookmarkFolder(CreateFolderRequest folderDTO) {
 
