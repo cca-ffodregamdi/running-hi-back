@@ -6,7 +6,7 @@ import com.runninghi.postreport.command.domain.aggregate.entity.PostReport;
 import com.runninghi.postreport.command.domain.aggregate.vo.PostReportUserVO;
 import com.runninghi.postreport.command.domain.aggregate.vo.PostReportedUserVO;
 import com.runninghi.postreport.command.domain.aggregate.vo.ReportedPostVO;
-import com.runninghi.postreport.command.domain.repository.PostReportRepository;
+import com.runninghi.postreport.command.domain.repository.PostReportCommandRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +15,9 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class PostReportService {
+public class PostReportCommandService {
 
-    private final PostReportRepository postReportRepository;
+    private final PostReportCommandRepository postReportCommandRepository;
 
     public PostReport savePostReport(PostReportRequest postReportRequest) {
 
@@ -46,7 +46,7 @@ public class PostReportService {
                 .reportedPostVO(new ReportedPostVO(reportedPostNo))
                 .build();
 
-        postReportRepository.save(postReport);
+        postReportCommandRepository.save(postReport);
 
         return postReport;
     }
@@ -54,10 +54,10 @@ public class PostReportService {
 
     public void deletePostReport(Long postReportNo) {
 
-        if (postReportRepository.findById(postReportNo).isPresent()) {
-            postReportRepository.deleteById(postReportNo);
-        } else {
-            throw new NotFoundException("해당하는 신고 내역이 없습니다.");
-        }
+        PostReport postReport = postReportCommandRepository.findById(postReportNo)
+                .orElseThrow(() -> new NotFoundException("해당하는 신고 내역이 없습니다."));
+
+        postReportCommandRepository.delete(postReport);
+
     }
 }
