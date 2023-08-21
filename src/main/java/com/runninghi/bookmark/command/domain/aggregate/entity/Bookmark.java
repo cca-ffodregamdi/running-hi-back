@@ -5,13 +5,11 @@ import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -20,19 +18,18 @@ import java.time.LocalDate;
 public class Bookmark implements Serializable {
 
     @EmbeddedId
-    private BookmarkVO bookmark;
+    private BookmarkVO bookmarkVO;
 
     @Column
-    private Long userNo;
+    private UUID userNo;
 
     @Column
     private LocalDate addDate;
 
-    public Bookmark(BookmarkVO bookmark) {
-        this.bookmark = bookmark;
-    }
-
-    public Bookmark(Long folderNo, Long postNo) {
-        this.bookmark = new BookmarkVO(folderNo, postNo);
+    @Builder
+    public Bookmark(BookmarkVO bookmarkVO, UUID userNo, LocalDate addDate) {
+        this.bookmarkVO = bookmarkVO;
+        this.userNo = userNo;
+        this.addDate = addDate;
     }
 }

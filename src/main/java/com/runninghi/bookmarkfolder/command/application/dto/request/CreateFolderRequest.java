@@ -10,7 +10,7 @@ public record CreateFolderRequest(
         UUID userNo ){
 
         public String getFolderName() {
-                return folderName;
+                        return folderName;
         }
         public UUID getUserNo() {
                 return userNo;
