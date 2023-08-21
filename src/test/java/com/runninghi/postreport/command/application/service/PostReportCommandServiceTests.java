@@ -121,39 +121,6 @@ public class PostReportCommandServiceTests {
         //then
         Assertions.assertEquals(after, before);
     }
-    @Test
-    @DisplayName("게시글 신고 조회 테스트: 상세조회 성공")
-    void findPostReportTest() {
-
-        //given
-        PostReportRequest postReportRequest = new PostReportRequest(2, "홍보 게시물");
-
-        //when
-        PostReport savedPostReport = postReportCommandService.savePostReport(postReportRequest);
-
-        PostReport findedPostReport = postReportCommandRepository.findById(savedPostReport.getPostReportNo()).get();
-
-        //then
-        assertThat(findedPostReport.getPostReportContent().equals("홍보 게시물"));
-        assertThat(findedPostReport.getPostReportCategoryCode()).isEqualTo(2);
-    }
-
-    @Test
-    @DisplayName("게시글 신고 조회 테스트: 전체조회 성공")
-    void findPostReportListTest() {
-
-        //given
-        postReportCommandService.savePostReport(new PostReportRequest(1, "욕설"));
-        postReportCommandService.savePostReport(new PostReportRequest(2, "홍보"));
-        postReportCommandService.savePostReport(new PostReportRequest(3, "도배"));
-
-        //when
-        List<PostReport> postReportList = postReportCommandRepository.findAll();
-
-        //then
-        Assertions.assertEquals(3, postReportList.size());
-    }
-
 
     @Test
     @DisplayName("게시글 신고 삭제 테스트: 삭제 성공 확인")
@@ -176,7 +143,7 @@ public class PostReportCommandServiceTests {
 
     @Test
     @DisplayName("게시글 신고 삭제 테스트: 해당하는 신고 내역 없을 시 예외처리 확인")
-    void checkPostReportNoExistTest() {
+    void doesNotExistPostReportTest() {
 
         //given
         PostReportRequest postReportRequest = new PostReportRequest(2, "홍보 게시물");
