@@ -9,6 +9,7 @@ import com.runninghi.postreport.command.domain.aggregate.vo.ReportedPostVO;
 import com.runninghi.postreport.command.domain.repository.PostReportCommandRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -19,6 +20,7 @@ public class PostReportCommandService {
 
     private final PostReportCommandRepository postReportCommandRepository;
 
+    @Transactional
     public PostReport savePostReport(PostReportRequest postReportRequest) {
 
         if (postReportRequest.postReportCategoryCode() == 0) {
@@ -51,7 +53,7 @@ public class PostReportCommandService {
         return postReport;
     }
 
-
+    @Transactional
     public void deletePostReport(Long postReportNo) {
 
         PostReport postReport = postReportCommandRepository.findById(postReportNo)
