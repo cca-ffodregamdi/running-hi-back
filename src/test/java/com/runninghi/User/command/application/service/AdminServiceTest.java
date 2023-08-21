@@ -124,6 +124,7 @@ public class AdminServiceTest {
                 .build());
         // when
         List<UserInfoResponse> admins = adminService.getAdmins();
+
         // then
         Assertions.assertThat(admins).hasSize(3);
         for (UserInfoResponse admin : admins) {
