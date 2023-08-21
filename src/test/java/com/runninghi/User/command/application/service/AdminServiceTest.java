@@ -130,17 +130,17 @@ public class AdminServiceTest {
             if (admin.account().equals("qwerty1234")) {
                 Assertions.assertThat(admin.account()).isEqualTo("qwerty1234");
                 Assertions.assertThat(admin.name()).isEqualTo("김철수");
-                Assertions.assertThat(admin.name()).isEqualTo("qwe");
+                Assertions.assertThat(admin.nickname()).isEqualTo("qwe");
             }
             if (admin.account().equals("asdfg1234")) {
                 Assertions.assertThat(admin.account()).isEqualTo("asdfg1234");
                 Assertions.assertThat(admin.name()).isEqualTo("나철수");
-                Assertions.assertThat(admin.name()).isEqualTo("asd");
+                Assertions.assertThat(admin.nickname()).isEqualTo("asd");
             }
             if (admin.account().equals("zxcvb1234")) {
                 Assertions.assertThat(admin.account()).isEqualTo("zxcvb1234");
                 Assertions.assertThat(admin.name()).isEqualTo("박철수");
-                Assertions.assertThat(admin.name()).isEqualTo("zxc");
+                Assertions.assertThat(admin.nickname()).isEqualTo("zxc");
             }
             Assertions.assertThat(admin.role()).isEqualTo(Role.ADMIN);
         }
