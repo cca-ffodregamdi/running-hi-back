@@ -4,6 +4,7 @@ import com.runninghi.comment.command.application.dto.request.CreateCommentReques
 import com.runninghi.comment.command.application.service.CommentCommandService;
 import com.runninghi.comment.command.domain.aggregate.entity.Comment;
 import com.runninghi.comment.command.domain.repository.CommentRepository;
+import com.runninghi.comment.query.application.dto.request.FindAllCommentsRequest;
 import com.runninghi.comment.query.application.dto.request.FindCommentRequest;
 import com.runninghi.feedback.command.domain.exception.customException.NotFoundException;
 import jakarta.transaction.Transactional;
@@ -12,6 +13,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.UUID;
 
@@ -28,24 +32,26 @@ public class CommentQueryServiceTests {
     @Autowired
     private CommentCommandService createCommentService;
 
-//    @Test
-//    @DisplayName("댓글 전체 조회 테스트 : success")
-//    void testFindCommentsByPostNo() {
-//
-//        Long userPostNo = 999L;
-//
-//        commentRepository.save(Comment.builder()
-//                .userPostNo(userPostNo)
-//                .build());
-//
-//        commentRepository.save(Comment.builder()
-//                .userPostNo(userPostNo)
-//                .build());
-//
-//
-//        Assertions.assertEquals(2, queryCommentService.findAllComments(new FindAllCommentsRequest(userPostNo)).size());
-//
-//    }
+    @Test
+    @DisplayName("댓글 전체 조회 테스트 : success")
+    void testFindCommentsByPostNo() {
+
+        Long userPostNo = 999L;
+
+        commentRepository.save(Comment.builder()
+                .userPostNo(userPostNo)
+                .build());
+
+        commentRepository.save(Comment.builder()
+                .userPostNo(userPostNo)
+                .build());
+
+        Pageable pageable = PageRequest.of(0, 10);      //추후 수정 필요
+        Page<Comment> commentsPage = queryCommentService.findAllComments(new FindAllCommentsRequest(userPostNo), pageable);
+
+        Assertions.assertEquals(2, commentsPage.getTotalElements());
+
+    }
 
     @Test
     @DisplayName("특정 댓글 조회 테스트 : success")
