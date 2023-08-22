@@ -1,5 +1,6 @@
 package com.runninghi.common.exception;
 
+import com.runninghi.common.handler.feedback.customException.NotFoundException;
 import com.runninghi.common.response.ApiResponse;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
@@ -47,5 +48,10 @@ public class ExceptionResponseHandler {
     @ExceptionHandler(ExpiredJwtException.class)
     public ResponseEntity<ApiResponse> handleExpiredJwtException() {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ApiResponse.error("토큰이 만료되었습니다. 다시 로그인해주세요."));
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ApiResponse> handleNotFoundException(NotFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ApiResponse.error(e.getMessage()));
     }
 }
