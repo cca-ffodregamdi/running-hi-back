@@ -1,6 +1,6 @@
 package com.runninghi.postreport.command.application.service;
 
-import com.runninghi.feedback.command.domain.exception.customException.NotFoundException;
+import com.runninghi.common.handler.feedback.customException.NotFoundException;
 import com.runninghi.postreport.command.application.dto.request.PostReportRequest;
 import com.runninghi.postreport.command.domain.aggregate.entity.PostReport;
 import com.runninghi.postreport.command.domain.aggregate.vo.PostReportUserVO;
@@ -21,7 +21,8 @@ public class PostReportCommandService {
     private final PostReportCommandRepository postReportCommandRepository;
 
     @Transactional
-    public PostReport savePostReport(PostReportRequest postReportRequest) {
+    public PostReport savePostReport(PostReportRequest postReportRequest, UUID reportUserNo,
+                                     UUID reportedUserNo, Long reportedPostNo) {
 
         if (postReportRequest.postReportCategoryCode() == 0) {
             throw new IllegalArgumentException("신고 카테고리를 선택해주세요");
@@ -34,10 +35,6 @@ public class PostReportCommandService {
         if (postReportRequest.postReportContent().length() > 100) {
             throw new IllegalArgumentException("신고 내용은 100자를 넘을 수 없습니다.");
         }
-
-        UUID reportUserNo = UUID.randomUUID();  //임의 값
-        UUID reportedUserNo = UUID.randomUUID();
-        Long reportedPostNo = 1L;
 
         PostReport postReport = PostReport.builder()
                 .postReportCategoryCode(postReportRequest.postReportCategoryCode())
