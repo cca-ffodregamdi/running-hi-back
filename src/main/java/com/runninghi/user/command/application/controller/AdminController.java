@@ -22,11 +22,12 @@ public class AdminController {
     @Operation(summary = "회원 목록 조회")
     @GetMapping("/users")
     public ApiResponse getAllUsers() {
-        return ApiResponse.success("조회 성공", adminService.getUsers());
+        return ApiResponse.success("조회 성공", adminService.findAllUsers());
     }
 
     @Operation(summary = "관리자 목록 조회")
     @GetMapping("/admins")
     public ApiResponse getAllAdmins() {
-        return ApiResponse.success("조회 성공", adminService.getAdmins());}
+        return ApiResponse.success("조회 성공", adminService.findAllAdmins());
+    }
 }

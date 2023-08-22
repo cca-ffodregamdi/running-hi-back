@@ -17,7 +17,7 @@ public class ApiFeedbackInfraService implements ApiFeedbackDomainService {
 
     public FeedbackUserResponse checkUser(UUID userId) {
 
-        UserInfoResponse result = userService.getUserInfo(userId);
+        UserInfoResponse result = userService.findUserInfo(userId);
 
         return new FeedbackUserResponse(
                 result.id(),
