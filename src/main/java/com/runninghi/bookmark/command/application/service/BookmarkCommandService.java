@@ -13,7 +13,7 @@ import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
-public class CommandBookmarkService {
+public class BookmarkCommandService {
 
     private final BookmarkRepository bookmarkRepository;
     private final BookmarkCommandDomainService domainService;
