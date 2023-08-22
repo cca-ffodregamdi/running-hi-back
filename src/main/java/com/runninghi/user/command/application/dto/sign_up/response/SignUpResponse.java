@@ -10,7 +10,7 @@ public record SignUpResponse(
         UUID id,
         @Schema(description = "회원 아이디", example = "qwerty123")
         String account,
-        @Schema(description = "회원 이름", example = "qwe")
+        @Schema(description = "회원 이름", example = "김철수")
         String name
 ) {
     public static SignUpResponse from(User user) {

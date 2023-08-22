@@ -44,12 +44,12 @@ class SignServiceTest {
     @DisplayName("회원가입 테스트 : success")
     void signUpTest() {
         // given
-        SignUpRequest request = new SignUpRequest("qwerty1234", "1234", "qweqwe");
+        SignUpRequest request = new SignUpRequest("qwerty1234", "1234", "김철수", "qwe", "qwe@qwe.qw");
         // when
         SignUpResponse response = signService.registUser(request);
         // then
         Assertions.assertThat(response.account()).isEqualTo("qwerty1234");
-        Assertions.assertThat(response.name()).isEqualTo("qweqwe");
+        Assertions.assertThat(response.name()).isEqualTo("김철수");
     }
 
     @Test
@@ -59,10 +59,13 @@ class SignServiceTest {
         userRepository.save(User.builder()
                 .account("qwerty1234")
                 .password(encoder.encode("1234"))
-                .name("qweqwe")
+                .name("김철수")
+                .nickname("qwe")
+                .email("qwe@qwe.qw")
                 .role(Role.USER)
+                .status(true)
                 .build());
-        SignUpRequest request = new SignUpRequest("qwerty1234", "1234", null);
+        SignUpRequest request = new SignUpRequest("qwerty1234", "1234", "김철수", "qwe", "qwe@qwe.qw");
         // when
         // then
         Assertions.assertThatThrownBy(() -> signService.registUser(request))
@@ -77,13 +80,16 @@ class SignServiceTest {
         userRepository.save(User.builder()
                 .account("qwerty1234")
                 .password(encoder.encode("1234"))
-                .name("qweqwe")
+                .name("김철수")
+                .nickname("qwe")
+                .email("qwe@qwe.qw")
                 .role(Role.USER)
+                .status(true)
                 .build());
         // when
         SignInResponse response = signService.signIn(new SignInRequest("qwerty1234", "1234"));
         // then
-        Assertions.assertThat(response.name()).isEqualTo("qweqwe");
+        Assertions.assertThat(response.name()).isEqualTo("김철수");
         Assertions.assertThat(response.role()).isEqualTo(Role.USER);
     }
 
@@ -94,8 +100,11 @@ class SignServiceTest {
         userRepository.save(User.builder()
                 .account("qwerty1234")
                 .password(encoder.encode("1234"))
-                .name("qweqwe")
+                .name("김철수")
+                .nickname("qwe")
+                .email("qwe@qwe.qw")
                 .role(Role.USER)
+                .status(true)
                 .build());
         // when
         // then

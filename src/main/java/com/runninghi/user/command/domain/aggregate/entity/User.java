@@ -23,16 +23,18 @@ public class User extends BaseEntity {
     private UUID id; // 회원 고유 값
 
     @Column(nullable = false, scale = 20, unique = true)
-    private String account; // 폼 로그인 아이디
+    private String account; // 일반 로그인 아이디
     @Column(nullable = false)
-    private String password; // 폼 로그인 비밀번호
-    private String name; // 폼 로그인 이름
-    private String nickname; // 폼 로그인 닉네임
-    private String location; // 추가로 현 위치 받을 때
+    private String password; // 일반 로그인 비밀번호
+    @Column(nullable = false)
+    private String name; // 일반 로그인 이름
+    @Column(nullable = false)
+    private String nickname; // 일반 로그인 닉네임
+    @Column(nullable = false)
+    private String email; // 일반 로그인 이메일
     private String kakaoId; // 카카오 고유 아이디
-    private String email; // 카카오 계정에 등록된 이메일
     private String kakaoName; // 카카오 닉네임
-    private int reportCount; // 신고 횟수
+    private int reportCount; // 피신고 횟수
     private boolean blacklistStatus; // 블랙리스트 상태
     private boolean status; // 회원 상태 (true = 회원, false = 삭제)
 
@@ -41,16 +43,15 @@ public class User extends BaseEntity {
     private Role role; // ADMIN or USER
     private String provider; // 어떤 OAuth인지 (google, naver 등)
     private String provideId; // 해당 OAuth 의 key(id)
-    
+
     @Builder
-    public User(String account, String password, String name, String location, String nickname, String kakaoId, String email, String kakaoName, int reportCount, boolean blacklistStatus, boolean status, Role role, String provider, String provideId) {
+    public User(String account, String password, String name, String nickname, String email, String kakaoId, String kakaoName, int reportCount, boolean blacklistStatus, boolean status, Role role, String provider, String provideId) {
         this.account = account;
         this.password = password;
         this.name = name;
-        this.location = location;
         this.nickname = nickname;
-        this.kakaoId = kakaoId;
         this.email = email;
+        this.kakaoId = kakaoId;
         this.kakaoName = kakaoName;
         this.reportCount = reportCount;
         this.blacklistStatus = blacklistStatus;
@@ -65,13 +66,16 @@ public class User extends BaseEntity {
                 .account(request.account())
                 .password(encoder.encode(request.password()))
                 .name(request.name())
+                .nickname(request.nickname())
+                .email(request.email())
                 .role(Role.USER)
+                .status(true)
                 .build();
     }
 
     public void update(UserUpdateRequest newUser, PasswordEncoder encoder) {
         this.password = newUser.newPassword() == null || newUser.newPassword().isBlank()
                 ? this.password : encoder.encode(newUser.newPassword());
-        this.name = newUser.name();
+        this.nickname = newUser.nickname();
     }
 }
