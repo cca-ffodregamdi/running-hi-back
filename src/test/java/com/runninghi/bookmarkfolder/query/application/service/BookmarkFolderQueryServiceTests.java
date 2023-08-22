@@ -7,6 +7,7 @@ import com.runninghi.bookmarkfolder.query.application.dto.request.FindFolderRequ
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,11 @@ public class BookmarkFolderQueryServiceTests {
 
     @Autowired
     private BookmarkFolderRepository folderRepository;
+
+    @BeforeEach
+    void clear() {
+        folderRepository.deleteAllInBatch();
+    }
 
     @Test
     @DisplayName("즐겨찾기 폴더 조회 테스트 : success")
