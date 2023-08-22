@@ -32,9 +32,8 @@ public class KeywordQueryService {
 
     @Transactional
     public FindKeywordResponse findKeyword(String keywordName) {
-
         return keywordQueryRepository.findKeywordByKeywordName(keywordName)
-                .map(FindKeywordResponse::from)
+                .map(FindKeywordResponse::of)
                 .orElseThrow(
                         () -> new NotFoundException("일치하는 키워드가 없습니다.")
                 );
