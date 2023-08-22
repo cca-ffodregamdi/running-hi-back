@@ -57,9 +57,11 @@ public class FeedbackQueryServiceTests {
         user1 = userRepository.save(User.builder()
                 .account("qwerty1234")
                 .password(encoder.encode("1234"))
-                .name("qweqwe")
-                .nickname("닉네임입니다")
+                .name("김철수")
+                .nickname("qwe")
+                .email("qwe@qwe.qw")
                 .role(Role.USER)
+                .status(true)
                 .build());
 
         user2 = userRepository.save(User.builder()
@@ -67,7 +69,9 @@ public class FeedbackQueryServiceTests {
                 .password(encoder.encode("1111"))
                 .name("testUUUUser")
                 .nickname("user2닉네임입니다")
+                .email("test@test.te")
                 .role(Role.USER)
+                .status(true)
                 .build());
 
         FeedbackWriterVO feedbackWriterVO = new FeedbackWriterVO(user1.getId());

@@ -40,7 +40,7 @@ public class UserServiceTest {
     @BeforeEach
     @AfterEach
     void clear() {
-        userRepository.deleteAll();
+        userRepository.deleteAllInBatch();
     }
 
     @Test
@@ -50,15 +50,20 @@ public class UserServiceTest {
         User savedUser = userRepository.save(User.builder()
                 .account("qwerty1234")
                 .password(encoder.encode("1234"))
-                .name("qweqwe")
+                .name("김철수")
+                .nickname("qwe")
+                .email("qwe@qwe.qw")
                 .role(Role.USER)
+                .status(true)
                 .build());
         // when
         UserInfoResponse response = userService.getUserInfo(savedUser.getId());
         // then
         assertThat(response.id()).isEqualTo(savedUser.getId());
         assertThat(response.account()).isEqualTo("qwerty1234");
-        assertThat(response.name()).isEqualTo("qweqwe");
+        assertThat(response.name()).isEqualTo("김철수");
+        assertThat(response.nickname()).isEqualTo("qwe");
+        assertThat(response.email()).isEqualTo("qwe@qwe.qw");
         assertThat(response.role()).isEqualTo(Role.USER);
     }
 
@@ -80,8 +85,11 @@ public class UserServiceTest {
         User savedUser = userRepository.save(User.builder()
                 .account("qwerty1234")
                 .password(encoder.encode("1234"))
-                .name("qweqwe")
+                .name("김철수")
+                .nickname("qwe")
+                .email("qwe@qwe.qw")
                 .role(Role.USER)
+                .status(true)
                 .build());
         // when
         UserDeleteResponse result = userService.deleteUser(savedUser.getId());
@@ -98,15 +106,18 @@ public class UserServiceTest {
         User savedUser = userRepository.save(User.builder()
                 .account("qwerty1234")
                 .password(encoder.encode("1234"))
-                .name("qweqwe")
+                .name("김철수")
+                .nickname("qwe")
+                .email("qwe@qwe.qw")
                 .role(Role.USER)
+                .status(true)
                 .build());
         // when
-        UserUpdateRequest request = new UserUpdateRequest("1234", "5678", "qweqwe");
+        UserUpdateRequest request = new UserUpdateRequest("1234", "5678", "qwe");
         UserUpdateResponse result = userService.updateUser(savedUser.getId(), request);
         // then
         assertThat(result.result()).isEqualTo(true);
-        assertThat(result.name()).isEqualTo("qweqwe");
+        assertThat(result.nickname()).isEqualTo("qwe");
         User user = userRepository.findAll().get(0);
         assertThat(encoder.matches("5678", user.getPassword())).isEqualTo(true);
     }

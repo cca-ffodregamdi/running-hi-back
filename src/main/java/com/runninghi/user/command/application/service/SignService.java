@@ -50,6 +50,6 @@ public class SignService {
                         it -> it.updateRefreshToken(refreshToken),
                         () -> userRefreshTokenRepository.save(new UserRefreshToken(user, refreshToken))
                 );
-        return new SignInResponse(user.getName(), user.getRole(), accessToken, refreshToken);
+        return new SignInResponse(user.getName(), user.getNickname(), user.getEmail(), user.getRole(), accessToken, refreshToken);
     }
 }
