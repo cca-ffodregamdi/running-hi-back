@@ -1,7 +1,9 @@
 package com.runninghi.keyword.command.application.service;
 
+import com.runninghi.common.handler.feedback.customException.NotFoundException;
 import com.runninghi.keyword.command.application.dto.request.KeywordUpdateRequest;
 import com.runninghi.keyword.command.application.dto.response.KeywordCreateResponse;
+import com.runninghi.keyword.command.application.dto.response.KeywordUpdateResponse;
 import com.runninghi.keyword.command.domain.aggregate.entity.Keyword;
 import com.runninghi.keyword.command.domain.repository.KeywordCommandRepository;
 import com.runninghi.user.command.domain.aggregate.entity.User;
@@ -91,15 +93,46 @@ class KeywordCommandServiceTest {
     void testUpdateKeyword() {
 
         // given
-        KeywordUpdateRequest request = new KeywordUpdateRequest(null, 1L, "이거");
+        keywordCommandRepository.save(Keyword.builder()
+                .keywordNo(1L)
+                .keywordName("test1")
+                .build()
+        );
+
+        KeywordUpdateRequest request = KeywordUpdateRequest.from(
+                Keyword.builder()
+                        .keywordNo(1L)
+                        .keywordName("테스트1")
+                        .build()
+        );
 
         // when
-        Keyword result = keywordCommandService.updateKeyword(request);
-        System.out.println(result.toString());
+        KeywordUpdateResponse result = keywordCommandService.updateKeyword(request);
 
         // when & then
-//        Assertions.assertThatCode(
-//                () -> keywordCommandService.updateKeyword(request)
-//        ).doesNotThrowAnyException();
+        Assertions.assertThat(result.keywordName())
+                .isEqualTo("테스트1");
+    }
+
+    @DisplayName("키워드 수정 테스트 : 수정하려는 키워드가 존재하지 않을 때 Not Found 예외 처리 확인")
+    @Test
+    void testKeywordUpdateNotFound() {
+
+        // given
+        keywordCommandRepository.deleteAllInBatch();
+        KeywordUpdateRequest request = KeywordUpdateRequest.from(
+                Keyword.builder()
+                        .keywordNo(1L)
+                        .keywordName("이이")
+                        .build()
+        );
+
+        // when & then
+        Assertions.assertThatThrownBy(
+                () -> keywordCommandService.updateKeyword(request)
+        )
+                .isInstanceOf(NotFoundException.class)
+                .hasMessage("존재하지 않는 키워드입니다.");
+
     }
 }
