@@ -17,7 +17,7 @@ public class ApiKeywordInfraService implements ApiKeywordDomainService {
 
     @Override
     public UserCheckResponse checkUserByUserKey(UUID userKey) {
-        UserInfoResponse result = userService.getUserInfo(userKey);
+        UserInfoResponse result = userService.findUserInfo(userKey);
         return new UserCheckResponse(
                 result.id(),
                 result.account(),

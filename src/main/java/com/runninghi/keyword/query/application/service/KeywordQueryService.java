@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,7 +18,7 @@ public class KeywordQueryService {
     private final KeywordQueryRepository keywordQueryRepository;
 
     @Transactional
-    public List<FindKeywordResponse> findKeywordList () {
+    public List<FindKeywordResponse> findKeywordList() {
         List<Keyword> keywordListResponse = keywordQueryRepository.findAll();
         if (keywordListResponse.isEmpty()) {
             throw new NullPointerException("검색 결과가 없습니다.");
@@ -32,7 +31,7 @@ public class KeywordQueryService {
     }
 
     @Transactional
-    public FindKeywordResponse findKeyword (String keywordName) {
+    public FindKeywordResponse findKeyword(String keywordName) {
 
         return keywordQueryRepository.findKeywordByKeywordName(keywordName)
                 .map(FindKeywordResponse::from)

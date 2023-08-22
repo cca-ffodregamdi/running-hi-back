@@ -16,7 +16,7 @@ public class AdminService {
 
     // 전체 유저 정보 조회
     @Transactional(readOnly = true)
-    public List<UserInfoResponse> getUsers() {
+    public List<UserInfoResponse> findAllUsers() {
         return userRepository.findAllByRole(Role.USER).stream()
                 .map(UserInfoResponse::from)
                 .toList();
@@ -24,7 +24,7 @@ public class AdminService {
 
     // 전체 관리자 정보 조회
     @Transactional(readOnly = true)
-    public List<UserInfoResponse> getAdmins() {
+    public List<UserInfoResponse> findAllAdmins() {
         return userRepository.findAllByRole(Role.ADMIN).stream()
                 .map(UserInfoResponse::from)
                 .toList();
