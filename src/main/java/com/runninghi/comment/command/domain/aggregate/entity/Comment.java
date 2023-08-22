@@ -7,6 +7,7 @@ import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -25,7 +26,7 @@ public class Comment {
     private Long userPostNo;
 
     @Column
-    private LocalDate commentDate;
+    private Date commentDate;
 
     @Column
     private String commentContent;
@@ -34,7 +35,7 @@ public class Comment {
     private int commentReportCnt;
 
     @Builder
-    public Comment(Long commentNo, UUID userNo, Long userPostNo, LocalDate commentDate, String commentContent, int commentReportCnt) {
+    public Comment(Long commentNo, UUID userNo, Long userPostNo, Date commentDate, String commentContent, int commentReportCnt) {
         this.commentNo = commentNo;
         this.userNo = userNo;
         this.userPostNo = userPostNo;
@@ -45,6 +46,6 @@ public class Comment {
 
     public void update(UpdateCommentRequest commentRequest) {
         this.commentContent = commentRequest.commentContent();
-        this.commentDate = LocalDate.now();
+        this.commentDate = new Date();
     }
 }

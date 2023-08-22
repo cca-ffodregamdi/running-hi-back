@@ -13,6 +13,7 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Date;
 import java.util.UUID;
 
 
@@ -94,14 +95,18 @@ public class CommentCommandServiceTests {
 
     @Test
     @DisplayName("댓글 수정 테스트 : success")
-    void testUpdateComment() {
+    void testUpdateComment() throws InterruptedException {
         CreateCommentRequest commentRequest = new CreateCommentRequest(UUID.randomUUID(), 1L, "댓글 생성 테스트");
         Comment comment = commentCommandService.createComment(commentRequest);
+        Date date = comment.getCommentDate();
+
+        Thread.sleep(1000);
 
         commentCommandService.updateComment(new UpdateCommentRequest(comment.getCommentNo(), "댓글 수정 테스트 입니다."));
 
         Assertions.assertSame(commentQueryService.findComment(new FindCommentRequest(comment.getCommentNo())).getCommentContent(),
                 "댓글 수정 테스트 입니다.");
+        Assertions.assertNotSame(date, commentQueryService.findComment(new FindCommentRequest(comment.getCommentNo())).getCommentDate());
     }
 
     @Test

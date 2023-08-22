@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
@@ -32,7 +33,7 @@ public class CommentCommandService {
                 .userNo(commentDTO.userNo())
                 .userPostNo(commentDTO.userPostNo())
                 .commentContent(commentDTO.commentContent())
-                .commentDate(LocalDate.now())
+                .commentDate(new Date())
                 .build());
     }
 
