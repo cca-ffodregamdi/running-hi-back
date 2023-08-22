@@ -19,7 +19,7 @@ public class PostReportQueryService {
     @Transactional
     public PostReportResponse findPostReport(Long postReportNo) {
 
-        // 설명. findById는 Optional<PostReport> 형태로 객체 반환.
+        // 필기. findById는 Optional<PostReport> 형태로 객체 반환.
         PostReport postReport = postReportCommandRepository.findById(postReportNo)
                 .orElseThrow(() -> new NotFoundException("해당하는 신고 내역이 없습니다."));
 
