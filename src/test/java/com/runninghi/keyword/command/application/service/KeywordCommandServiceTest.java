@@ -1,6 +1,8 @@
 package com.runninghi.keyword.command.application.service;
 
+import com.runninghi.keyword.command.application.dto.request.KeywordUpdateRequest;
 import com.runninghi.keyword.command.application.dto.response.KeywordCreateResponse;
+import com.runninghi.keyword.command.domain.aggregate.entity.Keyword;
 import com.runninghi.keyword.command.domain.repository.KeywordCommandRepository;
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
@@ -82,5 +84,22 @@ class KeywordCommandServiceTest {
         // then
         Assertions.assertThat(afterSize)
                 .isEqualTo(beforeSize + 1);
+    }
+
+    @DisplayName("키워드 수정 테스트 : success")
+    @Test
+    void testUpdateKeyword() {
+
+        // given
+        KeywordUpdateRequest request = new KeywordUpdateRequest(null, 1L, "이거");
+
+        // when
+        Keyword result = keywordCommandService.updateKeyword(request);
+        System.out.println(result.toString());
+
+        // when & then
+//        Assertions.assertThatCode(
+//                () -> keywordCommandService.updateKeyword(request)
+//        ).doesNotThrowAnyException();
     }
 }
