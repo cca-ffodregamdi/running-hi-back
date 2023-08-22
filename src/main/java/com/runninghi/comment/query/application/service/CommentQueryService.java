@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +20,7 @@ public class CommentQueryService {
     private final CommentRepository commentRepository;
     private final BookmarkCommandDomainService domainService;
 
+    @Transactional(readOnly = true)
     public Page<Comment> findAllComments(FindAllCommentsRequest commentDTO, Pageable pageable) {
 
 //        domainService.validatePostExist(commentDTO.userPostNo());
@@ -28,6 +30,7 @@ public class CommentQueryService {
 //        return commentRepository.findAllByUserPostNo(commentDTO.userPostNo());
     }
 
+    @Transactional(readOnly = true)
     public Comment findComment(FindCommentRequest commentDTO) {
 
        return commentRepository.findById(commentDTO.commentNo())
