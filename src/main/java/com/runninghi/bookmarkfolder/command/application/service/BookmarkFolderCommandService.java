@@ -43,6 +43,7 @@ public class BookmarkFolderCommandService {
         List<Bookmark> bookmarks = bookmarkRepository.findBookmarkByBookmarkVO_FolderNo(folderDTO.folderNo());
         bookmarks.forEach(bookmark -> bookmarkCommandService.deleteBookmark(new DeleteBookmarkRequest(bookmark.getBookmarkVO())));
 
+
         folderRepository.deleteById(folderDTO.folderNo());
 
     }

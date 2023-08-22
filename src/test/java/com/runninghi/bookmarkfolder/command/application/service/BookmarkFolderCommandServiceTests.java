@@ -1,5 +1,12 @@
 package com.runninghi.bookmarkfolder.command.application.service;
 
+import com.runninghi.bookmark.command.application.service.BookmarkCommandService;
+import com.runninghi.bookmark.command.domain.aggregate.entity.Bookmark;
+import com.runninghi.bookmark.command.domain.aggregate.vo.BookmarkVO;
+import com.runninghi.bookmark.command.domain.repository.BookmarkRepository;
+import com.runninghi.bookmark.query.application.dto.FindBookmarkListRequest;
+import com.runninghi.bookmark.query.application.dto.FindBookmarkRequest;
+import com.runninghi.bookmark.query.application.service.BookmarkQueryService;
 import com.runninghi.bookmarkfolder.command.application.dto.request.CreateFolderRequest;
 import com.runninghi.bookmarkfolder.command.application.dto.request.DeleteFolderRequest;
 import com.runninghi.bookmarkfolder.command.application.dto.request.UpdateFolderRequest;
@@ -15,6 +22,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 
@@ -26,7 +34,13 @@ public class BookmarkFolderCommandServiceTests {
     private BookmarkFolderCommandService commandBookmarkFolderService;
 
     @Autowired
-    private BookmarkFolderQueryService queryBookmarkFolderService;
+    private BookmarkFolderQueryService bookmarkFolderQueryService;
+
+    @Autowired
+    private BookmarkQueryService bookmarkQueryService;
+
+    @Autowired
+    private BookmarkRepository bookmarkRepository;
 
     @Autowired
     private BookmarkFolderRepository bookmarkFolderRepository;
@@ -85,7 +99,7 @@ public class BookmarkFolderCommandServiceTests {
 
         BookmarkFolder update = commandBookmarkFolderService.updateBookmarkFolder(updateFolder);
 
-        BookmarkFolder bookmarkFolder = queryBookmarkFolderService.findBookmarkFolder(new FindFolderRequest(folder.getFolderNo()));
+        BookmarkFolder bookmarkFolder = bookmarkFolderQueryService.findBookmarkFolder(new FindFolderRequest(folder.getFolderNo()));
 
         Assertions.assertEquals(bookmarkFolder, update);
     }
@@ -158,7 +172,7 @@ public class BookmarkFolderCommandServiceTests {
         commandBookmarkFolderService.deleteBookmarkFolder(folderRequest);
 
         Assertions.assertThrows(NotFoundException.class, () -> {
-            queryBookmarkFolderService.findBookmarkFolder(findRequest);
+            bookmarkFolderQueryService.findBookmarkFolder(findRequest);
         });
     }
 
@@ -172,13 +186,19 @@ public class BookmarkFolderCommandServiceTests {
                 .folderNo(1L)
                 .build());
 
+        Bookmark bookmark = bookmarkRepository.save(Bookmark.builder()
+                .bookmarkVO(new BookmarkVO(folder.getFolderNo(), 3L))
+                .userNo(UUID.randomUUID())
+                .addDate(LocalDate.now())
+                .build());
+
+
         DeleteFolderRequest folderRequest = new DeleteFolderRequest(folder.getFolderNo());
-        FindFolderRequest findRequest = new FindFolderRequest(folder.getFolderNo());
 
         commandBookmarkFolderService.deleteBookmarkFolder(folderRequest);
 
         Assertions.assertThrows(NotFoundException.class, () -> {
-            queryBookmarkFolderService.findBookmarkFolder(findRequest);
+            bookmarkQueryService.findBookmark(new FindBookmarkRequest(bookmark.getBookmarkVO()));
         });
     }
 
