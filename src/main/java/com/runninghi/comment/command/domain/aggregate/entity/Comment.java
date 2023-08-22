@@ -1,7 +1,10 @@
 package com.runninghi.comment.command.domain.aggregate.entity;
 
+import com.runninghi.comment.command.application.dto.request.UpdateCommentRequest;
+import com.runninghi.user.command.application.dto.user.request.UserUpdateRequest;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -38,5 +41,10 @@ public class Comment {
         this.commentDate = commentDate;
         this.commentContent = commentContent;
         this.commentReportCnt = commentReportCnt;
+    }
+
+    public void update(UpdateCommentRequest commentRequest) {
+        this.commentContent = commentRequest.commentContent();
+        this.commentDate = LocalDate.now();
     }
 }
