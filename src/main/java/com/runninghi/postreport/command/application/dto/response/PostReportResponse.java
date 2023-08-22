@@ -24,7 +24,7 @@ public record PostReportResponse (
         Long reportedPostNo
 ) {
 
-    public  static PostReportResponse from(PostReport postReport) {
+    public static PostReportResponse from(PostReport postReport) {
 
         return new PostReportResponse(
                 postReport.getPostReportNo(),
