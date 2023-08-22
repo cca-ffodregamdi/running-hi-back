@@ -10,5 +10,4 @@ import java.util.List;
 @Repository
 public interface BookmarkRepository extends JpaRepository<Bookmark, BookmarkVO> {
     List<Bookmark> findBookmarkByBookmarkVO_FolderNo(Long folderNo);
-
 }
