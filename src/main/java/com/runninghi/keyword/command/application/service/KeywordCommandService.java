@@ -1,5 +1,8 @@
 package com.runninghi.keyword.command.application.service;
 
+import com.runninghi.common.handler.feedback.customException.NotFoundException;
+import com.runninghi.keyword.command.application.dto.request.KeywordUpdateRequest;
+import com.runninghi.keyword.command.application.dto.response.KeywordUpdateResponse;
 import com.runninghi.keyword.command.application.dto.response.UserCheckResponse;
 import com.runninghi.keyword.command.application.dto.response.KeywordCreateResponse;
 import com.runninghi.keyword.command.domain.aggregate.entity.Keyword;
@@ -33,4 +36,13 @@ public class KeywordCommandService {
                 .build());
         return KeywordCreateResponse.of(result.getKeywordNo(), result.getKeywordName());
     }
+
+    @Transactional
+    public KeywordUpdateResponse updateKeyword(KeywordUpdateRequest request) {
+        Keyword keyword = keywordCommandRepository.findById(request.keywordNo())
+                .orElseThrow( () -> new NotFoundException("존재하지 않는 키워드입니다."));
+        keyword.update(request.keywordName());
+        return KeywordUpdateResponse.of(keyword);
+    }
+
 }
