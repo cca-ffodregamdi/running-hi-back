@@ -25,7 +25,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class FeedbackService {
+public class FeedbackCommandService {
     private final FeedbackRepository feedbackRepository;
     private final UserRepository userRepository;
 

@@ -57,7 +57,7 @@ public class UserServiceTest {
                 .status(true)
                 .build());
         // when
-        UserInfoResponse response = userService.getUserInfo(savedUser.getId());
+        UserInfoResponse response = userService.findUserInfo(savedUser.getId());
         // then
         assertThat(response.id()).isEqualTo(savedUser.getId());
         assertThat(response.account()).isEqualTo("qwerty1234");
@@ -73,7 +73,7 @@ public class UserServiceTest {
         // given
         // when
         // then
-        assertThatThrownBy(() -> userService.getUserInfo(UUID.randomUUID()))
+        assertThatThrownBy(() -> userService.findUserInfo(UUID.randomUUID()))
                 .isInstanceOf(NoSuchElementException.class)
                 .hasMessage("존재하지 않는 회원입니다.");
     }

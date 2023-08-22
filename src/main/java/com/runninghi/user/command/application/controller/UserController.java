@@ -1,8 +1,8 @@
 package com.runninghi.user.command.application.controller;
 
 import com.runninghi.common.annotation.UserAuthorize;
-import com.runninghi.user.command.application.dto.user.request.UserUpdateRequest;
 import com.runninghi.common.response.ApiResponse;
+import com.runninghi.user.command.application.dto.user.request.UserUpdateRequest;
 import com.runninghi.user.command.application.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,13 +24,13 @@ public class UserController {
     @Operation(summary = "회원 정보 조회")
     @GetMapping
     public ApiResponse getUserInfo(@AuthenticationPrincipal User user) {
-        return ApiResponse.success("조회 성공", userService.getUserInfo(UUID.fromString(user.getUsername())));
+        return ApiResponse.success("조회 성공", userService.findUserInfo(UUID.fromString(user.getUsername())));
     }
 
     @Operation(summary = "회원 탈퇴")
     @DeleteMapping
     public ApiResponse deleteUser(@AuthenticationPrincipal User user) {
-        return ApiResponse.success( "성공적으로 탈퇴되었습니다.", userService.deleteUser(UUID.fromString(user.getUsername())));
+        return ApiResponse.success("성공적으로 탈퇴되었습니다.", userService.deleteUser(UUID.fromString(user.getUsername())));
     }
 
     @Operation(summary = "회원 정보 수정")

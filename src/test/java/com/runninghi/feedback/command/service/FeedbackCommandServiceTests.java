@@ -3,7 +3,7 @@ package com.runninghi.feedback.command.service;
 
 import com.runninghi.common.handler.feedback.customException.IllegalArgumentException;
 import com.runninghi.feedback.command.application.dto.request.FeedbackCreateRequest;
-import com.runninghi.feedback.command.application.service.FeedbackService;
+import com.runninghi.feedback.command.application.service.FeedbackCommandService;
 import com.runninghi.feedback.command.domain.repository.FeedbackRepository;
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
@@ -19,10 +19,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootTest
 @Transactional
-public class FeedbackServiceTests {
+public class FeedbackCommandServiceTests {
 
     @Autowired
-    private FeedbackService feedbackService;
+    private FeedbackCommandService feedbackService;
 
     @Autowired
     private FeedbackRepository feedbackRepository;

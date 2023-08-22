@@ -22,10 +22,10 @@ import java.util.Date;
 
 @SpringBootTest
 @Transactional
-public class FeedbackServiceTests {
+public class FeedbackCommandServiceTests {
 
     @Autowired
-    private FeedbackService feedbackService;
+    private FeedbackCommandService feedbackCommandService;
 
     @Autowired
     private FeedbackRepository feedbackRepository;
@@ -113,7 +113,7 @@ public class FeedbackServiceTests {
         long before = feedbackRepository.count();
         FeedbackCreateRequest feedbackCreateRequest = new FeedbackCreateRequest("제목", "내용", 0);
 
-        feedbackService.createFeedback(feedbackCreateRequest, user1.getId());
+        feedbackCommandService.createFeedback(feedbackCreateRequest, user1.getId());
 
         long after = feedbackRepository.count();
         Assertions.assertEquals(before + 1, after);
@@ -128,7 +128,7 @@ public class FeedbackServiceTests {
         long before = feedbackRepository.count();
         FeedbackCreateRequest feedbackCreateRequest = new FeedbackCreateRequest(str, "내용", 0);
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> feedbackService.createFeedback(feedbackCreateRequest, user1.getId()));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> feedbackCommandService.createFeedback(feedbackCreateRequest, user1.getId()));
 
         long after = feedbackRepository.count();
         Assertions.assertEquals(before, after);
@@ -143,7 +143,7 @@ public class FeedbackServiceTests {
         long before = feedbackRepository.count();
         FeedbackCreateRequest feedbackCreateRequest = new FeedbackCreateRequest("제목", str, 0);
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> feedbackService.createFeedback(feedbackCreateRequest, user1.getId()));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> feedbackCommandService.createFeedback(feedbackCreateRequest, user1.getId()));
 
         long after = feedbackRepository.count();
         Assertions.assertEquals(before, after);
@@ -157,7 +157,7 @@ public class FeedbackServiceTests {
         long before = feedbackRepository.count();
         FeedbackCreateRequest feedbackCreateRequest = new FeedbackCreateRequest("제목", "내용", 1000);
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> feedbackService.createFeedback(feedbackCreateRequest, user1.getId()));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> feedbackCommandService.createFeedback(feedbackCreateRequest, user1.getId()));
         long after = feedbackRepository.count();
         Assertions.assertEquals(before, after);
     }
@@ -172,7 +172,7 @@ public class FeedbackServiceTests {
         FeedbackUpdateRequest feedbackUpdateRequest = new FeedbackUpdateRequest(setUpFeedback1.getFeedbackNo(), title, content,
                 category);
 
-        feedbackService.updateFeedback(feedbackUpdateRequest, user1.getId());
+        feedbackCommandService.updateFeedback(feedbackUpdateRequest, user1.getId());
 
         Feedback updateFeedback = feedbackRepository.findByFeedbackNo(setUpFeedback1.getFeedbackNo()).get();
         Assertions.assertEquals(title, updateFeedback.getFeedbackTitle());
@@ -192,7 +192,7 @@ public class FeedbackServiceTests {
         FeedbackUpdateRequest feedbackUpdateRequest = new FeedbackUpdateRequest(setUpFeedback1.getFeedbackNo(), title, content,
                 category);
 
-        Assertions.assertThrows(NotMatchWriterException.class, () -> feedbackService.updateFeedback(feedbackUpdateRequest, user2.getId()));
+        Assertions.assertThrows(NotMatchWriterException.class, () -> feedbackCommandService.updateFeedback(feedbackUpdateRequest, user2.getId()));
 
     }
 
@@ -203,7 +203,7 @@ public class FeedbackServiceTests {
         long before = feedbackRepository.count();
         FeedbackDeleteRequest feedbackDeleteRequest = new FeedbackDeleteRequest(setUpFeedback1.getFeedbackNo());
 
-        feedbackService.deleteFeedback(feedbackDeleteRequest, user1.getId());
+        feedbackCommandService.deleteFeedback(feedbackDeleteRequest, user1.getId());
 
         long after = feedbackRepository.count();
         Assertions.assertEquals(before - 1, after);
@@ -216,7 +216,7 @@ public class FeedbackServiceTests {
 
         FeedbackDeleteRequest feedbackDeleteRequest = new FeedbackDeleteRequest(setUpFeedback1.getFeedbackNo());
 
-        Assertions.assertThrows(NotMatchWriterException.class, () -> feedbackService.deleteFeedback(feedbackDeleteRequest, user2.getId()));
+        Assertions.assertThrows(NotMatchWriterException.class, () -> feedbackCommandService.deleteFeedback(feedbackDeleteRequest, user2.getId()));
 
     }
 
