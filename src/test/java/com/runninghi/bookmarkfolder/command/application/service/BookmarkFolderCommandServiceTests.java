@@ -17,6 +17,7 @@ import com.runninghi.bookmarkfolder.query.application.service.BookmarkFolderQuer
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,10 @@ public class BookmarkFolderCommandServiceTests {
     private BookmarkFolderRepository bookmarkFolderRepository;
 
 
+    @BeforeEach
+    void clear() {
+        bookmarkFolderRepository.deleteAllInBatch();
+    }
     @Test
     @DisplayName("즐겨찾기 폴더 추가 테스트 : success")
     void testCreateNewBookmarkFolder() {
