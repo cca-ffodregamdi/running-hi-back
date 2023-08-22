@@ -130,6 +130,19 @@ public class BookmarkFolderCommandServiceTests {
     }
 
     @Test
+    @DisplayName("즐겨찾기 폴더 수정 테스트: 폴더 이름이 공백 일 때 예외처리")
+    void testUpdateFolderNameIsBlank() {
+
+        BookmarkFolder folder = createBookmarkFolder();
+
+        UpdateFolderRequest updateFolder = new UpdateFolderRequest(folder.getFolderNo(), "             ",folder.getUserNo());
+
+        org.assertj.core.api.Assertions.assertThatThrownBy(() -> commandBookmarkFolderService.updateBookmarkFolder(updateFolder))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("폴더 제목은 공백일 수 없습니다.");
+    }
+
+    @Test
     @DisplayName("즐겨찾기 폴더 삭제 테스트 : success")
     void testDeleteBookmarkFolder() {
 

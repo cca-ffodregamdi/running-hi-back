@@ -24,7 +24,10 @@ public class FolderCommandInfraService implements FolderCommandDomainService {
             throw new IllegalArgumentException("폴더 제목이 20자를 초과하였습니다.");
         } else if (folderName.length() < 1) {
             throw new IllegalArgumentException("폴더 제목이 1자 미만입니다.");
+        } else if (folderName.trim().isEmpty()) {
+            throw new IllegalArgumentException("폴더 제목은 공백일 수 없습니다.");
         }
     }
+
 
 }
