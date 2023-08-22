@@ -22,7 +22,7 @@ import java.util.UUID;
 public class BookmarkCommandServiceTests {
 
     @Autowired
-    private CommandBookmarkService commandBookmarkService;
+    private BookmarkCommandService commandBookmarkService;
 
     @Autowired
     private BookmarkRepository bookmarkRepository;

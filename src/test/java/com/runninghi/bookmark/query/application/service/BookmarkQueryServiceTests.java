@@ -1,7 +1,7 @@
 package com.runninghi.bookmark.query.application.service;
 
 import com.runninghi.bookmark.command.application.dto.request.CreateBookmarkRequest;
-import com.runninghi.bookmark.command.application.service.CommandBookmarkService;
+import com.runninghi.bookmark.command.application.service.BookmarkCommandService;
 import com.runninghi.bookmark.command.domain.aggregate.entity.Bookmark;
 import com.runninghi.bookmark.command.domain.aggregate.vo.BookmarkVO;
 import com.runninghi.bookmark.query.application.dto.FindBookmarkRequest;
@@ -21,7 +21,7 @@ import java.util.UUID;
 public class BookmarkQueryServiceTests {
 
     @Autowired
-    CommandBookmarkService createBookmarkService;
+    BookmarkCommandService createBookmarkService;
 
     @Autowired
     BookmarkQueryService queryBookmarkService;

@@ -143,8 +143,28 @@ public class BookmarkFolderCommandServiceTests {
     }
 
     @Test
-    @DisplayName("즐겨찾기 폴더 삭제 테스트 : success")
+    @DisplayName("즐겨찾기 폴더 삭제 테스트 : success - 폴더 삭제")
     void testDeleteBookmarkFolder() {
+
+        BookmarkFolder folder = bookmarkFolderRepository.save(BookmarkFolder.builder()
+                .folderName("deleteTestFolder")
+                .userNo(UUID.randomUUID())
+                .folderNo(1L)
+                .build());
+
+        DeleteFolderRequest folderRequest = new DeleteFolderRequest(folder.getFolderNo());
+        FindFolderRequest findRequest = new FindFolderRequest(folder.getFolderNo());
+
+        commandBookmarkFolderService.deleteBookmarkFolder(folderRequest);
+
+        Assertions.assertThrows(NotFoundException.class, () -> {
+            queryBookmarkFolderService.findBookmarkFolder(findRequest);
+        });
+    }
+
+    @Test
+    @DisplayName("즐겨찾기 폴더 삭제 테스트 : success - 폴더 내 즐겨찾기 목록 삭제")
+    void testDeleteBookmarksInFolder() {
 
         BookmarkFolder folder = bookmarkFolderRepository.save(BookmarkFolder.builder()
                 .folderName("deleteTestFolder")
