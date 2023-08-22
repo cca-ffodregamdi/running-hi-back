@@ -1,6 +1,5 @@
 package com.runninghi.postreport.query.application.service;
-
-import com.runninghi.feedback.command.domain.exception.customException.NotFoundException;
+import com.runninghi.common.handler.feedback.customException.NotFoundException;
 import com.runninghi.postreport.command.application.dto.response.PostReportResponse;
 import com.runninghi.postreport.command.domain.aggregate.entity.PostReport;
 import com.runninghi.postreport.command.domain.repository.PostReportCommandRepository;
@@ -14,7 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostReportQueryService {
 
-    private PostReportCommandRepository postReportCommandRepository;
+    private final PostReportCommandRepository postReportCommandRepository;
 
     // 설명. 게시글 신고 상세 조회
     @Transactional
