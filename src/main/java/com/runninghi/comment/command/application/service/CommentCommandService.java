@@ -1,6 +1,7 @@
 package com.runninghi.comment.command.application.service;
 
 import com.runninghi.comment.command.application.dto.request.CreateCommentRequest;
+import com.runninghi.comment.command.application.dto.request.DeleteCommentRequest;
 import com.runninghi.comment.command.domain.aggregate.entity.Comment;
 import com.runninghi.comment.command.domain.repository.CommentRepository;
 import com.runninghi.comment.command.domain.service.CommentCommandDomainService;
@@ -30,5 +31,13 @@ public class CommentCommandService {
                 .commentContent(commentDTO.commentContent())
                 .commentDate(LocalDate.now())
                 .build());
+    }
+
+    @Transactional
+    public void deleteComment(DeleteCommentRequest commentDTO) {
+
+        domainService.validateComment(commentDTO.commentNo());
+
+        commentRepository.deleteById(commentDTO.commentNo());
     }
 }

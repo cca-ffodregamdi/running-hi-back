@@ -22,6 +22,8 @@ public class AdminInitializer implements ApplicationRunner {
                 .account("admin")
                 .password(encoder.encode("admin"))
                 .name("관리자")
+                .nickname("자리관")
+                .email("admin@admin.kr")
                 .role(Role.ADMIN)
                 .build());
     }

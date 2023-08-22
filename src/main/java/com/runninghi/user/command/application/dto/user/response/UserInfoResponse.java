@@ -12,11 +12,25 @@ public record UserInfoResponse(
         UUID id,
         @Schema(description = "회원 아이디", example = "qwerty123")
         String account,
-        @Schema(description = "회원 이름", example = "qwe")
+        @Schema(description = "회원 이름", example = "김철수")
         String name,
+        @Schema(description = "회원 닉네임", example = "qwe")
+        String nickname,
+        @Schema(description = "회원 이메일", example = "qwe@qwe.qw")
+        String email,
+        @Schema(description = "카카오 아이디", example = "032109312")
+        String kakaoId,
+        @Schema(description = "카카오 닉네임", example = "asd")
+        String kakaoName,
+        @Schema(description = "피신고 횟수", example = "11")
+        int reportCount,
+        @Schema(description = "블랙리스트 상태", example = "false")
+        boolean blackListStatus,
+        @Schema(description = "회원 상태", example = "true")
+        boolean status,
         @Schema(description = "회원 타입", example = "USER")
         Role role,
-        @Schema(description = "회원 생성일", example = "2023-05-11T15:00:00")
+        @Schema(description = "회원 생성일", example = "2023-08-11T20:02:11")
         LocalDateTime createdAt
 ) {
     public static UserInfoResponse from(User user) {
@@ -24,6 +38,13 @@ public record UserInfoResponse(
                 user.getId(),
                 user.getAccount(),
                 user.getName(),
+                user.getNickname(),
+                user.getEmail(),
+                user.getKakaoId(),
+                user.getKakaoName(),
+                user.getReportCount(),
+                user.isBlacklistStatus(),
+                user.isStatus(),
                 user.getRole(),
                 user.getCreatedAt()
         );
