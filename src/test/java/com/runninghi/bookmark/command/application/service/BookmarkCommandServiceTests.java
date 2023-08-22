@@ -43,6 +43,8 @@ public class BookmarkCommandServiceTests {
 
         Long afterSize = bookmarkRepository.count();
 
+        System.out.println(beforeSize + afterSize);
+
         Assertions.assertEquals(beforeSize + 1, afterSize);
 
     }
