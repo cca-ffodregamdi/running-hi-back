@@ -21,7 +21,7 @@ public class UserService {
 
     // 회원 정보 조회
     @Transactional(readOnly = true)
-    public UserInfoResponse getUserInfo(UUID id) {
+    public UserInfoResponse findUserInfo(UUID id) {
         return userRepository.findById(id)
                 .map(UserInfoResponse::from)
                 .orElseThrow(() -> new NoSuchElementException("존재하지 않는 회원입니다."));

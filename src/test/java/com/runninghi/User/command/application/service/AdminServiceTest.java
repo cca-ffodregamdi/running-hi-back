@@ -68,7 +68,7 @@ public class AdminServiceTest {
                 .status(true)
                 .build());
         // when
-        List<UserInfoResponse> users = adminService.getUsers();
+        List<UserInfoResponse> users = adminService.findAllUsers();
         // then
         Assertions.assertThat(users).hasSize(3);
         for (UserInfoResponse user : users) {
@@ -123,7 +123,7 @@ public class AdminServiceTest {
                 .status(true)
                 .build());
         // when
-        List<UserInfoResponse> admins = adminService.getAdmins();
+        List<UserInfoResponse> admins = adminService.findAllAdmins();
 
         // then
         Assertions.assertThat(admins).hasSize(3);
