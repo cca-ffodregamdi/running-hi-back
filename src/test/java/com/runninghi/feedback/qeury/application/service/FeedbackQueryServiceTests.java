@@ -3,10 +3,14 @@ package com.runninghi.feedback.qeury.application.service;
 import com.runninghi.feedback.command.domain.aggregate.entity.Feedback;
 import com.runninghi.feedback.command.domain.aggregate.entity.FeedbackCategory;
 import com.runninghi.feedback.command.domain.aggregate.vo.FeedbackWriterVO;
-import com.runninghi.feedback.command.domain.repository.FeedbackRepository;
+import com.runninghi.feedback.command.domain.repository.FeedbackCommandRepository;
 import com.runninghi.feedback.query.application.dto.request.FeedbackFindRequest;
+import com.runninghi.feedback.query.application.dto.request.FeedbackStatusRequest;
 import com.runninghi.feedback.query.application.dto.response.FeedbackFindResponse;
+import com.runninghi.feedback.query.application.dto.response.FeedbackStatusResponse;
+import com.runninghi.feedback.query.application.dto.response.FeedbackUserResponse;
 import com.runninghi.feedback.query.application.service.FeedbackQueryService;
+import com.runninghi.feedback.query.domain.service.ApiFeedbackQueryDomainService;
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
 import com.runninghi.user.command.domain.repository.UserRepository;
@@ -15,20 +19,25 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Date;
+import java.util.List;
 
 @SpringBootTest
 @Transactional
 public class FeedbackQueryServiceTests {
 
     @Autowired
-    private FeedbackQueryService feedbackQueryService;
+    private ApiFeedbackQueryDomainService apiFeedbackQueryDomainService;
 
     @Autowired
-    private FeedbackRepository feedbackRepository;
+    private FeedbackCommandRepository feedbackCommandRepository;
+
+    @Autowired
+    private FeedbackQueryService feedbackQueryService;
 
     @Autowired
     private UserRepository userRepository;
@@ -48,13 +57,13 @@ public class FeedbackQueryServiceTests {
     @AfterEach
     void clear() {
         userRepository.deleteAll();
-        feedbackRepository.deleteAll();
+        feedbackCommandRepository.deleteAll();
     }
 
     @BeforeEach
     public void setUp() {
 
-        user1 = userRepository.save(User.builder()
+        user1 = userRepository.saveAndFlush(User.builder()
                 .account("qwerty1234")
                 .password(encoder.encode("1234"))
                 .name("김철수")
@@ -64,7 +73,7 @@ public class FeedbackQueryServiceTests {
                 .status(true)
                 .build());
 
-        user2 = userRepository.save(User.builder()
+        user2 = userRepository.saveAndFlush(User.builder()
                 .account("testUser")
                 .password(encoder.encode("1111"))
                 .name("testUUUUser")
@@ -88,7 +97,7 @@ public class FeedbackQueryServiceTests {
                 .feedbackCategory(feedbackCategory)
                 .build();
 
-        setUpFeedback1 = feedbackRepository.save(feedback);
+        setUpFeedback1 = feedbackCommandRepository.saveAndFlush(feedback);
 
         FeedbackCategory feedbackCategory2 = FeedbackCategory.fromValue(2);
 
@@ -103,7 +112,7 @@ public class FeedbackQueryServiceTests {
                 .feedbackCategory(feedbackCategory2)
                 .build();
 
-        setUpFeedback2 = feedbackRepository.save(feedback2);
+        setUpFeedback2 = feedbackCommandRepository.saveAndFlush(feedback2);
     }
 
     @Test
@@ -111,10 +120,13 @@ public class FeedbackQueryServiceTests {
     void checkFindFeedbackAllTest() {
 
         FeedbackFindRequest feedbackFindRequest = new FeedbackFindRequest(null, null);
+        Pageable pageable = PageRequest.of(0, 1);
 
-        Page<FeedbackFindResponse> feedbackPage = feedbackQueryService.findAllFeedback(feedbackFindRequest, Pageable.unpaged());
+        Page<FeedbackFindResponse> feedbackPage = feedbackQueryService.findAllFeedback(feedbackFindRequest, pageable);
 
-        Assertions.assertEquals(feedbackRepository.count(), feedbackPage.getTotalElements());
+        Assertions.assertEquals(feedbackCommandRepository.count(), feedbackPage.getTotalElements());
+        Assertions.assertEquals(2, feedbackPage.getTotalPages());
+
     }
 
     @Test
@@ -122,11 +134,45 @@ public class FeedbackQueryServiceTests {
     void checkFindFeedbackWithCategoryTest() {
 
         FeedbackFindRequest feedbackFindRequest = new FeedbackFindRequest(null, 1);
+        Pageable pageable = PageRequest.of(0, 1);
 
-        Page<FeedbackFindResponse> feedbackPage = feedbackQueryService.findAllFeedback(feedbackFindRequest, Pageable.unpaged());
+        Page<FeedbackFindResponse> feedbackPage = feedbackQueryService.findAllFeedback(feedbackFindRequest, pageable);
 
         Assertions.assertEquals(1, feedbackPage.getTotalElements());
         Assertions.assertEquals(setUpFeedback1.getFeedbackTitle(), feedbackPage.getContent().get(0).feedbackTitle());
+        Assertions.assertEquals(1, feedbackPage.getTotalPages());
+
+    }
+
+    @Test
+    @DisplayName("피드백 조회 테스트 : 답변 여부로 조회 success")
+    void checkFindFeedbackWithReplyStatusTest() {
+        FeedbackStatusRequest feedbackStatusRequest1 = new FeedbackStatusRequest(true);
+        FeedbackStatusRequest feedbackStatusRequest2 = new FeedbackStatusRequest(false);
+        Pageable pageable = PageRequest.of(0, 1);
+
+        Page<FeedbackStatusResponse> feedbackPage1 = feedbackQueryService.findFeedbackbyReplyStatus(feedbackStatusRequest1, pageable);
+        Page<FeedbackStatusResponse> feedbackPage2 = feedbackQueryService.findFeedbackbyReplyStatus(feedbackStatusRequest2, pageable);
+
+        Assertions.assertEquals(0, feedbackPage1.getTotalElements());
+        Assertions.assertEquals(2, feedbackPage2.getTotalElements());
+        Assertions.assertEquals(2, feedbackPage2.getTotalPages());
+
+    }
+
+    @Test
+    @DisplayName("피드백 조회 테스트 : 본인의 피드백 전체 조회 success")
+    void checkFindFeedbackMyPageTest() {
+
+        FeedbackUserResponse feedbackUserResponse = apiFeedbackQueryDomainService.checkUser(user1.getId());
+        Pageable pageable = PageRequest.of(0, 1);
+
+        Page<Feedback> feedbackPage = feedbackQueryService.findFeedbackMyPage(feedbackUserResponse, pageable);
+        List<Feedback> feedbackList = feedbackPage.stream().toList();
+
+        Assertions.assertEquals(2, feedbackPage.getTotalElements());
+        Assertions.assertEquals(setUpFeedback1.getFeedbackNo(), feedbackList.get(0).getFeedbackNo());
+        Assertions.assertEquals(2, feedbackPage.getTotalPages());
 
     }
 
