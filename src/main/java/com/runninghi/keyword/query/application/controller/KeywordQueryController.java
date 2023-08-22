@@ -1,6 +1,6 @@
 package com.runninghi.keyword.query.application.controller;
 
-import com.runninghi.keyword.query.application.dto.response.GetKeywordListResponse;
+import com.runninghi.keyword.query.application.dto.response.FindKeywordResponse;
 import com.runninghi.keyword.query.application.service.KeywordQueryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -20,8 +20,8 @@ public class KeywordQueryController {
 
     @Operation(summary = "전체 키워드 목록 조회")
     @GetMapping("api/v1/keyword")
-    public ResponseEntity<List<GetKeywordListResponse>> findKeywordList() {
-        List<GetKeywordListResponse> keywordList = keywordQueryService.getKeywordList();
+    public ResponseEntity<List<FindKeywordResponse>> findKeywordList() {
+        List<FindKeywordResponse> keywordList = keywordQueryService.findKeywordList();
         return ResponseEntity.ok(keywordList);
     }
 
