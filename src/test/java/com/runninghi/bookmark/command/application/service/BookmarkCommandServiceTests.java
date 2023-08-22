@@ -22,7 +22,7 @@ import java.util.UUID;
 public class BookmarkCommandServiceTests {
 
     @Autowired
-    private CommandBookmarkService commandBookmarkService;
+    private BookmarkCommandService commandBookmarkService;
 
     @Autowired
     private BookmarkRepository bookmarkRepository;
@@ -42,6 +42,8 @@ public class BookmarkCommandServiceTests {
         commandBookmarkService.createBookmark(bookmarkRequest);
 
         Long afterSize = bookmarkRepository.count();
+
+        System.out.println(beforeSize + afterSize);
 
         Assertions.assertEquals(beforeSize + 1, afterSize);
 
