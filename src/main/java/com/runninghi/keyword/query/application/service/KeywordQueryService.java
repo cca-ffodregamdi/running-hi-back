@@ -13,11 +13,11 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class KeywordQueryService {
 
     private final KeywordQueryRepository keywordQueryRepository;
 
-    @Transactional
     public List<FindKeywordResponse> findKeywordList() {
         List<Keyword> keywordListResponse = keywordQueryRepository.findAll();
         if (keywordListResponse.isEmpty()) {
@@ -30,7 +30,6 @@ public class KeywordQueryService {
         return keywordList;
     }
 
-    @Transactional
     public FindKeywordResponse findKeyword(String keywordName) {
         return keywordQueryRepository.findKeywordByKeywordName(keywordName)
                 .map(FindKeywordResponse::of)
@@ -39,4 +38,11 @@ public class KeywordQueryService {
                 );
     }
 
+    public FindKeywordResponse findKeywordByKeywordNo(Long keywordNo) {
+        return keywordQueryRepository.findById(keywordNo)
+                .map(FindKeywordResponse::of)
+                .orElseThrow(
+                        () -> new NotFoundException("일치하는 키워드가 없습니다.")
+                );
+    }
 }
