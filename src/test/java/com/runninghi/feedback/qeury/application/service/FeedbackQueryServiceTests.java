@@ -9,7 +9,7 @@ import com.runninghi.feedback.query.application.dto.response.FeedbackFindRespons
 import com.runninghi.feedback.query.application.service.FeedbackQueryService;
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
-import com.runninghi.user.command.domain.repository.UserRepository;
+import com.runninghi.user.command.domain.repository.UserCommandRepository;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class FeedbackQueryServiceTests {
     private FeedbackRepository feedbackRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserCommandRepository userRepository;
 
     @Autowired
     private PasswordEncoder encoder;

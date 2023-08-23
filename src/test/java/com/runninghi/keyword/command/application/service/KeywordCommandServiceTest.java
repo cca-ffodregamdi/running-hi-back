@@ -4,14 +4,15 @@ import com.runninghi.keyword.command.application.dto.response.KeywordCreateRespo
 import com.runninghi.keyword.command.domain.repository.KeywordCommandRepository;
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
-import com.runninghi.user.command.domain.repository.UserRepository;
-import org.junit.jupiter.api.*;
+import com.runninghi.user.command.domain.repository.UserCommandRepository;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import org.assertj.core.api.Assertions;
+import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 @Transactional
@@ -22,7 +23,7 @@ class KeywordCommandServiceTest {
     @Autowired
     private KeywordCommandRepository keywordCommandRepository;
     @Autowired
-    private UserRepository userRepository;
+    private UserCommandRepository userRepository;
     @Autowired
     private PasswordEncoder encoder;
 
@@ -46,7 +47,7 @@ class KeywordCommandServiceTest {
         // when & then
         Assertions.assertThatCode(
                 () -> keywordCommandService.checkAdminByUserKey(admin.getId())
-                ).doesNotThrowAnyException();
+        ).doesNotThrowAnyException();
     }
 
     @DisplayName("키워드 생성 테스트 : 일반 유저가 생성 시도 시 예외처리 확인")
@@ -76,7 +77,7 @@ class KeywordCommandServiceTest {
         Long beforeSize = keywordCommandRepository.count();
 
         // when
-        KeywordCreateResponse  insertedKeyword = keywordCommandService.createKeyword("낮과 밤");
+        KeywordCreateResponse insertedKeyword = keywordCommandService.createKeyword("낮과 밤");
         Long afterSize = keywordCommandRepository.count();
 
         // then

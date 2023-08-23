@@ -4,7 +4,7 @@ import com.runninghi.user.command.application.dto.user.request.UserUpdateRequest
 import com.runninghi.user.command.application.dto.user.response.UserDeleteResponse;
 import com.runninghi.user.command.application.dto.user.response.UserInfoResponse;
 import com.runninghi.user.command.application.dto.user.response.UserUpdateResponse;
-import com.runninghi.user.command.domain.repository.UserRepository;
+import com.runninghi.user.command.domain.repository.UserCommandRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,14 +15,14 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
-public class UserService {
-    private final UserRepository userRepository;
+public class UserCommandService {
+    private final UserCommandRepository userCommandRepository;
     private final PasswordEncoder encoder;
 
     // 회원 정보 조회
     @Transactional(readOnly = true)
     public UserInfoResponse findUserInfo(UUID id) {
-        return userRepository.findById(id)
+        return userCommandRepository.findById(id)
                 .map(UserInfoResponse::from)
                 .orElseThrow(() -> new NoSuchElementException("존재하지 않는 회원입니다."));
     }
@@ -30,15 +30,15 @@ public class UserService {
     // 회원 탈퇴
     @Transactional
     public UserDeleteResponse deleteUser(UUID id) {
-        if (!userRepository.existsById(id)) return new UserDeleteResponse(false);
-        userRepository.deleteById(id);
+        if (!userCommandRepository.existsById(id)) return new UserDeleteResponse(false);
+        userCommandRepository.deleteById(id);
         return new UserDeleteResponse(true);
     }
 
     // 회원 정보 수정
     @Transactional
     public UserUpdateResponse updateUser(UUID id, UserUpdateRequest request) {
-        return userRepository.findById(id)
+        return userCommandRepository.findById(id)
                 .filter(user -> encoder.matches(request.password(), user.getPassword()))
                 .map(user -> {
                     user.update(request, encoder);

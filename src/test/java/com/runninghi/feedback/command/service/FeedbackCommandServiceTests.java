@@ -7,7 +7,7 @@ import com.runninghi.feedback.command.application.service.FeedbackCommandService
 import com.runninghi.feedback.command.domain.repository.FeedbackRepository;
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
-import com.runninghi.user.command.domain.repository.UserRepository;
+import com.runninghi.user.command.domain.repository.UserCommandRepository;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,7 +28,7 @@ public class FeedbackCommandServiceTests {
     private FeedbackRepository feedbackRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserCommandRepository userRepository;
 
     @Autowired
     private PasswordEncoder encoder;

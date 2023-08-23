@@ -4,10 +4,10 @@ import com.runninghi.user.command.application.dto.sign_in.request.SignInRequest;
 import com.runninghi.user.command.application.dto.sign_in.response.SignInResponse;
 import com.runninghi.user.command.application.dto.sign_up.request.SignUpRequest;
 import com.runninghi.user.command.application.dto.sign_up.response.SignUpResponse;
-import com.runninghi.user.command.application.service.SignService;
+import com.runninghi.user.command.application.service.SignCommandService;
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
-import com.runninghi.user.command.domain.repository.UserRepository;
+import com.runninghi.user.command.domain.repository.UserCommandRepository;
 import com.runninghi.user.query.infrastructure.repository.UserRefreshTokenRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
@@ -19,14 +19,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootTest
-class SignServiceTest {
-    private final SignService signService;
-    private final UserRepository userRepository;
+class SignCommandServiceTest {
+    private final SignCommandService signService;
+    private final UserCommandRepository userRepository;
     private final UserRefreshTokenRepository userRefreshTokenRepository;
     private final PasswordEncoder encoder;
 
     @Autowired
-    SignServiceTest(SignService signService, UserRepository userRepository, UserRefreshTokenRepository userRefreshTokenRepository, PasswordEncoder encoder) {
+    SignCommandServiceTest(SignCommandService signService, UserCommandRepository userRepository, UserRefreshTokenRepository userRefreshTokenRepository, PasswordEncoder encoder) {
         this.signService = signService;
         this.userRepository = userRepository;
         this.userRefreshTokenRepository = userRefreshTokenRepository;

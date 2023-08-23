@@ -14,7 +14,7 @@ import com.runninghi.feedback.command.domain.aggregate.vo.FeedbackWriterVO;
 import com.runninghi.feedback.command.domain.repository.FeedbackRepository;
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
-import com.runninghi.user.command.domain.repository.UserRepository;
+import com.runninghi.user.command.domain.repository.UserCommandRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,7 +27,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class FeedbackCommandService {
     private final FeedbackRepository feedbackRepository;
-    private final UserRepository userRepository;
+    private final UserCommandRepository userRepository;
 
     // 피드백 저장
     @Transactional

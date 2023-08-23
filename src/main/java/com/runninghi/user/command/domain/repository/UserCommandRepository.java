@@ -12,9 +12,9 @@ import java.util.UUID;
 
 @Repository
 @Transactional
-public interface UserRepository extends JpaRepository<User, UUID> {
-    Optional<User> findByAccount(String account);
+public interface UserCommandRepository extends JpaRepository<User, UUID> {
+    Optional<User> findUserByAccount(String account);
 
-    List<User> findAllByRole(Role role);
+    List<User> findAllUserByRole(Role role);
 }
 

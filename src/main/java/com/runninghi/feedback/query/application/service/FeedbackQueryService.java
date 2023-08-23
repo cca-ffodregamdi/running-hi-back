@@ -2,15 +2,15 @@ package com.runninghi.feedback.query.application.service;
 
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
 import com.runninghi.common.handler.feedback.customException.UnauthorizedAccessException;
-import com.runninghi.feedback.command.domain.repository.FeedbackRepository;
-import com.runninghi.feedback.query.application.dto.request.FeedbackFindRequest;
-import com.runninghi.feedback.query.application.dto.response.FeedbackFindResponse;
 import com.runninghi.feedback.command.application.dto.response.FeedbackResponse;
 import com.runninghi.feedback.command.domain.aggregate.entity.Feedback;
 import com.runninghi.feedback.command.domain.aggregate.entity.FeedbackCategory;
+import com.runninghi.feedback.command.domain.repository.FeedbackRepository;
+import com.runninghi.feedback.query.application.dto.request.FeedbackFindRequest;
+import com.runninghi.feedback.query.application.dto.response.FeedbackFindResponse;
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
-import com.runninghi.user.command.domain.repository.UserRepository;
+import com.runninghi.user.command.domain.repository.UserCommandRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,7 +24,7 @@ import java.util.UUID;
 public class FeedbackQueryService {
 
     private final FeedbackRepository feedbackRepository;
-    private final UserRepository userRepository;
+    private final UserCommandRepository userRepository;
 
     // 피드백 조회 (본인, 관리자)
     @Transactional
@@ -53,8 +53,7 @@ public class FeedbackQueryService {
         if (feedbackFindRequest.feedbackCategory() == null) {
             // 필터링없이 전체 조회
             feedbackPage = feedbackRepository.findAllFeedback(pageable);
-        }
-        else {
+        } else {
             // 카테고리로 필터링할 때
             feedbackPage = feedbackRepository.findFeedbacksByFeedbackCategory(FeedbackCategory.fromValue(feedbackFindRequest.feedbackCategory()), pageable);
         }

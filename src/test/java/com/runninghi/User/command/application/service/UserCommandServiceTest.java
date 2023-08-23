@@ -4,10 +4,10 @@ import com.runninghi.user.command.application.dto.user.request.UserUpdateRequest
 import com.runninghi.user.command.application.dto.user.response.UserDeleteResponse;
 import com.runninghi.user.command.application.dto.user.response.UserInfoResponse;
 import com.runninghi.user.command.application.dto.user.response.UserUpdateResponse;
-import com.runninghi.user.command.application.service.UserService;
+import com.runninghi.user.command.application.service.UserCommandService;
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
-import com.runninghi.user.command.domain.repository.UserRepository;
+import com.runninghi.user.command.domain.repository.UserCommandRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -25,13 +25,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 @SpringBootTest
-public class UserServiceTest {
-    private final UserService userService;
-    private final UserRepository userRepository;
+public class UserCommandServiceTest {
+    private final UserCommandService userService;
+    private final UserCommandRepository userRepository;
     private final PasswordEncoder encoder;
 
     @Autowired
-    UserServiceTest(UserService userService, UserRepository userRepository, PasswordEncoder encoder) {
+    UserCommandServiceTest(UserCommandService userService, UserCommandRepository userRepository, PasswordEncoder encoder) {
         this.userService = userService;
         this.userRepository = userRepository;
         this.encoder = encoder;

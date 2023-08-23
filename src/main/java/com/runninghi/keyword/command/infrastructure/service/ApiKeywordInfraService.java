@@ -4,7 +4,7 @@ import com.runninghi.common.annotation.InfraService;
 import com.runninghi.keyword.command.application.dto.response.UserCheckResponse;
 import com.runninghi.keyword.command.domain.service.ApiKeywordDomainService;
 import com.runninghi.user.command.application.dto.user.response.UserInfoResponse;
-import com.runninghi.user.command.application.service.UserService;
+import com.runninghi.user.command.application.service.UserCommandService;
 import lombok.RequiredArgsConstructor;
 
 import java.util.UUID;
@@ -13,7 +13,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ApiKeywordInfraService implements ApiKeywordDomainService {
 
-    private final UserService userService;
+    private final UserCommandService userService;
 
     @Override
     public UserCheckResponse checkUserByUserKey(UUID userKey) {

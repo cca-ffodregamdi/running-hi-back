@@ -2,7 +2,7 @@ package com.runninghi;
 
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
-import com.runninghi.user.command.domain.repository.UserRepository;
+import com.runninghi.user.command.domain.repository.UserCommandRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Component
 public class AdminInitializer implements ApplicationRunner {
-    private final UserRepository userRepository;
+    private final UserCommandRepository userRepository;
     private final PasswordEncoder encoder;
 
     @Override

@@ -2,10 +2,10 @@ package com.runninghi.User.command.application.service;
 
 
 import com.runninghi.user.command.application.dto.user.response.UserInfoResponse;
-import com.runninghi.user.command.application.service.AdminService;
+import com.runninghi.user.command.application.service.AdminCommandService;
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
-import com.runninghi.user.command.domain.repository.UserRepository;
+import com.runninghi.user.command.domain.repository.UserCommandRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,13 +18,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.List;
 
 @SpringBootTest
-public class AdminServiceTest {
-    private final AdminService adminService;
-    private final UserRepository userRepository;
+public class AdminCommandServiceTest {
+    private final AdminCommandService adminService;
+    private final UserCommandRepository userRepository;
     private final PasswordEncoder encoder;
 
     @Autowired
-    AdminServiceTest(AdminService adminService, UserRepository userRepository, PasswordEncoder encoder) {
+    AdminCommandServiceTest(AdminCommandService adminService, UserCommandRepository userRepository, PasswordEncoder encoder) {
         this.adminService = adminService;
         this.userRepository = userRepository;
         this.encoder = encoder;
