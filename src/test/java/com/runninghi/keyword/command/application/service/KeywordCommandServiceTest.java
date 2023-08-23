@@ -2,8 +2,7 @@ package com.runninghi.keyword.command.application.service;
 
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
 import com.runninghi.keyword.command.application.dto.request.KeywordUpdateRequest;
-import com.runninghi.keyword.command.application.dto.response.KeywordCreateResponse;
-import com.runninghi.keyword.command.application.dto.response.KeywordUpdateResponse;
+import com.runninghi.keyword.command.application.dto.response.KeywordResponse;
 import com.runninghi.keyword.command.domain.aggregate.entity.Keyword;
 import com.runninghi.keyword.command.domain.repository.KeywordCommandRepository;
 import com.runninghi.user.command.domain.aggregate.entity.User;
@@ -81,6 +80,7 @@ class KeywordCommandServiceTest {
         Long beforeSize = keywordCommandRepository.count();
 
         // when
+        KeywordResponse insertedKeyword = keywordCommandService.createKeyword("낮과 밤");
         KeywordCreateResponse insertedKeyword = keywordCommandService.createKeyword("낮과 밤");
         Long afterSize = keywordCommandRepository.count();
 
@@ -108,7 +108,7 @@ class KeywordCommandServiceTest {
         );
 
         // when
-        KeywordUpdateResponse result = keywordCommandService.updateKeyword(request);
+        KeywordResponse result = keywordCommandService.updateKeyword(request);
 
         // when & then
         Assertions.assertThat(result.keywordName())
@@ -133,7 +133,37 @@ class KeywordCommandServiceTest {
                 () -> keywordCommandService.updateKeyword(request)
         )
                 .isInstanceOf(NotFoundException.class)
-                .hasMessage("존재하지 않는 키워드입니다.");
+                .hasMessage("일치하는 키워드가 없습니다.");
 
+    }
+
+    @DisplayName("키워드 삭제 테스트 : success")
+    @Test
+    void testDeleteKeywordSuccess () {
+
+        // given
+        KeywordResponse testCreated = keywordCommandService.createKeyword("테테스스트트");
+
+        // when
+        int response = keywordCommandService.deleteKeyword(testCreated.keywordNo());
+
+        // then
+        Assertions.assertThat(response)
+                .isEqualTo(1);
+    }
+
+    @DisplayName("키워드 삭제 테스트 : 키워드가 존재하지 않을 때 Not Found 예외 처리 되는 지 확인")
+    @Test
+    void testDeleteKeywordNotFound () {
+
+        // given
+        keywordCommandRepository.deleteAll();
+
+        // when & then
+        Assertions.assertThatThrownBy(
+                () -> keywordCommandService.deleteKeyword(1L)
+        )
+                .isInstanceOf(NotFoundException.class)
+                .hasMessage("일치하는 키워드가 없습니다.");
     }
 }
