@@ -9,6 +9,7 @@ import com.runninghi.bookmark.query.application.service.BookmarkQueryService;
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,11 @@ public class BookmarkCommandServiceTests {
 
     @Autowired
     private BookmarkQueryService queryBookmarkService;
+
+    @BeforeEach
+    void clear() {
+        bookmarkRepository.deleteAllInBatch();
+    }
 
 
     @Test

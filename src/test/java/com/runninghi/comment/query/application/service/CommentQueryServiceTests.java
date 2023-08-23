@@ -9,6 +9,7 @@ import com.runninghi.comment.query.application.dto.request.FindCommentRequest;
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,11 @@ public class CommentQueryServiceTests {
 
     @Autowired
     private CommentCommandService createCommentService;
+
+    @BeforeEach
+    void clear() {
+        commentRepository.deleteAllInBatch();
+    }
 
     @Test
     @DisplayName("댓글 전체 조회 테스트 : success")

@@ -8,7 +8,7 @@ import com.runninghi.feedback.command.domain.aggregate.entity.Feedback;
 import com.runninghi.feedback.command.domain.aggregate.entity.FeedbackCategory;
 import com.runninghi.feedback.command.domain.aggregate.vo.FeedbackWriterVO;
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
-import com.runninghi.feedback.command.domain.repository.FeedbackRepository;
+import com.runninghi.feedback.command.domain.repository.FeedbackCommandRepository;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,14 +26,14 @@ public class FeedbackReplyCommandServiceTests {
     private FeedbackReplyCommandService feedbackReplyCommandService;
 
     @Autowired
-    private FeedbackRepository feedbackRepository;
+    private FeedbackCommandRepository feedbackCommandRepository;
 
     private Feedback setUpFeedback;
 
     @BeforeEach
     @AfterEach
     void clear() {
-        feedbackRepository.deleteAll();
+        feedbackCommandRepository.deleteAll();
     }
 
     @BeforeEach
@@ -53,7 +53,7 @@ public class FeedbackReplyCommandServiceTests {
                 .feedbackCategory(feedbackCategory)
                 .build();
 
-        setUpFeedback = feedbackRepository.save(feedback);
+        setUpFeedback = feedbackCommandRepository.save(feedback);
 
     }
 
@@ -65,7 +65,7 @@ public class FeedbackReplyCommandServiceTests {
         FeedbackReplyCreateRequest feedbackReplyCreateRequest = new FeedbackReplyCreateRequest(setUpFeedback.getFeedbackNo(), feedbackReply);
         FeedbackResponse feedbackResponse = feedbackReplyCommandService.createFeedbackReply(feedbackReplyCreateRequest);
 
-        Optional<Feedback> feedbackOptional = feedbackRepository.findByFeedbackNo(feedbackResponse.feedbackNo());
+        Optional<Feedback> feedbackOptional = feedbackCommandRepository.findByFeedbackNo(feedbackResponse.feedbackNo());
         Feedback feedback = feedbackOptional.get();
 
         Assertions.assertEquals(feedbackReply, feedback.getFeedbackReply());
@@ -95,7 +95,7 @@ public class FeedbackReplyCommandServiceTests {
         Thread.sleep(1000);
         FeedbackResponse feedbackResponse = feedbackReplyCommandService.updateFeedbackReply(feedbackReplyUpdateRequest);
 
-        Feedback updateFeedback = feedbackRepository.findByFeedbackNo(feedbackResponse.feedbackNo()).get();
+        Feedback updateFeedback = feedbackCommandRepository.findByFeedbackNo(feedbackResponse.feedbackNo()).get();
 
         Assertions.assertEquals(feedbackReply, updateFeedback.getFeedbackReply());
         Assertions.assertNotEquals(date, updateFeedback.getFeedbackReplyDate());
@@ -121,7 +121,7 @@ public class FeedbackReplyCommandServiceTests {
 
         feedbackReplyCommandService.deleteFeedbackReply(feedbackReplyDeleteRequest);
 
-        Feedback feedback = feedbackRepository.findByFeedbackNo(setUpFeedback.getFeedbackNo()).get();
+        Feedback feedback = feedbackCommandRepository.findByFeedbackNo(setUpFeedback.getFeedbackNo()).get();
 
         Assertions.assertNull(feedback.getFeedbackReply());
         Assertions.assertNull(feedback.getFeedbackReplyDate());
@@ -132,7 +132,7 @@ public class FeedbackReplyCommandServiceTests {
     @DisplayName("피드백 답변 삭제 테스트 : 피드백 없을 시 예외처리")
     void checkFeedbackExistInDeleteFeedbackReplyTest() {
 
-        long before = feedbackRepository.count();
+        long before = feedbackCommandRepository.count();
 
         FeedbackReplyDeleteRequest feedbackReplyDeleteRequest = new FeedbackReplyDeleteRequest(before + 1);
 

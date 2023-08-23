@@ -21,4 +21,9 @@ public class Keyword {
         this.keywordNo = keywordNo;
         this.keywordName = keywordName;
     }
+
+    public void update (String keywordName) {
+        this.keywordName = keywordName;
+    }
+
 }

@@ -4,8 +4,9 @@ import com.runninghi.feedback.command.application.dto.response.FeedbackUserRespo
 
 import java.util.UUID;
 
-public interface ApiFeedbackDomainService {
+public interface ApiFeedbackCommandDomainService {
 
+    // 회원 찾기
     FeedbackUserResponse checkUser(UUID userId);
 
 }

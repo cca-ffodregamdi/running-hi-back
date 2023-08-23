@@ -9,7 +9,7 @@ public record FindKeywordResponse(
         @Schema(description = "키워드 제목")
         String keywordName
 ) {
-        public static FindKeywordResponse from(Keyword keyword) {
+        public static FindKeywordResponse of(Keyword keyword) {
                 return new FindKeywordResponse(
                         keyword.getKeywordNo(),
                         keyword.getKeywordName()

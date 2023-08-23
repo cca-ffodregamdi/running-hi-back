@@ -4,11 +4,13 @@ import com.runninghi.bookmark.command.application.dto.request.CreateBookmarkRequ
 import com.runninghi.bookmark.command.application.service.BookmarkCommandService;
 import com.runninghi.bookmark.command.domain.aggregate.entity.Bookmark;
 import com.runninghi.bookmark.command.domain.aggregate.vo.BookmarkVO;
+import com.runninghi.bookmark.command.domain.repository.BookmarkRepository;
 import com.runninghi.bookmark.query.application.dto.FindBookmarkListRequest;
 import com.runninghi.bookmark.query.application.dto.FindBookmarkRequest;
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,15 @@ public class BookmarkQueryServiceTests {
 
     @Autowired
     BookmarkQueryService queryBookmarkService;
+
+    @Autowired
+    BookmarkRepository bookmarkRepository;
+
+    @BeforeEach
+    void clear() {
+        bookmarkRepository.deleteAllInBatch();
+    }
+
 
     @Test
     @DisplayName("즐겨찾기 조회 테스트 : success - 특정 즐겨찾기")
