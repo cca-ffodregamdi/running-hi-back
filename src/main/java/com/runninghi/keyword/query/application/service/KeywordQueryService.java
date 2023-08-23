@@ -39,4 +39,12 @@ public class KeywordQueryService {
                 );
     }
 
+    @Transactional
+    public FindKeywordResponse findKeywordByKeywordNo(Long keywordNo) {
+        return keywordQueryRepository.findById(keywordNo)
+                .map(FindKeywordResponse::of)
+                .orElseThrow(
+                        () -> new NotFoundException("일치하는 키워드가 없습니다.")
+                );
+    }
 }
