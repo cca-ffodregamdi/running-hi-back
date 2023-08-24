@@ -102,11 +102,11 @@ public class BookmarkFolderCommandServiceTests {
 
         UpdateFolderRequest updateFolder = new UpdateFolderRequest(folder.getFolderNo(), "updated",folder.getUserNo());
 
-        BookmarkFolder update = commandBookmarkFolderService.updateBookmarkFolder(updateFolder);
+        commandBookmarkFolderService.updateBookmarkFolder(updateFolder);
 
         BookmarkFolder bookmarkFolder = bookmarkFolderQueryService.findBookmarkFolder(new FindFolderRequest(folder.getFolderNo()));
 
-        Assertions.assertEquals(bookmarkFolder, update);
+        Assertions.assertSame(bookmarkFolder.getFolderName(), "updated");
     }
 
     @Test

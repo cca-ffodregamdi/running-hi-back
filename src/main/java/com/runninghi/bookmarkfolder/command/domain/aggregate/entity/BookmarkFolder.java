@@ -1,6 +1,8 @@
 package com.runninghi.bookmarkfolder.command.domain.aggregate.entity;
 
 
+import com.runninghi.bookmarkfolder.command.application.dto.request.UpdateFolderRequest;
+import com.runninghi.comment.command.application.dto.request.UpdateCommentRequest;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -31,6 +33,10 @@ public class BookmarkFolder {
         this.folderNo = folderNo;
         this.folderName = folderName;
         this.userNo = userNo;
+    }
+
+    public void update(UpdateFolderRequest folderRequest) {
+        this.folderName = folderRequest.folderName();
     }
 
 }
