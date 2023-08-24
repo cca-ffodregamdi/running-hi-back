@@ -5,6 +5,7 @@ import com.runninghi.comment.command.domain.aggregate.entity.Comment;
 import com.runninghi.comment.command.domain.repository.CommentRepository;
 import com.runninghi.comment.query.application.dto.request.FindAllCommentsRequest;
 import com.runninghi.comment.query.application.dto.request.FindCommentRequest;
+import com.runninghi.comment.query.application.dto.response.CommentQueryResponse;
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -31,9 +32,11 @@ public class CommentQueryService {
     }
 
     @Transactional(readOnly = true)
-    public Comment findComment(FindCommentRequest commentDTO) {
+    public CommentQueryResponse findComment(FindCommentRequest commentDTO) {
 
-       return commentRepository.findById(commentDTO.commentNo())
+       Comment comment = commentRepository.findById(commentDTO.commentNo())
                .orElseThrow(() -> new NotFoundException("존재하지 않는 댓글 입니다."));
+
+       return CommentQueryResponse.from(comment);
     }
 }

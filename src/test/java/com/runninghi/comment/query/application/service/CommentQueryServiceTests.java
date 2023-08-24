@@ -1,11 +1,13 @@
 package com.runninghi.comment.query.application.service;
 
 import com.runninghi.comment.command.application.dto.request.CreateCommentRequest;
+import com.runninghi.comment.command.application.dto.response.CommentCommandResponse;
 import com.runninghi.comment.command.application.service.CommentCommandService;
 import com.runninghi.comment.command.domain.aggregate.entity.Comment;
 import com.runninghi.comment.command.domain.repository.CommentRepository;
 import com.runninghi.comment.query.application.dto.request.FindAllCommentsRequest;
 import com.runninghi.comment.query.application.dto.request.FindCommentRequest;
+import com.runninghi.comment.query.application.dto.response.CommentQueryResponse;
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
@@ -64,9 +66,11 @@ public class CommentQueryServiceTests {
     void testFindCommentByCommentNo() {
 
         CreateCommentRequest commentRequest = new CreateCommentRequest(UUID.randomUUID(), 1L, "댓글 생성 테스트");
-        Comment comment = createCommentService.createComment(commentRequest);
+        CommentCommandResponse comment = createCommentService.createComment(commentRequest);
 
-        Assertions.assertEquals(comment, queryCommentService.findComment(new FindCommentRequest(comment.getCommentNo())));
+        CommentQueryResponse response = queryCommentService.findComment(new FindCommentRequest(comment.commentNo()));
+
+        Assertions.assertEquals(comment.commentNo(), response.commentNo());
 
     }
 
