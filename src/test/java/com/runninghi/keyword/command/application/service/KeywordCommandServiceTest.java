@@ -26,13 +26,13 @@ class KeywordCommandServiceTest {
     @Autowired
     private KeywordCommandRepository keywordCommandRepository;
     @Autowired
-    private UserCommandRepository userRepository;
+    private UserCommandRepository userCommandRepository;
     @Autowired
     private PasswordEncoder encoder;
 
     @BeforeEach
     void clear() {
-        userRepository.deleteAll();
+        userCommandRepository.deleteAll();
     }
 
     @DisplayName("키워드 생성 테스트 : 작성자가 관리자가 맞는 지 확인")
@@ -40,7 +40,7 @@ class KeywordCommandServiceTest {
     void testCheckAdminByAdminUserKey() {
 
         // given
-        User admin = userRepository.save(User.builder()
+        User admin = userCommandRepository.save(User.builder()
                 .account("qwerty1234")
                 .password(encoder.encode("1234"))
                 .name("qweqwe")
@@ -58,7 +58,7 @@ class KeywordCommandServiceTest {
     void testCheckAdminByUserUserKey() {
 
         // given
-        User admin = userRepository.save(User.builder()
+        User admin = userCommandRepository.save(User.builder()
                 .account("qwerty1234")
                 .password(encoder.encode("1234"))
                 .name("qweqwe")

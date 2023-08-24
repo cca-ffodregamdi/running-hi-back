@@ -40,7 +40,7 @@ public class FeedbackQueryServiceTests {
     private FeedbackQueryService feedbackQueryService;
 
     @Autowired
-    private UserCommandRepository userRepository;
+    private UserCommandRepository userCommandRepository;
 
     @Autowired
     private PasswordEncoder encoder;
@@ -56,14 +56,14 @@ public class FeedbackQueryServiceTests {
     @BeforeEach
     @AfterEach
     void clear() {
-        userRepository.deleteAll();
+        userCommandRepository.deleteAll();
         feedbackCommandRepository.deleteAll();
     }
 
     @BeforeEach
     public void setUp() {
 
-        user1 = userRepository.saveAndFlush(User.builder()
+        user1 = userCommandRepository.saveAndFlush(User.builder()
                 .account("qwerty1234")
                 .password(encoder.encode("1234"))
                 .name("김철수")
@@ -73,7 +73,7 @@ public class FeedbackQueryServiceTests {
                 .status(true)
                 .build());
 
-        user2 = userRepository.saveAndFlush(User.builder()
+        user2 = userCommandRepository.saveAndFlush(User.builder()
                 .account("testUser")
                 .password(encoder.encode("1111"))
                 .name("testUUUUser")

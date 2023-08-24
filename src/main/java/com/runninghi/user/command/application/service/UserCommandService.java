@@ -2,7 +2,6 @@ package com.runninghi.user.command.application.service;
 
 import com.runninghi.user.command.application.dto.user.request.UserUpdateRequest;
 import com.runninghi.user.command.application.dto.user.response.UserDeleteResponse;
-import com.runninghi.user.command.application.dto.user.response.UserInfoResponse;
 import com.runninghi.user.command.application.dto.user.response.UserUpdateResponse;
 import com.runninghi.user.command.domain.repository.UserCommandRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +9,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -19,13 +17,13 @@ public class UserCommandService {
     private final UserCommandRepository userCommandRepository;
     private final PasswordEncoder encoder;
 
-    // 회원 정보 조회
-    @Transactional(readOnly = true)
-    public UserInfoResponse findUserInfo(UUID id) {
-        return userCommandRepository.findById(id)
-                .map(UserInfoResponse::from)
-                .orElseThrow(() -> new NoSuchElementException("존재하지 않는 회원입니다."));
-    }
+//    // 회원 정보 조회
+//    @Transactional(readOnly = true)
+//    public UserInfoResponse findUserInfo(UUID id) {
+//        return userCommandRepository.findById(id)
+//                .map(UserInfoResponse::from)
+//                .orElseThrow(() -> new NoSuchElementException("존재하지 않는 회원입니다."));
+//    }
 
     // 회원 탈퇴
     @Transactional

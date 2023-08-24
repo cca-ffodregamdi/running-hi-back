@@ -39,7 +39,7 @@ public class CommentCommandControllerTests {
     @Autowired
     private CommentRepository commentRepository;
     @Autowired
-    private UserCommandRepository userRepository;
+    private UserCommandRepository userCommandRepository;
     @Autowired
     private PasswordEncoder encoder;
 
@@ -47,7 +47,7 @@ public class CommentCommandControllerTests {
     @AfterEach
     void clear() {
         commentRepository.deleteAllInBatch();
-        userRepository.deleteAllInBatch();
+        userCommandRepository.deleteAllInBatch();
     }
 
     @BeforeEach
@@ -59,7 +59,7 @@ public class CommentCommandControllerTests {
     @Test
     @DisplayName("댓글 생성 컨트롤러 : success")
     void createCommentControllerTest() throws Exception {
-        User user = userRepository.save(User.builder()
+        User user = userCommandRepository.save(User.builder()
                 .account("qwerty1234")
                 .password(encoder.encode("1234"))
                 .name("김철수")

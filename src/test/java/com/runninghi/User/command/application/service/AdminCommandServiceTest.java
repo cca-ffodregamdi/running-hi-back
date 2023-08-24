@@ -20,27 +20,27 @@ import java.util.List;
 @SpringBootTest
 public class AdminCommandServiceTest {
     private final AdminQueryService adminQueryService;
-    private final UserCommandRepository userRepository;
+    private final UserCommandRepository userCommandRepository;
     private final PasswordEncoder encoder;
 
     @Autowired
-    AdminCommandServiceTest(AdminQueryService adminQueryService, UserCommandRepository userRepository, PasswordEncoder encoder) {
+    AdminCommandServiceTest(AdminQueryService adminQueryService, UserCommandRepository userCommandRepository, PasswordEncoder encoder) {
         this.adminQueryService = adminQueryService;
-        this.userRepository = userRepository;
+        this.userCommandRepository = userCommandRepository;
         this.encoder = encoder;
     }
 
     @BeforeEach
     @AfterEach
     void clear() {
-        userRepository.deleteAllInBatch();
+        userCommandRepository.deleteAllInBatch();
     }
 
     @Test
     @DisplayName("모든 회원 정보 조회 테스트 : success")
     void findAllUserTest() {
         // given
-        userRepository.save(User.builder()
+        userCommandRepository.save(User.builder()
                 .account("qwerty1234")
                 .password(encoder.encode("1234"))
                 .name("김철수")
@@ -49,7 +49,7 @@ public class AdminCommandServiceTest {
                 .role(Role.USER)
                 .status(true)
                 .build());
-        userRepository.save(User.builder()
+        userCommandRepository.save(User.builder()
                 .account("asdfg1234")
                 .password(encoder.encode("1234"))
                 .name("나철수")
@@ -58,7 +58,7 @@ public class AdminCommandServiceTest {
                 .role(Role.USER)
                 .status(true)
                 .build());
-        userRepository.save(User.builder()
+        userCommandRepository.save(User.builder()
                 .account("zxcvb1234")
                 .password(encoder.encode("1234"))
                 .name("박철수")
@@ -95,7 +95,7 @@ public class AdminCommandServiceTest {
     @DisplayName("모든 관리자 정보 조회 테스트 : success")
     void findAllAdminTest() {
         // given
-        userRepository.save(User.builder()
+        userCommandRepository.save(User.builder()
                 .account("qwerty1234")
                 .password(encoder.encode("1234"))
                 .name("김철수")
@@ -104,7 +104,7 @@ public class AdminCommandServiceTest {
                 .role(Role.ADMIN)
                 .status(true)
                 .build());
-        userRepository.save(User.builder()
+        userCommandRepository.save(User.builder()
                 .account("asdfg1234")
                 .password(encoder.encode("1234"))
                 .name("나철수")
@@ -113,7 +113,7 @@ public class AdminCommandServiceTest {
                 .role(Role.ADMIN)
                 .status(true)
                 .build());
-        userRepository.save(User.builder()
+        userCommandRepository.save(User.builder()
                 .account("zxcvb1234")
                 .password(encoder.encode("1234"))
                 .name("박철수")
