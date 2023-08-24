@@ -8,7 +8,7 @@ import com.runninghi.user.command.application.service.SignCommandService;
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
 import com.runninghi.user.command.domain.repository.UserCommandRepository;
-import com.runninghi.user.query.infrastructure.repository.UserRefreshTokenRepository;
+import com.runninghi.user.query.infrastructure.repository.UserQueryRefreshTokenRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,11 +22,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 class SignCommandServiceTest {
     private final SignCommandService signService;
     private final UserCommandRepository userRepository;
-    private final UserRefreshTokenRepository userRefreshTokenRepository;
+    private final UserQueryRefreshTokenRepository userRefreshTokenRepository;
     private final PasswordEncoder encoder;
 
     @Autowired
-    SignCommandServiceTest(SignCommandService signService, UserCommandRepository userRepository, UserRefreshTokenRepository userRefreshTokenRepository, PasswordEncoder encoder) {
+    SignCommandServiceTest(SignCommandService signService, UserCommandRepository userRepository, UserQueryRefreshTokenRepository userRefreshTokenRepository, PasswordEncoder encoder) {
         this.signService = signService;
         this.userRepository = userRepository;
         this.userRefreshTokenRepository = userRefreshTokenRepository;

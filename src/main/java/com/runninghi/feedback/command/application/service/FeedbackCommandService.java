@@ -13,11 +13,6 @@ import com.runninghi.feedback.command.domain.aggregate.entity.FeedbackCategory;
 import com.runninghi.feedback.command.domain.aggregate.vo.FeedbackWriterVO;
 import com.runninghi.feedback.command.domain.repository.FeedbackCommandRepository;
 import com.runninghi.feedback.command.domain.service.FeedbackCommandDomainService;
-import com.runninghi.user.command.domain.repository.UserRepository;
-import com.runninghi.feedback.command.domain.repository.FeedbackRepository;
-import com.runninghi.user.command.domain.aggregate.entity.User;
-import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
-import com.runninghi.user.command.domain.repository.UserCommandRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -32,9 +27,6 @@ public class FeedbackCommandService {
     private final FeedbackCommandRepository feedbackCommandRepository;
 
     private final FeedbackCommandDomainService feedbackCommandDomainService;
-
-    private final UserCommandRepository userRepository;
-
 
 
     // 피드백 저장

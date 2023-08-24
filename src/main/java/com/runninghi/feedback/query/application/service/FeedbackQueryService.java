@@ -5,13 +5,6 @@ import com.runninghi.common.handler.feedback.customException.UnauthorizedAccessE
 import com.runninghi.feedback.command.application.dto.response.FeedbackResponse;
 import com.runninghi.feedback.command.domain.aggregate.entity.Feedback;
 import com.runninghi.feedback.command.domain.aggregate.entity.FeedbackCategory;
-import com.runninghi.feedback.command.domain.repository.FeedbackRepository;
-import com.runninghi.feedback.query.application.dto.request.FeedbackFindRequest;
-import com.runninghi.feedback.query.application.dto.response.FeedbackFindResponse;
-import com.runninghi.user.command.domain.aggregate.entity.User;
-import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
-import com.runninghi.user.command.domain.repository.UserCommandRepository;
-import jakarta.transaction.Transactional;
 import com.runninghi.feedback.command.domain.aggregate.vo.FeedbackWriterVO;
 import com.runninghi.feedback.query.application.dto.request.FeedbackFindRequest;
 import com.runninghi.feedback.query.application.dto.request.FeedbackStatusRequest;
@@ -31,7 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class FeedbackQueryService {
 
-    private final UserCommandRepository userRepository;
     private final FeedbackQueryRepository feedbackQueryRepository;
 
     private final FeedbackQueryDomainService feedbackQueryDomainService;
@@ -62,8 +54,7 @@ public class FeedbackQueryService {
         if (feedbackFindRequest.feedbackCategory() == null) {
             // 필터링없이 전체 조회
             feedbackPage = feedbackQueryRepository.findAll(pageable);
-        }
-        else {
+        } else {
             // 카테고리로 필터링할 때
             feedbackPage = feedbackQueryRepository.findFeedbacksByFeedbackCategory(FeedbackCategory.fromValue(feedbackFindRequest.feedbackCategory()), pageable);
         }

@@ -4,6 +4,7 @@ import com.runninghi.common.annotation.UserAuthorize;
 import com.runninghi.common.response.ApiResponse;
 import com.runninghi.user.command.application.dto.user.request.UserUpdateRequest;
 import com.runninghi.user.command.application.service.UserCommandService;
+import com.runninghi.user.query.application.service.UserQueryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -20,11 +21,12 @@ import java.util.UUID;
 @RequestMapping("/user")
 public class UserCommandController {
     private final UserCommandService userCommandService;
+    private final UserQueryService userQueryService;
 
     @Operation(summary = "회원 정보 조회")
     @GetMapping
     public ApiResponse getUserInfo(@AuthenticationPrincipal User user) {
-        return ApiResponse.success("조회 성공", userCommandService.findUserInfo(UUID.fromString(user.getUsername())));
+        return ApiResponse.success("조회 성공", userQueryService.findUserInfo(UUID.fromString(user.getUsername())));
     }
 
     @Operation(summary = "회원 탈퇴")

@@ -3,19 +3,25 @@ package com.runninghi.feedback.command.service;
 
 import com.runninghi.common.handler.feedback.customException.IllegalArgumentException;
 import com.runninghi.feedback.command.application.dto.request.FeedbackCreateRequest;
+import com.runninghi.feedback.command.application.dto.request.FeedbackDeleteRequest;
+import com.runninghi.feedback.command.application.dto.request.FeedbackUpdateRequest;
+import com.runninghi.feedback.command.application.dto.response.FeedbackUserResponse;
 import com.runninghi.feedback.command.application.service.FeedbackCommandService;
-import com.runninghi.feedback.command.domain.repository.FeedbackRepository;
+import com.runninghi.feedback.command.domain.aggregate.entity.Feedback;
+import com.runninghi.feedback.command.domain.aggregate.entity.FeedbackCategory;
+import com.runninghi.feedback.command.domain.aggregate.vo.FeedbackWriterVO;
+import com.runninghi.feedback.command.domain.repository.FeedbackCommandRepository;
+import com.runninghi.feedback.command.infrastructure.service.ApiFeedbackCommandInfraService;
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
 import com.runninghi.user.command.domain.repository.UserCommandRepository;
 import jakarta.transaction.Transactional;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.Date;
 
 @SpringBootTest
 @Transactional
@@ -31,7 +37,7 @@ public class FeedbackCommandServiceTests {
     private FeedbackCommandRepository feedbackCommandRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserCommandRepository userCommandRepository;
 
     @Autowired
     private PasswordEncoder encoder;
@@ -47,14 +53,14 @@ public class FeedbackCommandServiceTests {
     @BeforeEach
     @AfterEach
     void clear() {
-        userRepository.deleteAllInBatch();
+        userCommandRepository.deleteAllInBatch();
         feedbackCommandRepository.deleteAllInBatch();
     }
 
     @BeforeEach
     public void setUp() {
 
-        user1 = userRepository.saveAndFlush(User.builder()
+        user1 = userCommandRepository.saveAndFlush(User.builder()
                 .account("qwerty1234")
                 .password(encoder.encode("1234"))
                 .name("김철수")
@@ -64,7 +70,7 @@ public class FeedbackCommandServiceTests {
                 .status(true)
                 .build());
 
-        user2 = userRepository.saveAndFlush(User.builder()
+        user2 = userCommandRepository.saveAndFlush(User.builder()
                 .account("testUser")
                 .password(encoder.encode("1111"))
                 .name("testUUUUser")
