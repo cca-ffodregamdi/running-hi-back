@@ -14,6 +14,7 @@ import com.runninghi.bookmarkfolder.command.application.dto.response.FolderDelet
 import com.runninghi.bookmarkfolder.command.domain.aggregate.entity.BookmarkFolder;
 import com.runninghi.bookmarkfolder.command.domain.repository.BookmarkFolderRepository;
 import com.runninghi.bookmarkfolder.query.application.dto.request.FindFolderRequest;
+import com.runninghi.bookmarkfolder.query.application.dto.response.FolderQueryResponse;
 import com.runninghi.bookmarkfolder.query.application.service.BookmarkFolderQueryService;
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
 import jakarta.transaction.Transactional;
@@ -105,9 +106,9 @@ public class BookmarkFolderCommandServiceTests {
 
         commandBookmarkFolderService.updateBookmarkFolder(updateFolder);
 
-        BookmarkFolder bookmarkFolder = bookmarkFolderQueryService.findBookmarkFolder(new FindFolderRequest(folder.getFolderNo()));
+        FolderQueryResponse bookmarkFolder = bookmarkFolderQueryService.findBookmarkFolder(new FindFolderRequest(folder.getFolderNo()));
 
-        Assertions.assertSame(bookmarkFolder.getFolderName(), "updated");
+        Assertions.assertEquals(bookmarkFolder.folderName(), "updated");
     }
 
     @Test

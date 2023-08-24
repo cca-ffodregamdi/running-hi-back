@@ -2,6 +2,10 @@ package com.runninghi.bookmarkfolder.command.controller;
 
 import com.runninghi.bookmarkfolder.command.application.controller.FolderCommandController;
 import com.runninghi.bookmarkfolder.command.application.dto.request.CreateFolderRequest;
+import com.runninghi.bookmarkfolder.command.application.dto.request.DeleteFolderRequest;
+import com.runninghi.bookmarkfolder.command.application.dto.request.UpdateFolderRequest;
+import com.runninghi.bookmarkfolder.command.application.service.BookmarkFolderCommandService;
+import com.runninghi.bookmarkfolder.command.domain.aggregate.entity.BookmarkFolder;
 import com.runninghi.bookmarkfolder.command.domain.repository.BookmarkFolderRepository;
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
@@ -12,10 +16,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.util.Date;
+import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -37,6 +45,9 @@ public class FolderCommandControllerTests {
     @Autowired
     private PasswordEncoder encoder;
 
+    @MockBean
+    BookmarkFolderCommandService bookmarkFolderCommandService;
+
     @BeforeEach
     @AfterEach
     void clear() {
@@ -50,8 +61,8 @@ public class FolderCommandControllerTests {
     }
 
     @Test
-    @DisplayName("폴더 생성 컨트롤러 : success")
-    void testCreateFolder() throws Exception{
+    @DisplayName("즐겨찾기 폴더 생성 컨트롤러 : success")
+    void createFolderControllerTest() throws Exception {
         User user = userRepository.save(User.builder()
                 .account("qwerty1234")
                 .password(encoder.encode("1234"))
@@ -62,13 +73,48 @@ public class FolderCommandControllerTests {
                 .status(true)
                 .build());
 
-        CreateFolderRequest request = new CreateFolderRequest("test folder", user.getId());
-
-        System.out.println(String.valueOf(request));
+        CreateFolderRequest request = new CreateFolderRequest("폴더 생성 컨트롤러", user.getId());
 
         mock.perform(post("/api/v1/bookmark-folders")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(String.valueOf(request)))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("즐겨찾기 폴더 수정 컨트롤러 : success")
+    void updateCommentControllerTest() throws Exception {
+
+        BookmarkFolder folder = BookmarkFolder.builder()
+                .folderNo(999L)
+                .folderName("폴더 수정")
+                .userNo(UUID.randomUUID())
+                .build();
+
+        UpdateFolderRequest request = new UpdateFolderRequest(folder.getFolderNo(), "수정!!!", folder.getUserNo());
+
+        mock.perform(put("/api/v1/bookmark-folders/" + request.folderNo())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(String.valueOf(request)))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    @DisplayName("즐겨찾기 폴더 삭제 컨트롤러 : success")
+    void deleteCommentControllerTest() throws Exception {
+
+        BookmarkFolder folder = BookmarkFolder.builder()
+                .folderNo(999L)
+                .folderName("폴더 수정")
+                .userNo(UUID.randomUUID())
+                .build();
+
+        DeleteFolderRequest request = new DeleteFolderRequest(folder.getFolderNo());
+
+        mock.perform(delete("/api/v1/bookmark-folders/" + request.folderNo())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(String.valueOf(request)))
+                .andExpect(status().isOk());
+    }
+
 }
