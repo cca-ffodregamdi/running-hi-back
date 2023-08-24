@@ -3,7 +3,8 @@ package com.runninghi.comment.command.application.service;
 import com.runninghi.comment.command.application.dto.request.CreateCommentRequest;
 import com.runninghi.comment.command.application.dto.request.DeleteCommentRequest;
 import com.runninghi.comment.command.application.dto.request.UpdateCommentRequest;
-import com.runninghi.comment.command.domain.aggregate.entity.Comment;
+import com.runninghi.comment.command.application.dto.response.CommentCommandResponse;
+import com.runninghi.comment.command.application.dto.response.CommentDeleteResponse;
 import com.runninghi.comment.command.domain.repository.CommentRepository;
 import com.runninghi.comment.query.application.dto.request.FindCommentRequest;
 import com.runninghi.comment.query.application.service.CommentQueryService;
@@ -71,15 +72,27 @@ public class CommentCommandServiceTests {
     }
 
     @Test
-    @DisplayName("댓글 삭제 테스트 : success")
-    void testDeleteComment() {
+    @DisplayName("댓글 삭제 테스트 : success - response true")
+    void testDeleteCommentResponseTrue() {
 
         CreateCommentRequest commentRequest = new CreateCommentRequest(UUID.randomUUID(), 1L, "댓글 생성 테스트");
-        Comment comment = commentCommandService.createComment(commentRequest);
+        CommentCommandResponse comment = commentCommandService.createComment(commentRequest);
 
-        commentCommandService.deleteComment(new DeleteCommentRequest(comment.getCommentNo()));
+        CommentDeleteResponse response = commentCommandService.deleteComment(new DeleteCommentRequest(comment.commentNo()));
 
-        org.assertj.core.api.Assertions.assertThatThrownBy(() -> commentQueryService.findComment(new FindCommentRequest(comment.getCommentNo())))
+        Assertions.assertTrue(response.result());
+    }
+
+    @Test
+    @DisplayName("댓글 삭제 테스트 : success - 조회 시 예외처리")
+    void testDeleteCommentFindException() {
+
+        CreateCommentRequest commentRequest = new CreateCommentRequest(UUID.randomUUID(), 1L, "댓글 생성 테스트");
+        CommentCommandResponse comment = commentCommandService.createComment(commentRequest);
+
+        CommentDeleteResponse response = commentCommandService.deleteComment(new DeleteCommentRequest(comment.commentNo()));
+
+        org.assertj.core.api.Assertions.assertThatThrownBy(() -> commentQueryService.findComment(new FindCommentRequest(comment.commentNo())))
                 .isInstanceOf(NotFoundException.class)
                 .hasMessage("존재하지 않는 댓글 입니다.");
     }
@@ -97,25 +110,25 @@ public class CommentCommandServiceTests {
     @DisplayName("댓글 수정 테스트 : success")
     void testUpdateComment() throws InterruptedException {
         CreateCommentRequest commentRequest = new CreateCommentRequest(UUID.randomUUID(), 1L, "댓글 생성 테스트");
-        Comment comment = commentCommandService.createComment(commentRequest);
-        Date date = comment.getCommentDate();
+        CommentCommandResponse comment = commentCommandService.createComment(commentRequest);
+        Date date = comment.commentDate();
 
         Thread.sleep(1000);
 
-        commentCommandService.updateComment(new UpdateCommentRequest(comment.getCommentNo(), "댓글 수정 테스트 입니다."));
+        commentCommandService.updateComment(new UpdateCommentRequest(comment.commentNo(), "댓글 수정 테스트 입니다."));
 
-        Assertions.assertSame(commentQueryService.findComment(new FindCommentRequest(comment.getCommentNo())).getCommentContent(),
+        Assertions.assertSame(commentQueryService.findComment(new FindCommentRequest(comment.commentNo())).commentContent(),
                 "댓글 수정 테스트 입니다.");
-        Assertions.assertNotSame(date, commentQueryService.findComment(new FindCommentRequest(comment.getCommentNo())).getCommentDate());
+        Assertions.assertNotSame(date, commentQueryService.findComment(new FindCommentRequest(comment.commentNo())).commentDate());
     }
 
     @Test
     @DisplayName("댓글 수정 테스트 : 댓글 공백 시 예외처리")
     void testContentIsBlank() {
         CreateCommentRequest commentRequest = new CreateCommentRequest(UUID.randomUUID(), 1L, "댓글 생성 테스트");
-        Comment comment = commentCommandService.createComment(commentRequest);
+        CommentCommandResponse comment = commentCommandService.createComment(commentRequest);
 
-        UpdateCommentRequest updateRequest = new UpdateCommentRequest(comment.getCommentNo(), "          ");
+        UpdateCommentRequest updateRequest = new UpdateCommentRequest(comment.commentNo(), "          ");
 
         org.assertj.core.api.Assertions.assertThatThrownBy(() -> commentCommandService.updateComment(updateRequest))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -126,9 +139,9 @@ public class CommentCommandServiceTests {
     @DisplayName("댓글 수정 테스트 : 댓글 null 시 예외처리")
     void testContentIsNull() {
         CreateCommentRequest commentRequest = new CreateCommentRequest(UUID.randomUUID(), 1L, "댓글 생성 테스트");
-        Comment comment = commentCommandService.createComment(commentRequest);
+        CommentCommandResponse comment = commentCommandService.createComment(commentRequest);
 
-        UpdateCommentRequest updateRequest = new UpdateCommentRequest(comment.getCommentNo(), "");
+        UpdateCommentRequest updateRequest = new UpdateCommentRequest(comment.commentNo(), "");
 
         org.assertj.core.api.Assertions.assertThatThrownBy(() -> commentCommandService.updateComment(updateRequest))
                 .isInstanceOf(IllegalArgumentException.class)
