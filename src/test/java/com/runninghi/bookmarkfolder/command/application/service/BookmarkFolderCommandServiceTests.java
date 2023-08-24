@@ -10,6 +10,7 @@ import com.runninghi.bookmark.query.application.service.BookmarkQueryService;
 import com.runninghi.bookmarkfolder.command.application.dto.request.CreateFolderRequest;
 import com.runninghi.bookmarkfolder.command.application.dto.request.DeleteFolderRequest;
 import com.runninghi.bookmarkfolder.command.application.dto.request.UpdateFolderRequest;
+import com.runninghi.bookmarkfolder.command.application.dto.response.FolderDeleteResponse;
 import com.runninghi.bookmarkfolder.command.domain.aggregate.entity.BookmarkFolder;
 import com.runninghi.bookmarkfolder.command.domain.repository.BookmarkFolderRepository;
 import com.runninghi.bookmarkfolder.query.application.dto.request.FindFolderRequest;
@@ -174,7 +175,9 @@ public class BookmarkFolderCommandServiceTests {
         DeleteFolderRequest folderRequest = new DeleteFolderRequest(folder.getFolderNo());
         FindFolderRequest findRequest = new FindFolderRequest(folder.getFolderNo());
 
-        commandBookmarkFolderService.deleteBookmarkFolder(folderRequest);
+        FolderDeleteResponse response = commandBookmarkFolderService.deleteBookmarkFolder(folderRequest);
+
+        Assertions.assertTrue(response.result());
 
         Assertions.assertThrows(NotFoundException.class, () -> {
             bookmarkFolderQueryService.findBookmarkFolder(findRequest);
