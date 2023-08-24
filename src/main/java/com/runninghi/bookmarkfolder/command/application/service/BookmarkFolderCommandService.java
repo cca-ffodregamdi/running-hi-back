@@ -10,6 +10,7 @@ import com.runninghi.bookmarkfolder.command.application.dto.request.UpdateFolder
 import com.runninghi.bookmarkfolder.command.domain.aggregate.entity.BookmarkFolder;
 import com.runninghi.bookmarkfolder.command.domain.repository.BookmarkFolderRepository;
 import com.runninghi.bookmarkfolder.command.domain.service.FolderCommandDomainService;
+import com.runninghi.common.handler.feedback.customException.NotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -49,17 +50,15 @@ public class BookmarkFolderCommandService {
     }
 
     @Transactional
-    public BookmarkFolder updateBookmarkFolder(UpdateFolderRequest folderDTO) {
+    public void updateBookmarkFolder(UpdateFolderRequest folderDTO) {
 
         domainService.validateFolderExist(folderDTO.folderNo());
         domainService.validateFolderName(folderDTO.folderName());
 
-        return folderRepository.save(BookmarkFolder.builder()
-                .folderName(folderDTO.folderName())
-                .userNo(folderDTO.userNo())
-                .folderNo(folderDTO.folderNo())
-                .build());
+        BookmarkFolder folder = folderRepository.findById(folderDTO.folderNo())
+                .orElseThrow(() -> new NotFoundException("존재하지 않는 폴더입니다."));
 
+        folder.update(folderDTO);
     }
 
 }
