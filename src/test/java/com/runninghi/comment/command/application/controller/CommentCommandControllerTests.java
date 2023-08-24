@@ -1,7 +1,6 @@
 package com.runninghi.comment.command.application.controller;
 
 import com.runninghi.comment.command.application.dto.request.CreateCommentRequest;
-
 import com.runninghi.comment.command.application.dto.request.DeleteCommentRequest;
 import com.runninghi.comment.command.application.dto.request.UpdateCommentRequest;
 import com.runninghi.comment.command.application.service.CommentCommandService;
@@ -9,10 +8,12 @@ import com.runninghi.comment.command.domain.aggregate.entity.Comment;
 import com.runninghi.comment.command.domain.repository.CommentRepository;
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
-import com.runninghi.user.command.domain.repository.UserRepository;
-import org.junit.jupiter.api.*;
+import com.runninghi.user.command.domain.repository.UserCommandRepository;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -30,22 +31,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 public class CommentCommandControllerTests {
 
-    private MockMvc mock;
-
     @Autowired
     CommentCommandController commentCommandController;
-
-    @Autowired
-    private CommentRepository commentRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private PasswordEncoder encoder;
-
     @MockBean
     CommentCommandService commentCommandService;
+    private MockMvc mock;
+    @Autowired
+    private CommentRepository commentRepository;
+    @Autowired
+    private UserCommandRepository userRepository;
+    @Autowired
+    private PasswordEncoder encoder;
 
     @BeforeEach
     @AfterEach
