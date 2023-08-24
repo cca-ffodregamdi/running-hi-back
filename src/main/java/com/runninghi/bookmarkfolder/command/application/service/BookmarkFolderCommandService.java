@@ -7,6 +7,8 @@ import com.runninghi.bookmark.command.domain.repository.BookmarkRepository;
 import com.runninghi.bookmarkfolder.command.application.dto.request.CreateFolderRequest;
 import com.runninghi.bookmarkfolder.command.application.dto.request.DeleteFolderRequest;
 import com.runninghi.bookmarkfolder.command.application.dto.request.UpdateFolderRequest;
+import com.runninghi.bookmarkfolder.command.application.dto.response.FolderCommandResponse;
+import com.runninghi.bookmarkfolder.command.application.dto.response.FolderDeleteResponse;
 import com.runninghi.bookmarkfolder.command.domain.aggregate.entity.BookmarkFolder;
 import com.runninghi.bookmarkfolder.command.domain.repository.BookmarkFolderRepository;
 import com.runninghi.bookmarkfolder.command.domain.service.FolderCommandDomainService;
@@ -26,18 +28,20 @@ public class BookmarkFolderCommandService {
     private final BookmarkCommandService bookmarkCommandService;
     private final FolderCommandDomainService domainService;
     @Transactional
-    public void createNewBookmarkFolder(CreateFolderRequest folderDTO) {
+    public FolderCommandResponse createNewBookmarkFolder(CreateFolderRequest folderDTO) {
 
         domainService.validateFolderName(folderDTO.folderName());
 
-        folderRepository.save(BookmarkFolder.builder().
+        BookmarkFolder folder = folderRepository.save(BookmarkFolder.builder().
                 folderName(folderDTO.folderName()).
                 userNo(folderDTO.getUserNo()).
                 build());
+
+        return FolderCommandResponse.from(folder);
     }
 
     @Transactional
-    public void deleteBookmarkFolder(DeleteFolderRequest folderDTO) {
+    public FolderDeleteResponse deleteBookmarkFolder(DeleteFolderRequest folderDTO) {
 
         domainService.validateFolderExist(folderDTO.folderNo());
 
@@ -47,10 +51,12 @@ public class BookmarkFolderCommandService {
 
         folderRepository.deleteById(folderDTO.folderNo());
 
+        return new FolderDeleteResponse(true);
+
     }
 
     @Transactional
-    public void updateBookmarkFolder(UpdateFolderRequest folderDTO) {
+    public FolderCommandResponse updateBookmarkFolder(UpdateFolderRequest folderDTO) {
 
         domainService.validateFolderExist(folderDTO.folderNo());
         domainService.validateFolderName(folderDTO.folderName());
@@ -59,6 +65,8 @@ public class BookmarkFolderCommandService {
                 .orElseThrow(() -> new NotFoundException("존재하지 않는 폴더입니다."));
 
         folder.update(folderDTO);
+
+        return FolderCommandResponse.from(folder);
     }
 
 }

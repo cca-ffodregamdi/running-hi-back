@@ -4,6 +4,7 @@ import com.runninghi.bookmarkfolder.command.application.dto.request.CreateFolder
 import com.runninghi.bookmarkfolder.command.domain.aggregate.entity.BookmarkFolder;
 import com.runninghi.bookmarkfolder.command.domain.repository.BookmarkFolderRepository;
 import com.runninghi.bookmarkfolder.query.application.dto.request.FindFolderRequest;
+import com.runninghi.bookmarkfolder.query.application.dto.response.FolderQueryResponse;
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
@@ -43,9 +44,11 @@ public class BookmarkFolderQueryServiceTests {
 
         FindFolderRequest folderRequest = new FindFolderRequest(folder.getFolderNo());
 
-        BookmarkFolder findFolder = findBookmarkFolder.findBookmarkFolder(folderRequest);
+        FolderQueryResponse findFolder = findBookmarkFolder.findBookmarkFolder(folderRequest);
 
-        Assertions.assertEquals(findFolder, folder);
+        Assertions.assertEquals(findFolder.folderName(), folder.getFolderName());
+        Assertions.assertEquals(findFolder.folderNo(), folder.getFolderNo());
+        Assertions.assertEquals(findFolder.userNo(), folder.getUserNo());
     }
 
     @Test
