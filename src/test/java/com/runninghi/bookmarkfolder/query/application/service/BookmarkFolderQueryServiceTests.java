@@ -2,6 +2,7 @@ package com.runninghi.bookmarkfolder.query.application.service;
 
 import com.runninghi.bookmarkfolder.command.application.dto.request.CreateFolderRequest;
 import com.runninghi.bookmarkfolder.command.domain.aggregate.entity.BookmarkFolder;
+import com.runninghi.bookmarkfolder.command.domain.aggregate.vo.FolderUserVO;
 import com.runninghi.bookmarkfolder.command.domain.repository.BookmarkFolderRepository;
 import com.runninghi.bookmarkfolder.query.application.dto.request.FindFolderRequest;
 import com.runninghi.bookmarkfolder.query.application.dto.response.FolderQueryResponse;
@@ -34,7 +35,7 @@ public class BookmarkFolderQueryServiceTests {
     @Test
     @DisplayName("즐겨찾기 폴더 조회 테스트 : success")
     void testFindBookmarkFolderByNo() {
-        CreateFolderRequest folderDTO = new CreateFolderRequest("testFind", UUID.randomUUID());
+        CreateFolderRequest folderDTO = new CreateFolderRequest("testFind", new FolderUserVO(UUID.randomUUID()));
 
         BookmarkFolder folder = folderRepository.save(BookmarkFolder.builder()
                 .folderName(folderDTO.folderName())

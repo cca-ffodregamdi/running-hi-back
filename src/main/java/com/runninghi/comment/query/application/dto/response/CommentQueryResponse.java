@@ -1,16 +1,16 @@
 package com.runninghi.comment.query.application.dto.response;
 
 import com.runninghi.comment.command.domain.aggregate.entity.Comment;
+import com.runninghi.comment.command.domain.aggregate.vo.CommentUserVO;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Date;
-import java.util.UUID;
 
 public record CommentQueryResponse(
         @Schema(description = "댓글 고유 번호", example = "1")
-    Long commentNo,
+        Long commentNo,
         @Schema(description = "회원 고유키", example = "c0a80121-7aeb-4b4b-8b0a-6b1c032f0e4a")
-        UUID userNo,
+        CommentUserVO userNo,
 
         @Schema(description = "게시글 번호", example = "1")
         Long userPostNo,
