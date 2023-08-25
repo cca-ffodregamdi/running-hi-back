@@ -17,21 +17,6 @@ public class UserCommandService {
     private final UserCommandRepository userCommandRepository;
     private final PasswordEncoder encoder;
 
-//    // 회원 정보 조회
-//    @Transactional(readOnly = true)
-//    public UserInfoResponse findUserInfo(UUID id) {
-//        return userCommandRepository.findById(id)
-//                .map(UserInfoResponse::from)
-//                .orElseThrow(() -> new NoSuchElementException("존재하지 않는 회원입니다."));
-//    }
-
-    // 회원 탈퇴
-    @Transactional
-    public UserDeleteResponse deleteUser(UUID id) {
-        if (!userCommandRepository.existsById(id)) return new UserDeleteResponse(false);
-        userCommandRepository.deleteById(id);
-        return new UserDeleteResponse(true);
-    }
 
     // 회원 정보 수정
     @Transactional
@@ -43,5 +28,13 @@ public class UserCommandService {
                     return UserUpdateResponse.of(true, user);
                 })
                 .orElseThrow(() -> new IllegalArgumentException("아이디 또는 비밀번호가 일치하지 않습니다."));
+    }
+
+    // 회원 탈퇴
+    @Transactional
+    public UserDeleteResponse deleteUser(UUID id) {
+        if (!userCommandRepository.existsById(id)) return new UserDeleteResponse(false);
+        userCommandRepository.deleteById(id);
+        return new UserDeleteResponse(true);
     }
 }
