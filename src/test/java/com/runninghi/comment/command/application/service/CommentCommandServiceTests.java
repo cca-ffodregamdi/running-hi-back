@@ -6,14 +6,16 @@ import com.runninghi.comment.command.application.dto.request.UpdateCommentReques
 import com.runninghi.comment.command.application.dto.response.CommentCommandResponse;
 import com.runninghi.comment.command.application.dto.response.CommentDeleteResponse;
 import com.runninghi.comment.command.domain.aggregate.vo.CommentUserVO;
-import com.runninghi.comment.command.domain.repository.CommentRepository;
+import com.runninghi.comment.command.domain.repository.CommentCommandRepository;
 import com.runninghi.comment.query.application.dto.request.FindCommentRequest;
 import com.runninghi.comment.query.application.service.CommentQueryService;
+import com.runninghi.comment.query.infrastructure.repository.CommentQueryRepository;
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Date;
 import java.util.UUID;
@@ -27,7 +29,10 @@ public class CommentCommandServiceTests {
     private CommentCommandService commentCommandService;
 
     @Autowired
-    private CommentRepository commentRepository;
+    private CommentCommandRepository commentRepository;
+
+    @Autowired
+    private CommentQueryRepository commentQueryRepository;
 
     @Autowired
     private CommentQueryService commentQueryService;
@@ -42,14 +47,14 @@ public class CommentCommandServiceTests {
     @DisplayName("댓글 생성 테스트 : success")
     void testCreateComment() {
 
-        long beforeSize = commentRepository.count();
+        long beforeSize = commentQueryRepository.count();
 
         CreateCommentRequest commentRequest = new CreateCommentRequest(new CommentUserVO(UUID.randomUUID()), 1L, "댓글 생성 테스트");
         commentCommandService.createComment(commentRequest);
 
-        long afterSize = commentRepository.count();
+        long afterSize = commentQueryRepository.count();
 
-        org.junit.jupiter.api.Assertions.assertEquals(beforeSize + 1, afterSize);
+        Assertions.assertEquals(beforeSize + 1, afterSize);
     }
 
     @Test
@@ -57,7 +62,7 @@ public class CommentCommandServiceTests {
     void testCommentIsBlank() {
 
         CreateCommentRequest commentRequest = new CreateCommentRequest(new CommentUserVO(UUID.randomUUID()), 1L, "         ");
-        org.assertj.core.api.Assertions.assertThatThrownBy(() -> commentCommandService.createComment(commentRequest))
+        assertThatThrownBy(() -> commentCommandService.createComment(commentRequest))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("댓글은 공백일 수 없습니다.");
     }
@@ -67,7 +72,7 @@ public class CommentCommandServiceTests {
     void testCommentIsNull() {
 
         CreateCommentRequest commentRequest = new CreateCommentRequest(new CommentUserVO(UUID.randomUUID()), 1L, null);
-        org.assertj.core.api.Assertions.assertThatThrownBy(() -> commentCommandService.createComment(commentRequest))
+        assertThatThrownBy(() -> commentCommandService.createComment(commentRequest))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("댓글은 공백일 수 없습니다.");
     }
@@ -93,7 +98,7 @@ public class CommentCommandServiceTests {
 
         CommentDeleteResponse response = commentCommandService.deleteComment(new DeleteCommentRequest(comment.commentNo()));
 
-        org.assertj.core.api.Assertions.assertThatThrownBy(() -> commentQueryService.findComment(new FindCommentRequest(comment.commentNo())))
+        assertThatThrownBy(() -> commentQueryService.findComment(new FindCommentRequest(comment.commentNo())))
                 .isInstanceOf(NotFoundException.class)
                 .hasMessage("존재하지 않는 댓글 입니다.");
     }
@@ -102,7 +107,7 @@ public class CommentCommandServiceTests {
     @DisplayName("댓글 삭제 테스트 : 존재하지 않는 댓글 예외처리")
     void testDeleteCommentDoesntExist() {
 
-        org.assertj.core.api.Assertions.assertThatThrownBy(() -> commentCommandService.deleteComment(new DeleteCommentRequest(0L)))
+        assertThatThrownBy(() -> commentCommandService.deleteComment(new DeleteCommentRequest(0L)))
                 .isInstanceOf(NotFoundException.class)
                 .hasMessage("존재하지 않는 댓글 입니다.");
     }
@@ -131,7 +136,7 @@ public class CommentCommandServiceTests {
 
         UpdateCommentRequest updateRequest = new UpdateCommentRequest(comment.commentNo(), "          ");
 
-        org.assertj.core.api.Assertions.assertThatThrownBy(() -> commentCommandService.updateComment(updateRequest))
+        assertThatThrownBy(() -> commentCommandService.updateComment(updateRequest))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("댓글은 공백일 수 없습니다.");
     }
@@ -144,7 +149,7 @@ public class CommentCommandServiceTests {
 
         UpdateCommentRequest updateRequest = new UpdateCommentRequest(comment.commentNo(), "");
 
-        org.assertj.core.api.Assertions.assertThatThrownBy(() -> commentCommandService.updateComment(updateRequest))
+        assertThatThrownBy(() -> commentCommandService.updateComment(updateRequest))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("댓글은 공백일 수 없습니다.");
     }

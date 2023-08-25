@@ -7,7 +7,7 @@ import com.runninghi.comment.command.application.dto.response.CommentCommandResp
 import com.runninghi.comment.command.application.dto.response.CommentDeleteResponse;
 import com.runninghi.comment.command.domain.aggregate.entity.Comment;
 import com.runninghi.comment.command.domain.aggregate.vo.CommentUserVO;
-import com.runninghi.comment.command.domain.repository.CommentRepository;
+import com.runninghi.comment.command.domain.repository.CommentCommandRepository;
 import com.runninghi.comment.command.domain.service.CommentCommandDomainService;
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
 import jakarta.transaction.Transactional;
@@ -20,7 +20,7 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class CommentCommandService {
 
-    private final CommentRepository commentRepository;
+    private final CommentCommandRepository commentRepository;
     private final CommentCommandDomainService commentDomainService;
 
     @Transactional

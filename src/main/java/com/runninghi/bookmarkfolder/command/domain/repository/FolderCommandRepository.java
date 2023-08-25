@@ -1,10 +1,10 @@
-package com.runninghi.bookmarkfolder.query.infrastructure.repository;
+package com.runninghi.bookmarkfolder.command.domain.repository;
 
 import com.runninghi.bookmarkfolder.command.domain.aggregate.entity.BookmarkFolder;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface FindFolderRepository extends JpaRepository<BookmarkFolder, Long> {
+public interface FolderCommandRepository extends JpaRepository<BookmarkFolder, Long> {
 
 }
