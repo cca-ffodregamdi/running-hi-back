@@ -1,14 +1,11 @@
 package com.runninghi.comment.command.domain.aggregate.entity;
 
 import com.runninghi.comment.command.application.dto.request.UpdateCommentRequest;
-import com.runninghi.user.command.application.dto.user.request.UserUpdateRequest;
+import com.runninghi.comment.command.domain.aggregate.vo.CommentUserVO;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.time.LocalDate;
 import java.util.Date;
-import java.util.UUID;
 
 @Entity
 @Getter
@@ -19,8 +16,8 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentNo;
 
-    @Column
-    private UUID userNo;
+    @Embedded
+    private CommentUserVO userNo;
 
     @Column
     private Long userPostNo;
@@ -35,7 +32,7 @@ public class Comment {
     private int commentReportCnt;
 
     @Builder
-    public Comment(Long commentNo, UUID userNo, Long userPostNo, Date commentDate, String commentContent, int commentReportCnt) {
+    public Comment(Long commentNo, CommentUserVO userNo, Long userPostNo, Date commentDate, String commentContent, int commentReportCnt) {
         this.commentNo = commentNo;
         this.userNo = userNo;
         this.userPostNo = userPostNo;

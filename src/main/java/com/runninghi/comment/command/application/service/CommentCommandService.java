@@ -6,6 +6,7 @@ import com.runninghi.comment.command.application.dto.request.UpdateCommentReques
 import com.runninghi.comment.command.application.dto.response.CommentCommandResponse;
 import com.runninghi.comment.command.application.dto.response.CommentDeleteResponse;
 import com.runninghi.comment.command.domain.aggregate.entity.Comment;
+import com.runninghi.comment.command.domain.aggregate.vo.CommentUserVO;
 import com.runninghi.comment.command.domain.repository.CommentRepository;
 import com.runninghi.comment.command.domain.service.CommentCommandDomainService;
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
@@ -30,7 +31,7 @@ public class CommentCommandService {
 //        domainService.validateUserPost(commentDTO.userPostNo());
 
         Comment comment = commentRepository.save(Comment.builder()
-                .userNo(commentDTO.userNo())
+                .userNo(new CommentUserVO(commentDTO.userNo().getUserNo()))
                 .userPostNo(commentDTO.userPostNo())
                 .commentContent(commentDTO.commentContent())
                 .commentDate(new Date())

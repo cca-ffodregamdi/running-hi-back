@@ -34,7 +34,7 @@ public class BookmarkFolderCommandService {
 
         BookmarkFolder folder = folderRepository.save(BookmarkFolder.builder().
                 folderName(folderDTO.folderName()).
-                userNo(folderDTO.getUserNo()).
+                userNo(folderDTO.userNo()).
                 build());
 
         return FolderCommandResponse.from(folder);

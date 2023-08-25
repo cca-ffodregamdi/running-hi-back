@@ -6,13 +6,13 @@ import com.runninghi.comment.command.application.dto.request.DeleteCommentReques
 import com.runninghi.comment.command.application.dto.request.UpdateCommentRequest;
 import com.runninghi.comment.command.application.service.CommentCommandService;
 import com.runninghi.comment.command.domain.aggregate.entity.Comment;
+import com.runninghi.comment.command.domain.aggregate.vo.CommentUserVO;
 import com.runninghi.comment.command.domain.repository.CommentRepository;
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
 import com.runninghi.user.command.domain.repository.UserRepository;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -73,7 +73,7 @@ public class CommentCommandControllerTests {
                 .status(true)
                 .build());
 
-        CreateCommentRequest request = new CreateCommentRequest(user.getId(), 1L, "댓글 생성 컨트롤러 테스트");
+        CreateCommentRequest request = new CreateCommentRequest(new CommentUserVO(user.getId()), 1L, "댓글 생성 컨트롤러 테스트");
 
         mock.perform(post("/api/v1/comments")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -88,7 +88,7 @@ public class CommentCommandControllerTests {
                 .commentNo(999L)
                 .commentDate(new Date())
                 .commentContent("댓글 수정 컨트롤러 테스트")
-                .userNo(UUID.randomUUID())
+                .userNo(new CommentUserVO(UUID.randomUUID()))
                 .userPostNo(111L)
                 .build();
 
@@ -107,7 +107,7 @@ public class CommentCommandControllerTests {
                 .commentNo(999L)
                 .commentDate(new Date())
                 .commentContent("댓글 수정 컨트롤러 테스트")
-                .userNo(UUID.randomUUID())
+                .userNo(new CommentUserVO(UUID.randomUUID()))
                 .userPostNo(111L)
                 .build();
 
