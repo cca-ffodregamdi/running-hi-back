@@ -2,6 +2,7 @@ package com.runninghi.bookmark.command.application.service;
 
 import com.runninghi.bookmark.command.application.dto.request.CreateBookmarkRequest;
 import com.runninghi.bookmark.command.application.dto.request.DeleteBookmarkRequest;
+import com.runninghi.bookmark.command.domain.aggregate.vo.BookmarkUserVO;
 import com.runninghi.bookmark.command.domain.aggregate.vo.BookmarkVO;
 import com.runninghi.bookmark.command.domain.repository.BookmarkRepository;
 import com.runninghi.bookmark.query.application.dto.FindBookmarkRequest;
@@ -44,7 +45,7 @@ public class BookmarkCommandServiceTests {
         Long beforeSize = bookmarkRepository.count();
 
         BookmarkVO bookmarkVO = new BookmarkVO(1L, 2L);
-        CreateBookmarkRequest bookmarkRequest = new CreateBookmarkRequest(bookmarkVO, UUID.randomUUID());
+        CreateBookmarkRequest bookmarkRequest = new CreateBookmarkRequest(bookmarkVO, new BookmarkUserVO(UUID.randomUUID()));
         commandBookmarkService.createBookmark(bookmarkRequest);
 
         Long afterSize = bookmarkRepository.count();
@@ -60,7 +61,7 @@ public class BookmarkCommandServiceTests {
     void testFolderNoDoesntExist() {
 
         BookmarkVO bookmarkVO = new BookmarkVO(0L, 1L);
-        CreateBookmarkRequest bookmarkRequest = new CreateBookmarkRequest(bookmarkVO, UUID.randomUUID());
+        CreateBookmarkRequest bookmarkRequest = new CreateBookmarkRequest(bookmarkVO, new BookmarkUserVO(UUID.randomUUID()));
 
         org.assertj.core.api.Assertions.assertThatThrownBy(() -> commandBookmarkService.createBookmark(bookmarkRequest))
                 .isInstanceOf(NotFoundException.class)
@@ -83,7 +84,7 @@ public class BookmarkCommandServiceTests {
     @DisplayName("즐겨찾기 삭제 테스트 : success")
     void testDeleteBookmark() {
         BookmarkVO bookmarkVO = new BookmarkVO(1L, 2L);
-        CreateBookmarkRequest createRequest = new CreateBookmarkRequest(bookmarkVO, UUID.randomUUID());
+        CreateBookmarkRequest createRequest = new CreateBookmarkRequest(bookmarkVO, new BookmarkUserVO(UUID.randomUUID()));
         commandBookmarkService.createBookmark(createRequest);
 
         DeleteBookmarkRequest deleteRequest = new DeleteBookmarkRequest(new BookmarkVO(bookmarkVO.getFolderNo(), bookmarkVO.getPostNo()));

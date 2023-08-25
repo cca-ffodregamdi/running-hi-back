@@ -5,6 +5,7 @@ import com.runninghi.comment.command.application.dto.request.DeleteCommentReques
 import com.runninghi.comment.command.application.dto.request.UpdateCommentRequest;
 import com.runninghi.comment.command.application.dto.response.CommentCommandResponse;
 import com.runninghi.comment.command.application.dto.response.CommentDeleteResponse;
+import com.runninghi.comment.command.domain.aggregate.vo.CommentUserVO;
 import com.runninghi.comment.command.domain.repository.CommentRepository;
 import com.runninghi.comment.query.application.dto.request.FindCommentRequest;
 import com.runninghi.comment.query.application.service.CommentQueryService;
@@ -43,7 +44,7 @@ public class CommentCommandServiceTests {
 
         long beforeSize = commentRepository.count();
 
-        CreateCommentRequest commentRequest = new CreateCommentRequest(UUID.randomUUID(), 1L, "댓글 생성 테스트");
+        CreateCommentRequest commentRequest = new CreateCommentRequest(new CommentUserVO(UUID.randomUUID()), 1L, "댓글 생성 테스트");
         commentCommandService.createComment(commentRequest);
 
         long afterSize = commentRepository.count();
@@ -55,7 +56,7 @@ public class CommentCommandServiceTests {
     @DisplayName("댓글 생성 테스트: 댓글 내용 공백일 때 예외처리")
     void testCommentIsBlank() {
 
-        CreateCommentRequest commentRequest = new CreateCommentRequest(UUID.randomUUID(), 1L, "         ");
+        CreateCommentRequest commentRequest = new CreateCommentRequest(new CommentUserVO(UUID.randomUUID()), 1L, "         ");
         org.assertj.core.api.Assertions.assertThatThrownBy(() -> commentCommandService.createComment(commentRequest))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("댓글은 공백일 수 없습니다.");
@@ -65,7 +66,7 @@ public class CommentCommandServiceTests {
     @DisplayName("댓글 생성 테스트: 댓글 내용 null일 때 예외처리")
     void testCommentIsNull() {
 
-        CreateCommentRequest commentRequest = new CreateCommentRequest(UUID.randomUUID(), 1L, null);
+        CreateCommentRequest commentRequest = new CreateCommentRequest(new CommentUserVO(UUID.randomUUID()), 1L, null);
         org.assertj.core.api.Assertions.assertThatThrownBy(() -> commentCommandService.createComment(commentRequest))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("댓글은 공백일 수 없습니다.");
@@ -75,7 +76,7 @@ public class CommentCommandServiceTests {
     @DisplayName("댓글 삭제 테스트 : success - response true")
     void testDeleteCommentResponseTrue() {
 
-        CreateCommentRequest commentRequest = new CreateCommentRequest(UUID.randomUUID(), 1L, "댓글 생성 테스트");
+        CreateCommentRequest commentRequest = new CreateCommentRequest(new CommentUserVO(UUID.randomUUID()), 1L, "댓글 생성 테스트");
         CommentCommandResponse comment = commentCommandService.createComment(commentRequest);
 
         CommentDeleteResponse response = commentCommandService.deleteComment(new DeleteCommentRequest(comment.commentNo()));
@@ -87,7 +88,7 @@ public class CommentCommandServiceTests {
     @DisplayName("댓글 삭제 테스트 : success - 조회 시 예외처리")
     void testDeleteCommentFindException() {
 
-        CreateCommentRequest commentRequest = new CreateCommentRequest(UUID.randomUUID(), 1L, "댓글 생성 테스트");
+        CreateCommentRequest commentRequest = new CreateCommentRequest(new CommentUserVO(UUID.randomUUID()), 1L, "댓글 생성 테스트");
         CommentCommandResponse comment = commentCommandService.createComment(commentRequest);
 
         CommentDeleteResponse response = commentCommandService.deleteComment(new DeleteCommentRequest(comment.commentNo()));
@@ -109,7 +110,7 @@ public class CommentCommandServiceTests {
     @Test
     @DisplayName("댓글 수정 테스트 : success")
     void testUpdateComment() throws InterruptedException {
-        CreateCommentRequest commentRequest = new CreateCommentRequest(UUID.randomUUID(), 1L, "댓글 생성 테스트");
+        CreateCommentRequest commentRequest = new CreateCommentRequest(new CommentUserVO(UUID.randomUUID()), 1L, "댓글 생성 테스트");
         CommentCommandResponse comment = commentCommandService.createComment(commentRequest);
         Date date = comment.commentDate();
 
@@ -125,7 +126,7 @@ public class CommentCommandServiceTests {
     @Test
     @DisplayName("댓글 수정 테스트 : 댓글 공백 시 예외처리")
     void testContentIsBlank() {
-        CreateCommentRequest commentRequest = new CreateCommentRequest(UUID.randomUUID(), 1L, "댓글 생성 테스트");
+        CreateCommentRequest commentRequest = new CreateCommentRequest(new CommentUserVO(UUID.randomUUID()), 1L, "댓글 생성 테스트");
         CommentCommandResponse comment = commentCommandService.createComment(commentRequest);
 
         UpdateCommentRequest updateRequest = new UpdateCommentRequest(comment.commentNo(), "          ");
@@ -138,7 +139,7 @@ public class CommentCommandServiceTests {
     @Test
     @DisplayName("댓글 수정 테스트 : 댓글 null 시 예외처리")
     void testContentIsNull() {
-        CreateCommentRequest commentRequest = new CreateCommentRequest(UUID.randomUUID(), 1L, "댓글 생성 테스트");
+        CreateCommentRequest commentRequest = new CreateCommentRequest(new CommentUserVO(UUID.randomUUID()), 1L, "댓글 생성 테스트");
         CommentCommandResponse comment = commentCommandService.createComment(commentRequest);
 
         UpdateCommentRequest updateRequest = new UpdateCommentRequest(comment.commentNo(), "");

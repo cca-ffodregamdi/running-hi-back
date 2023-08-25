@@ -4,6 +4,7 @@ import com.runninghi.comment.command.application.dto.request.CreateCommentReques
 import com.runninghi.comment.command.application.dto.response.CommentCommandResponse;
 import com.runninghi.comment.command.application.service.CommentCommandService;
 import com.runninghi.comment.command.domain.aggregate.entity.Comment;
+import com.runninghi.comment.command.domain.aggregate.vo.CommentUserVO;
 import com.runninghi.comment.command.domain.repository.CommentRepository;
 import com.runninghi.comment.query.application.dto.request.FindAllCommentsRequest;
 import com.runninghi.comment.query.application.dto.request.FindCommentRequest;
@@ -65,7 +66,7 @@ public class CommentQueryServiceTests {
     @DisplayName("특정 댓글 조회 테스트 : success")
     void testFindCommentByCommentNo() {
 
-        CreateCommentRequest commentRequest = new CreateCommentRequest(UUID.randomUUID(), 1L, "댓글 생성 테스트");
+        CreateCommentRequest commentRequest = new CreateCommentRequest(new CommentUserVO(UUID.randomUUID()), 1L, "댓글 생성 테스트");
         CommentCommandResponse comment = createCommentService.createComment(commentRequest);
 
         CommentQueryResponse response = queryCommentService.findComment(new FindCommentRequest(comment.commentNo()));

@@ -27,6 +27,7 @@ out/
 !**/src/test/**/out/
 application.yml
 jwt.yml
+bootstrap.yml
 
 ### NetBeans ###
 /nbproject/private/
