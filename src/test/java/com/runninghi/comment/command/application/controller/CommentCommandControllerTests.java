@@ -7,7 +7,7 @@ import com.runninghi.comment.command.application.dto.request.UpdateCommentReques
 import com.runninghi.comment.command.application.service.CommentCommandService;
 import com.runninghi.comment.command.domain.aggregate.entity.Comment;
 import com.runninghi.comment.command.domain.aggregate.vo.CommentUserVO;
-import com.runninghi.comment.command.domain.repository.CommentRepository;
+import com.runninghi.comment.command.domain.repository.CommentCommandRepository;
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
 import com.runninghi.user.command.domain.repository.UserRepository;
@@ -36,7 +36,7 @@ public class CommentCommandControllerTests {
     CommentCommandController commentCommandController;
 
     @Autowired
-    private CommentRepository commentRepository;
+    private CommentCommandRepository commentRepository;
 
     @Autowired
     private UserRepository userRepository;

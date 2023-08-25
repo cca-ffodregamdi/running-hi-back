@@ -3,14 +3,15 @@ package com.runninghi.bookmarkfolder.command.application.service;
 import com.runninghi.bookmark.command.application.dto.request.DeleteBookmarkRequest;
 import com.runninghi.bookmark.command.application.service.BookmarkCommandService;
 import com.runninghi.bookmark.command.domain.aggregate.entity.Bookmark;
-import com.runninghi.bookmark.command.domain.repository.BookmarkRepository;
+import com.runninghi.bookmark.command.domain.repository.BookmarkCommandRepository;
+import com.runninghi.bookmark.query.infrastructure.repository.BookmarkQueryRepository;
 import com.runninghi.bookmarkfolder.command.application.dto.request.CreateFolderRequest;
 import com.runninghi.bookmarkfolder.command.application.dto.request.DeleteFolderRequest;
 import com.runninghi.bookmarkfolder.command.application.dto.request.UpdateFolderRequest;
 import com.runninghi.bookmarkfolder.command.application.dto.response.FolderCommandResponse;
 import com.runninghi.bookmarkfolder.command.application.dto.response.FolderDeleteResponse;
 import com.runninghi.bookmarkfolder.command.domain.aggregate.entity.BookmarkFolder;
-import com.runninghi.bookmarkfolder.command.domain.repository.BookmarkFolderRepository;
+import com.runninghi.bookmarkfolder.command.domain.repository.FolderCommandRepository;
 import com.runninghi.bookmarkfolder.command.domain.service.FolderCommandDomainService;
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
 import jakarta.transaction.Transactional;
@@ -23,8 +24,9 @@ import java.util.List;
 @Service
 public class BookmarkFolderCommandService {
 
-    private final BookmarkFolderRepository folderRepository;
-    private final BookmarkRepository bookmarkRepository;
+    private final FolderCommandRepository folderRepository;
+    private final BookmarkCommandRepository bookmarkRepository;
+    private final BookmarkQueryRepository bookmarkQueryRepository;
     private final BookmarkCommandService bookmarkCommandService;
     private final FolderCommandDomainService domainService;
     @Transactional
@@ -45,7 +47,7 @@ public class BookmarkFolderCommandService {
 
         domainService.validateFolderExist(folderDTO.folderNo());
 
-        List<Bookmark> bookmarks = bookmarkRepository.findBookmarkByBookmarkVO_FolderNo(folderDTO.folderNo());
+        List<Bookmark> bookmarks = bookmarkQueryRepository.findBookmarkByBookmarkVO_FolderNo(folderDTO.folderNo());
         bookmarks.forEach(bookmark -> bookmarkCommandService.deleteBookmark(new DeleteBookmarkRequest(bookmark.getBookmarkVO())));
 
 

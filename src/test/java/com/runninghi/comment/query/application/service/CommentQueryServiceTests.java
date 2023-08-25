@@ -5,7 +5,7 @@ import com.runninghi.comment.command.application.dto.response.CommentCommandResp
 import com.runninghi.comment.command.application.service.CommentCommandService;
 import com.runninghi.comment.command.domain.aggregate.entity.Comment;
 import com.runninghi.comment.command.domain.aggregate.vo.CommentUserVO;
-import com.runninghi.comment.command.domain.repository.CommentRepository;
+import com.runninghi.comment.command.domain.repository.CommentCommandRepository;
 import com.runninghi.comment.query.application.dto.request.FindAllCommentsRequest;
 import com.runninghi.comment.query.application.dto.request.FindCommentRequest;
 import com.runninghi.comment.query.application.dto.response.CommentQueryResponse;
@@ -28,7 +28,7 @@ import java.util.UUID;
 public class CommentQueryServiceTests {
 
     @Autowired
-    private CommentRepository commentRepository;
+    private CommentCommandRepository commentCommandRepository;
 
     @Autowired
     private CommentQueryService queryCommentService;
@@ -38,7 +38,7 @@ public class CommentQueryServiceTests {
 
     @BeforeEach
     void clear() {
-        commentRepository.deleteAllInBatch();
+        commentCommandRepository.deleteAllInBatch();
     }
 
     @Test
@@ -47,11 +47,11 @@ public class CommentQueryServiceTests {
 
         Long userPostNo = 999L;
 
-        commentRepository.save(Comment.builder()
+        commentCommandRepository.save(Comment.builder()
                 .userPostNo(userPostNo)
                 .build());
 
-        commentRepository.save(Comment.builder()
+        commentCommandRepository.save(Comment.builder()
                 .userPostNo(userPostNo)
                 .build());
 

@@ -1,11 +1,9 @@
 package com.runninghi.bookmarkfolder.command.application.service;
 
-import com.runninghi.bookmark.command.application.service.BookmarkCommandService;
 import com.runninghi.bookmark.command.domain.aggregate.entity.Bookmark;
 import com.runninghi.bookmark.command.domain.aggregate.vo.BookmarkUserVO;
 import com.runninghi.bookmark.command.domain.aggregate.vo.BookmarkVO;
-import com.runninghi.bookmark.command.domain.repository.BookmarkRepository;
-import com.runninghi.bookmark.query.application.dto.FindBookmarkListRequest;
+import com.runninghi.bookmark.command.domain.repository.BookmarkCommandRepository;
 import com.runninghi.bookmark.query.application.dto.FindBookmarkRequest;
 import com.runninghi.bookmark.query.application.service.BookmarkQueryService;
 import com.runninghi.bookmarkfolder.command.application.dto.request.CreateFolderRequest;
@@ -14,7 +12,7 @@ import com.runninghi.bookmarkfolder.command.application.dto.request.UpdateFolder
 import com.runninghi.bookmarkfolder.command.application.dto.response.FolderDeleteResponse;
 import com.runninghi.bookmarkfolder.command.domain.aggregate.entity.BookmarkFolder;
 import com.runninghi.bookmarkfolder.command.domain.aggregate.vo.FolderUserVO;
-import com.runninghi.bookmarkfolder.command.domain.repository.BookmarkFolderRepository;
+import com.runninghi.bookmarkfolder.command.domain.repository.FolderCommandRepository;
 import com.runninghi.bookmarkfolder.query.application.dto.request.FindFolderRequest;
 import com.runninghi.bookmarkfolder.query.application.dto.response.FolderQueryResponse;
 import com.runninghi.bookmarkfolder.query.application.service.BookmarkFolderQueryService;
@@ -26,6 +24,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -45,10 +45,10 @@ public class BookmarkFolderCommandServiceTests {
     private BookmarkQueryService bookmarkQueryService;
 
     @Autowired
-    private BookmarkRepository bookmarkRepository;
+    private BookmarkCommandRepository bookmarkRepository;
 
     @Autowired
-    private BookmarkFolderRepository bookmarkFolderRepository;
+    private FolderCommandRepository bookmarkFolderRepository;
 
 
     @BeforeEach
@@ -66,7 +66,7 @@ public class BookmarkFolderCommandServiceTests {
 
         long afterSize = bookmarkFolderRepository.count();
 
-        org.junit.jupiter.api.Assertions.assertEquals(beforeSize + 1, afterSize);
+        assertEquals(beforeSize + 1, afterSize);
     }
 
     @Test
@@ -75,7 +75,7 @@ public class BookmarkFolderCommandServiceTests {
 
         CreateFolderRequest folderDTO = new CreateFolderRequest("testFoldertestFoldertestFoldertestFoldertestFolder", new FolderUserVO(UUID.randomUUID()));
 
-        org.assertj.core.api.Assertions.assertThatThrownBy(() -> commandBookmarkFolderService.createNewBookmarkFolder(folderDTO))
+        assertThatThrownBy(() -> commandBookmarkFolderService.createNewBookmarkFolder(folderDTO))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("폴더 제목이 20자를 초과하였습니다.");
     }
@@ -85,7 +85,7 @@ public class BookmarkFolderCommandServiceTests {
     void testBookmarkFolderLengthShortException() {
         CreateFolderRequest folderDTO = new CreateFolderRequest("", new FolderUserVO(UUID.randomUUID()));
 
-        org.assertj.core.api.Assertions.assertThatThrownBy(() -> commandBookmarkFolderService.createNewBookmarkFolder(folderDTO))
+        assertThatThrownBy(() -> commandBookmarkFolderService.createNewBookmarkFolder(folderDTO))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("폴더 제목이 1자 미만입니다.");
     }
@@ -119,7 +119,7 @@ public class BookmarkFolderCommandServiceTests {
 
         UpdateFolderRequest updateFolder = new UpdateFolderRequest(0L, "NotFound",new FolderUserVO(UUID.randomUUID()));
 
-        org.assertj.core.api.Assertions.assertThatThrownBy(() -> commandBookmarkFolderService.updateBookmarkFolder(updateFolder))
+        assertThatThrownBy(() -> commandBookmarkFolderService.updateBookmarkFolder(updateFolder))
                 .isInstanceOf(NotFoundException.class)
                 .hasMessage("존재하지 않는 폴더입니다.");
 
@@ -134,7 +134,7 @@ public class BookmarkFolderCommandServiceTests {
 
         UpdateFolderRequest updateFolder = new UpdateFolderRequest(folder.getFolderNo(), "",folder.getUserNo());
 
-        org.assertj.core.api.Assertions.assertThatThrownBy(() -> commandBookmarkFolderService.updateBookmarkFolder(updateFolder))
+        assertThatThrownBy(() -> commandBookmarkFolderService.updateBookmarkFolder(updateFolder))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("폴더 제목이 1자 미만입니다.");
     }
@@ -147,7 +147,7 @@ public class BookmarkFolderCommandServiceTests {
 
         UpdateFolderRequest updateFolder = new UpdateFolderRequest(folder.getFolderNo(), "testFoldertestFoldertestFoldertestFoldertestFolder",folder.getUserNo());
 
-        org.assertj.core.api.Assertions.assertThatThrownBy(() -> commandBookmarkFolderService.updateBookmarkFolder(updateFolder))
+        assertThatThrownBy(() -> commandBookmarkFolderService.updateBookmarkFolder(updateFolder))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("폴더 제목이 20자를 초과하였습니다.");
     }
@@ -160,7 +160,7 @@ public class BookmarkFolderCommandServiceTests {
 
         UpdateFolderRequest updateFolder = new UpdateFolderRequest(folder.getFolderNo(), "             ",folder.getUserNo());
 
-        org.assertj.core.api.Assertions.assertThatThrownBy(() -> commandBookmarkFolderService.updateBookmarkFolder(updateFolder))
+        assertThatThrownBy(() -> commandBookmarkFolderService.updateBookmarkFolder(updateFolder))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("폴더 제목은 공백일 수 없습니다.");
     }

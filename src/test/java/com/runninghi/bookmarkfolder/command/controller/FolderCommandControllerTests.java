@@ -7,7 +7,7 @@ import com.runninghi.bookmarkfolder.command.application.dto.request.UpdateFolder
 import com.runninghi.bookmarkfolder.command.application.service.BookmarkFolderCommandService;
 import com.runninghi.bookmarkfolder.command.domain.aggregate.entity.BookmarkFolder;
 import com.runninghi.bookmarkfolder.command.domain.aggregate.vo.FolderUserVO;
-import com.runninghi.bookmarkfolder.command.domain.repository.BookmarkFolderRepository;
+import com.runninghi.bookmarkfolder.command.domain.repository.FolderCommandRepository;
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
 import com.runninghi.user.command.domain.repository.UserRepository;
@@ -23,7 +23,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.Date;
 import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -38,7 +37,7 @@ public class FolderCommandControllerTests {
     FolderCommandController folderCommandController;
 
     @Autowired
-    private BookmarkFolderRepository folderRepository;
+    private FolderCommandRepository folderRepository;
 
     @Autowired
     private UserRepository userRepository;

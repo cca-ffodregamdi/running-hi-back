@@ -3,7 +3,7 @@ package com.runninghi.bookmarkfolder.query.application.service;
 import com.runninghi.bookmarkfolder.command.application.dto.request.CreateFolderRequest;
 import com.runninghi.bookmarkfolder.command.domain.aggregate.entity.BookmarkFolder;
 import com.runninghi.bookmarkfolder.command.domain.aggregate.vo.FolderUserVO;
-import com.runninghi.bookmarkfolder.command.domain.repository.BookmarkFolderRepository;
+import com.runninghi.bookmarkfolder.command.domain.repository.FolderCommandRepository;
 import com.runninghi.bookmarkfolder.query.application.dto.request.FindFolderRequest;
 import com.runninghi.bookmarkfolder.query.application.dto.response.FolderQueryResponse;
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
@@ -25,7 +25,7 @@ public class BookmarkFolderQueryServiceTests {
     private BookmarkFolderQueryService findBookmarkFolder;
 
     @Autowired
-    private BookmarkFolderRepository folderRepository;
+    private FolderCommandRepository folderRepository;
 
     @BeforeEach
     void clear() {
