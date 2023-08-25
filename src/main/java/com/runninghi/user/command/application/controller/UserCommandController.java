@@ -4,7 +4,6 @@ import com.runninghi.common.annotation.UserAuthorize;
 import com.runninghi.common.response.ApiResponse;
 import com.runninghi.user.command.application.dto.user.request.UserUpdateRequest;
 import com.runninghi.user.command.application.service.UserCommandService;
-import com.runninghi.user.query.application.service.UserQueryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -14,20 +13,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
-@Tag(name = "로그인 후 사용할 수 있는 API")
+@Tag(name = "회원용 COMMAND API")
 @RequiredArgsConstructor
 @UserAuthorize
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/vi/user")
 public class UserCommandController {
     private final UserCommandService userCommandService;
-    private final UserQueryService userQueryService;
-
-    @Operation(summary = "회원 정보 조회")
-    @GetMapping
-    public ApiResponse getUserInfo(@AuthenticationPrincipal User user) {
-        return ApiResponse.success("조회 성공", userQueryService.findUserInfo(UUID.fromString(user.getUsername())));
-    }
 
     @Operation(summary = "회원 탈퇴")
     @DeleteMapping

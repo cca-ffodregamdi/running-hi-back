@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "회원 가입 및 로그인")
+@Tag(name = "회원 가입 및 로그인 API")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping
@@ -21,13 +21,13 @@ public class SignCommandController {
     private final SignCommandService signCommandService;
 
     @Operation(summary = "회원 가입")
-    @PostMapping("/sign-up")
+    @PostMapping("/api/vi/sign-up")
     public ApiResponse signUp(@RequestBody SignUpRequest request) {
         return ApiResponse.success("성공적으로 가입되었습니다.", signCommandService.registUser(request));
     }
 
     @Operation(summary = "로그인")
-    @PostMapping("/sign-in")
+    @PostMapping("/api/vi/sign-in")
     public ApiResponse signIn(@RequestBody SignInRequest request) {
         return ApiResponse.success("성공적으로 로그인되었습니다.", signCommandService.signIn(request));
     }

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @AdminAuthorize
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/api/vi/admin")
 public class AdminCommandController {
 
 //    @Operation(summary = "회원 목록 조회")
