@@ -1,4 +1,4 @@
-package com.runninghi.User.command.application.service;
+package com.runninghi.User.query.application.service;
 
 
 import com.runninghi.user.command.application.dto.user.response.UserInfoResponse;
@@ -18,13 +18,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.List;
 
 @SpringBootTest
-public class AdminCommandServiceTest {
+public class AdminQueryServiceTest {
     private final AdminQueryService adminQueryService;
     private final UserCommandRepository userCommandRepository;
     private final PasswordEncoder encoder;
 
     @Autowired
-    AdminCommandServiceTest(AdminQueryService adminQueryService, UserCommandRepository userCommandRepository, PasswordEncoder encoder) {
+    AdminQueryServiceTest(AdminQueryService adminQueryService, UserCommandRepository userCommandRepository, PasswordEncoder encoder) {
         this.adminQueryService = adminQueryService;
         this.userCommandRepository = userCommandRepository;
         this.encoder = encoder;
