@@ -7,6 +7,7 @@ import com.runninghi.bookmark.command.domain.aggregate.vo.BookmarkVO;
 import com.runninghi.bookmark.command.domain.repository.BookmarkRepository;
 import com.runninghi.bookmark.query.application.dto.FindBookmarkRequest;
 import com.runninghi.bookmark.query.application.service.BookmarkQueryService;
+import com.runninghi.common.handler.feedback.customException.IllegalArgumentException;
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
@@ -108,5 +109,21 @@ public class BookmarkCommandServiceTests {
 
     }
 
+    @Test
+    @DisplayName("즐겨찾기 추가 테스트 : 이미 저장된 즐겨찾기 예외처리")
+    public void testSavedBookmarkException() {
+
+        BookmarkVO bookmarkVO1 = new BookmarkVO(1L, 2L);
+        CreateBookmarkRequest bookmarkRequest1 = new CreateBookmarkRequest(bookmarkVO1, new BookmarkUserVO(UUID.randomUUID()));
+        commandBookmarkService.createBookmark(bookmarkRequest1);
+
+        BookmarkVO bookmarkVO2 = new BookmarkVO(1L, 2L);
+        CreateBookmarkRequest bookmarkRequest2 = new CreateBookmarkRequest(bookmarkVO2, bookmarkRequest1.userNo());
+
+        org.assertj.core.api.Assertions.assertThatThrownBy(() -> commandBookmarkService.createBookmark(bookmarkRequest2))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이미 저장되어있는 즐겨찾기 입니다.");
+
+    }
 
 }

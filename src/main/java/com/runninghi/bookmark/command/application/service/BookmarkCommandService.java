@@ -24,6 +24,7 @@ public class BookmarkCommandService {
 
         //infraService.validatePostExist(bookmarkDTO.bookmarkVO().getPostNo());
         domainService.validateFolderExist(bookmarkDTO.bookmarkVO().getFolderNo());
+        domainService.validateBookmarkExist(bookmarkDTO.bookmarkVO());
 
         return bookmarkRepository.save(Bookmark.builder()
                 .bookmarkVO(bookmarkDTO.bookmarkVO())
