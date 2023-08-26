@@ -25,7 +25,7 @@ public record CommentQueryResponse(
     public static CommentQueryResponse from (Comment comment) {
         return new CommentQueryResponse(
                 comment.getCommentNo(),
-                comment.getUserNo(),
+                comment.getUserNoVO(),
                 comment.getUserPostNo(),
                 comment.getCommentDate(),
                 comment.getCommentContent()

@@ -199,7 +199,7 @@ public class BookmarkFolderCommandServiceTests {
 
         Bookmark bookmark = bookmarkRepository.save(Bookmark.builder()
                 .bookmarkVO(new BookmarkVO(folder.getFolderNo(), 3L))
-                .userNo(new BookmarkUserVO(UUID.randomUUID()))
+                .userNoVO(new BookmarkUserVO(UUID.randomUUID()))
                 .addDate(LocalDate.now())
                 .build());
 

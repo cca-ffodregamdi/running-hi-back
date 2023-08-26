@@ -71,7 +71,7 @@ public class CommentCommandControllerTests {
                 .status(true)
                 .build());
 
-        CreateCommentRequest request = new CreateCommentRequest(new CommentUserVO(user.getId()), 1L, "댓글 생성 컨트롤러 테스트");
+        CreateCommentRequest request = new CreateCommentRequest(user.getId(), 1L, "댓글 생성 컨트롤러 테스트");
 
         mock.perform(post("/api/v1/comments")
                         .contentType(MediaType.APPLICATION_JSON)
