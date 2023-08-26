@@ -1,7 +1,9 @@
 package com.runninghi.userpost.command.application.service;
 
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
+import com.runninghi.common.handler.feedback.customException.NotMatchWriterException;
 import com.runninghi.userpost.command.application.dto.request.UserPostCreateRequest;
+import com.runninghi.userpost.command.application.dto.request.UserPostDeleteRequest;
 import com.runninghi.userpost.command.application.dto.request.UserPostUpdateRequest;
 import com.runninghi.userpost.command.application.dto.response.UserPostResponse;
 import com.runninghi.userpost.command.application.dto.response.UserPostUserResponse;
@@ -11,6 +13,7 @@ import com.runninghi.userpost.command.domain.repository.UserPostCommandRepositor
 import com.runninghi.userpost.command.domain.service.UserPostCommandDomainService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
@@ -23,7 +26,7 @@ public class UserPostCommandService {
     private final UserPostCommandDomainService userPostCommandDomainService;
 
     // 유저 게시물 생성
-    // 관련된 keyword Of post 생성
+    @Transactional
     public UserPostResponse createUserPost(UserPostCreateRequest userPostCreateRequest, UserPostUserResponse user) {
 
         // 유저 게시물 제한 사항 확인
@@ -42,12 +45,14 @@ public class UserPostCommandService {
         // 유저 게시물 저장
         UserPost createdUserPost = userPostCommandRepository.save(userPost);
 
+        // 관련된 keyword Of post 생성
+
         return UserPostResponse.from(createdUserPost);
 
     }
 
     // 유저 게시물 수정
-    // 관련된 keyword Of post 수정
+    @Transactional
     public UserPostResponse updateUserPost(UserPostUpdateRequest userPostUpdateRequest, UserPostUserResponse user) {
 
         // 유저 게시물 제한 사항 확안
@@ -71,13 +76,29 @@ public class UserPostCommandService {
 
         UserPost result = userPostCommandRepository.save(updateUserPost);
 
+        // 관련된 keyword Of post 수정
+
         return UserPostResponse.from(result);
     }
 
     // 유저 게시물 삭제
-    // 관련된 keyword Of post 삭제
-    // 관련된 이미지 삭제
-    // 관련된 댓글 삭제
-    // 관련된 즐겨찾기 삭제
+    @Transactional
+    public void deleteUserPost(UserPostDeleteRequest userPostDeleteRequest, UserPostUserResponse user) {
+
+        UserPost userPost = userPostCommandRepository.findByUserPostNo(userPostDeleteRequest.userPostNo())
+                .orElseThrow(() -> new NotFoundException("존재하지않는 유저 게시물입니다."));
+
+        // 작성자와 현재 회원이 일치하는지 확인
+        if (!userPostCommandDomainService.isWriter(user, userPost)) {
+            throw new NotMatchWriterException("작성자와 회원이 일치하지않습니다.");
+        }
+
+        userPostCommandRepository.delete(userPost);
+
+        // 관련된 keyword Of post 삭제
+        // 관련된 이미지 삭제
+        // 관련된 댓글 삭제
+        // 관련된 즐겨찾기 삭제
+    }
 
 }
