@@ -153,4 +153,13 @@ public class CommentCommandServiceTests {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("댓글은 공백일 수 없습니다.");
     }
+
+    @Test
+    @DisplayName("댓글 생성 테스트 : 생성시 status false 확인")
+    void testCommentStatusIsFalse() {
+        CreateCommentRequest commentRequest = new CreateCommentRequest(new CommentUserVO(UUID.randomUUID()), 1L, "댓글 생성 테스트");
+        CommentCommandResponse comment = commentCommandService.createComment(commentRequest);
+
+        Assertions.assertFalse(comment.commentStatus());
+    }
 }

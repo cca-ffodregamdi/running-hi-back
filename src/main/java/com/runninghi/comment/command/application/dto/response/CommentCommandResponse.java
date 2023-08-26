@@ -20,7 +20,10 @@ public record CommentCommandResponse(
         Date commentDate,
 
         @Schema(description = "댓글 내용", example = "댓글 내용을 작성하는 부분입니다.")
-        String commentContent
+        String commentContent,
+
+        @Schema(description = "댓글 신고 상태", example = "false")
+        boolean commentStatus
 ) {
 
     public static CommentCommandResponse from (Comment comment) {
@@ -29,7 +32,8 @@ public record CommentCommandResponse(
                 comment.getUserNo().getUserNo(),
                 comment.getUserPostNo(),
                 comment.getCommentDate(),
-                comment.getCommentContent()
+                comment.getCommentContent(),
+                comment.isCommentStatus()
         );
     }
 }

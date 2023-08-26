@@ -30,6 +30,7 @@ public class Comment {
 
     @Column
     private int commentReportCnt;
+
     @Column(nullable = false)
     private boolean commentStatus;
 
