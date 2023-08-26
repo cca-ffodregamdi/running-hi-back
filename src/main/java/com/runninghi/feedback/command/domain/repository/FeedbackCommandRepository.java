@@ -12,4 +12,6 @@ public interface FeedbackCommandRepository extends JpaRepository<Feedback, Integ
     // FeedbackNo로 피드백 하나 조회
     Optional<Feedback> findByFeedbackNo(Long feedbackNo);
 
+
+
 }
