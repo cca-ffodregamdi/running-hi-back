@@ -86,7 +86,7 @@ public class CommentCommandControllerTests {
                 .commentNo(999L)
                 .commentDate(new Date())
                 .commentContent("댓글 수정 컨트롤러 테스트")
-                .userNo(new CommentUserVO(UUID.randomUUID()))
+                .userNoVO(new CommentUserVO(UUID.randomUUID()))
                 .userPostNo(111L)
                 .build();
 
@@ -105,7 +105,7 @@ public class CommentCommandControllerTests {
                 .commentNo(999L)
                 .commentDate(new Date())
                 .commentContent("댓글 수정 컨트롤러 테스트")
-                .userNo(new CommentUserVO(UUID.randomUUID()))
+                .userNoVO(new CommentUserVO(UUID.randomUUID()))
                 .userPostNo(111L)
                 .build();
 

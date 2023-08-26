@@ -17,7 +17,7 @@ public class Comment {
     private Long commentNo;
 
     @Embedded
-    private CommentUserVO userNo;
+    private CommentUserVO userNoVO;
 
     @Column
     private Long userPostNo;
@@ -35,9 +35,9 @@ public class Comment {
     private boolean commentStatus;
 
     @Builder
-    public Comment(Long commentNo, CommentUserVO userNo, Long userPostNo, Date commentDate, String commentContent, int commentReportCnt, boolean commentStatus) {
+    public Comment(Long commentNo, CommentUserVO userNoVO, Long userPostNo, Date commentDate, String commentContent, int commentReportCnt, boolean commentStatus) {
         this.commentNo = commentNo;
-        this.userNo = userNo;
+        this.userNoVO = userNoVO;
         this.userPostNo = userPostNo;
         this.commentDate = commentDate;
         this.commentContent = commentContent;

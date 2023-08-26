@@ -66,7 +66,7 @@ public class CommentQueryServiceTests {
     @DisplayName("특정 댓글 조회 테스트 : success")
     void testFindCommentByCommentNo() {
 
-        CreateCommentRequest commentRequest = new CreateCommentRequest(new CommentUserVO(UUID.randomUUID()), 1L, "댓글 생성 테스트");
+        CreateCommentRequest commentRequest = new CreateCommentRequest(UUID.randomUUID(), 1L, "댓글 생성 테스트");
         CommentCommandResponse comment = createCommentService.createComment(commentRequest);
 
         CommentQueryResponse response = queryCommentService.findComment(new FindCommentRequest(comment.commentNo()));

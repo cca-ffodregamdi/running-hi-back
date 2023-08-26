@@ -18,7 +18,7 @@ public record FolderCommandResponse(
         return new FolderCommandResponse(
             folder.getFolderNo(),
             folder.getFolderName(),
-            folder.getUserNo().getUserNo()
+            folder.getUserNoVO().getUserNo()
         );
     }
 }
