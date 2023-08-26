@@ -125,7 +125,7 @@ public class CommentCommandServiceTests {
 
         Assertions.assertSame(commentQueryService.findComment(new FindCommentRequest(comment.commentNo())).commentContent(),
                 "댓글 수정 테스트 입니다.");
-        Assertions.assertNotSame(date, commentQueryService.findComment(new FindCommentRequest(comment.commentNo())).commentDate());
+        Assertions.assertNotSame(date, commentQueryService.findComment(new FindCommentRequest(comment.commentNo())).updateDate());
     }
 
     @Test

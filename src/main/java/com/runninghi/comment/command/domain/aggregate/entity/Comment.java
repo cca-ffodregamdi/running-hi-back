@@ -34,8 +34,11 @@ public class Comment {
     @Column(nullable = false)
     private boolean commentStatus;
 
+    @Column
+    private Date updateDate;
+
     @Builder
-    public Comment(Long commentNo, CommentUserVO userNoVO, Long userPostNo, Date commentDate, String commentContent, int commentReportCnt, boolean commentStatus) {
+    public Comment(Long commentNo, CommentUserVO userNoVO, Long userPostNo, Date commentDate, String commentContent, int commentReportCnt, boolean commentStatus, Date updateDate) {
         this.commentNo = commentNo;
         this.userNoVO = userNoVO;
         this.userPostNo = userPostNo;
@@ -43,10 +46,11 @@ public class Comment {
         this.commentContent = commentContent;
         this.commentReportCnt = commentReportCnt;
         this.commentStatus = commentStatus;
+        this.updateDate = updateDate;
     }
 
     public void update(UpdateCommentRequest commentRequest) {
         this.commentContent = commentRequest.commentContent();
-        this.commentDate = new Date();
+        this.updateDate = new Date();
     }
 }
