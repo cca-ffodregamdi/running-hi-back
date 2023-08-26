@@ -19,14 +19,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootTest
-class SignCommandServiceTest {
+class SignQueryServiceTest {
     private final SignCommandService signCommandService;
     private final UserCommandRepository userCommandRepository;
     private final UserQueryRefreshTokenRepository userQueryRefreshTokenRepository;
     private final PasswordEncoder encoder;
 
     @Autowired
-    SignCommandServiceTest(SignCommandService signCommandService, UserCommandRepository userCommandRepository, UserQueryRefreshTokenRepository userQueryRefreshTokenRepository, PasswordEncoder encoder) {
+    SignQueryServiceTest(SignCommandService signCommandService, UserCommandRepository userCommandRepository, UserQueryRefreshTokenRepository userQueryRefreshTokenRepository, PasswordEncoder encoder) {
         this.signCommandService = signCommandService;
         this.userCommandRepository = userCommandRepository;
         this.userQueryRefreshTokenRepository = userQueryRefreshTokenRepository;

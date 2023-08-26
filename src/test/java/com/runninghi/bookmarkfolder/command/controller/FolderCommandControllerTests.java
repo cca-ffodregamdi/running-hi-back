@@ -10,7 +10,7 @@ import com.runninghi.bookmarkfolder.command.domain.aggregate.vo.FolderUserVO;
 import com.runninghi.bookmarkfolder.command.domain.repository.BookmarkFolderRepository;
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
-import com.runninghi.user.command.domain.repository.UserRepository;
+import com.runninghi.user.command.domain.repository.UserCommandRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -23,7 +23,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.Date;
 import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -32,28 +31,23 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 public class FolderCommandControllerTests {
 
-    private MockMvc mock;
-
     @Autowired
     FolderCommandController folderCommandController;
-
-    @Autowired
-    private BookmarkFolderRepository folderRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private PasswordEncoder encoder;
-
     @MockBean
     BookmarkFolderCommandService bookmarkFolderCommandService;
+    private MockMvc mock;
+    @Autowired
+    private BookmarkFolderRepository folderRepository;
+    @Autowired
+    private UserCommandRepository userCommandRepository;
+    @Autowired
+    private PasswordEncoder encoder;
 
     @BeforeEach
     @AfterEach
     void clear() {
         folderRepository.deleteAllInBatch();
-        userRepository.deleteAllInBatch();
+        userCommandRepository.deleteAllInBatch();
     }
 
     @BeforeEach
@@ -64,7 +58,7 @@ public class FolderCommandControllerTests {
     @Test
     @DisplayName("즐겨찾기 폴더 생성 컨트롤러 : success")
     void createFolderControllerTest() throws Exception {
-        User user = userRepository.save(User.builder()
+        User user = userCommandRepository.save(User.builder()
                 .account("qwerty1234")
                 .password(encoder.encode("1234"))
                 .name("김철수")
@@ -77,8 +71,8 @@ public class FolderCommandControllerTests {
         CreateFolderRequest request = new CreateFolderRequest("폴더 생성 컨트롤러", new FolderUserVO(user.getId()));
 
         mock.perform(post("/api/v1/bookmark-folders")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(String.valueOf(request)))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(String.valueOf(request)))
                 .andExpect(status().isOk());
     }
 
