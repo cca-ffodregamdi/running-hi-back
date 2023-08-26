@@ -85,10 +85,10 @@ public class FolderCommandControllerTests {
         BookmarkFolder folder = BookmarkFolder.builder()
                 .folderNo(999L)
                 .folderName("폴더 수정")
-                .userNo(new FolderUserVO(UUID.randomUUID()))
+                .userNoVO(new FolderUserVO(UUID.randomUUID()))
                 .build();
 
-        UpdateFolderRequest request = new UpdateFolderRequest(folder.getFolderNo(), "수정!!!", folder.getUserNo().getUserNo());
+        UpdateFolderRequest request = new UpdateFolderRequest(folder.getFolderNo(), "수정!!!", folder.getUserNoVO().getUserNo());
 
         mock.perform(put("/api/v1/bookmark-folders/" + request.folderNo())
                         .contentType(MediaType.APPLICATION_JSON)
