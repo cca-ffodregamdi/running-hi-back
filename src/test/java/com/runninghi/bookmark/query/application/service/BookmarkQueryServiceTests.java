@@ -45,7 +45,7 @@ public class BookmarkQueryServiceTests {
     void testFindBookmark() {
 
         BookmarkVO bookmarkVO = new BookmarkVO(1L, 2L);
-        CreateBookmarkRequest bookmarkRequest = new CreateBookmarkRequest(bookmarkVO, new BookmarkUserVO(UUID.randomUUID()));
+        CreateBookmarkRequest bookmarkRequest = new CreateBookmarkRequest(bookmarkVO, UUID.randomUUID());
         Bookmark bookmark = createBookmarkService.createBookmark(bookmarkRequest);
 
         FindBookmarkRequest findRequest = new FindBookmarkRequest(bookmarkVO);
@@ -59,8 +59,8 @@ public class BookmarkQueryServiceTests {
 
         BookmarkVO bookmarkVO1 = new BookmarkVO(1L, 2L);
         BookmarkVO bookmarkVO2 = new BookmarkVO(1L, 3L);
-        CreateBookmarkRequest bookmarkRequest1 = new CreateBookmarkRequest(bookmarkVO1, new BookmarkUserVO(UUID.randomUUID()));
-        CreateBookmarkRequest bookmarkRequest2 = new CreateBookmarkRequest(bookmarkVO2, new BookmarkUserVO(UUID.randomUUID()));
+        CreateBookmarkRequest bookmarkRequest1 = new CreateBookmarkRequest(bookmarkVO1, UUID.randomUUID());
+        CreateBookmarkRequest bookmarkRequest2 = new CreateBookmarkRequest(bookmarkVO2, UUID.randomUUID());
 
         Bookmark bookmark1 = createBookmarkService.createBookmark(bookmarkRequest1);
         Bookmark bookmark2 = createBookmarkService.createBookmark(bookmarkRequest2);

@@ -10,7 +10,7 @@ public record CreateBookmarkRequest(
         @Schema(description = "회원 고유키", example = "{\"folderNo\": 1, \"postNo\": 123}")
         BookmarkVO bookmarkVO,
         @Schema(description = "회원 고유키", example = "c0a80121-7aeb-4b4b-8b0a-6b1c032f0e4a")
-        BookmarkUserVO userNo
+        UUID userNo
 
 ) {
         @Override
@@ -19,7 +19,7 @@ public record CreateBookmarkRequest(
         }
 
         @Override
-        public BookmarkUserVO userNo() {
+        public UUID userNo() {
             return userNo;
         }
 }
