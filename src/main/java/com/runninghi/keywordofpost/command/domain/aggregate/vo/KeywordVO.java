@@ -15,4 +15,7 @@ import lombok.NoArgsConstructor;
 public class KeywordVO {
     @Column
     private Long keywordNo;
+
+    @Column
+    private String keywordName;
 }
