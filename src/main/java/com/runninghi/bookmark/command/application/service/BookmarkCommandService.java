@@ -3,8 +3,7 @@ package com.runninghi.bookmark.command.application.service;
 import com.runninghi.bookmark.command.application.dto.request.CreateBookmarkRequest;
 import com.runninghi.bookmark.command.application.dto.request.DeleteBookmarkRequest;
 import com.runninghi.bookmark.command.domain.aggregate.entity.Bookmark;
-import com.runninghi.bookmark.command.domain.aggregate.vo.BookmarkUserVO;
-import com.runninghi.bookmark.command.domain.repository.BookmarkRepository;
+import com.runninghi.bookmark.command.domain.repository.BookmarkCommandRepository;
 import com.runninghi.bookmark.command.domain.service.BookmarkCommandDomainService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +15,7 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class BookmarkCommandService {
 
-    private final BookmarkRepository bookmarkRepository;
+    private final BookmarkCommandRepository bookmarkRepository;
     private final BookmarkCommandDomainService domainService;
 
     @Transactional
@@ -24,6 +23,7 @@ public class BookmarkCommandService {
 
         //infraService.validatePostExist(bookmarkDTO.bookmarkVO().getPostNo());
         domainService.validateFolderExist(bookmarkDTO.bookmarkVO().getFolderNo());
+        domainService.validateBookmarkExist(bookmarkDTO.bookmarkVO());
 
         return bookmarkRepository.save(Bookmark.builder()
                 .bookmarkVO(bookmarkDTO.bookmarkVO())

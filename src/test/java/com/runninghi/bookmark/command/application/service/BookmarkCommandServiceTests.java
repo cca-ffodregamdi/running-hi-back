@@ -4,9 +4,11 @@ import com.runninghi.bookmark.command.application.dto.request.CreateBookmarkRequ
 import com.runninghi.bookmark.command.application.dto.request.DeleteBookmarkRequest;
 import com.runninghi.bookmark.command.domain.aggregate.vo.BookmarkUserVO;
 import com.runninghi.bookmark.command.domain.aggregate.vo.BookmarkVO;
-import com.runninghi.bookmark.command.domain.repository.BookmarkRepository;
+import com.runninghi.bookmark.command.domain.repository.BookmarkCommandRepository;
 import com.runninghi.bookmark.query.application.dto.FindBookmarkRequest;
 import com.runninghi.bookmark.query.application.service.BookmarkQueryService;
+import com.runninghi.bookmark.query.infrastructure.repository.BookmarkQueryRepository;
+import com.runninghi.common.handler.feedback.customException.IllegalArgumentException;
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
@@ -18,6 +20,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.UUID;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 
 @SpringBootTest
 @Transactional
@@ -27,7 +31,7 @@ public class BookmarkCommandServiceTests {
     private BookmarkCommandService commandBookmarkService;
 
     @Autowired
-    private BookmarkRepository bookmarkRepository;
+    private BookmarkCommandRepository bookmarkRepository;
 
     @Autowired
     private BookmarkQueryService queryBookmarkService;
@@ -63,7 +67,7 @@ public class BookmarkCommandServiceTests {
         BookmarkVO bookmarkVO = new BookmarkVO(0L, 1L);
         CreateBookmarkRequest bookmarkRequest = new CreateBookmarkRequest(bookmarkVO, new BookmarkUserVO(UUID.randomUUID()));
 
-        org.assertj.core.api.Assertions.assertThatThrownBy(() -> commandBookmarkService.createBookmark(bookmarkRequest))
+        assertThatThrownBy(() -> commandBookmarkService.createBookmark(bookmarkRequest))
                 .isInstanceOf(NotFoundException.class)
                 .hasMessage("해당 폴더가 존재하지 않습니다.");
     }
@@ -90,7 +94,7 @@ public class BookmarkCommandServiceTests {
         DeleteBookmarkRequest deleteRequest = new DeleteBookmarkRequest(new BookmarkVO(bookmarkVO.getFolderNo(), bookmarkVO.getPostNo()));
         commandBookmarkService.deleteBookmark(deleteRequest);
 
-        org.assertj.core.api.Assertions.assertThatThrownBy(() -> queryBookmarkService.findBookmark(new FindBookmarkRequest(bookmarkVO)))
+        assertThatThrownBy(() -> queryBookmarkService.findBookmark(new FindBookmarkRequest(bookmarkVO)))
                 .isInstanceOf(NotFoundException.class)
                 .hasMessage("존재하지 않는 즐겨찾기 입니다.");
 
@@ -108,5 +112,21 @@ public class BookmarkCommandServiceTests {
 
     }
 
+    @Test
+    @DisplayName("즐겨찾기 추가 테스트 : 이미 저장된 즐겨찾기 예외처리")
+    public void testSavedBookmarkException() {
+
+        BookmarkVO bookmarkVO1 = new BookmarkVO(1L, 2L);
+        CreateBookmarkRequest bookmarkRequest1 = new CreateBookmarkRequest(bookmarkVO1, new BookmarkUserVO(UUID.randomUUID()));
+        commandBookmarkService.createBookmark(bookmarkRequest1);
+
+        BookmarkVO bookmarkVO2 = new BookmarkVO(1L, 2L);
+        CreateBookmarkRequest bookmarkRequest2 = new CreateBookmarkRequest(bookmarkVO2, bookmarkRequest1.userNo());
+
+        org.assertj.core.api.Assertions.assertThatThrownBy(() -> commandBookmarkService.createBookmark(bookmarkRequest2))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이미 저장되어있는 즐겨찾기 입니다.");
+
+    }
 
 }

@@ -7,7 +7,7 @@ import com.runninghi.bookmarkfolder.command.application.dto.request.UpdateFolder
 import com.runninghi.bookmarkfolder.command.application.service.BookmarkFolderCommandService;
 import com.runninghi.bookmarkfolder.command.domain.aggregate.entity.BookmarkFolder;
 import com.runninghi.bookmarkfolder.command.domain.aggregate.vo.FolderUserVO;
-import com.runninghi.bookmarkfolder.command.domain.repository.BookmarkFolderRepository;
+import com.runninghi.bookmarkfolder.command.domain.repository.FolderCommandRepository;
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
 import com.runninghi.user.command.domain.repository.UserCommandRepository;
@@ -38,6 +38,8 @@ public class FolderCommandControllerTests {
     private MockMvc mock;
     @Autowired
     private BookmarkFolderRepository folderRepository;
+    private FolderCommandRepository folderRepository;
+
     @Autowired
     private UserCommandRepository userCommandRepository;
     @Autowired

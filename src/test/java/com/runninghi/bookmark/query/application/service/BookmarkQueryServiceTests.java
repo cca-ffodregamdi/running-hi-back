@@ -5,7 +5,7 @@ import com.runninghi.bookmark.command.application.service.BookmarkCommandService
 import com.runninghi.bookmark.command.domain.aggregate.entity.Bookmark;
 import com.runninghi.bookmark.command.domain.aggregate.vo.BookmarkUserVO;
 import com.runninghi.bookmark.command.domain.aggregate.vo.BookmarkVO;
-import com.runninghi.bookmark.command.domain.repository.BookmarkRepository;
+import com.runninghi.bookmark.command.domain.repository.BookmarkCommandRepository;
 import com.runninghi.bookmark.query.application.dto.FindBookmarkListRequest;
 import com.runninghi.bookmark.query.application.dto.FindBookmarkRequest;
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
@@ -32,7 +32,7 @@ public class BookmarkQueryServiceTests {
     BookmarkQueryService queryBookmarkService;
 
     @Autowired
-    BookmarkRepository bookmarkRepository;
+    BookmarkCommandRepository bookmarkRepository;
 
     @BeforeEach
     void clear() {
