@@ -31,7 +31,7 @@ public class JwtExceptionResponseTest {
     }
 
     private MockHttpServletRequestBuilder request() {
-        return get("/admin/users").contentType(MediaType.APPLICATION_JSON);
+        return get("/api/vi/admin/users").contentType(MediaType.APPLICATION_JSON);
     }
 
     @Test

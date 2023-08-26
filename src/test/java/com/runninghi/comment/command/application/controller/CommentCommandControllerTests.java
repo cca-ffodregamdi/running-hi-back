@@ -1,7 +1,6 @@
 package com.runninghi.comment.command.application.controller;
 
 import com.runninghi.comment.command.application.dto.request.CreateCommentRequest;
-
 import com.runninghi.comment.command.application.dto.request.DeleteCommentRequest;
 import com.runninghi.comment.command.application.dto.request.UpdateCommentRequest;
 import com.runninghi.comment.command.application.service.CommentCommandService;
@@ -10,8 +9,11 @@ import com.runninghi.comment.command.domain.aggregate.vo.CommentUserVO;
 import com.runninghi.comment.command.domain.repository.CommentCommandRepository;
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
-import com.runninghi.user.command.domain.repository.UserRepository;
-import org.junit.jupiter.api.*;
+import com.runninghi.user.command.domain.repository.UserCommandRepository;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -30,28 +32,24 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 public class CommentCommandControllerTests {
 
-    private MockMvc mock;
-
     @Autowired
     CommentCommandController commentCommandController;
-
+    @MockBean
+    CommentCommandService commentCommandService;
+    private MockMvc mock;
     @Autowired
     private CommentCommandRepository commentRepository;
 
     @Autowired
-    private UserRepository userRepository;
-
+    private UserCommandRepository userCommandRepository;
     @Autowired
     private PasswordEncoder encoder;
-
-    @MockBean
-    CommentCommandService commentCommandService;
 
     @BeforeEach
     @AfterEach
     void clear() {
         commentRepository.deleteAllInBatch();
-        userRepository.deleteAllInBatch();
+        userCommandRepository.deleteAllInBatch();
     }
 
     @BeforeEach
@@ -63,7 +61,7 @@ public class CommentCommandControllerTests {
     @Test
     @DisplayName("댓글 생성 컨트롤러 : success")
     void createCommentControllerTest() throws Exception {
-        User user = userRepository.save(User.builder()
+        User user = userCommandRepository.save(User.builder()
                 .account("qwerty1234")
                 .password(encoder.encode("1234"))
                 .name("김철수")

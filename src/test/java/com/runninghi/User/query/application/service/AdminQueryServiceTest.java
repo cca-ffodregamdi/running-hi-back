@@ -1,11 +1,11 @@
-package com.runninghi.User.command.application.service;
+package com.runninghi.User.query.application.service;
 
 
 import com.runninghi.user.command.application.dto.user.response.UserInfoResponse;
-import com.runninghi.user.command.application.service.AdminService;
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
-import com.runninghi.user.command.domain.repository.UserRepository;
+import com.runninghi.user.command.domain.repository.UserCommandRepository;
+import com.runninghi.user.query.application.service.AdminQueryService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,29 +18,29 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.List;
 
 @SpringBootTest
-public class AdminServiceTest {
-    private final AdminService adminService;
-    private final UserRepository userRepository;
+public class AdminQueryServiceTest {
+    private final AdminQueryService adminQueryService;
+    private final UserCommandRepository userCommandRepository;
     private final PasswordEncoder encoder;
 
     @Autowired
-    AdminServiceTest(AdminService adminService, UserRepository userRepository, PasswordEncoder encoder) {
-        this.adminService = adminService;
-        this.userRepository = userRepository;
+    AdminQueryServiceTest(AdminQueryService adminQueryService, UserCommandRepository userCommandRepository, PasswordEncoder encoder) {
+        this.adminQueryService = adminQueryService;
+        this.userCommandRepository = userCommandRepository;
         this.encoder = encoder;
     }
 
     @BeforeEach
     @AfterEach
     void clear() {
-        userRepository.deleteAllInBatch();
+        userCommandRepository.deleteAllInBatch();
     }
 
     @Test
     @DisplayName("모든 회원 정보 조회 테스트 : success")
     void findAllUserTest() {
         // given
-        userRepository.save(User.builder()
+        userCommandRepository.save(User.builder()
                 .account("qwerty1234")
                 .password(encoder.encode("1234"))
                 .name("김철수")
@@ -49,7 +49,7 @@ public class AdminServiceTest {
                 .role(Role.USER)
                 .status(true)
                 .build());
-        userRepository.save(User.builder()
+        userCommandRepository.save(User.builder()
                 .account("asdfg1234")
                 .password(encoder.encode("1234"))
                 .name("나철수")
@@ -58,7 +58,7 @@ public class AdminServiceTest {
                 .role(Role.USER)
                 .status(true)
                 .build());
-        userRepository.save(User.builder()
+        userCommandRepository.save(User.builder()
                 .account("zxcvb1234")
                 .password(encoder.encode("1234"))
                 .name("박철수")
@@ -68,7 +68,7 @@ public class AdminServiceTest {
                 .status(true)
                 .build());
         // when
-        List<UserInfoResponse> users = adminService.findAllUsers();
+        List<UserInfoResponse> users = adminQueryService.findAllUsers();
         // then
         Assertions.assertThat(users).hasSize(3);
         for (UserInfoResponse user : users) {
@@ -95,7 +95,7 @@ public class AdminServiceTest {
     @DisplayName("모든 관리자 정보 조회 테스트 : success")
     void findAllAdminTest() {
         // given
-        userRepository.save(User.builder()
+        userCommandRepository.save(User.builder()
                 .account("qwerty1234")
                 .password(encoder.encode("1234"))
                 .name("김철수")
@@ -104,7 +104,7 @@ public class AdminServiceTest {
                 .role(Role.ADMIN)
                 .status(true)
                 .build());
-        userRepository.save(User.builder()
+        userCommandRepository.save(User.builder()
                 .account("asdfg1234")
                 .password(encoder.encode("1234"))
                 .name("나철수")
@@ -113,7 +113,7 @@ public class AdminServiceTest {
                 .role(Role.ADMIN)
                 .status(true)
                 .build());
-        userRepository.save(User.builder()
+        userCommandRepository.save(User.builder()
                 .account("zxcvb1234")
                 .password(encoder.encode("1234"))
                 .name("박철수")
@@ -123,7 +123,7 @@ public class AdminServiceTest {
                 .status(true)
                 .build());
         // when
-        List<UserInfoResponse> admins = adminService.findAllAdmins();
+        List<UserInfoResponse> admins = adminQueryService.findAllAdmins();
 
         // then
         Assertions.assertThat(admins).hasSize(3);
