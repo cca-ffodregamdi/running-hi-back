@@ -45,7 +45,8 @@ public class User extends BaseEntity {
     private String provideId; // 해당 OAuth 의 key(id)
 
     @Builder
-    public User(String account, String password, String name, String nickname, String email, String kakaoId, String kakaoName, int reportCount, boolean blacklistStatus, boolean status, Role role, String provider, String provideId) {
+    public User(UUID id, String account, String password, String name, String nickname, String email, String kakaoId, String kakaoName, int reportCount, boolean blacklistStatus, boolean status, Role role, String provider, String provideId) {
+        this.id = id;
         this.account = account;
         this.password = password;
         this.name = name;

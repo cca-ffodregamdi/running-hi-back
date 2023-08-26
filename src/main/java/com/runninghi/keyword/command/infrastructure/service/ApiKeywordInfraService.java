@@ -7,7 +7,7 @@ import com.runninghi.keyword.command.domain.service.ApiKeywordDomainService;
 import com.runninghi.keyword.query.application.dto.response.FindKeywordResponse;
 import com.runninghi.keyword.query.application.service.KeywordQueryService;
 import com.runninghi.user.command.application.dto.user.response.UserInfoResponse;
-import com.runninghi.user.command.application.service.UserService;
+import com.runninghi.user.query.application.service.UserQueryService;
 import lombok.RequiredArgsConstructor;
 
 import java.util.UUID;
@@ -17,11 +17,11 @@ import java.util.UUID;
 public class ApiKeywordInfraService implements ApiKeywordDomainService {
 
     private final KeywordQueryService keywordQueryService;
-    private final UserService userService;
+    private final UserQueryService userQueryService;
 
     @Override
     public UserCheckResponse checkUserByUserKey(UUID userKey) {
-        UserInfoResponse result = userService.findUserInfo(userKey);
+        UserInfoResponse result = userQueryService.findUserInfo(userKey);
         return new UserCheckResponse(
                 result.id(),
                 result.account(),

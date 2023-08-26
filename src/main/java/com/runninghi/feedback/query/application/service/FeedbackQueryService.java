@@ -54,8 +54,7 @@ public class FeedbackQueryService {
         if (feedbackFindRequest.feedbackCategory() == null) {
             // 필터링없이 전체 조회
             feedbackPage = feedbackQueryRepository.findAll(pageable);
-        }
-        else {
+        } else {
             // 카테고리로 필터링할 때
             feedbackPage = feedbackQueryRepository.findFeedbacksByFeedbackCategory(FeedbackCategory.fromValue(feedbackFindRequest.feedbackCategory()), pageable);
         }

@@ -7,14 +7,15 @@ import com.runninghi.keyword.command.domain.aggregate.entity.Keyword;
 import com.runninghi.keyword.command.domain.repository.KeywordCommandRepository;
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
-import com.runninghi.user.command.domain.repository.UserRepository;
-import org.junit.jupiter.api.*;
+import com.runninghi.user.command.domain.repository.UserCommandRepository;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import org.assertj.core.api.Assertions;
+import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 @Transactional
@@ -25,13 +26,13 @@ class KeywordCommandServiceTest {
     @Autowired
     private KeywordCommandRepository keywordCommandRepository;
     @Autowired
-    private UserRepository userRepository;
+    private UserCommandRepository userCommandRepository;
     @Autowired
     private PasswordEncoder encoder;
 
     @BeforeEach
     void clear() {
-        userRepository.deleteAll();
+        userCommandRepository.deleteAll();
     }
 
     @DisplayName("키워드 생성 테스트 : 작성자가 관리자가 맞는 지 확인")
@@ -39,7 +40,7 @@ class KeywordCommandServiceTest {
     void testCheckAdminByAdminUserKey() {
 
         // given
-        User admin = userRepository.save(User.builder()
+        User admin = userCommandRepository.save(User.builder()
                 .account("qwerty1234")
                 .password(encoder.encode("1234"))
                 .name("qweqwe")
@@ -49,7 +50,7 @@ class KeywordCommandServiceTest {
         // when & then
         Assertions.assertThatCode(
                 () -> keywordCommandService.checkAdminByUserKey(admin.getId())
-                ).doesNotThrowAnyException();
+        ).doesNotThrowAnyException();
     }
 
     @DisplayName("키워드 생성 테스트 : 일반 유저가 생성 시도 시 예외처리 확인")
@@ -57,7 +58,7 @@ class KeywordCommandServiceTest {
     void testCheckAdminByUserUserKey() {
 
         // given
-        User admin = userRepository.save(User.builder()
+        User admin = userCommandRepository.save(User.builder()
                 .account("qwerty1234")
                 .password(encoder.encode("1234"))
                 .name("qweqwe")
@@ -128,8 +129,8 @@ class KeywordCommandServiceTest {
 
         // when & then
         Assertions.assertThatThrownBy(
-                () -> keywordCommandService.updateKeyword(request)
-        )
+                        () -> keywordCommandService.updateKeyword(request)
+                )
                 .isInstanceOf(NotFoundException.class)
                 .hasMessage("일치하는 키워드가 없습니다.");
 
@@ -137,7 +138,7 @@ class KeywordCommandServiceTest {
 
     @DisplayName("키워드 삭제 테스트 : success")
     @Test
-    void testDeleteKeywordSuccess () {
+    void testDeleteKeywordSuccess() {
 
         // given
         KeywordResponse testCreated = keywordCommandService.createKeyword("테테스스트트");
@@ -152,15 +153,15 @@ class KeywordCommandServiceTest {
 
     @DisplayName("키워드 삭제 테스트 : 키워드가 존재하지 않을 때 Not Found 예외 처리 되는 지 확인")
     @Test
-    void testDeleteKeywordNotFound () {
+    void testDeleteKeywordNotFound() {
 
         // given
         keywordCommandRepository.deleteAll();
 
         // when & then
         Assertions.assertThatThrownBy(
-                () -> keywordCommandService.deleteKeyword(1L)
-        )
+                        () -> keywordCommandService.deleteKeyword(1L)
+                )
                 .isInstanceOf(NotFoundException.class)
                 .hasMessage("일치하는 키워드가 없습니다.");
     }
