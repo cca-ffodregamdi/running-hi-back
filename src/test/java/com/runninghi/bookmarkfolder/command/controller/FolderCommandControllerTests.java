@@ -36,9 +36,9 @@ public class FolderCommandControllerTests {
     @MockBean
     BookmarkFolderCommandService bookmarkFolderCommandService;
     private MockMvc mock;
+
     @Autowired
-    private BookmarkFolderRepository folderRepository;
-    private FolderCommandRepository folderRepository;
+    private FolderCommandRepository folderCommandRepository;
 
     @Autowired
     private UserCommandRepository userCommandRepository;
@@ -48,7 +48,7 @@ public class FolderCommandControllerTests {
     @BeforeEach
     @AfterEach
     void clear() {
-        folderRepository.deleteAllInBatch();
+        folderCommandRepository.deleteAllInBatch();
         userCommandRepository.deleteAllInBatch();
     }
 

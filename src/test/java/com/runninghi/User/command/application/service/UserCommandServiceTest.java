@@ -2,7 +2,6 @@ package com.runninghi.User.command.application.service;
 
 import com.runninghi.user.command.application.dto.user.request.UserUpdateRequest;
 import com.runninghi.user.command.application.dto.user.response.UserDeleteResponse;
-import com.runninghi.user.command.application.dto.user.response.UserInfoResponse;
 import com.runninghi.user.command.application.dto.user.response.UserUpdateResponse;
 import com.runninghi.user.command.application.service.UserCommandService;
 import com.runninghi.user.command.domain.aggregate.entity.User;
@@ -47,30 +46,6 @@ public class UserCommandServiceTest {
     @AfterEach
     void clear() {
         userCommandRepository.deleteAllInBatch();
-    }
-
-    @Test
-    @DisplayName("회원 조회 테스트 : success")
-    void findUserTest() {
-        // given
-        User savedUser = userCommandRepository.save(User.builder()
-                .account("qwerty1234")
-                .password(encoder.encode("1234"))
-                .name("김철수")
-                .nickname("qwe")
-                .email("qwe@qwe.qw")
-                .role(Role.USER)
-                .status(true)
-                .build());
-        // when
-        UserInfoResponse response = userQueryService.findUserInfo(savedUser.getId());
-        // then
-        assertThat(response.id()).isEqualTo(savedUser.getId());
-        assertThat(response.account()).isEqualTo("qwerty1234");
-        assertThat(response.name()).isEqualTo("김철수");
-        assertThat(response.nickname()).isEqualTo("qwe");
-        assertThat(response.email()).isEqualTo("qwe@qwe.qw");
-        assertThat(response.role()).isEqualTo(Role.USER);
     }
 
     @Test
