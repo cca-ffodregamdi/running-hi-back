@@ -1,7 +1,6 @@
 package com.runninghi.userpost.command.application.service;
 
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
-import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.userpost.command.application.dto.request.UserPostCreateRequest;
 import com.runninghi.userpost.command.application.dto.request.UserPostUpdateRequest;
 import com.runninghi.userpost.command.application.dto.response.UserPostResponse;
@@ -9,7 +8,6 @@ import com.runninghi.userpost.command.application.dto.response.UserPostUserRespo
 import com.runninghi.userpost.command.domain.aggregate.entity.UserPost;
 import com.runninghi.userpost.command.domain.aggregate.vo.UserVO;
 import com.runninghi.userpost.command.domain.repository.UserPostCommandRepository;
-import com.runninghi.userpost.command.domain.service.ApiUserPostCommandDomainService;
 import com.runninghi.userpost.command.domain.service.UserPostCommandDomainService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

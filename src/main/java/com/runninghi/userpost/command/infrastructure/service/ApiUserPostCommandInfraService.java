@@ -2,7 +2,7 @@ package com.runninghi.userpost.command.infrastructure.service;
 
 import com.runninghi.common.annotation.InfraService;
 import com.runninghi.user.command.application.dto.user.response.UserInfoResponse;
-import com.runninghi.user.command.application.service.UserService;
+import com.runninghi.user.query.application.service.UserQueryService;
 import com.runninghi.userpost.command.application.dto.response.UserPostUserResponse;
 import com.runninghi.userpost.command.domain.service.ApiUserPostCommandDomainService;
 import lombok.RequiredArgsConstructor;
@@ -13,11 +13,11 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ApiUserPostCommandInfraService implements ApiUserPostCommandDomainService {
 
-    private final UserService userService;
+private final UserQueryService userQueryService;
 
     public UserPostUserResponse checkUser(UUID userId) {
 
-        UserInfoResponse result = userService.findUserInfo(userId);
+        UserInfoResponse result = userQueryService.findUserInfo(userId);
 
         return new UserPostUserResponse(
                 result.id(),
