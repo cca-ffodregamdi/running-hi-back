@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 
-@Tag(name = "키워드 커멘드 컨트롤러")
+@Tag(name = "키워드 Command API")
 @RestController
 @RequiredArgsConstructor
 public class KeywordCommandController {

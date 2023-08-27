@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Tag(name = "키워드 쿼리 컨트롤러")
+@Tag(name = "키워드 Query API")
 @RestController
 @RequiredArgsConstructor
 public class KeywordQueryController {
