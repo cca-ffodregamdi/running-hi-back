@@ -49,7 +49,7 @@ public class BookmarkCommandServiceTests {
         Long beforeSize = bookmarkRepository.count();
 
         BookmarkVO bookmarkVO = new BookmarkVO(1L, 2L);
-        CreateBookmarkRequest bookmarkRequest = new CreateBookmarkRequest(bookmarkVO, new BookmarkUserVO(UUID.randomUUID()));
+        CreateBookmarkRequest bookmarkRequest = new CreateBookmarkRequest(bookmarkVO, UUID.randomUUID());
         commandBookmarkService.createBookmark(bookmarkRequest);
 
         Long afterSize = bookmarkRepository.count();
@@ -65,7 +65,7 @@ public class BookmarkCommandServiceTests {
     void testFolderNoDoesntExist() {
 
         BookmarkVO bookmarkVO = new BookmarkVO(0L, 1L);
-        CreateBookmarkRequest bookmarkRequest = new CreateBookmarkRequest(bookmarkVO, new BookmarkUserVO(UUID.randomUUID()));
+        CreateBookmarkRequest bookmarkRequest = new CreateBookmarkRequest(bookmarkVO, UUID.randomUUID());
 
         assertThatThrownBy(() -> commandBookmarkService.createBookmark(bookmarkRequest))
                 .isInstanceOf(NotFoundException.class)
@@ -88,7 +88,7 @@ public class BookmarkCommandServiceTests {
     @DisplayName("즐겨찾기 삭제 테스트 : success")
     void testDeleteBookmark() {
         BookmarkVO bookmarkVO = new BookmarkVO(1L, 2L);
-        CreateBookmarkRequest createRequest = new CreateBookmarkRequest(bookmarkVO, new BookmarkUserVO(UUID.randomUUID()));
+        CreateBookmarkRequest createRequest = new CreateBookmarkRequest(bookmarkVO, UUID.randomUUID());
         commandBookmarkService.createBookmark(createRequest);
 
         DeleteBookmarkRequest deleteRequest = new DeleteBookmarkRequest(new BookmarkVO(bookmarkVO.getFolderNo(), bookmarkVO.getPostNo()));
@@ -117,7 +117,7 @@ public class BookmarkCommandServiceTests {
     public void testSavedBookmarkException() {
 
         BookmarkVO bookmarkVO1 = new BookmarkVO(1L, 2L);
-        CreateBookmarkRequest bookmarkRequest1 = new CreateBookmarkRequest(bookmarkVO1, new BookmarkUserVO(UUID.randomUUID()));
+        CreateBookmarkRequest bookmarkRequest1 = new CreateBookmarkRequest(bookmarkVO1,UUID.randomUUID());
         commandBookmarkService.createBookmark(bookmarkRequest1);
 
         BookmarkVO bookmarkVO2 = new BookmarkVO(1L, 2L);

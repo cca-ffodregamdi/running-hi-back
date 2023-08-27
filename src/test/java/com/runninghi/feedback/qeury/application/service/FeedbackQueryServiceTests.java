@@ -13,7 +13,7 @@ import com.runninghi.feedback.query.application.service.FeedbackQueryService;
 import com.runninghi.feedback.query.domain.service.ApiFeedbackQueryDomainService;
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
-import com.runninghi.user.command.domain.repository.UserRepository;
+import com.runninghi.user.command.domain.repository.UserCommandRepository;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ public class FeedbackQueryServiceTests {
     private FeedbackQueryService feedbackQueryService;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserCommandRepository userCommandRepository;
 
     @Autowired
     private PasswordEncoder encoder;
@@ -56,14 +56,14 @@ public class FeedbackQueryServiceTests {
     @BeforeEach
     @AfterEach
     void clear() {
-        userRepository.deleteAll();
+        userCommandRepository.deleteAll();
         feedbackCommandRepository.deleteAll();
     }
 
     @BeforeEach
     public void setUp() {
 
-        user1 = userRepository.saveAndFlush(User.builder()
+        user1 = userCommandRepository.saveAndFlush(User.builder()
                 .account("qwerty1234")
                 .password(encoder.encode("1234"))
                 .name("김철수")
@@ -73,7 +73,7 @@ public class FeedbackQueryServiceTests {
                 .status(true)
                 .build());
 
-        user2 = userRepository.saveAndFlush(User.builder()
+        user2 = userCommandRepository.saveAndFlush(User.builder()
                 .account("testUser")
                 .password(encoder.encode("1111"))
                 .name("testUUUUser")

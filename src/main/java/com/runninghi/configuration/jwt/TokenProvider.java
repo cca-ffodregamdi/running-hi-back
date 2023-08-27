@@ -3,7 +3,7 @@ package com.runninghi.configuration.jwt;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.runninghi.user.command.domain.aggregate.entity.UserRefreshToken;
-import com.runninghi.user.query.infrastructure.repository.UserRefreshTokenRepository;
+import com.runninghi.user.query.infrastructure.repository.UserQueryRefreshTokenRepository;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -29,7 +29,7 @@ public class TokenProvider {
     private final long refreshExpirationHours;
     private final String issuer;
     private final long reissueLimit;
-    private final UserRefreshTokenRepository userRefreshTokenRepository;
+    private final UserQueryRefreshTokenRepository userQueryRefreshTokenRepository;
 
     // JWT 역직렬화를 위한 ObjectMapper
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -39,12 +39,12 @@ public class TokenProvider {
             @Value("${expiration-minutes}") long expirationMinutes,
             @Value("${refresh-expiration-hours}") long refreshExpirationHours,
             @Value("${issuer}") String issuer,
-            UserRefreshTokenRepository userRefreshTokenRepository) {
+            UserQueryRefreshTokenRepository userQueryRefreshTokenRepository) {
         this.secretKey = secretKey;
         this.expirationMinutes = expirationMinutes;
         this.refreshExpirationHours = refreshExpirationHours;
         this.issuer = issuer;
-        this.userRefreshTokenRepository = userRefreshTokenRepository;
+        this.userQueryRefreshTokenRepository = userQueryRefreshTokenRepository;
         reissueLimit = refreshExpirationHours * 60 / expirationMinutes;
     }
 
@@ -70,7 +70,7 @@ public class TokenProvider {
     @Transactional
     public String recreateAccessToken(String oldAccessToken) throws JsonProcessingException {
         String subject = decodeJwtPayloadSubject(oldAccessToken);
-        userRefreshTokenRepository.findByUserIdAndReissueCountLessThan(UUID.fromString(subject.split(":")[0]), reissueLimit)
+        userQueryRefreshTokenRepository.findByUserIdAndReissueCountLessThan(UUID.fromString(subject.split(":")[0]), reissueLimit)
                 .ifPresentOrElse(
                         UserRefreshToken::increaseReissueCount,
                         () -> {
@@ -97,7 +97,7 @@ public class TokenProvider {
     public void validateRefreshToken(String refreshToken, String oldAccessToken) throws JsonProcessingException {
         validateAndParseToken(refreshToken);
         String userId = decodeJwtPayloadSubject(oldAccessToken).split(":")[0];
-        userRefreshTokenRepository.findByUserIdAndReissueCountLessThan(UUID.fromString(userId), reissueLimit)
+        userQueryRefreshTokenRepository.findByUserIdAndReissueCountLessThan(UUID.fromString(userId), reissueLimit)
                 .filter(userRefreshToken -> userRefreshToken.validateRefreshToken(refreshToken))
                 .orElseThrow(() -> new ExpiredJwtException(null, null, "Refresh token expired."));
     }

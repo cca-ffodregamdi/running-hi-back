@@ -19,15 +19,15 @@ public class Bookmark implements Serializable {
     private BookmarkVO bookmarkVO;
 
     @Embedded
-    private BookmarkUserVO userNo;
+    private BookmarkUserVO userNoVO;
 
     @Column
     private LocalDate addDate;
 
     @Builder
-    public Bookmark(BookmarkVO bookmarkVO, BookmarkUserVO userNo, LocalDate addDate) {
+    public Bookmark(BookmarkVO bookmarkVO, BookmarkUserVO userNoVO, LocalDate addDate) {
         this.bookmarkVO = bookmarkVO;
-        this.userNo = userNo;
+        this.userNoVO = userNoVO;
         this.addDate = addDate;
     }
 }

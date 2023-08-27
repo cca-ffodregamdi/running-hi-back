@@ -17,7 +17,7 @@ public class Comment {
     private Long commentNo;
 
     @Embedded
-    private CommentUserVO userNo;
+    private CommentUserVO userNoVO;
 
     @Column
     private Long userPostNo;
@@ -31,18 +31,26 @@ public class Comment {
     @Column
     private int commentReportCnt;
 
+    @Column(nullable = false)
+    private boolean commentStatus;
+
+    @Column
+    private Date updateDate;
+
     @Builder
-    public Comment(Long commentNo, CommentUserVO userNo, Long userPostNo, Date commentDate, String commentContent, int commentReportCnt) {
+    public Comment(Long commentNo, CommentUserVO userNoVO, Long userPostNo, Date commentDate, String commentContent, int commentReportCnt, boolean commentStatus, Date updateDate) {
         this.commentNo = commentNo;
-        this.userNo = userNo;
+        this.userNoVO = userNoVO;
         this.userPostNo = userPostNo;
         this.commentDate = commentDate;
         this.commentContent = commentContent;
         this.commentReportCnt = commentReportCnt;
+        this.commentStatus = commentStatus;
+        this.updateDate = updateDate;
     }
 
     public void update(UpdateCommentRequest commentRequest) {
         this.commentContent = commentRequest.commentContent();
-        this.commentDate = new Date();
+        this.updateDate = new Date();
     }
 }

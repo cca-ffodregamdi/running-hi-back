@@ -1,6 +1,7 @@
 package com.runninghi.bookmark.query.application.service;
 
 import com.runninghi.bookmark.command.application.dto.request.CreateBookmarkRequest;
+import com.runninghi.bookmark.command.application.dto.response.BookmarkCommandResponse;
 import com.runninghi.bookmark.command.application.service.BookmarkCommandService;
 import com.runninghi.bookmark.command.domain.aggregate.entity.Bookmark;
 import com.runninghi.bookmark.command.domain.aggregate.vo.BookmarkUserVO;
@@ -45,12 +46,12 @@ public class BookmarkQueryServiceTests {
     void testFindBookmark() {
 
         BookmarkVO bookmarkVO = new BookmarkVO(1L, 2L);
-        CreateBookmarkRequest bookmarkRequest = new CreateBookmarkRequest(bookmarkVO, new BookmarkUserVO(UUID.randomUUID()));
-        Bookmark bookmark = createBookmarkService.createBookmark(bookmarkRequest);
+        CreateBookmarkRequest bookmarkRequest = new CreateBookmarkRequest(bookmarkVO, UUID.randomUUID());
+        BookmarkCommandResponse bookmark = createBookmarkService.createBookmark(bookmarkRequest);
 
         FindBookmarkRequest findRequest = new FindBookmarkRequest(bookmarkVO);
 
-        Assertions.assertEquals(bookmark, queryBookmarkService.findBookmark(findRequest));
+        Assertions.assertEquals(bookmark.bookmarkVO(), queryBookmarkService.findBookmark(findRequest).getBookmarkVO());
     }
 
     @Test
@@ -59,16 +60,17 @@ public class BookmarkQueryServiceTests {
 
         BookmarkVO bookmarkVO1 = new BookmarkVO(1L, 2L);
         BookmarkVO bookmarkVO2 = new BookmarkVO(1L, 3L);
-        CreateBookmarkRequest bookmarkRequest1 = new CreateBookmarkRequest(bookmarkVO1, new BookmarkUserVO(UUID.randomUUID()));
-        CreateBookmarkRequest bookmarkRequest2 = new CreateBookmarkRequest(bookmarkVO2, new BookmarkUserVO(UUID.randomUUID()));
+        CreateBookmarkRequest bookmarkRequest1 = new CreateBookmarkRequest(bookmarkVO1, UUID.randomUUID());
+        CreateBookmarkRequest bookmarkRequest2 = new CreateBookmarkRequest(bookmarkVO2, UUID.randomUUID());
 
-        Bookmark bookmark1 = createBookmarkService.createBookmark(bookmarkRequest1);
-        Bookmark bookmark2 = createBookmarkService.createBookmark(bookmarkRequest2);
+        BookmarkCommandResponse bookmark1 = createBookmarkService.createBookmark(bookmarkRequest1);
+        BookmarkCommandResponse bookmark2 = createBookmarkService.createBookmark(bookmarkRequest2);
 
         FindBookmarkListRequest listRequest = new FindBookmarkListRequest(1L);
         List<Bookmark> bookmarkList = queryBookmarkService.findBookmarkListByFolder(listRequest);
 
-        org.assertj.core.api.Assertions.assertThat(bookmarkList).contains(bookmark1, bookmark2);
+        Assertions.assertEquals(bookmarkList.get(0).getBookmarkVO(), bookmark1.bookmarkVO());
+        Assertions.assertEquals(bookmarkList.get(1).getBookmarkVO(), bookmark2.bookmarkVO());
     }
 
     @Test
