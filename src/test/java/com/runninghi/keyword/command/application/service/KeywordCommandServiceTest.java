@@ -32,7 +32,7 @@ class KeywordCommandServiceTest {
 
     @BeforeEach
     void clear() {
-        userCommandRepository.deleteAll();
+        userCommandRepository.deleteAllInBatch();
     }
 
     @DisplayName("키워드 생성 테스트 : 작성자가 관리자가 맞는 지 확인")
@@ -156,7 +156,7 @@ class KeywordCommandServiceTest {
     void testDeleteKeywordNotFound() {
 
         // given
-        keywordCommandRepository.deleteAll();
+        keywordCommandRepository.deleteAllInBatch();
 
         // when & then
         Assertions.assertThatThrownBy(
