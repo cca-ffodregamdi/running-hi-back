@@ -98,7 +98,7 @@ class KeywordCommandServiceTest {
                 .keywordName("test1")
                 .build()
         );
-
+        Long keywordNo = 1L;
         KeywordUpdateRequest request = KeywordUpdateRequest.from(
                 Keyword.builder()
                         .keywordNo(1L)
@@ -107,7 +107,7 @@ class KeywordCommandServiceTest {
         );
 
         // when
-        KeywordResponse result = keywordCommandService.updateKeyword(request);
+        KeywordResponse result = keywordCommandService.updateKeyword(keywordNo, request.keywordName());
 
         // when & then
         Assertions.assertThat(result.keywordName())
@@ -120,6 +120,7 @@ class KeywordCommandServiceTest {
 
         // given
         keywordCommandRepository.deleteAllInBatch();
+        Long keywordNo = 1L;
         KeywordUpdateRequest request = KeywordUpdateRequest.from(
                 Keyword.builder()
                         .keywordNo(1L)
@@ -129,7 +130,7 @@ class KeywordCommandServiceTest {
 
         // when & then
         Assertions.assertThatThrownBy(
-                        () -> keywordCommandService.updateKeyword(request)
+                        () -> keywordCommandService.updateKeyword(keywordNo, request.keywordName())
                 )
                 .isInstanceOf(NotFoundException.class)
                 .hasMessage("일치하는 키워드가 없습니다.");

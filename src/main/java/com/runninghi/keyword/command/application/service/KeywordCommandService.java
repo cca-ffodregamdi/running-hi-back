@@ -37,10 +37,10 @@ public class KeywordCommandService {
     }
 
     @Transactional
-    public KeywordResponse updateKeyword(KeywordUpdateRequest request) {
-        Keyword keyword = keywordCommandRepository.findById(request.keywordNo())
+    public KeywordResponse updateKeyword(Long keywordNo, String keywordName) {
+        Keyword keyword = keywordCommandRepository.findById(keywordNo)
                 .orElseThrow( () -> new NotFoundException("일치하는 키워드가 없습니다."));
-        keyword.update(request.keywordName());
+        keyword.update(keywordName);
         return KeywordResponse.of(keyword.getKeywordNo(), keyword.getKeywordName());
     }
 
