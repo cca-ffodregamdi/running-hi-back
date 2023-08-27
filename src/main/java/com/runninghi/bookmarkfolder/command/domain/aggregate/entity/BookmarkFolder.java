@@ -27,13 +27,13 @@ public class BookmarkFolder {
     private String folderName;
 
     @Embedded
-    private FolderUserVO userNo;
+    private FolderUserVO userNoVO;
 
     @Builder
-    public BookmarkFolder(Long folderNo, String folderName, FolderUserVO userNo) {
+    public BookmarkFolder(Long folderNo, String folderName, FolderUserVO userNoVO) {
         this.folderNo = folderNo;
         this.folderName = folderName;
-        this.userNo = userNo;
+        this.userNoVO = userNoVO;
     }
 
     public void update(UpdateFolderRequest folderRequest) {
