@@ -15,7 +15,7 @@ public class ImageCommandDomainService {
     public String checkAndGetFileExtension(String fileName) {
 
         // 허용되는 이미지 확장자 목록
-        List<String> allowedExtensions = Arrays.asList("jpg", "jpeg", "png", "bmp");
+        List<String> allowedExtensions = Arrays.asList("jpg", "jpeg", "png", "bmp", "webp");
 
         // 파일의 확장자 추출
         String fileExtension = fileName.substring(fileName.lastIndexOf("."));
