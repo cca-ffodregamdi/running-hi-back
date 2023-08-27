@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class AdminCommandService {
+public class BlackListCommandService {
 
     private final PostReportCommandRepository postReportCommandRepository;
     private final PostReportCommandDomainService postReportCommandDomainService;
