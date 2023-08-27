@@ -19,7 +19,7 @@ public class KeywordQueryController {
     private final KeywordQueryService keywordQueryService;
 
     @Operation(summary = "전체 키워드 목록 조회")
-    @GetMapping("api/v1/keyword")
+    @GetMapping("/api/v1/keyword")
     public ResponseEntity<List<FindKeywordResponse>> findKeywordList() {
         List<FindKeywordResponse> keywordList = keywordQueryService.findKeywordList();
         return ResponseEntity.ok(keywordList);

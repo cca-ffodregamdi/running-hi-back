@@ -17,5 +17,5 @@ import java.util.UUID;
 public class UserPostVO {
 
     @Column
-    private UUID userNo;
+    private Long userPostNo;
 }
