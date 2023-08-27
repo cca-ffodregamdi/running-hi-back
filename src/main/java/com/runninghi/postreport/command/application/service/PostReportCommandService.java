@@ -1,8 +1,9 @@
 package com.runninghi.postreport.command.application.service;
 
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
-import com.runninghi.postreport.command.application.dto.request.PostReportRequest;
+import com.runninghi.postreport.command.application.dto.request.PostReportSaveRequest;
 import com.runninghi.postreport.command.domain.aggregate.entity.PostReport;
+import com.runninghi.postreport.command.domain.aggregate.entity.enumtype.ProcessingStatus;
 import com.runninghi.postreport.command.domain.aggregate.vo.PostReportUserVO;
 import com.runninghi.postreport.command.domain.aggregate.vo.PostReportedUserVO;
 import com.runninghi.postreport.command.domain.aggregate.vo.ReportedPostVO;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -21,28 +21,28 @@ public class PostReportCommandService {
     private final PostReportCommandRepository postReportCommandRepository;
 
     @Transactional
-    public PostReport savePostReport(PostReportRequest postReportRequest, UUID reportUserNo,
-                                     UUID reportedUserNo, Long reportedPostNo) {
+    public PostReport savePostReport(PostReportSaveRequest postReportSaveRequest) {
 
-        if (postReportRequest.postReportCategoryCode() == 0) {
+        if (postReportSaveRequest.postReportCategoryCode() == 0) {
             throw new IllegalArgumentException("신고 카테고리를 선택해주세요");
         }
 
-        if (postReportRequest.postReportContent().isEmpty()) {
+        if (postReportSaveRequest.postReportContent().isEmpty()) {
             throw new IllegalArgumentException("신고 내용을 입력해주세요");
         }
 
-        if (postReportRequest.postReportContent().length() > 100) {
+        if (postReportSaveRequest.postReportContent().length() > 100) {
             throw new IllegalArgumentException("신고 내용은 100자를 넘을 수 없습니다.");
         }
 
         PostReport postReport = PostReport.builder()
-                .postReportCategoryCode(postReportRequest.postReportCategoryCode())
-                .postReportContent(postReportRequest.postReportContent())
+                .postReportCategoryCode(postReportSaveRequest.postReportCategoryCode())
+                .postReportContent(postReportSaveRequest.postReportContent())
                 .postReportedDate(LocalDateTime.now())
-                .postReportUserVO(new PostReportUserVO(reportUserNo))
-                .postReportedUserVO(new PostReportedUserVO(reportedUserNo))
-                .reportedPostVO(new ReportedPostVO(reportedPostNo))
+                .processingStatus(ProcessingStatus.INPROGRESS)
+                .postReportUserVO(new PostReportUserVO(postReportSaveRequest.reportUserNo()))
+                .postReportedUserVO(new PostReportedUserVO(postReportSaveRequest.reportedUserNo()))
+                .reportedPostVO(new ReportedPostVO(postReportSaveRequest.reportedPostNo()))
                 .build();
 
         postReportCommandRepository.save(postReport);
