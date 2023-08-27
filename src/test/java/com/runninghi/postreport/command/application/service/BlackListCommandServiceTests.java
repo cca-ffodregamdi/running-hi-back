@@ -8,7 +8,9 @@ import com.runninghi.postreport.command.domain.repository.PostReportCommandRepos
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
 import com.runninghi.user.command.domain.repository.UserCommandRepository;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -35,12 +37,6 @@ public class BlackListCommandServiceTests {
     @Autowired
     private PasswordEncoder encoder;
 
-    @BeforeEach
-    @AfterEach
-    void clear() {
-        postReportCommandRepository.deleteAllInBatch();
-    }
-
     @Test
     @DisplayName("게시글 신고 수락 테스트: 관리자가 신고 수락한 경우 신고 status 'ACCEPTED'로 변경 확인")
     void checkAcceptedStatus() {
@@ -60,13 +56,10 @@ public class BlackListCommandServiceTests {
         Assertions.assertEquals(ProcessingStatus.ACCEPTED, updatedPostReport.getProcessingStatus());
     }
 
-    @Test
-    @DisplayName("게시글 신고 수락 테스트: 관리자가 신고 수락 시 게시글 상태값 true(조회 안됨) 변경")
-        // userPost merge 후 작성
-    void updatePostStatusTrue() {
-
-
-    }
+//    @Test
+//    @DisplayName("게시글 신고 수락 테스트: 관리자가 신고 수락 시 게시글 상태값 true(조회 안됨) 변경")          // userPost merge 후 작성
+//    void updatePostStatusTrue() {
+//    }
 
     @Test
     @DisplayName("게시글 신고 수락 테스트: 관리자가 게시글 신고 수락한 경우 유저 신고횟수 +1")
@@ -97,7 +90,7 @@ public class BlackListCommandServiceTests {
     }
 
 //    @Test
-//    @DisplayName("게시글 신고 거절 테스트: 관리자가 신고 거절한 경우 신고 status 'REJECTED'로 변경 확인")
+//    @DisplayName("게시글 신고 거절 테스트: 관리자가 신고 거절한 경우 신고 status 'REJECTED'로 변경 확인")         // 오류나서 주석
 //    void checkRejectedStatus() {
 
     // given
@@ -115,13 +108,10 @@ public class BlackListCommandServiceTests {
 //        Assertions.assertEquals(ProcessingStatus.REJECTED, updatedPostReport.getProcessingStatus());
 //    }
 
-    @Test
-    @DisplayName("게시글 신고 거절 테스트: 관리자가 신고 거절 시 게시글 상태값 false(조회 됨) 유지")
-        // userPost merge 후 작성
-    void checkPostStatusFalse() {
-
-
-    }
+//    @Test
+//    @DisplayName("게시글 신고 거절 테스트: 관리자가 신고 거절 시 게시글 상태값 false(조회 됨) 유지")    // userPost merge 후 작성
+//    void checkPostStatusFalse() {
+//    }
 
     @Test
     @DisplayName("게시글 신고 거절 테스트: 관리자가 게시글 신고 거절한 경우 유저 신고횟수 동일 확인")
