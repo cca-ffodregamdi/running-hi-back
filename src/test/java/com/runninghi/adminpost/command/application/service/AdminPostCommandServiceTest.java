@@ -1,5 +1,6 @@
 package com.runninghi.adminpost.command.application.service;
 
+import com.runninghi.adminpost.command.application.controller.AdminPostCommandController;
 import com.runninghi.adminpost.command.application.dto.request.AdminPostCreateRequest;
 import com.runninghi.adminpost.command.application.dto.request.KeywordListRequest;
 import com.runninghi.adminpost.command.domain.repository.AdminPostCommandRepository;
@@ -25,6 +26,8 @@ import java.util.List;
 class AdminPostCommandServiceTest {
 
     @Autowired
+    private AdminPostCommandController adminPostCommandController;
+    @Autowired
     private UserCommandRepository userCommandRepository;
     @Autowired
     private PasswordEncoder encoder;
@@ -35,18 +38,6 @@ class AdminPostCommandServiceTest {
     @Autowired
     private KeywordCommandRepository keywordCommandRepository;
 
-//    @BeforeEach
-//    void admin() {
-//        User admin = userCommandRepository.save(User.builder()
-//                .account("qwerty1234")
-//                .password(encoder.encode("1234"))
-//                .name("김철수")
-//                .nickname("qwe")
-//                .email("qwe@qwe.qw")
-//                .role(Role.ADMIN)
-//                .status(true)
-//                .build());
-//    }
 
     @BeforeEach
     @AfterEach
@@ -119,7 +110,5 @@ class AdminPostCommandServiceTest {
                 () -> adminPostCommandService.createAdminPost(request)
         ).isInstanceOf(NullPointerException.class);
     }
-
-
 
 }

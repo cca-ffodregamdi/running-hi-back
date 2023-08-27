@@ -30,13 +30,14 @@ public class AdminPostCommandService {
 
     @Transactional
     public AdminPostResponse createAdminPost(AdminPostCreateRequest request) {
+
         AdminPost result = adminPostCommandRepository.save(
                 AdminPost.builder()
-                .writerNoVO(new WriterNoVO(request.userKey()))
-                .adminPostTitle(request.adminPostTitle())
-                .adminPostContent(request.adminPostContent())
-                .adminPostThumbnail(request.thumbnail())
-                .build()
+                        .writerNoVO(new WriterNoVO(request.userKey()))
+                        .adminPostTitle(request.adminPostTitle())
+                        .adminPostContent(request.adminPostContent())
+                        .adminPostThumbnail(request.thumbnail())
+                        .build()
         );
 
         List<Long> keywordNoList = apiAdminPostDomainService.createKeywordOfAdminPost(
