@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "댓글 커맨드 컨트롤러")
+@Tag(name = "댓글 Command API")
 @RestController
 @RequiredArgsConstructor
 public class CommentCommandController {

@@ -162,4 +162,13 @@ public class CommentCommandServiceTests {
 
         Assertions.assertFalse(comment.commentStatus());
     }
+
+    @Test
+    @DisplayName("댓글 생성 테스트 : 생성시 update date null 확인")
+    void testCommentUpdateDateIsNull() {
+        CreateCommentRequest commentRequest = new CreateCommentRequest(UUID.randomUUID(), 1L, "댓글 생성 테스트");
+        CommentCommandResponse comment = commentCommandService.createComment(commentRequest);
+
+        Assertions.assertNull(comment.updateDate());
+    }
 }
