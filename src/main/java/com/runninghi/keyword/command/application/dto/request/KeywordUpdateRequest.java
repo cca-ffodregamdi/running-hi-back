@@ -10,16 +10,12 @@ public record KeywordUpdateRequest (
     @Schema(description = "작성자 고유 키")
     UUID userKey,
 
-    @Schema(description = "키워드 번호")
-    Long keywordNo,
-
     @Schema(description = "키워드 이름")
     String keywordName
 ) {
     public static KeywordUpdateRequest from (Keyword keyword) {
         return new KeywordUpdateRequest(
                 null,
-                keyword.getKeywordNo(),
                 keyword.getKeywordName()
         );
     }
