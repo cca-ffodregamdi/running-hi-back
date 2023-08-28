@@ -57,7 +57,6 @@ public class BlackListCommandServiceTests {
 
         // when
         PostReport updatedPostReport = postReportCommandRepository.findById(postReport.getPostReportNo()).get();
-        System.out.println("updatedPostReport = " + updatedPostReport);
 
         // then
         Assertions.assertEquals(ProcessingStatus.ACCEPTED, updatedPostReport.getProcessingStatus());
@@ -69,7 +68,6 @@ public class BlackListCommandServiceTests {
 //    }
     @Test
     @DisplayName("게시글 신고 거절 테스트: 관리자가 신고 거절한 경우 신고 status 'REJECTED'로 변경 확인")
-// 오류나서 주석
     void checkRejectedStatus() {
 
         // given
@@ -82,7 +80,6 @@ public class BlackListCommandServiceTests {
 
         // when
         PostReport updatedPostReport = postReportCommandRepository.findById(postReport.getPostReportNo()).get();
-        System.out.println("updatedPostReport = " + updatedPostReport);
 
         // then
         Assertions.assertEquals(ProcessingStatus.REJECTED, updatedPostReport.getProcessingStatus());
