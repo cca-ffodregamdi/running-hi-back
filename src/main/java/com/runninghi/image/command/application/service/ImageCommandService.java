@@ -6,7 +6,13 @@ import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.runninghi.image.command.application.dto.request.ImageDeleteRequest;
+import com.runninghi.image.command.application.dto.request.ImageDeleteUserPostRequest;
+import com.runninghi.image.command.application.dto.request.ImageRequest;
 import com.runninghi.image.command.application.dto.response.ImageCreateResponse;
+import com.runninghi.image.command.application.dto.response.ImageResponse;
+import com.runninghi.image.command.domain.aggregate.entity.Image;
+import com.runninghi.image.command.domain.aggregate.vo.UserPostVO;
+import com.runninghi.image.command.domain.repository.ImageCommandRepository;
 import com.runninghi.image.command.domain.service.ImageCommandDomainService;
 import lombok.RequiredArgsConstructor;
 import net.coobird.thumbnailator.Thumbnails;
@@ -24,6 +30,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -37,6 +45,43 @@ public class ImageCommandService {
 
     private final ImageCommandDomainService imageCommandDomainService;
 
+    private final ImageCommandRepository imageCommandRepository;
+
+    // 여러 개의 이미지 s3에 저장
+    public List<ImageCreateResponse> uploadImageFiles(List<MultipartFile> multipartFileList) {
+
+        // s3 bucket 의 폴더 중 user 폴더로 지정
+        String bucketfolder = "user_post/";
+        // s3 bucket에 저장 후 반환된 url을 모아둔 list
+        List<ImageCreateResponse> imageUrls = new ArrayList<>();
+
+        for (MultipartFile multipartFile : multipartFileList) {
+            // 이미지 이름 새로 생성
+            String filename = createFileName(multipartFile.getOriginalFilename());
+
+            try (InputStream inputStream = multipartFile.getInputStream()) {
+                // 이미지 압축
+                InputStream compressedInputStream = compressImage(inputStream);
+
+                ObjectMetadata objectMetadata = new ObjectMetadata();
+                objectMetadata.setContentLength(compressedInputStream.available());
+                objectMetadata.setContentType(multipartFile.getContentType());
+
+                // s3에 저장
+                amazonS3.putObject(new PutObjectRequest(bucket, bucketfolder + filename, compressedInputStream, objectMetadata));
+
+                // url list 저장된 이미지의 url 저장
+                String imageUrl = amazonS3.getUrl(bucket, bucketfolder + filename).toString();
+                imageUrls.add(ImageCreateResponse.from(imageUrl));
+
+            } catch (IOException | SdkClientException e) {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+            }
+        }
+        
+        return imageUrls;
+        
+    }
 
     // 이미지 s3에 업로드
     public ImageCreateResponse uploadImageFile(MultipartFile multipartFile) {
@@ -45,6 +90,7 @@ public class ImageCommandService {
         String fileName = createFileName(multipartFile.getOriginalFilename());
         // s3 bucket 의 폴더 중 user 폴더로 지정
         String bucketFolder = "user_post/";
+
 
         // s3에 이미지 저장
         try (InputStream inputStream = multipartFile.getInputStream()) {
@@ -68,13 +114,48 @@ public class ImageCommandService {
 
     }
 
-    // 이미지 삭제
+    // 하나의 이미지 삭제
+    // 권한 확인?
     public void deleteImageFile(ImageDeleteRequest imageDeleteRequest) {
 
         // s3 bucket 의 폴더 중 user 폴더로 지정
         String bucketFolder = "user_post/";
 
         amazonS3.deleteObject(new DeleteObjectRequest(bucket, imageDeleteRequest.imageUrl().split("/")[3]));
+
+    }
+
+    // 특정 게시물과 관련된 이미지 entity 생성
+    public ImageResponse createUserPostImage(ImageRequest imageRequest) {
+
+        UserPostVO userPostVO = new UserPostVO(imageRequest.userPostNo());
+
+        // 이미지 entity 저장
+        List<Image> imageEntities = imageRequest.imageUrls().stream()
+                .map(imageUrl -> {
+                    Image image = new Image.Builder()
+                            .imageUrl(imageUrl)
+                            .userPostVO(userPostVO)
+                            .build();
+                    return imageCommandRepository.save(image);
+                })
+                .toList();
+
+        // 생성한 이미지 entity 들의 imageNo만 모아서 반환
+        List<Long> imageNos = imageEntities.stream()
+                .map(Image::getImageNo)
+                .toList();
+
+        return new ImageResponse(imageNos);
+    }
+
+    // 특정 게시물과 관련된 s3이미지, 이미지 entity 전부 삭제
+    public void deleteUserPostImage(ImageDeleteUserPostRequest imageDeleteUserPostRequest) {
+
+        UserPostVO userPostVO = new UserPostVO(imageDeleteUserPostRequest.userPostNo());
+
+        // 이미지 entity 전부 삭제
+        imageCommandRepository.deleteImagesByUserPostVO(userPostVO);
 
     }
 
