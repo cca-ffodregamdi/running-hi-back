@@ -22,12 +22,12 @@ public class BlackListCommandService {
     // 설명. 신고 수락 여부에 따라 신고 처리상태 변경 기능
     @Transactional
     public void updatePostReportStatus(PostReportProcessingRequest postReportProcessingDTO) {
-
         PostReport postReport = postReportCommandRepository.findById(postReportProcessingDTO.postReportNo()).get();
 
-            ProcessingStatus processingStatus = postReportProcessingDTO.isAccepted() ?
-                    ProcessingStatus.ACCEPTED : ProcessingStatus.REJECTED;
-            postReport.update(new PostReportUpdateRequest(processingStatus));
+        ProcessingStatus processingStatus = postReportProcessingDTO.isAccepted() ?
+                ProcessingStatus.ACCEPTED : ProcessingStatus.REJECTED;
+
+        postReport.update(new PostReportUpdateRequest(processingStatus));
     }
 
     // 설명. 신고 수락 시 피신고자 신고횟수 추가 기능
@@ -41,7 +41,7 @@ public class BlackListCommandService {
         int originReportCount = postReportCommandDomainService.getReportedUserInfo(reportedUserNo).reportCount();   // 기존 피신고 횟수
 
         // 설명. 신고 수락 시 유저 신고횟수 +1
-        int newReportCount = postReportProcessingDTO.isAccepted() ? originReportCount +1 : originReportCount;
+        int newReportCount = postReportProcessingDTO.isAccepted() ? originReportCount + 1 : originReportCount;
 
         return newReportCount;
     }
@@ -54,7 +54,7 @@ public class BlackListCommandService {
 
         boolean blackListStatus = postReportCommandDomainService.getReportedUserInfo(userNo).blacklistStatus();
 
-        if(reportCount >= 5) {
+        if (reportCount >= 5) {
             blackListStatus = true;
         }
 

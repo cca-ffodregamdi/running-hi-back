@@ -1,24 +1,25 @@
-package com.runninghi.User.query.application.service;
+package com.runninghi.user.query.application.service;
 
 import com.runninghi.user.command.application.dto.user.response.UserInfoResponse;
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
-import com.runninghi.user.query.application.service.UserQueryService;
-import com.runninghi.user.query.infrastructure.repository.UserQueryRepository;
+import com.runninghi.user.command.domain.repository.UserCommandRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
+@Transactional
 public class UserQueryServiceTest {
     @Autowired
     private UserQueryService userQueryService;
     @Autowired
-    private UserQueryRepository userQueryRepository;
+    private UserCommandRepository userCommandRepository;
     @Autowired
     private PasswordEncoder encoder;
 
@@ -26,7 +27,7 @@ public class UserQueryServiceTest {
     @DisplayName("회원 조회 테스트 : success")
     void findUserTest() {
         // given
-        User savedUser = userQueryRepository.save(User.builder()
+        User savedUser = userCommandRepository.save(User.builder()
                 .account("qwerty1234")
                 .password(encoder.encode("1234"))
                 .name("김철수")

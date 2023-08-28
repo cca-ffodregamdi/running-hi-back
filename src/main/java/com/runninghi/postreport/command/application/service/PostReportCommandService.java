@@ -45,7 +45,7 @@ public class PostReportCommandService {
                 .reportedPostVO(new ReportedPostVO(postReportSaveRequest.reportedPostNo()))
                 .build();
 
-        postReportCommandRepository.save(postReport);
+        System.out.println(postReportCommandRepository.save(postReport));
 
         return postReport;
     }
