@@ -1,10 +1,9 @@
-package com.runninghi.User.command.application.service;
+package com.runninghi.user.command.application.service;
 
 import com.runninghi.user.command.application.dto.sign_in.request.SignInRequest;
 import com.runninghi.user.command.application.dto.sign_in.response.SignInResponse;
 import com.runninghi.user.command.application.dto.sign_up.request.SignUpRequest;
 import com.runninghi.user.command.application.dto.sign_up.response.SignUpResponse;
-import com.runninghi.user.command.application.service.SignCommandService;
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
 import com.runninghi.user.command.domain.repository.UserCommandRepository;
@@ -20,19 +19,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootTest
 class SignCommandServiceTest {
-    private final SignCommandService signCommandService;
-    private final UserCommandRepository userCommandRepository;
-    private final UserQueryRefreshTokenRepository userQueryRefreshTokenRepository;
-    private final PasswordEncoder encoder;
-
     @Autowired
-    SignCommandServiceTest(SignCommandService signCommandService, UserCommandRepository userCommandRepository, UserQueryRefreshTokenRepository userQueryRefreshTokenRepository, PasswordEncoder encoder) {
-        this.signCommandService = signCommandService;
-        this.userCommandRepository = userCommandRepository;
-        this.userQueryRefreshTokenRepository = userQueryRefreshTokenRepository;
-        this.encoder = encoder;
-    }
-
+    private SignCommandService signCommandService;
+    @Autowired
+    private UserCommandRepository userCommandRepository;
+    @Autowired
+    private UserQueryRefreshTokenRepository userQueryRefreshTokenRepository;
+    @Autowired
+    private PasswordEncoder encoder;
+    
     @BeforeEach
     @AfterEach
     void clear() {

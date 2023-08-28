@@ -1,9 +1,8 @@
-package com.runninghi.User.command.application.service;
+package com.runninghi.user.command.application.service;
 
 import com.runninghi.user.command.application.dto.user.request.UserUpdateRequest;
 import com.runninghi.user.command.application.dto.user.response.UserDeleteResponse;
 import com.runninghi.user.command.application.dto.user.response.UserUpdateResponse;
-import com.runninghi.user.command.application.service.UserCommandService;
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
 import com.runninghi.user.command.domain.repository.UserCommandRepository;
@@ -16,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -26,6 +26,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 @SpringBootTest
+@Transactional
 public class UserCommandServiceTest {
     private final UserCommandService userCommandService;
     private final UserQueryService userQueryService;
