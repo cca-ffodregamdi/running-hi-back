@@ -5,12 +5,13 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.runninghi.image.command.application.dto.request.ImageDeletePostRequest;
 import com.runninghi.image.command.application.dto.request.ImageDeleteRequest;
-import com.runninghi.image.command.application.dto.request.ImageDeleteUserPostRequest;
 import com.runninghi.image.command.application.dto.request.ImageRequest;
 import com.runninghi.image.command.application.dto.response.ImageCreateResponse;
 import com.runninghi.image.command.application.dto.response.ImageResponse;
 import com.runninghi.image.command.domain.aggregate.entity.Image;
+import com.runninghi.image.command.domain.aggregate.vo.AdminPostVO;
 import com.runninghi.image.command.domain.aggregate.vo.UserPostVO;
 import com.runninghi.image.command.domain.repository.ImageCommandRepository;
 import com.runninghi.image.command.domain.service.ImageCommandDomainService;
@@ -84,13 +85,12 @@ public class ImageCommandService {
     }
 
     // 이미지 s3에 업로드
-    public ImageCreateResponse uploadImageFile(MultipartFile multipartFile) {
+    public ImageCreateResponse uploadImageFile(MultipartFile multipartFile, String board) {
 
         // 이미지 파일 이름 새로 만들기
         String fileName = createFileName(multipartFile.getOriginalFilename());
-        // s3 bucket 의 폴더 중 user 폴더로 지정
-        String bucketFolder = "user_post/";
-
+        // s3 bucket 의 폴더 지정
+        String bucketFolder = (board.equals("admin")) ? "admin_post/" : "user_post/";
 
         // s3에 이미지 저장
         try (InputStream inputStream = multipartFile.getInputStream()) {
@@ -114,21 +114,20 @@ public class ImageCommandService {
 
     }
 
-    // 하나의 이미지 삭제
-    // 권한 확인?
+    // s3에서 하나의 이미지 삭제
     public void deleteImageFile(ImageDeleteRequest imageDeleteRequest) {
 
-        // s3 bucket 의 폴더 중 user 폴더로 지정
-        String bucketFolder = "user_post/";
+        // s3 bucket 의 폴더 지정
+        String bucketFolder = (imageDeleteRequest.board().equals("admin")) ? "admin_post/" : "user_post/";
 
         amazonS3.deleteObject(new DeleteObjectRequest(bucket, imageDeleteRequest.imageUrl().split("/")[3]));
 
     }
 
-    // 특정 게시물과 관련된 이미지 entity 생성
+    // 유저 게시판 : 특정 게시물과 관련된 이미지 entity 생성
     public ImageResponse createUserPostImage(ImageRequest imageRequest) {
 
-        UserPostVO userPostVO = new UserPostVO(imageRequest.userPostNo());
+        UserPostVO userPostVO = new UserPostVO(imageRequest.postNo());
 
         // 이미지 entity 저장
         List<Image> imageEntities = imageRequest.imageUrls().stream()
@@ -149,13 +148,47 @@ public class ImageCommandService {
         return new ImageResponse(imageNos);
     }
 
-    // 특정 게시물과 관련된 s3이미지, 이미지 entity 전부 삭제
-    public void deleteUserPostImage(ImageDeleteUserPostRequest imageDeleteUserPostRequest) {
+    // 유저 게시판 : 특정 게시물과 관련된 s3이미지, 이미지 entity 전부 삭제
+    public void deleteUserPostImage(ImageDeletePostRequest imageDeletePostRequest) {
 
-        UserPostVO userPostVO = new UserPostVO(imageDeleteUserPostRequest.userPostNo());
+        UserPostVO userPostVO = new UserPostVO(imageDeletePostRequest.postNo());
 
         // 이미지 entity 전부 삭제
         imageCommandRepository.deleteImagesByUserPostVO(userPostVO);
+
+    }
+
+    // 관리자 게시판 : 특정 게시물과 관련된 이미지 entity 생성
+    public ImageResponse createAdminPostImage(ImageRequest imageRequest) {
+
+        AdminPostVO adminPostVO = new AdminPostVO(imageRequest.postNo());
+
+        // 이미지 entity 저장
+        List<Image> imageEntities = imageRequest.imageUrls().stream()
+                .map(imageUrl -> {
+                    Image image = new Image.Builder()
+                            .imageUrl(imageUrl)
+                            .adminPostVO(adminPostVO)
+                            .build();
+                    return imageCommandRepository.save(image);
+                })
+                .toList();
+
+        List<Long> imageNos = imageEntities.stream()
+                .map(Image::getImageNo)
+                .toList();
+
+        return new ImageResponse(imageNos);
+
+    }
+
+    // 관리자 게시판 : 특정 게시물과 관련된 s3이미지, 이미지 entity 전부 삭제
+    public void deleteAdminPostImage(ImageDeletePostRequest imageDeletePostRequest) {
+
+        AdminPostVO adminPostVO = new AdminPostVO(imageDeletePostRequest.postNo());
+
+        // 이미지 entity 전부 삭제
+        imageCommandRepository.deleteImagesByAdminPostVO(adminPostVO);
 
     }
 

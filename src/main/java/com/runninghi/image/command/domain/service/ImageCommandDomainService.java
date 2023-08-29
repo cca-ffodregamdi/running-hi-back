@@ -33,5 +33,4 @@ public class ImageCommandDomainService {
         return fileExtension;
     }
 
-
 }

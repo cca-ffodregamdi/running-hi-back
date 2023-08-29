@@ -1,5 +1,5 @@
 package com.runninghi.image.command.application.dto.request;
 
-public record ImageDeleteUserPostRequest(
-        Long userPostNo
+public record ImageDeletePostRequest(
+        Long postNo
 ) { }

@@ -4,5 +4,5 @@ import java.util.List;
 
 public record ImageRequest(
         List<String> imageUrls,
-        Long userPostNo
+        Long postNo
 ) { }
