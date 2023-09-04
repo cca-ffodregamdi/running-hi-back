@@ -5,25 +5,27 @@ import com.runninghi.common.response.ApiResponse;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.security.SignatureException;
-import jakarta.validation.ConstraintViolationException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.NoSuchElementException;
 
+@Slf4j
 @RestControllerAdvice
 public class ExceptionResponseHandler {
     @ExceptionHandler({IllegalArgumentException.class, NoSuchElementException.class})
     public ResponseEntity<ApiResponse> handleCommonException(Exception e) {
+        log.error(e.getMessage());
         return ResponseEntity.badRequest().body(ApiResponse.error(e.getMessage()));
     }
 
     @ExceptionHandler(NullPointerException.class)
     public ResponseEntity<ApiResponse> handleNullPointerException(NullPointerException e) {
+        log.error(e.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(ApiResponse.error(e.getMessage()));
     }
 
@@ -54,6 +56,7 @@ public class ExceptionResponseHandler {
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ApiResponse> handleNotFoundException(NotFoundException e) {
+        log.error(e.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ApiResponse.error(e.getMessage()));
     }
 }
