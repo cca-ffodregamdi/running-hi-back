@@ -28,20 +28,16 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @SpringBootTest
 @Transactional
 public class UserCommandServiceTest {
-    private final UserCommandService userCommandService;
-    private final UserQueryService userQueryService;
-    private final UserCommandRepository userCommandRepository;
-    private final UserQueryRepository userQueryRepository;
-    private final PasswordEncoder encoder;
-
     @Autowired
-    UserCommandServiceTest(UserCommandService userCommandService, UserQueryService userQueryService, UserCommandRepository userCommandRepository, UserQueryRepository userQueryRepository, PasswordEncoder encoder) {
-        this.userCommandService = userCommandService;
-        this.userQueryService = userQueryService;
-        this.userCommandRepository = userCommandRepository;
-        this.userQueryRepository = userQueryRepository;
-        this.encoder = encoder;
-    }
+    private UserCommandService userCommandService;
+    @Autowired
+    private UserQueryService userQueryService;
+    @Autowired
+    private UserCommandRepository userCommandRepository;
+    @Autowired
+    private UserQueryRepository userQueryRepository;
+    @Autowired
+    private PasswordEncoder encoder;
 
     @BeforeEach
     @AfterEach
