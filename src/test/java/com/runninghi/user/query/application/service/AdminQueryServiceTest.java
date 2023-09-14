@@ -20,16 +20,12 @@ import java.util.List;
 @SpringBootTest
 @Transactional
 public class AdminQueryServiceTest {
-    private final AdminQueryService adminQueryService;
-    private final UserCommandRepository userCommandRepository;
-    private final PasswordEncoder encoder;
-
     @Autowired
-    AdminQueryServiceTest(AdminQueryService adminQueryService, UserCommandRepository userCommandRepository, PasswordEncoder encoder) {
-        this.adminQueryService = adminQueryService;
-        this.userCommandRepository = userCommandRepository;
-        this.encoder = encoder;
-    }
+    private AdminQueryService adminQueryService;
+    @Autowired
+    private UserCommandRepository userCommandRepository;
+    @Autowired
+    private PasswordEncoder encoder;
 
     @BeforeEach
     @AfterEach
