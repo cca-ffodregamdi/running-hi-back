@@ -53,7 +53,7 @@
     <td align="center"><strong>프론트엔드</strong></td>
     <td align="center"><strong>회원 게시글, 문의사항</strong></td>
     <td align="center"><strong>신고</strong></td>
-    <td align="center"><strong>회원가입/로그인, 회원 관련</strong></td>
+    <td align="center"><strong>로그인, 회원 관련, 로깅</strong></td>
   </tr>
 </table>
 
