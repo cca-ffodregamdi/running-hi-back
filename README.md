@@ -53,7 +53,7 @@
     <td align="center"><strong>프론트엔드</strong></td>
     <td align="center"><strong>회원 게시글, 문의사항</strong></td>
     <td align="center"><strong>신고</strong></td>
-    <td align="center"><strong>회원가입/로그인, 회원 관련</strong></td>
+    <td align="center"><strong>로그인, 회원 관련, 로깅</strong></td>
   </tr>
 </table>
 
@@ -72,11 +72,12 @@
 <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white"/> <img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=Notion&logoColor=white"/> <img src="https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=Swagger&logoColor=black"/> <img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=Figma&logoColor=white"/> <img src="https://img.shields.io/badge/Miro-F7DF1E?style=for-the-badge&logo=Miro&logoColor=black"/>
 
 <br>
-
+<!--
 ## 🧱 프로젝트 아키텍처
-<!-- 모놀리식 아키텍처 -->
+
 ![마이크로서비스_모놀리식서비스_다이어그램](https://github.com/cca-ffodregamdi/running-hi-back/assets/98208452/20724af9-66cb-42bf-9550-f29235839dcc)
 > 출처: https://library.gabia.com/contents/infrahosting/9154/
+--> 
 
 ### 모놀리식 아키텍처(Monolithic Architecture, MA)
 하나의 서비스 또는 애플리케이션으로 이뤄지는 하나의 거대한 아키텍처

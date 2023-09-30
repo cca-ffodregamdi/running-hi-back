@@ -63,10 +63,33 @@ public class CommentQueryServiceTests {
     }
 
     @Test
+    @DisplayName("댓글 전체 조회 테스트 : status true 조회 불가능")
+    void testStatusFalseComment() {
+
+        Long userPostNo = 999L;
+
+        commentCommandRepository.save(Comment.builder()
+                .userPostNo(userPostNo)
+                .commentStatus(true)
+                .build());
+
+        commentCommandRepository.save(Comment.builder()
+                .userPostNo(userPostNo)
+                .commentStatus(true)
+                .build());
+
+        Pageable pageable = PageRequest.of(0, 10);      //추후 수정 필요
+        Page<Comment> commentsPage = queryCommentService.findAllComments(new FindAllCommentsRequest(userPostNo), pageable);
+
+        Assertions.assertEquals(0, commentsPage.getTotalElements());
+
+    }
+
+    @Test
     @DisplayName("특정 댓글 조회 테스트 : success")
     void testFindCommentByCommentNo() {
 
-        CreateCommentRequest commentRequest = new CreateCommentRequest(new CommentUserVO(UUID.randomUUID()), 1L, "댓글 생성 테스트");
+        CreateCommentRequest commentRequest = new CreateCommentRequest(UUID.randomUUID(), 1L, "댓글 생성 테스트");
         CommentCommandResponse comment = createCommentService.createComment(commentRequest);
 
         CommentQueryResponse response = queryCommentService.findComment(new FindCommentRequest(comment.commentNo()));

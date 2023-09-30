@@ -1,9 +1,12 @@
 package com.runninghi.postreport.query.application.service;
+
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
-import com.runninghi.postreport.command.application.dto.request.PostReportRequest;
+import com.runninghi.postreport.command.application.dto.request.PostReportSaveRequest;
+import com.runninghi.postreport.command.application.dto.request.PostReportUpdateRequest;
 import com.runninghi.postreport.command.application.service.PostReportCommandService;
 import com.runninghi.postreport.command.domain.aggregate.entity.PostReport;
-import com.runninghi.postreport.command.domain.repository.PostReportCommandRepository;
+import com.runninghi.postreport.command.domain.aggregate.entity.enumtype.ProcessingStatus;
+import com.runninghi.postreport.query.infrastructure.repository.PostReportQueryRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 public class PostReportQueryServiceTests {
 
     @Autowired
-    private PostReportCommandRepository postReportCommandRepository;
+    private PostReportQueryRepository postReportQueryRepository;
 
     @Autowired
     private PostReportCommandService postReportCommandService;
@@ -34,12 +38,12 @@ public class PostReportQueryServiceTests {
     void findPostReportTest() {
 
         //given
-        PostReportRequest postReportRequest = new PostReportRequest(2, "홍보 게시물");
+        PostReportSaveRequest postReportSaveRequest = new PostReportSaveRequest(2, "홍보 게시물",
+                UUID.randomUUID(), UUID.randomUUID(), 1L);
 
         //when
-        PostReport savedPostReport = postReportCommandService.savePostReport(postReportRequest, UUID.randomUUID(), UUID.randomUUID(), 1L);
-
-        PostReport findedPostReport = postReportCommandRepository.findById(savedPostReport.getPostReportNo()).get();
+        PostReport savedPostReport = postReportCommandService.savePostReport(postReportSaveRequest);
+        PostReport findedPostReport = postReportQueryRepository.findById(savedPostReport.getPostReportNo()).get();
 
         //then
         assertThat(findedPostReport.getPostReportContent().equals("홍보 게시물"));
@@ -47,19 +51,35 @@ public class PostReportQueryServiceTests {
     }
 
     @Test
+    @DisplayName("게시글 신고 조회 테스트: status INPROGRESS만 조회 성공")
+    void findInProgressPostReportTest() {
+
+        //given
+        postReportCommandService.savePostReport(new PostReportSaveRequest(1, "홍보", UUID.randomUUID(), UUID.randomUUID(), 1L));
+        postReportCommandService.savePostReport(new PostReportSaveRequest(1, "홍보", UUID.randomUUID(), UUID.randomUUID(), 1L));
+        postReportCommandService.savePostReport(new PostReportSaveRequest(1, "홍보", UUID.randomUUID(), UUID.randomUUID(), 1L));
+        PostReport postReport = postReportCommandService.savePostReport(new PostReportSaveRequest(1, "홍보", UUID.randomUUID(), UUID.randomUUID(), 1L));
+
+        postReport.update(new PostReportUpdateRequest(ProcessingStatus.ACCEPTED));
+
+        //when
+        List<PostReport> inProgressPostReportList = postReportQueryRepository.findByProcessingStatus(ProcessingStatus.INPROGRESS);
+
+        //then
+        Assertions.assertEquals(3, inProgressPostReportList.size());
+    }
+
+    @Test
     @DisplayName("게시글 신고 조회 테스트: 전체조회 성공")
     void findPostReportListTest() {
 
         //given
-        postReportCommandService.savePostReport(new PostReportRequest(1, "욕설"),
-                UUID.randomUUID(), UUID.randomUUID(), 1L);
-        postReportCommandService.savePostReport(new PostReportRequest(2, "홍보"),
-                UUID.randomUUID(), UUID.randomUUID(), 1L);
-        postReportCommandService.savePostReport(new PostReportRequest(3, "도배"),
-                UUID.randomUUID(), UUID.randomUUID(), 1L);
+        postReportCommandService.savePostReport(new PostReportSaveRequest(1, "욕설", UUID.randomUUID(), UUID.randomUUID(), 1L));
+        postReportCommandService.savePostReport(new PostReportSaveRequest(1, "욕설", UUID.randomUUID(), UUID.randomUUID(), 1L));
+        postReportCommandService.savePostReport(new PostReportSaveRequest(1, "욕설", UUID.randomUUID(), UUID.randomUUID(), 1L));
 
         //when
-        List<PostReport> postReportList = postReportCommandRepository.findAll();
+        List<PostReport> postReportList = postReportQueryRepository.findAll();
 
         //then
         Assertions.assertEquals(3, postReportList.size());
@@ -70,8 +90,7 @@ public class PostReportQueryServiceTests {
     void doesNotExistPostReportTest() {
 
         //given
-        postReportCommandService.savePostReport(new PostReportRequest(1, "욕설"),
-                UUID.randomUUID(), UUID.randomUUID(), 1L);
+        postReportCommandService.savePostReport(new PostReportSaveRequest(1, "욕설", UUID.randomUUID(), UUID.randomUUID(), 1L));
 
         //when
         //then

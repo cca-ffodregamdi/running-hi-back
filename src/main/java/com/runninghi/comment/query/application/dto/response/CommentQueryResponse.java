@@ -19,16 +19,24 @@ public record CommentQueryResponse(
         Date commentDate,
 
         @Schema(description = "댓글 내용", example = "댓글 내용을 작성하는 부분입니다.")
-        String commentContent
+        String commentContent,
+
+        @Schema(description = "댓글 신고 상태", example = "false")
+        boolean commentStatus,
+
+        @Schema(description = "댓글 수정 날짜", example = "2023-09-09")
+        Date updateDate
 ) {
 
     public static CommentQueryResponse from (Comment comment) {
         return new CommentQueryResponse(
                 comment.getCommentNo(),
-                comment.getUserNo(),
+                comment.getUserNoVO(),
                 comment.getUserPostNo(),
                 comment.getCommentDate(),
-                comment.getCommentContent()
+                comment.getCommentContent(),
+                comment.isCommentStatus(),
+                comment.getUpdateDate()
         );
     }
 }

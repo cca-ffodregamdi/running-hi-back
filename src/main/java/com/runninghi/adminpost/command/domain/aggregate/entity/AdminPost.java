@@ -2,15 +2,13 @@ package com.runninghi.adminpost.command.domain.aggregate.entity;
 
 import com.runninghi.adminpost.command.domain.aggregate.vo.WriterNoVO;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 @Table(name = "TBL_ADMINPOST")
+@ToString
 public class AdminPost {
 
     @Id
@@ -19,6 +17,7 @@ public class AdminPost {
 
     @Embedded
     private WriterNoVO writerNoVO;
+
     @Column
     private String adminPostTitle;
 
