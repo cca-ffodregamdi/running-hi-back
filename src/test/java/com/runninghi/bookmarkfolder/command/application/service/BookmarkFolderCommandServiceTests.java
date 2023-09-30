@@ -61,7 +61,7 @@ public class BookmarkFolderCommandServiceTests {
 
         long beforeSize = bookmarkFolderRepository.count();
 
-        CreateFolderRequest folderDTO = new CreateFolderRequest("testFolder", new FolderUserVO(UUID.randomUUID()));
+        CreateFolderRequest folderDTO = new CreateFolderRequest("testFolder", UUID.randomUUID());
         commandBookmarkFolderService.createNewBookmarkFolder(folderDTO);
 
         long afterSize = bookmarkFolderRepository.count();
@@ -73,7 +73,7 @@ public class BookmarkFolderCommandServiceTests {
     @DisplayName("즐겨찾기 폴더 추가 테스트: 폴더 이름 20자 초과 시 예외처리")
     void testBookmarkFolderLengthLongException() {
 
-        CreateFolderRequest folderDTO = new CreateFolderRequest("testFoldertestFoldertestFoldertestFoldertestFolder", new FolderUserVO(UUID.randomUUID()));
+        CreateFolderRequest folderDTO = new CreateFolderRequest("testFoldertestFoldertestFoldertestFoldertestFolder", UUID.randomUUID());
 
         assertThatThrownBy(() -> commandBookmarkFolderService.createNewBookmarkFolder(folderDTO))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -83,7 +83,7 @@ public class BookmarkFolderCommandServiceTests {
     @Test
     @DisplayName("즐겨찾기 폴더 추가 테스트: 폴더 이름 1자 미만 시 예외처리")
     void testBookmarkFolderLengthShortException() {
-        CreateFolderRequest folderDTO = new CreateFolderRequest("", new FolderUserVO(UUID.randomUUID()));
+        CreateFolderRequest folderDTO = new CreateFolderRequest("", UUID.randomUUID());
 
         assertThatThrownBy(() -> commandBookmarkFolderService.createNewBookmarkFolder(folderDTO))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -93,7 +93,7 @@ public class BookmarkFolderCommandServiceTests {
     private BookmarkFolder createBookmarkFolder() {
         return bookmarkFolderRepository.save(BookmarkFolder.builder()
                 .folderName("updateTestFolder")
-                .userNo(new FolderUserVO(UUID.randomUUID()))
+                .userNoVO(new FolderUserVO(UUID.randomUUID()))
                 .folderNo(1L)
                 .build());
     }
@@ -104,7 +104,7 @@ public class BookmarkFolderCommandServiceTests {
 
         BookmarkFolder folder = createBookmarkFolder();
 
-        UpdateFolderRequest updateFolder = new UpdateFolderRequest(folder.getFolderNo(), "updated",folder.getUserNo());
+        UpdateFolderRequest updateFolder = new UpdateFolderRequest(folder.getFolderNo(), "updated",folder.getUserNoVO().getUserNo());
 
         commandBookmarkFolderService.updateBookmarkFolder(updateFolder);
 
@@ -117,7 +117,7 @@ public class BookmarkFolderCommandServiceTests {
     @DisplayName("즐겨찾기 폴더 수정 테스트: 즐겨찾기 폴더번호 없을 시 예외처리")
     void testUpdateFolderDoesntExist() {
 
-        UpdateFolderRequest updateFolder = new UpdateFolderRequest(0L, "NotFound",new FolderUserVO(UUID.randomUUID()));
+        UpdateFolderRequest updateFolder = new UpdateFolderRequest(0L, "NotFound",UUID.randomUUID());
 
         assertThatThrownBy(() -> commandBookmarkFolderService.updateBookmarkFolder(updateFolder))
                 .isInstanceOf(NotFoundException.class)
@@ -132,7 +132,7 @@ public class BookmarkFolderCommandServiceTests {
 
         BookmarkFolder folder = createBookmarkFolder();
 
-        UpdateFolderRequest updateFolder = new UpdateFolderRequest(folder.getFolderNo(), "",folder.getUserNo());
+        UpdateFolderRequest updateFolder = new UpdateFolderRequest(folder.getFolderNo(), "",folder.getUserNoVO().getUserNo());
 
         assertThatThrownBy(() -> commandBookmarkFolderService.updateBookmarkFolder(updateFolder))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -145,7 +145,7 @@ public class BookmarkFolderCommandServiceTests {
 
         BookmarkFolder folder = createBookmarkFolder();
 
-        UpdateFolderRequest updateFolder = new UpdateFolderRequest(folder.getFolderNo(), "testFoldertestFoldertestFoldertestFoldertestFolder",folder.getUserNo());
+        UpdateFolderRequest updateFolder = new UpdateFolderRequest(folder.getFolderNo(), "testFoldertestFoldertestFoldertestFoldertestFolder",folder.getUserNoVO().getUserNo());
 
         assertThatThrownBy(() -> commandBookmarkFolderService.updateBookmarkFolder(updateFolder))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -158,7 +158,7 @@ public class BookmarkFolderCommandServiceTests {
 
         BookmarkFolder folder = createBookmarkFolder();
 
-        UpdateFolderRequest updateFolder = new UpdateFolderRequest(folder.getFolderNo(), "             ",folder.getUserNo());
+        UpdateFolderRequest updateFolder = new UpdateFolderRequest(folder.getFolderNo(), "             ",folder.getUserNoVO().getUserNo());
 
         assertThatThrownBy(() -> commandBookmarkFolderService.updateBookmarkFolder(updateFolder))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -171,7 +171,7 @@ public class BookmarkFolderCommandServiceTests {
 
         BookmarkFolder folder = bookmarkFolderRepository.save(BookmarkFolder.builder()
                 .folderName("deleteTestFolder")
-                .userNo(new FolderUserVO(UUID.randomUUID()))
+                .userNoVO(new FolderUserVO(UUID.randomUUID()))
                 .folderNo(1L)
                 .build());
 
@@ -193,13 +193,13 @@ public class BookmarkFolderCommandServiceTests {
 
         BookmarkFolder folder = bookmarkFolderRepository.save(BookmarkFolder.builder()
                 .folderName("deleteTestFolder")
-                .userNo(new FolderUserVO(UUID.randomUUID()))
+                .userNoVO(new FolderUserVO(UUID.randomUUID()))
                 .folderNo(1L)
                 .build());
 
         Bookmark bookmark = bookmarkRepository.save(Bookmark.builder()
                 .bookmarkVO(new BookmarkVO(folder.getFolderNo(), 3L))
-                .userNo(new BookmarkUserVO(UUID.randomUUID()))
+                .userNoVO(new BookmarkUserVO(UUID.randomUUID()))
                 .addDate(LocalDate.now())
                 .build());
 

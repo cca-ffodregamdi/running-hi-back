@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,8 +28,12 @@ public class CommentQueryService {
 
 //        domainService.validatePostExist(commentDTO.userPostNo());
 
+        Specification<Comment> statusFilter = (root, query, criteriaBuilder) ->
+                criteriaBuilder.equal(root.get("commentStatus"), false);
+
         Pageable sortedPage = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize()); //추후에 sort 설정
-        return commentQueryRepository.findAll(sortedPage);
+
+        return commentQueryRepository.findAll(statusFilter, sortedPage);
 //        return commentRepository.findAllByUserPostNo(commentDTO.userPostNo());
     }
 

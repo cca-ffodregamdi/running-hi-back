@@ -31,7 +31,7 @@ public class CommentCommandService {
 //        domainService.validateUserPost(commentDTO.userPostNo());
 
         Comment comment = commentRepository.save(Comment.builder()
-                .userNo(new CommentUserVO(commentDTO.userNo().getUserNo()))
+                .userNoVO(new CommentUserVO(commentDTO.userNo()))
                 .userPostNo(commentDTO.userPostNo())
                 .commentContent(commentDTO.commentContent())
                 .commentDate(new Date())
