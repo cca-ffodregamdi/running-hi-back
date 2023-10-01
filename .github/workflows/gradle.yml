@@ -39,7 +39,7 @@ jobs:
           touch ./src/main/resources/application.yml
         shell: bash
 
-      - name: deliver bootstrap
+      - name: deliver application
         run: echo "${{ secrets.APPLICATION_DEV }}" > ./src/main/resources/application.yml
         shell: bash
 
