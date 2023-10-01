@@ -2,7 +2,6 @@ package com.runninghi.comment.query.application.service;
 
 import com.runninghi.bookmark.command.domain.service.BookmarkCommandDomainService;
 import com.runninghi.comment.command.domain.aggregate.entity.Comment;
-import com.runninghi.comment.command.domain.repository.CommentCommandRepository;
 import com.runninghi.comment.query.application.dto.request.FindAllCommentsRequest;
 import com.runninghi.comment.query.application.dto.request.FindCommentRequest;
 import com.runninghi.comment.query.application.dto.response.CommentQueryResponse;
@@ -10,8 +9,6 @@ import com.runninghi.comment.query.infrastructure.repository.CommentQueryReposit
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
 import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -27,7 +24,7 @@ public class CommentQueryService {
     private final BookmarkCommandDomainService domainService;
 
     @Transactional(readOnly = true)
-    public List<Comment> findAllComments(FindAllCommentsRequest commentDTO, Pageable pageable) {
+    public List<CommentQueryResponse> findAllComments(FindAllCommentsRequest commentDTO, Pageable pageable) {
 
 //        domainService.validatePostExist(commentDTO.userPostNo());
 
@@ -43,7 +40,8 @@ public class CommentQueryService {
 //        return commentRepository.findAllByUserPostNo(commentDTO.userPostNo());
 
 //        return commentQueryRepository.findAllComments(commentDTO.userPostNo());
-        return commentQueryRepository.findAll(filter);
+        List<Comment> comments = commentQueryRepository.findAll(filter);
+        return CommentQueryResponse.from(comments);
     }
 
     @Transactional(readOnly = true)
