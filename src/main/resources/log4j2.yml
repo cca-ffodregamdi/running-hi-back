@@ -7,7 +7,7 @@ Configutation:
       - name: "log-path"
         value: "./logs"
       - name: "pattern"
-        value: "%highlight{[%-5level]} %d{yyyy-MM-dd HH:mm:ss.SSS} [%t][%F] %c{1} - %msg%n"
+        value: "%highlight{[%-5level]} %d{yyyy-MM-dd HH:mm:ss.SSS} [%t][%F] %highlight{%c{1}} : %msg%n"
       - name: "charset-UTF-8"
         value: "UTF-8"
 
@@ -36,7 +36,7 @@ Configutation:
         fileIndex: "max"
   Loggers:
     Root:
-      level: debug
+      level: info
       AppenderRef:
         - ref: Console_Appender
         - ref: RollingFile_Appender
