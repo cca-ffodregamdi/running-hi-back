@@ -21,13 +21,13 @@ public class SignCommandController {
     private final SignCommandService signCommandService;
 
     @Operation(summary = "회원 가입")
-    @PostMapping("/api/vi/sign-up")
+    @PostMapping("/api/v1/sign-up")
     public ApiResponse signUp(@RequestBody SignUpRequest request) {
         return ApiResponse.success("성공적으로 가입되었습니다.", signCommandService.registUser(request));
     }
 
     @Operation(summary = "로그인")
-    @PostMapping("/api/vi/sign-in")
+    @PostMapping("/api/v1/sign-in")
     public ApiResponse signIn(@RequestBody SignInRequest request) {
         return ApiResponse.success("성공적으로 로그인되었습니다.", signCommandService.signIn(request));
     }
