@@ -86,4 +86,14 @@ public class UserPost {
         }
     }
 
+    // 제목 수정
+    public void updateTitle(String userPostTitle) {
+        this.userPostTitle = userPostTitle;
+    }
+
+    // 내용 수정
+    public void updateContent(String userPostContent) {
+        this.userPostContent = userPostContent;
+    }
+
 }
