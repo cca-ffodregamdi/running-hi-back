@@ -1,9 +1,8 @@
 package com.runninghi.postreport.command.application.dto.response;
 
 import com.runninghi.postreport.command.domain.aggregate.entity.PostReport;
+import com.runninghi.postreport.command.domain.aggregate.entity.enumtype.ProcessingStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.*;
-
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -16,6 +15,8 @@ public record PostReportResponse (
         String postReportContent,
         @Schema(description = "게시글 신고 작성 일시", example = "2023-08-18 14:47:10.324255")
         LocalDateTime postReportedDate,
+        @Schema(description = "게시글 신고 처리 상태", example = "처리중")
+        ProcessingStatus processingStatus,
         @Schema(description = "게시글 신고자 번호", example = "65d5bd82-a758-4999-abd7-e3023c236f16")
         UUID postReportUserNo,
         @Schema(description = "게시글 피신고자 번호", example = "129c5993-2820-4b20-aabd-9d414bb302e8")
@@ -31,6 +32,7 @@ public record PostReportResponse (
                 postReport.getPostReportCategoryCode(),
                 postReport.getPostReportContent(),
                 postReport.getPostReportedDate(),
+                postReport.getProcessingStatus(),
                 postReport.getPostReportUserVO().getPostReportUserNo(),
                 postReport.getPostReportedUserVO().getPostReportedUserNo(),
                 postReport.getReportedPostVO().getReportedPostNo()

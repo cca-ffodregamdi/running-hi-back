@@ -19,7 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-@Tag(name = "즐겨찾기 폴더 커맨드 컨트롤러")
+@Tag(name = "즐겨찾기 폴더 Command API")
 @RestController
 @RequiredArgsConstructor
 public class FolderCommandController {

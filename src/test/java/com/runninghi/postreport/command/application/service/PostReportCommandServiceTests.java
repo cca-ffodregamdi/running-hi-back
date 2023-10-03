@@ -1,7 +1,8 @@
 package com.runninghi.postreport.command.application.service;
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
-import com.runninghi.postreport.command.application.dto.request.PostReportRequest;
+import com.runninghi.postreport.command.application.dto.request.PostReportSaveRequest;
 import com.runninghi.postreport.command.domain.aggregate.entity.PostReport;
+import com.runninghi.postreport.command.domain.aggregate.entity.enumtype.ProcessingStatus;
 import com.runninghi.postreport.command.domain.aggregate.vo.PostReportUserVO;
 import com.runninghi.postreport.command.domain.aggregate.vo.PostReportedUserVO;
 import com.runninghi.postreport.command.domain.aggregate.vo.ReportedPostVO;
@@ -37,20 +38,18 @@ public class PostReportCommandServiceTests {
         //given
         Long before = postReportCommandRepository.count();
 
-        UUID reportUserNo = UUID.randomUUID();
-        UUID reportedUserNo = UUID.randomUUID();
-        Long reportedPostNo = 1L;
-
         //when
-        PostReportRequest postReportRequest = new PostReportRequest(1, "욕설");
+        PostReportSaveRequest postReportSaveRequest = new PostReportSaveRequest(1, "욕설",
+                UUID.randomUUID(), UUID.randomUUID(), 1L);
 
         PostReport postReport = PostReport.builder()
-                .postReportCategoryCode(postReportRequest.postReportCategoryCode())
-                .postReportContent(postReportRequest.postReportContent())
+                .postReportCategoryCode(postReportSaveRequest.postReportCategoryCode())
+                .postReportContent(postReportSaveRequest.postReportContent())
                 .postReportedDate(LocalDateTime.now())
-                .postReportUserVO(new PostReportUserVO(reportUserNo))
-                .postReportedUserVO(new PostReportedUserVO(reportedUserNo))
-                .reportedPostVO(new ReportedPostVO(reportedPostNo))
+                .processingStatus(ProcessingStatus.INPROGRESS)
+                .postReportUserVO(new PostReportUserVO(postReportSaveRequest.reportUserNo()))
+                .postReportedUserVO(new PostReportedUserVO(postReportSaveRequest.reportedUserNo()))
+                .reportedPostVO(new ReportedPostVO(postReportSaveRequest.reportedPostNo()))
                 .build();
 
         postReportCommandRepository.save(postReport);
@@ -67,14 +66,13 @@ public class PostReportCommandServiceTests {
         //given
         Long before = postReportCommandRepository.count();
 
-        PostReportRequest postReportRequest =
-                new PostReportRequest(0, "욕설");
+        PostReportSaveRequest postReportSaveRequest =
+                new PostReportSaveRequest(0, "욕설",
+                        UUID.randomUUID(), UUID.randomUUID(), 1L);
 
         //when
         // 필기. 예외의 유형, () -> 테스트할 코드
-        Assertions.assertThrows(IllegalArgumentException.class, () -> postReportCommandService.savePostReport(postReportRequest,
-                UUID.randomUUID(), UUID.randomUUID(), 1L));
-
+        Assertions.assertThrows(IllegalArgumentException.class, () -> postReportCommandService.savePostReport(postReportSaveRequest));
         Long after = postReportCommandRepository.count();
 
         //then
@@ -88,12 +86,12 @@ public class PostReportCommandServiceTests {
         //given
         Long before = postReportCommandRepository.count();
 
-        PostReportRequest postReportRequest =
-                new PostReportRequest(1, "");
+        PostReportSaveRequest postReportSaveRequest =
+                new PostReportSaveRequest(1, "",
+                        UUID.randomUUID(), UUID.randomUUID(), 1L);
 
         //when
-        Assertions.assertThrows(IllegalArgumentException.class, () -> postReportCommandService.savePostReport(postReportRequest,
-                UUID.randomUUID(), UUID.randomUUID(), 1L));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> postReportCommandService.savePostReport(postReportSaveRequest));
 
         Long after = postReportCommandRepository.count();
 
@@ -110,12 +108,12 @@ public class PostReportCommandServiceTests {
 
         String str = "a".repeat(101);
 
-        PostReportRequest postReportRequest =
-                new PostReportRequest(1, str);
+        PostReportSaveRequest postReportSaveRequest =
+                new PostReportSaveRequest(1, str,
+                        UUID.randomUUID(), UUID.randomUUID(), 1L);
 
         //when
-        assertThatThrownBy(() -> postReportCommandService.savePostReport(postReportRequest,
-                UUID.randomUUID(), UUID.randomUUID(), 1L))
+        assertThatThrownBy(() -> postReportCommandService.savePostReport(postReportSaveRequest))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("신고 내용은 100자를 넘을 수 없습니다.");
 
@@ -130,9 +128,9 @@ public class PostReportCommandServiceTests {
     void deletePostReportTest() {
 
         //given
-        PostReportRequest postReportRequest = new PostReportRequest(2, "홍보 게시물");
-        PostReport savedPostReport = postReportCommandService.savePostReport(postReportRequest,
+        PostReportSaveRequest postReportSaveRequest = new PostReportSaveRequest(2, "홍보 게시물",
                 UUID.randomUUID(), UUID.randomUUID(), 1L);
+        PostReport savedPostReport = postReportCommandService.savePostReport(postReportSaveRequest);
 
         //when
         postReportCommandService.deletePostReport(savedPostReport.getPostReportNo());
@@ -148,9 +146,9 @@ public class PostReportCommandServiceTests {
     void doesNotExistPostReportTest() {
 
         //given
-        PostReportRequest postReportRequest = new PostReportRequest(2, "홍보 게시물");
-        PostReport savedPostReport = postReportCommandService.savePostReport(postReportRequest,
+        PostReportSaveRequest postReportSaveRequest = new PostReportSaveRequest(2, "홍보 게시물",
                 UUID.randomUUID(), UUID.randomUUID(), 1L);
+        PostReport savedPostReport = postReportCommandService.savePostReport(postReportSaveRequest);
 
         Long before = postReportCommandRepository.count();
 
@@ -164,7 +162,5 @@ public class PostReportCommandServiceTests {
         //then
         Assertions.assertEquals(after, before);
     }
-
-
 
 }

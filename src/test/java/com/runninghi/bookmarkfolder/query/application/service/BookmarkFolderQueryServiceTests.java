@@ -35,11 +35,11 @@ public class BookmarkFolderQueryServiceTests {
     @Test
     @DisplayName("즐겨찾기 폴더 조회 테스트 : success")
     void testFindBookmarkFolderByNo() {
-        CreateFolderRequest folderDTO = new CreateFolderRequest("testFind", new FolderUserVO(UUID.randomUUID()));
+        CreateFolderRequest folderDTO = new CreateFolderRequest("testFind", UUID.randomUUID());
 
         BookmarkFolder folder = folderRepository.save(BookmarkFolder.builder()
                 .folderName(folderDTO.folderName())
-                .userNo(folderDTO.getUserNo())
+                .userNoVO(new FolderUserVO(folderDTO.getUserNo()))
                 .folderNo(1L)
                 .build());
 
@@ -49,7 +49,7 @@ public class BookmarkFolderQueryServiceTests {
 
         Assertions.assertEquals(findFolder.folderName(), folder.getFolderName());
         Assertions.assertEquals(findFolder.folderNo(), folder.getFolderNo());
-        Assertions.assertEquals(findFolder.userNo(), folder.getUserNo());
+        Assertions.assertEquals(findFolder.userNo(), folder.getUserNoVO());
     }
 
     @Test

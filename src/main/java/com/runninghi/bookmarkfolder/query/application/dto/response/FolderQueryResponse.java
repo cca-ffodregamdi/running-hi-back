@@ -19,7 +19,7 @@ public record FolderQueryResponse(
         return new FolderQueryResponse(
                 folder.getFolderNo(),
                 folder.getFolderName(),
-                folder.getUserNo()
+                folder.getUserNoVO()
         );
     }
 }
