@@ -34,13 +34,13 @@ jobs:
           mysql user: ${{ secrets.MYSQL_USERNAME }}
           mysql password: ${{ secrets.MYSQL_PASSWORD }}
 
-      - name: make bootstrap.yml
+      - name: make application.yml
         run:
-          touch ./src/main/resources/bootstrap.yml
+          touch ./src/main/resources/application.yml
         shell: bash
 
-      - name: deliver bootstrap
-        run: echo "${{ secrets.BOOTSTRAP_SECRET }}" > ./src/main/resources/bootstrap.yml
+      - name: deliver application
+        run: echo "${{ secrets.APPLICATION_DEV }}" > ./src/main/resources/application.yml
         shell: bash
 
       - name: make jwt.yml
@@ -50,6 +50,15 @@ jobs:
 
       - name: deliver jwt.yml
         run: echo "${{ secrets.JWT }}" > ./src/main/resources/jwt.yml
+        shell: bash
+
+      - name: make log4j2.yml
+        run:
+          touch ./src/main/resources/log4j2.yml
+        shell: bash
+
+      - name: deliver log4j2.yml
+        run: echo "${{ secrets.LOG4J2 }}" > ./src/main/resources/log4j2.yml
         shell: bash
 
       - name: Add permission

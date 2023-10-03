@@ -15,6 +15,10 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+    all {
+        //logback과의 충돌 방지
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
 }
 
 repositories {
@@ -29,7 +33,6 @@ tasks.withType(JavaCompile) {
 ext {
     set('springCloudVersion', "2022.0.4")
 }
-
 
 
 dependencies {
@@ -71,7 +74,16 @@ dependencies {
     // Aws S3
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 
+    // log4j2
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.20.0'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.20.0'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.20.0'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-jul', version: '2.20.0'
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.32'
+    implementation group: 'org.slf4j', name: 'jul-to-slf4j', version: '1.7.32'
 
+    // log4j2.yml 설정 관련 라이브러리
+    implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.13.1'
 
 }
 
@@ -81,12 +93,13 @@ dependencyManagement {
     }
 }
 
-//tasks.named('test') {
-//    useJUnitPlatform()
-//}
-test {
+tasks.named('test') {
     useJUnitPlatform()
 }
+
+//test {
+//    useJUnitPlatform()
+//}
 
 bootJar {
     duplicatesStrategy = 'exclude'
