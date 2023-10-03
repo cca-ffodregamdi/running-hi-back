@@ -27,6 +27,7 @@ out/
 !**/src/test/**/out/
 application.yml
 jwt.yml
+log4j2.yml
 bootstrap.yml
 
 ### NetBeans ###
