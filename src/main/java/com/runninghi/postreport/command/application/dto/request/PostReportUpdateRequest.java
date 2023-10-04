@@ -7,4 +7,5 @@ public record PostReportUpdateRequest(
 
         @Schema(description = "신고 처리 상태", example = "ACCEPTED")
         ProcessingStatus processingStatus
-) {}
+) {
+}

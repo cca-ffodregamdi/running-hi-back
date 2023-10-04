@@ -3,11 +3,12 @@ package com.runninghi.postreport.command.application.dto.response;
 import com.runninghi.postreport.command.domain.aggregate.entity.PostReport;
 import com.runninghi.postreport.command.domain.aggregate.entity.enumtype.ProcessingStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public record PostReportResponse (
-        @Schema(description = "게시글 신고 번호", example = "1L")
+public record PostReportResponse(
+        @Schema(description = "게시글 신고 번호", example = "1")
         Long postReportNo,
         @Schema(description = "게시글 신고 카테고리 번호", example = "1")
         int postReportCategoryCode,
