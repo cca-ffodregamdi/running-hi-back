@@ -30,12 +30,12 @@ public class CommentQueryController {
 
     @Operation(summary = "전체 댓글 조회")
     @GetMapping("/api/v1/user-posts/{userPostNo}")
-    public ResponseEntity<ApiResponse> findAllComment(@PathVariable("userPostNo") Long userPostNo) {
+    public ApiResponse findAllComment(@PathVariable("userPostNo") Long userPostNo) {
 
 //        Page<Comment> response = commentQueryService.findAllComments(new FindAllCommentsRequest(userPostNo), PageRequest.of(0, 10));
 
         List<CommentQueryResponse> response = commentQueryService.findAllComments(new FindAllCommentsRequest(userPostNo), PageRequest.of(0, 10));
 
-        return ResponseEntity.ok(ApiResponse.success("성공적으로 조회되었습니다.", response));
+        return ApiResponse.success("성공적으로 조회되었습니다.", response);
     }
 }
