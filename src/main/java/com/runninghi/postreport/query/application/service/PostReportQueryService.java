@@ -1,4 +1,5 @@
 package com.runninghi.postreport.query.application.service;
+
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
 import com.runninghi.postreport.command.application.dto.response.PostReportResponse;
 import com.runninghi.postreport.command.domain.aggregate.entity.PostReport;
@@ -16,9 +17,24 @@ public class PostReportQueryService {
 
     private final PostReportQueryRepository postReportQueryRepository;
 
+    // 설명. 모든 게시글 신고 조회
+    @Transactional
+    public List<PostReportResponse> getAllPostReports() {
+
+        List<PostReportResponse> postReportList = postReportQueryRepository.findAll().stream()
+                .map(PostReportResponse::from)
+                .toList();
+
+//        if (postReportList.size() == 0) {
+//            throw new NotFoundException("신고 내역이 없습니다.");
+//        }
+
+        return postReportList;
+    }
+
     // 설명. 게시글 신고 상세 조회
     @Transactional
-    public PostReportResponse findPostReport(Long postReportNo) {
+    public PostReportResponse getPostReportByPostReportNo(Long postReportNo) {
 
         // 필기. findById는 Optional<PostReport> 형태로 객체 반환.
         PostReport postReport = postReportQueryRepository.findById(postReportNo)
@@ -32,23 +48,11 @@ public class PostReportQueryService {
 
     // 설명. 신고처리 상태로 게시글신고 조회
     @Transactional
-    public List<PostReport> findPostReportByProcessingStatus(ProcessingStatus processingStatus) {
-        List<PostReport> postReportList = postReportQueryRepository.findByProcessingStatus(processingStatus);
+    public List<PostReportResponse> getPostReportByProcessingStatus(ProcessingStatus processingStatus) {
 
-        return postReportList;
-    }
-
-    // 설명. 모든 게시글 신고 조회
-    @Transactional
-    public List<PostReportResponse> findAllPostReports() {
-
-        List<PostReportResponse> postReportList = postReportQueryRepository.findAll().stream()
+        List<PostReportResponse> postReportList = postReportQueryRepository.findByProcessingStatus(processingStatus).stream()
                 .map(PostReportResponse::from)
                 .toList();
-
-        if(postReportList.size() == 0) {
-            throw new NotFoundException("신고 내역이 없습니다.");
-        }
 
         return postReportList;
     }

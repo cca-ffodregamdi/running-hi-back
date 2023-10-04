@@ -2,6 +2,9 @@ package com.runninghi.postreport.command.application.service;
 
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
 import com.runninghi.postreport.command.application.dto.request.PostReportSaveRequest;
+import com.runninghi.postreport.command.application.dto.request.PostReportUpdateRequest;
+import com.runninghi.postreport.command.application.dto.response.PostReportDeleteResponse;
+import com.runninghi.postreport.command.application.dto.response.PostReportResponse;
 import com.runninghi.postreport.command.domain.aggregate.entity.PostReport;
 import com.runninghi.postreport.command.domain.aggregate.entity.enumtype.ProcessingStatus;
 import com.runninghi.postreport.command.domain.aggregate.vo.PostReportUserVO;
@@ -21,7 +24,7 @@ public class PostReportCommandService {
     private final PostReportCommandRepository postReportCommandRepository;
 
     @Transactional
-    public PostReport savePostReport(PostReportSaveRequest postReportSaveRequest) {
+    public PostReportResponse savePostReport(PostReportSaveRequest postReportSaveRequest) {
 
         if (postReportSaveRequest.postReportCategoryCode() == 0) {
             throw new IllegalArgumentException("신고 카테고리를 선택해주세요");
@@ -47,16 +50,30 @@ public class PostReportCommandService {
 
         postReportCommandRepository.save(postReport);
 
-        return postReport;
+        return PostReportResponse.from(postReport);
     }
 
     @Transactional
-    public void deletePostReport(Long postReportNo) {
+    public PostReportResponse updatePostReport(PostReportUpdateRequest request, Long postReportNo) {
+
+        PostReport postReport = postReportCommandRepository.findById(postReportNo)
+                .orElseThrow(() -> new NotFoundException("해당하는 신고 내역이 없습니다."));
+
+        postReport.update(request);
+
+        return PostReportResponse.from(postReport);
+
+
+    }
+
+    @Transactional
+    public PostReportDeleteResponse deletePostReport(Long postReportNo) {
 
         PostReport postReport = postReportCommandRepository.findById(postReportNo)
                 .orElseThrow(() -> new NotFoundException("해당하는 신고 내역이 없습니다."));
 
         postReportCommandRepository.delete(postReport);
 
+        return new PostReportDeleteResponse(true);
     }
 }
