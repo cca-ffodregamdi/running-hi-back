@@ -1,6 +1,9 @@
 package com.runninghi.postreport.command.application.service;
+
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
 import com.runninghi.postreport.command.application.dto.request.PostReportSaveRequest;
+import com.runninghi.postreport.command.application.dto.request.PostReportUpdateRequest;
+import com.runninghi.postreport.command.application.dto.response.PostReportResponse;
 import com.runninghi.postreport.command.domain.aggregate.entity.PostReport;
 import com.runninghi.postreport.command.domain.aggregate.entity.enumtype.ProcessingStatus;
 import com.runninghi.postreport.command.domain.aggregate.vo.PostReportUserVO;
@@ -10,12 +13,15 @@ import com.runninghi.postreport.command.domain.repository.PostReportCommandRepos
 import com.runninghi.postreport.query.application.service.PostReportQueryService;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
@@ -30,6 +36,11 @@ public class PostReportCommandServiceTests {
 
     @Autowired
     private PostReportQueryService postReportQueryService;
+
+    @BeforeEach
+    void clear() {
+        postReportCommandRepository.deleteAllInBatch();
+    }
 
     @Test
     @DisplayName("게시글 신고 저장 테스트: DTO 엔티티 변환 후 저장 확인")
@@ -55,7 +66,7 @@ public class PostReportCommandServiceTests {
         postReportCommandRepository.save(postReport);
         Long after = postReportCommandRepository.count();
 
-       //then
+        //then
         Assertions.assertEquals(1, after - before);
     }
 
@@ -124,19 +135,32 @@ public class PostReportCommandServiceTests {
     }
 
     @Test
+    @DisplayName("게시글 신고 수정 테스트: 수정 성공 확인")
+    void updatePostReportTest() {
+
+        PostReportResponse postReportResponse = postReportCommandService.savePostReport(new PostReportSaveRequest(1, "홍보", UUID.randomUUID(), UUID.randomUUID(), 1L));
+
+        PostReport postReport = postReportCommandRepository.findById(postReportResponse.postReportNo()).get();
+
+        postReport.update(new PostReportUpdateRequest(ProcessingStatus.ACCEPTED));
+
+        Assertions.assertEquals(ProcessingStatus.ACCEPTED, postReport.getProcessingStatus());
+    }
+
+    @Test
     @DisplayName("게시글 신고 삭제 테스트: 삭제 성공 확인")
     void deletePostReportTest() {
 
         //given
         PostReportSaveRequest postReportSaveRequest = new PostReportSaveRequest(2, "홍보 게시물",
                 UUID.randomUUID(), UUID.randomUUID(), 1L);
-        PostReport savedPostReport = postReportCommandService.savePostReport(postReportSaveRequest);
+        PostReportResponse savedPostReport = postReportCommandService.savePostReport(postReportSaveRequest);
 
         //when
-        postReportCommandService.deletePostReport(savedPostReport.getPostReportNo());
+        postReportCommandService.deletePostReport(savedPostReport.postReportNo());
 
         //then
-        assertThatThrownBy(() -> postReportQueryService.findPostReport(savedPostReport.getPostReportNo()))
+        assertThatThrownBy(() -> postReportQueryService.getPostReportByPostReportNo(savedPostReport.postReportNo()))
                 .isInstanceOf(NotFoundException.class)
                 .hasMessage("해당하는 신고 내역이 없습니다.");
     }
@@ -148,7 +172,8 @@ public class PostReportCommandServiceTests {
         //given
         PostReportSaveRequest postReportSaveRequest = new PostReportSaveRequest(2, "홍보 게시물",
                 UUID.randomUUID(), UUID.randomUUID(), 1L);
-        PostReport savedPostReport = postReportCommandService.savePostReport(postReportSaveRequest);
+
+        postReportCommandService.savePostReport(postReportSaveRequest);
 
         Long before = postReportCommandRepository.count();
 

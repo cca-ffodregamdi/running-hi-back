@@ -2,6 +2,7 @@ package com.runninghi.postreport.command.application.service;
 
 import com.runninghi.postreport.command.application.dto.request.PostReportProcessingRequest;
 import com.runninghi.postreport.command.application.dto.request.PostReportSaveRequest;
+import com.runninghi.postreport.command.application.dto.response.PostReportResponse;
 import com.runninghi.postreport.command.domain.aggregate.entity.PostReport;
 import com.runninghi.postreport.command.domain.aggregate.entity.enumtype.ProcessingStatus;
 import com.runninghi.postreport.command.domain.repository.PostReportCommandRepository;
@@ -48,15 +49,15 @@ public class BlackListCommandServiceTests {
     void checkAcceptedStatus() {
 
         // given
-        PostReport postReport = postReportCommandService.savePostReport(new PostReportSaveRequest(1, "욕설",
+        PostReportResponse postReport = postReportCommandService.savePostReport(new PostReportSaveRequest(1, "욕설",
                 UUID.randomUUID(), UUID.randomUUID(), 11L));
 
-        PostReportProcessingRequest postReportProcessingDTO = new PostReportProcessingRequest(true, postReport.getPostReportNo());
+        PostReportProcessingRequest postReportProcessingDTO = new PostReportProcessingRequest(true, postReport.postReportNo());
 
         blackListCommandService.updatePostReportStatus(postReportProcessingDTO);
 
         // when
-        PostReport updatedPostReport = postReportCommandRepository.findById(postReport.getPostReportNo()).get();
+        PostReport updatedPostReport = postReportCommandRepository.findById(postReport.postReportNo()).get();
 
         // then
         Assertions.assertEquals(ProcessingStatus.ACCEPTED, updatedPostReport.getProcessingStatus());
@@ -71,15 +72,15 @@ public class BlackListCommandServiceTests {
     void checkRejectedStatus() {
 
         // given
-        PostReport postReport = postReportCommandService.savePostReport(new PostReportSaveRequest(1, "욕설",
+        PostReportResponse postReport = postReportCommandService.savePostReport(new PostReportSaveRequest(1, "욕설",
                 UUID.randomUUID(), UUID.randomUUID(), 11L));
 
-        PostReportProcessingRequest postReportProcessingDTO = new PostReportProcessingRequest(false, postReport.getPostReportNo());
+        PostReportProcessingRequest postReportProcessingDTO = new PostReportProcessingRequest(false, postReport.postReportNo());
 
         blackListCommandService.updatePostReportStatus(postReportProcessingDTO);
 
         // when
-        PostReport updatedPostReport = postReportCommandRepository.findById(postReport.getPostReportNo()).get();
+        PostReport updatedPostReport = postReportCommandRepository.findById(postReport.postReportNo()).get();
 
         // then
         Assertions.assertEquals(ProcessingStatus.REJECTED, updatedPostReport.getProcessingStatus());
@@ -101,10 +102,10 @@ public class BlackListCommandServiceTests {
                 .reportCount(1)
                 .build());
 
-        PostReport postReport = postReportCommandService.savePostReport(new PostReportSaveRequest(1, "욕설",
+        PostReportResponse postReport = postReportCommandService.savePostReport(new PostReportSaveRequest(1, "욕설",
                 UUID.randomUUID(), savedUser.getId(), 11L));
 
-        PostReportProcessingRequest postReportProcessingDTO = new PostReportProcessingRequest(true, postReport.getPostReportNo());
+        PostReportProcessingRequest postReportProcessingDTO = new PostReportProcessingRequest(true, postReport.postReportNo());
 
         // when
         int newReportCount = blackListCommandService.addReportCountToUser(postReportProcessingDTO);
@@ -135,10 +136,10 @@ public class BlackListCommandServiceTests {
                 .reportCount(1)
                 .build());
 
-        PostReport postReport = postReportCommandService.savePostReport(new PostReportSaveRequest(1, "욕설",
+        PostReportResponse postReport = postReportCommandService.savePostReport(new PostReportSaveRequest(1, "욕설",
                 UUID.randomUUID(), savedUser.getId(), 11L));
 
-        PostReportProcessingRequest postReportProcessingDTO = new PostReportProcessingRequest(false, postReport.getPostReportNo());
+        PostReportProcessingRequest postReportProcessingDTO = new PostReportProcessingRequest(false, postReport.postReportNo());
 
         // when
         int newReportCount = blackListCommandService.addReportCountToUser(postReportProcessingDTO);
