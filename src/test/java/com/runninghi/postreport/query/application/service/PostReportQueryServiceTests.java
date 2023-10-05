@@ -68,7 +68,7 @@ public class PostReportQueryServiceTests {
         PostReportResponse postReportResponse = postReportCommandService.savePostReport(new PostReportSaveRequest(4, "홍보", UUID.randomUUID(), UUID.randomUUID(), 1L));
         System.out.println(postReportResponse.postReportNo());
 
-        postReportCommandService.updatePostReport(new PostReportUpdateRequest(ProcessingStatus.ACCEPTED), postReportResponse.postReportNo());
+        postReportCommandService.updatePostReport(new PostReportUpdateRequest(ProcessingStatus.REJECTED), postReportResponse.postReportNo());
 
         //when
         List<PostReport> inProgressPostReportList = postReportQueryRepository.findByProcessingStatus(ProcessingStatus.INPROGRESS);

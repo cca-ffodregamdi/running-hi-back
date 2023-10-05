@@ -16,6 +16,7 @@ public class PostReportCommandController {
 
     private final PostReportCommandService postReportCommandService;
 
+    // 설명. 게시글 신고 저장 기능
     @PostMapping("/postReports")
     public ApiResponse createPostReport(PostReportSaveRequest request) {
 
@@ -24,6 +25,7 @@ public class PostReportCommandController {
         return ApiResponse.success("성공적으로 등록되었습니다.", response);
     }
 
+    // 설명. 게시글 신고 수락 여부에 따라 신고 처리상태 및 유저정보 변경 기능
     @PutMapping("/postReports/{postReportNo}")
     public ApiResponse updatePostReport(PostReportUpdateRequest request, @PathVariable Long postReportNo) {
 
@@ -32,6 +34,7 @@ public class PostReportCommandController {
         return ApiResponse.success("성공적으로 처리되었습니다.", response);
     }
 
+    // 설명. 게시글 신고 삭제 기능
     @DeleteMapping("/postReports/{postReportNo}")
     public ApiResponse deletePostReport(@PathVariable Long postReportNo) {
 

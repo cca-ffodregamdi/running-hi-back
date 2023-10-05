@@ -11,17 +11,20 @@ import com.runninghi.postreport.command.domain.aggregate.vo.PostReportUserVO;
 import com.runninghi.postreport.command.domain.aggregate.vo.PostReportedUserVO;
 import com.runninghi.postreport.command.domain.aggregate.vo.ReportedPostVO;
 import com.runninghi.postreport.command.domain.repository.PostReportCommandRepository;
+import com.runninghi.postreport.command.domain.service.PostReportCommandDomainService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class PostReportCommandService {
 
     private final PostReportCommandRepository postReportCommandRepository;
+    private final PostReportCommandDomainService postReportCommandDomainService;
 
     @Transactional
     public PostReportResponse savePostReport(PostReportSaveRequest postReportSaveRequest) {
@@ -53,6 +56,7 @@ public class PostReportCommandService {
         return PostReportResponse.from(postReport);
     }
 
+    // 설명. 신고 수락 여부에 따른 신고처리상태 및 유저 신고횟수 변경
     @Transactional
     public PostReportResponse updatePostReport(PostReportUpdateRequest request, Long postReportNo) {
 
@@ -61,10 +65,16 @@ public class PostReportCommandService {
 
         postReport.update(request);
 
-        return PostReportResponse.from(postReport);
+        UUID reportedUserNo = postReport.getPostReportedUserVO().getPostReportedUserNo();   // 피신고자 번호
 
+        // 설명. 신고 수락 시 유저 신고횟수 +1
+        if (request.processingStatus() == ProcessingStatus.ACCEPTED) {
+            postReportCommandDomainService.updateUserInfo(reportedUserNo);
+        }
 
+        return PostReportResponse.from(postReport);     // 나중에 업데이트된 내용 새로운 dto에 담아서 리턴하도록 수정
     }
+
 
     @Transactional
     public PostReportDeleteResponse deletePostReport(Long postReportNo) {
