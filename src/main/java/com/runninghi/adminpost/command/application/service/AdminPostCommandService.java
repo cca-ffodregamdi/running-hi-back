@@ -31,6 +31,8 @@ public class AdminPostCommandService {
     @Transactional
     public AdminPostResponse createAdminPost(AdminPostCreateRequest request) {
 
+        checkAdminByUserNo(request.userKey());
+
         AdminPost result = adminPostCommandRepository.save(
                 AdminPost.builder()
                         .writerNoVO(new WriterNoVO(request.userKey()))
