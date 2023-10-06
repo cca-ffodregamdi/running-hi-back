@@ -1,6 +1,5 @@
 package com.runninghi.image.command.application.dto.request;
 
-public record ImageCreateRequest(
+public record ImagesCreateRequest(
         String board
-) {
-}
+){ }

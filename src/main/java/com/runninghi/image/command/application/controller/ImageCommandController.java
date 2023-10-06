@@ -1,6 +1,7 @@
 package com.runninghi.image.command.application.controller;
 
 import com.runninghi.image.command.application.dto.request.ImageCreateRequest;
+import com.runninghi.image.command.application.dto.request.ImagesCreateRequest;
 import com.runninghi.image.command.application.dto.request.ImageDeleteRequest;
 import com.runninghi.image.command.application.dto.response.ImageCreateResponse;
 import com.runninghi.image.command.application.service.ImageCommandService;
@@ -20,27 +21,27 @@ public class ImageCommandController {
 
     // 이미지 스토리지에 업로드, 이미지 entity 생성
     @PostMapping("/image")
-    public ResponseEntity<?> createImage(@RequestParam("file") MultipartFile multipartFile) {
+    public ResponseEntity<?> createImage(@RequestPart MultipartFile file, @RequestPart ImageCreateRequest request) {
 
-        ImageCreateResponse imageUrl = imageCommandService.uploadImageFile(multipartFile, "admin");
+        ImageCreateResponse imageUrl = imageCommandService.uploadImageFile(file, request.board());
 
         return new ResponseEntity<>(imageUrl, HttpStatus.OK);
     }
 
     // 여러 개의 이미지 스토리지에 업로드, 이미지 entity 생성
     @PostMapping("/images")
-    public ResponseEntity<?> createImages(@ModelAttribute ImageCreateRequest imageCreateRequest) {
+    public ResponseEntity<?> createImages(@RequestPart List<MultipartFile> files, @RequestPart ImagesCreateRequest request) {
 
-        List<ImageCreateResponse> imageUrl = imageCommandService.uploadImageFiles(imageCreateRequest.files());
+        List<ImageCreateResponse> imageUrl = imageCommandService.uploadImageFiles(files, request.board());
 
         return new ResponseEntity<>(imageUrl, HttpStatus.OK);
     }
 
     // 스토리지의 이미지 삭제, 이미지 entity 삭제
     @DeleteMapping("/image")
-    public ResponseEntity<?> deleteImage(@RequestBody ImageDeleteRequest imageDeleteRequest) {
+    public ResponseEntity<?> deleteImage(@RequestBody ImageDeleteRequest request) {
 
-        imageCommandService.deleteImageFile(imageDeleteRequest);
+        imageCommandService.deleteImageFile(request);
 
         return new ResponseEntity<>("삭제 완료", HttpStatus.OK);
     }

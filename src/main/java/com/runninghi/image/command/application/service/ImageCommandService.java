@@ -21,6 +21,7 @@ import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -48,6 +49,9 @@ public class ImageCommandService {
 
     @Value("${firebase.storage.bucket}")
     private String bucketName;
+
+    @Value("${firebase.storage.bucket-url}")
+    private String bucketUrl;
 
     private final ImageCommandDomainService imageCommandDomainService;
 
@@ -258,7 +262,8 @@ public class ImageCommandService {
 //    }
 
     // 여러 개의 이미지 Firebase Storage에 저장
-    public List<ImageCreateResponse> uploadImageFiles(List<MultipartFile> multipartFileList) {
+    @Transactional
+    public List<ImageCreateResponse> uploadImageFiles(List<MultipartFile> multipartFileList, String board) {
         // Firebase Storage 버킷 지정
         Bucket bucket = StorageClient.getInstance().bucket(bucketName);
 
@@ -268,18 +273,21 @@ public class ImageCommandService {
         for (MultipartFile multipartFile : multipartFileList) {
             // 이미지 이름 새로 생성
             String fileName = createFileName(multipartFile.getOriginalFilename());
+            String folder = (board.equals("admin")) ? "admin_post/" : "user_post/";
 
             try (InputStream inputStream = multipartFile.getInputStream()) {
                 // 이미지 압축
                 InputStream compressedInputStream = compressImage(inputStream);
 
                 // Firebase Storage에 이미지 저장
-                BlobId blobId = BlobId.of(bucketName, "user_post/" + fileName);
+                BlobId blobId = BlobId.of(bucketName, folder + fileName);
                 BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType(multipartFile.getContentType()).build();
-                Blob blob = bucket.create("user_post/" + fileName, compressedInputStream, blobInfo.getContentType());
+                Blob blob = bucket.create(folder + fileName, compressedInputStream, blobInfo.getContentType());
 
-                // 저장된 이미지의 URL 저장
-                String imageUrl = blob.getMediaLink();
+                // 이미지에 접근하는 조회용 url 생성
+                folder = folder.replace("/", "%2F");
+                String imageUrl = bucketUrl + folder + fileName + "?alt=media";
+
                 imageUrls.add(ImageCreateResponse.from(imageUrl));
 
             } catch (IOException e) {
@@ -291,6 +299,7 @@ public class ImageCommandService {
     }
 
     // 이미지 Firebase Storage에 업로드
+    @Transactional
     public ImageCreateResponse uploadImageFile(MultipartFile multipartFile, String board) {
         // Firebase Storage 버킷 지정
         Bucket bucket = StorageClient.getInstance().bucket(bucketName);
@@ -306,10 +315,12 @@ public class ImageCommandService {
             // Firebase Storage에 이미지 저장
             BlobId blobId = BlobId.of(bucketName, folder + fileName);
             BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType(multipartFile.getContentType()).build();
-            Blob blob = bucket.create("user_post/" + fileName, compressedInputStream, blobInfo.getContentType());
+            Blob blob = bucket.create(folder + fileName, compressedInputStream, blobInfo.getContentType());
 
-            // 저장된 이미지의 URL 반환
-            String imageUrl = blob.getMediaLink();
+            // 이미지에 접근하는 조회용 url 생성
+            folder = folder.replace("/", "%2F");
+            String imageUrl = bucketUrl + folder + fileName + "?alt=media";
+
             return ImageCreateResponse.from(imageUrl);
 
         } catch (IOException e) {
@@ -318,9 +329,11 @@ public class ImageCommandService {
     }
 
     // Firebase Storage에서 이미지 삭제
+    @Transactional
     public void deleteImageFile(ImageDeleteRequest imageDeleteRequest) {
         String folder = (imageDeleteRequest.board().equals("admin")) ? "admin_post/" : "user_post/";
-        BlobId blobId = BlobId.of(bucketName, folder + imageDeleteRequest.imageUrl());
+        String imageName = imageDeleteRequest.imageUrl().replace(bucketUrl, "").replace("%2F", "/").replace("?alt=media", "");
+        BlobId blobId = BlobId.of(bucketName,  imageName);
         Storage storage = StorageClient.getInstance().bucket(bucketName).getStorage();
         boolean deleted = storage.delete(blobId);
 
@@ -330,6 +343,7 @@ public class ImageCommandService {
     }
 
     // 유저 게시판: 특정 게시물과 관련된 Firebase Storage 이미지 및 이미지 entity 전부 삭제
+    @Transactional
     public void deleteUserPostImage(ImageDeletePostRequest imageDeletePostRequest) {
         UserPostVO userPostVO = new UserPostVO(imageDeletePostRequest.postNo());
 
@@ -340,8 +354,8 @@ public class ImageCommandService {
 
         // Firebase Storage에서 이미지 삭제 (옵션)
         imageUrls.forEach(imageUrl -> {
-            String folder = "user_post/";
-            BlobId blobId = BlobId.of(bucketName, folder + imageUrl);
+            String imageName = imageUrl.replace(bucketUrl, "").replace("%2F", "/").replace("?alt=media", "");
+            BlobId blobId = BlobId.of(bucketName, imageName);
             Storage storage = StorageClient.getInstance().bucket(bucketName).getStorage();
             boolean deleted = storage.delete(blobId);
 
@@ -385,8 +399,8 @@ public class ImageCommandService {
 
         // Firebase Storage에서 이미지 삭제 (옵션)
         imageUrls.forEach(imageUrl -> {
-            String folder = "admin_post/";
-            BlobId blobId = BlobId.of(bucketName, folder + imageUrl);
+            String imageName = imageUrl.replace(bucketUrl, "").replace("%2F", "/").replace("?alt=media", "");
+            BlobId blobId = BlobId.of(bucketName, imageName);
             Storage storage = StorageClient.getInstance().bucket(bucketName).getStorage();
             boolean deleted = storage.delete(blobId);
 
