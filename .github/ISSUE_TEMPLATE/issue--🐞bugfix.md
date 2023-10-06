@@ -1,7 +1,7 @@
 ---
 name: Bug Fix
 about: 버그 고치기
-title: "[bugfix, Oct 1st/2nd/3rd/4th] - [도메인]제목"
+title: "[bugfix, Oct 1st/2nd/3rd/4th, 2023] - [도메인]제목"
 labels: ''
 assignees: ''
 
