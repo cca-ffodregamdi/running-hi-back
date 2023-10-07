@@ -67,18 +67,6 @@ public class UserPostCommandService {
 
         // 유저 게시물이 존재하는지 확인
 
-
-
-
-
-
-
-
-
-
-
-
-
         UserPost userPost = userPostCommandRepository.findByUserPostNo(request.userPostNo())
                 .orElseThrow(() -> new NotFoundException("존재하지않는 게시물입니다."));
 
@@ -119,6 +107,7 @@ public class UserPostCommandService {
         // 관련된 이미지 삭제
         // 관련된 댓글 삭제
         // 관련된 즐겨찾기 삭제
+        // 관련된 신고 삭제
 
     }
 
