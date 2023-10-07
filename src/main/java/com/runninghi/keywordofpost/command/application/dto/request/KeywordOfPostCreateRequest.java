@@ -20,4 +20,8 @@ public record KeywordOfPostCreateRequest (
     public static KeywordOfPostCreateRequest adminPostFrom (Long adminPostNo, Long keywordNo, String keywordName){
         return new KeywordOfPostCreateRequest(adminPostNo, null, keywordNo, keywordName);
     }
+
+    public static KeywordOfPostCreateRequest userPostFrom (Long userPostNo, Long keywordNo, String keywordName){
+        return new KeywordOfPostCreateRequest(userPostNo, null, keywordNo, keywordName);
+    }
 }
