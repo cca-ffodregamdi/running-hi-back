@@ -1,23 +1,19 @@
 ---
 name: Request
 about: 요청하기
-title: "[Request] 주차 - [도메인] 제목"
-labels: "\U0001F64Frequest"
+title: "[Request - Oct 1st/2nd/3rd/4th, 2023]- [도메인] 제목"
+labels: ''
 assignees: ''
 
 ---
 
 🙏필요한 기능 설명
 -
-- todo
-- todo
-- todo
+- <!-- todo -->
 
 ⭐필요 도메인
 -
-- todo
-- todo
-- todo
+- <!-- todo -->
 
 👪담당자
 -

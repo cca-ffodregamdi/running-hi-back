@@ -30,6 +30,12 @@ public class AdminPostCommandController {
     private final AdminPostCommandService adminPostCommandService;
     private final Validator validator;
 
+    /**
+     * 관리자 권한으로 관리자 코스 추천 게시글 작성
+     * @param request 작성자 식별 값 / 제목 / 내용 / 키워드 목록
+     * @param bindingResult request 유효성 체크 결과
+     * @return 상태 코드 / 메세지 / 데이터{작성자 / 썸네일 / 제목 / 내용 / 키워드 목록}
+     */
     @Operation(summary = "관리자 게시글 생성")
     @PostMapping("api/v1/admin-post")
     public ResponseEntity<ApiResponse> createAdminPost(@RequestBody @Valid AdminPostCreateRequest request,
@@ -39,7 +45,6 @@ public class AdminPostCommandController {
         }
         Optional.ofNullable(request.userKey())
                 .orElseThrow( () -> new NullPointerException("로그인 후 이용해주세요."));
-        adminPostCommandService.checkAdminByUserNo(request.userKey());
         AdminPostResponse response = adminPostCommandService.createAdminPost(request);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
