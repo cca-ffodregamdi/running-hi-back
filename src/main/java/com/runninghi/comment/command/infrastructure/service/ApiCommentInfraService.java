@@ -4,14 +4,24 @@ import com.runninghi.comment.command.domain.service.ApiCommentDomainService;
 import com.runninghi.comment.query.application.dto.request.FindCommentRequest;
 import com.runninghi.comment.query.application.service.CommentQueryService;
 import com.runninghi.common.annotation.InfraService;
+import com.runninghi.feedback.command.application.dto.response.FeedbackUserResponse;
+import com.runninghi.user.command.application.dto.user.response.UserInfoResponse;
+import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
+import com.runninghi.user.query.application.service.UserQueryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 
+import java.util.NoSuchElementException;
 import java.util.UUID;
+
+import static com.runninghi.user.command.domain.aggregate.entity.enumtype.Role.ADMIN;
+import static com.runninghi.user.command.domain.aggregate.entity.enumtype.Role.USER;
 
 @InfraService
 @RequiredArgsConstructor
 public class ApiCommentInfraService implements ApiCommentDomainService {
     private final CommentQueryService commentQueryService;
+    private final UserQueryService userQueryService;
 
     @Override
     public void validateCommentContentNull(String commentContent) {
@@ -22,7 +32,13 @@ public class ApiCommentInfraService implements ApiCommentDomainService {
 
     @Override
     public void validateUser(UUID userNo) {
-        //회원 신고횟수에 따른 댓글 작성 여부 판단 로직
+
+        UserInfoResponse result = userQueryService.findUserInfo(userNo);
+
+        if(result.role() != USER || result.role() != ADMIN) {
+            throw new NoSuchElementException("존재하지 않는 회원입니다.");
+        }
+
     }
 
     @Override
