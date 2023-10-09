@@ -1,6 +1,6 @@
 package com.runninghi.comment.command.infrastructure.service;
 
-import com.runninghi.comment.command.domain.service.CommentCommandDomainService;
+import com.runninghi.comment.command.domain.service.ApiCommentDomainService;
 import com.runninghi.comment.query.application.dto.request.FindCommentRequest;
 import com.runninghi.comment.query.application.service.CommentQueryService;
 import com.runninghi.common.annotation.InfraService;
@@ -10,8 +10,7 @@ import java.util.UUID;
 
 @InfraService
 @RequiredArgsConstructor
-public class CommentCommandInfraService implements CommentCommandDomainService {
-
+public class ApiCommentInfraService implements ApiCommentDomainService {
     private final CommentQueryService commentQueryService;
 
     @Override
@@ -36,5 +35,4 @@ public class CommentCommandInfraService implements CommentCommandDomainService {
     public void validateComment(Long commentNo) {
         commentQueryService.findComment(new FindCommentRequest((commentNo)));
     }
-
 }

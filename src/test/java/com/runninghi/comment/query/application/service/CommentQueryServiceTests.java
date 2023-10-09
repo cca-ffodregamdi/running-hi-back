@@ -21,6 +21,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.UUID;
 
 @SpringBootTest
@@ -46,19 +47,25 @@ public class CommentQueryServiceTests {
     void testFindCommentsByPostNo() {
 
         Long userPostNo = 999L;
+        UUID userNo = UUID.randomUUID();
 
         commentCommandRepository.save(Comment.builder()
                 .userPostNo(userPostNo)
+                .userNoVO(new CommentUserVO(userNo))
+                .commentStatus(false)
                 .build());
 
         commentCommandRepository.save(Comment.builder()
                 .userPostNo(userPostNo)
+                .userNoVO(new CommentUserVO(userNo))
+                .commentStatus(false)
                 .build());
 
         Pageable pageable = PageRequest.of(0, 10);      //추후 수정 필요
-        Page<Comment> commentsPage = queryCommentService.findAllComments(new FindAllCommentsRequest(userPostNo), pageable);
 
-        Assertions.assertEquals(2, commentsPage.getTotalElements());
+        List<CommentQueryResponse> commentsList = queryCommentService.findAllComments(new FindAllCommentsRequest(userPostNo));
+
+        Assertions.assertEquals(2, commentsList.size());
 
     }
 
@@ -73,15 +80,10 @@ public class CommentQueryServiceTests {
                 .commentStatus(true)
                 .build());
 
-        commentCommandRepository.save(Comment.builder()
-                .userPostNo(userPostNo)
-                .commentStatus(true)
-                .build());
-
         Pageable pageable = PageRequest.of(0, 10);      //추후 수정 필요
-        Page<Comment> commentsPage = queryCommentService.findAllComments(new FindAllCommentsRequest(userPostNo), pageable);
+        List<CommentQueryResponse> commentsList = queryCommentService.findAllComments(new FindAllCommentsRequest(userPostNo));
 
-        Assertions.assertEquals(0, commentsPage.getTotalElements());
+        Assertions.assertEquals(0, commentsList.size());
 
     }
 

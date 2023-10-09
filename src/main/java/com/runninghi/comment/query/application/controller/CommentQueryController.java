@@ -34,7 +34,7 @@ public class CommentQueryController {
 
 //        Page<Comment> response = commentQueryService.findAllComments(new FindAllCommentsRequest(userPostNo), PageRequest.of(0, 10));
 
-        List<CommentQueryResponse> response = commentQueryService.findAllComments(new FindAllCommentsRequest(userPostNo), PageRequest.of(0, 10));
+        List<CommentQueryResponse> response = commentQueryService.findAllComments(new FindAllCommentsRequest(userPostNo));
 
         return ApiResponse.success("성공적으로 조회되었습니다.", response);
     }

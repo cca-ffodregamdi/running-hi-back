@@ -24,7 +24,7 @@ public class CommentQueryService {
     private final BookmarkCommandDomainService domainService;
 
     @Transactional(readOnly = true)
-    public List<CommentQueryResponse> findAllComments(FindAllCommentsRequest commentDTO, Pageable pageable) {
+    public List<CommentQueryResponse> findAllComments(FindAllCommentsRequest commentDTO) {
 
 //        domainService.validatePostExist(commentDTO.userPostNo());
 
