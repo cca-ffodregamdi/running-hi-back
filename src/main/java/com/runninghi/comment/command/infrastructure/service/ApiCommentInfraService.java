@@ -35,9 +35,7 @@ public class ApiCommentInfraService implements ApiCommentDomainService {
 
         UserInfoResponse result = userQueryService.findUserInfo(userNo);
 
-        if(result.role() != USER || result.role() != ADMIN) {
-            throw new NoSuchElementException("존재하지 않는 회원입니다.");
-        }
+        if(result.id() != userNo) throw new NoSuchElementException("존재하지 않는 회원입니다.");
 
     }
 
