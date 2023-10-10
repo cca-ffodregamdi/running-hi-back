@@ -18,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Date;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 
@@ -170,5 +171,15 @@ public class CommentCommandServiceTests {
         CommentCommandResponse comment = commentCommandService.createComment(commentRequest);
 
         Assertions.assertNull(comment.updateDate());
+    }
+
+    @Test
+    @DisplayName("댓글 생성 테스트 : 존재하지 않는 회원 예외처리")
+    void testCommentUserNull() {
+        CreateCommentRequest commentRequest = new CreateCommentRequest(UUID.randomUUID(), 1L, "댓글 생성 테스트");
+
+        assertThatThrownBy(() -> commentCommandService.createComment(commentRequest))
+                .isInstanceOf(NoSuchElementException.class)
+                .hasMessage("존재하지 않는 회원입니다.");
     }
 }

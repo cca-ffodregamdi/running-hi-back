@@ -27,7 +27,7 @@ public class CommentCommandService {
     public CommentCommandResponse createComment(CreateCommentRequest commentDTO) {
 
         commentDomainService.validateCommentContentNull(commentDTO.commentContent());
-//        domainService.validateUser(commentDTO.userNo());
+        commentDomainService.validateUser(commentDTO.userNo());
 //        domainService.validateUserPost(commentDTO.userPostNo());
 
         Comment comment = commentRepository.save(Comment.builder()

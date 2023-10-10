@@ -4,18 +4,13 @@ import com.runninghi.comment.command.domain.service.ApiCommentDomainService;
 import com.runninghi.comment.query.application.dto.request.FindCommentRequest;
 import com.runninghi.comment.query.application.service.CommentQueryService;
 import com.runninghi.common.annotation.InfraService;
-import com.runninghi.feedback.command.application.dto.response.FeedbackUserResponse;
 import com.runninghi.user.command.application.dto.user.response.UserInfoResponse;
-import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
 import com.runninghi.user.query.application.service.UserQueryService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.AccessDeniedException;
 
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
-import static com.runninghi.user.command.domain.aggregate.entity.enumtype.Role.ADMIN;
-import static com.runninghi.user.command.domain.aggregate.entity.enumtype.Role.USER;
 
 @InfraService
 @RequiredArgsConstructor
@@ -41,8 +36,8 @@ public class ApiCommentInfraService implements ApiCommentDomainService {
 
     @Override
     public void validateUserPost(Long userPostNo) {
-        //존재하는 게시글 번호인지 확인
-        //사용자의 게시글인지 확인
+
+
     }
 
     @Override
