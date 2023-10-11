@@ -52,6 +52,7 @@ public class CommentCommandServiceTests {
     @AfterEach
     void clear() {
         commentRepository.deleteAllInBatch();
+        userCommandRepository.deleteAllInBatch();
     }
 
     @BeforeEach

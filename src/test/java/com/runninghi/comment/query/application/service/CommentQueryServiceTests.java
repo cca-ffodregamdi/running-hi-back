@@ -10,11 +10,11 @@ import com.runninghi.comment.query.application.dto.request.FindAllCommentsReques
 import com.runninghi.comment.query.application.dto.request.FindCommentRequest;
 import com.runninghi.comment.query.application.dto.response.CommentQueryResponse;
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
+import com.runninghi.user.command.domain.aggregate.entity.User;
+import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
+import com.runninghi.user.command.domain.repository.UserCommandRepository;
 import jakarta.transaction.Transactional;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
@@ -37,9 +37,33 @@ public class CommentQueryServiceTests {
     @Autowired
     private CommentCommandService createCommentService;
 
+    @Autowired
+    private UserCommandRepository userCommandRepository;
+
+    private User user;
+
     @BeforeEach
+    @AfterEach
     void clear() {
         commentCommandRepository.deleteAllInBatch();
+        userCommandRepository.deleteAllInBatch();
+    }
+
+    @BeforeEach
+    public void createUser() {
+
+        UUID userId = UUID.randomUUID();
+
+        user = userCommandRepository.save(User.builder()
+                .id(userId)
+                .account("qwerty1234")
+                .password("Test")
+                .name("김철수")
+                .nickname("qwe")
+                .email("qwe@qwe.qw")
+                .role(Role.USER)
+                .status(true)
+                .build());
     }
 
     @Test
@@ -91,7 +115,7 @@ public class CommentQueryServiceTests {
     @DisplayName("특정 댓글 조회 테스트 : success")
     void testFindCommentByCommentNo() {
 
-        CreateCommentRequest commentRequest = new CreateCommentRequest(UUID.randomUUID(), 1L, "댓글 생성 테스트");
+        CreateCommentRequest commentRequest = new CreateCommentRequest(user.getId(), 1L, "댓글 생성 테스트");
         CommentCommandResponse comment = createCommentService.createComment(commentRequest);
 
         CommentQueryResponse response = queryCommentService.findComment(new FindCommentRequest(comment.commentNo()));
