@@ -1,7 +1,7 @@
 package com.runninghi.adminpost.command.application.service;
 
 import com.runninghi.adminpost.command.application.controller.AdminPostCommandController;
-import com.runninghi.adminpost.command.application.dto.request.AdminPostCreateRequest;
+import com.runninghi.adminpost.command.application.dto.request.AdminPostRequest;
 import com.runninghi.adminpost.command.application.dto.request.KeywordListRequest;
 import com.runninghi.adminpost.command.domain.repository.AdminPostCommandRepository;
 import com.runninghi.keyword.command.domain.repository.KeywordCommandRepository;
@@ -58,8 +58,8 @@ class AdminPostCommandServiceTest {
                 .build());
     }
 
-    private AdminPostCreateRequest createAdminPostRequest(User admin, List<KeywordListRequest> keywordList) {
-        return new AdminPostCreateRequest(
+    private AdminPostRequest createAdminPostRequest(User admin, List<KeywordListRequest> keywordList) {
+        return new AdminPostRequest(
                 admin.getId(),
                 "asdfiasdnfo.jpg",
                 "테스트 제목",
@@ -83,7 +83,7 @@ class AdminPostCommandServiceTest {
         // given
         User admin = createAdmin();
         List<KeywordListRequest> keywordList = createKeywordList();
-        AdminPostCreateRequest request = createAdminPostRequest(admin, keywordList);
+        AdminPostRequest request = createAdminPostRequest(admin, keywordList);
 
 
         // when & then
@@ -98,7 +98,7 @@ class AdminPostCommandServiceTest {
 
         // given
         User admin = createAdmin();
-        AdminPostCreateRequest request = new AdminPostCreateRequest(
+        AdminPostRequest request = new AdminPostRequest(
                 admin.getId(),
                 "asdfiasdnfo.jpg",
                 "테스트 제목",

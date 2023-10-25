@@ -1,7 +1,6 @@
 package com.runninghi.keyword.command.application.service;
 
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
-import com.runninghi.keyword.command.application.dto.request.KeywordUpdateRequest;
 import com.runninghi.keyword.command.application.dto.response.UserCheckResponse;
 import com.runninghi.keyword.command.application.dto.response.KeywordResponse;
 import com.runninghi.keyword.command.domain.aggregate.entity.Keyword;

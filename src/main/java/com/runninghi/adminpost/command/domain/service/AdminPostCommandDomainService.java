@@ -1,6 +1,5 @@
 package com.runninghi.adminpost.command.domain.service;
 
-import com.runninghi.adminpost.command.application.dto.request.AdminPostCreateRequest;
 import com.runninghi.common.annotation.DomainService;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
 

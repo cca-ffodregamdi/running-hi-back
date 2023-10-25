@@ -10,4 +10,6 @@ import java.util.UUID;
 public interface ApiAdminPostDomainService {
      Role checkAdminByUserNo(UUID userKey);
      List<Long> createKeywordOfAdminPost(List<KeywordListRequest> keywordNoList, Long adminPostNo);
+
+    List<Long> updateKeywordOfAdminPost(List<KeywordListRequest> keywordListRequests, Long adminPostNo);
 }

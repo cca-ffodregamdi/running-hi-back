@@ -1,6 +1,6 @@
 package com.runninghi.adminpost.command.application.service;
 
-import com.runninghi.adminpost.command.application.dto.request.AdminPostCreateRequest;
+import com.runninghi.adminpost.command.application.dto.request.AdminPostRequest;
 import com.runninghi.adminpost.command.application.dto.response.AdminPostResponse;
 import com.runninghi.adminpost.command.domain.aggregate.entity.AdminPost;
 import com.runninghi.adminpost.command.domain.aggregate.vo.WriterNoVO;
@@ -29,7 +29,7 @@ public class AdminPostCommandService {
     }
 
     @Transactional
-    public AdminPostResponse createAdminPost(AdminPostCreateRequest request) {
+    public AdminPostResponse createAdminPost(AdminPostRequest request) {
 
         checkAdminByUserNo(request.userKey());
 
@@ -53,6 +53,35 @@ public class AdminPostCommandService {
                 result.getAdminPostTitle(),
                 result.getAdminPostContent(),
                 keywordNoList
+        );
+    }
+
+    @Transactional
+    public AdminPostResponse updateAdminPost(Long adminPostNo, AdminPostRequest request) {
+
+        checkAdminByUserNo(request.userKey());
+
+        AdminPost result = adminPostCommandRepository.save(
+                AdminPost.builder()
+                        .adminPostNo(adminPostNo)
+                        .writerNoVO(new WriterNoVO(request.userKey()))
+                        .adminPostTitle(request.adminPostTitle())
+                        .adminPostContent(request.adminPostContent())
+                        .adminPostThumbnail(request.thumbnail())
+                        .build()
+        );
+
+        List<Long> keywordList = apiAdminPostDomainService.updateKeywordOfAdminPost(
+                request.keywordList(),
+                result.getAdminPostNo()
+        );
+
+        return AdminPostResponse.of(
+                result.getWriterNoVO().getWriterNo(),
+                result.getAdminPostThumbnail(),
+                result.getAdminPostTitle(),
+                result.getAdminPostContent(),
+                keywordList
         );
     }
 }

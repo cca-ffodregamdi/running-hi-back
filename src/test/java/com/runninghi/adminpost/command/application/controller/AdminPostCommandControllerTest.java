@@ -1,6 +1,6 @@
 package com.runninghi.adminpost.command.application.controller;
 
-import com.runninghi.adminpost.command.application.dto.request.AdminPostCreateRequest;
+import com.runninghi.adminpost.command.application.dto.request.AdminPostRequest;
 import com.runninghi.adminpost.command.application.dto.request.KeywordListRequest;
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
@@ -14,7 +14,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 
 import java.util.Arrays;
 import java.util.List;
@@ -60,8 +59,8 @@ class AdminPostCommandControllerTest {
                 .build());
     }
 
-    private AdminPostCreateRequest createAdminPostRequest(User admin, List<KeywordListRequest> keywordList) {
-        return new AdminPostCreateRequest(
+    private AdminPostRequest createAdminPostRequest(User admin, List<KeywordListRequest> keywordList) {
+        return new AdminPostRequest(
                 admin.getId(),
                 "asdfiasdnfo.jpg",
                 "테스트 제목",
@@ -84,7 +83,7 @@ class AdminPostCommandControllerTest {
 
         // given
         List<KeywordListRequest> keywordList = createKeywordList();
-        AdminPostCreateRequest request = new AdminPostCreateRequest(
+        AdminPostRequest request = new AdminPostRequest(
                 null,
                 "asdfiasdnfo.jpg",
                 "테스트 제목",
@@ -108,7 +107,7 @@ class AdminPostCommandControllerTest {
         // given
         User admin = createAdmin();
         List<KeywordListRequest> keywordList = createKeywordList();
-        AdminPostCreateRequest request = new AdminPostCreateRequest(
+        AdminPostRequest request = new AdminPostRequest(
                 admin.getId(),
                 null,
                 "테스트 제목",
@@ -117,7 +116,7 @@ class AdminPostCommandControllerTest {
         );
 
         // when
-        Set<ConstraintViolation<AdminPostCreateRequest>> violations =
+        Set<ConstraintViolation<AdminPostRequest>> violations =
                 validator.validate(request);
 
         // then
@@ -132,7 +131,7 @@ class AdminPostCommandControllerTest {
         // given
         User admin = createAdmin();
         List<KeywordListRequest> keywordList = createKeywordList();
-        AdminPostCreateRequest request = new AdminPostCreateRequest(
+        AdminPostRequest request = new AdminPostRequest(
                 admin.getId(),
                 "",
                 "테스트 제목",
@@ -141,7 +140,7 @@ class AdminPostCommandControllerTest {
         );
 
         // when
-        Set<ConstraintViolation<AdminPostCreateRequest>> violations =
+        Set<ConstraintViolation<AdminPostRequest>> violations =
                 validator.validate(request);
 
         // then
@@ -156,7 +155,7 @@ class AdminPostCommandControllerTest {
         // given
         User admin = createAdmin();
         List<KeywordListRequest> keywordList = createKeywordList();
-        AdminPostCreateRequest request = new AdminPostCreateRequest(
+        AdminPostRequest request = new AdminPostRequest(
                 admin.getId(),
                 "  ",
                 "테스트 제목",
@@ -165,7 +164,7 @@ class AdminPostCommandControllerTest {
         );
 
         // when
-        Set<ConstraintViolation<AdminPostCreateRequest>> violations =
+        Set<ConstraintViolation<AdminPostRequest>> violations =
                 validator.validate(request);
 
         // then
@@ -181,7 +180,7 @@ class AdminPostCommandControllerTest {
         // given
         User admin = createAdmin();
         List<KeywordListRequest> keywordList = createKeywordList();
-        AdminPostCreateRequest request = new AdminPostCreateRequest(
+        AdminPostRequest request = new AdminPostRequest(
                 admin.getId(),
                 "asdfiasdnfo.jpg",
                 null,
@@ -190,7 +189,7 @@ class AdminPostCommandControllerTest {
         );
 
         // when
-        Set<ConstraintViolation<AdminPostCreateRequest>> violations =
+        Set<ConstraintViolation<AdminPostRequest>> violations =
                 validator.validate(request);
 
         // then
@@ -205,7 +204,7 @@ class AdminPostCommandControllerTest {
         // given
         User admin = createAdmin();
         List<KeywordListRequest> keywordList = createKeywordList();
-        AdminPostCreateRequest request = new AdminPostCreateRequest(
+        AdminPostRequest request = new AdminPostRequest(
                 admin.getId(),
                 "asdfiasdnfo.jpg",
                 "",
@@ -214,7 +213,7 @@ class AdminPostCommandControllerTest {
         );
 
         // when
-        Set<ConstraintViolation<AdminPostCreateRequest>> violations =
+        Set<ConstraintViolation<AdminPostRequest>> violations =
                 validator.validate(request);
 
         // then
@@ -229,7 +228,7 @@ class AdminPostCommandControllerTest {
         // given
         User admin = createAdmin();
         List<KeywordListRequest> keywordList = createKeywordList();
-        AdminPostCreateRequest request = new AdminPostCreateRequest(
+        AdminPostRequest request = new AdminPostRequest(
                 admin.getId(),
                 "asdfiasdnfo.jpg",
                 " ",
@@ -238,7 +237,7 @@ class AdminPostCommandControllerTest {
         );
 
         // when
-        Set<ConstraintViolation<AdminPostCreateRequest>> violations =
+        Set<ConstraintViolation<AdminPostRequest>> violations =
                 validator.validate(request);
 
         // then
@@ -253,7 +252,7 @@ class AdminPostCommandControllerTest {
         // given
         User admin = createAdmin();
         List<KeywordListRequest> keywordList = createKeywordList();
-        AdminPostCreateRequest request = new AdminPostCreateRequest(
+        AdminPostRequest request = new AdminPostRequest(
                 admin.getId(),
                 "asdfiasdnfo.jpg",
                 "테스트 제목",
@@ -262,7 +261,7 @@ class AdminPostCommandControllerTest {
         );
 
         // when
-        Set<ConstraintViolation<AdminPostCreateRequest>> violations = validator.validate(request);
+        Set<ConstraintViolation<AdminPostRequest>> violations = validator.validate(request);
 
         // then
         Assertions.assertThat(violations.iterator().next().getMessage())
@@ -277,7 +276,7 @@ class AdminPostCommandControllerTest {
         // given
         User admin = createAdmin();
         List<KeywordListRequest> keywordList = createKeywordList();
-        AdminPostCreateRequest request = new AdminPostCreateRequest(
+        AdminPostRequest request = new AdminPostRequest(
                 admin.getId(),
                 "asdfiasdnfo.jpg",
                 "테스트 제목",
@@ -286,7 +285,7 @@ class AdminPostCommandControllerTest {
         );
 
         // when
-        Set<ConstraintViolation<AdminPostCreateRequest>> violations = validator.validate(request);
+        Set<ConstraintViolation<AdminPostRequest>> violations = validator.validate(request);
 
         // then
         Assertions.assertThat(violations.iterator().next().getMessage())
@@ -301,7 +300,7 @@ class AdminPostCommandControllerTest {
         // given
         User admin = createAdmin();
         List<KeywordListRequest> keywordList = createKeywordList();
-        AdminPostCreateRequest request = new AdminPostCreateRequest(
+        AdminPostRequest request = new AdminPostRequest(
                 admin.getId(),
                 "asdfiasdnfo.jpg",
                 "테스트 제목",
@@ -310,7 +309,7 @@ class AdminPostCommandControllerTest {
         );
 
         // when
-        Set<ConstraintViolation<AdminPostCreateRequest>> violations = validator.validate(request);
+        Set<ConstraintViolation<AdminPostRequest>> violations = validator.validate(request);
 
         // then
         Assertions.assertThat(violations.iterator().next().getMessage())

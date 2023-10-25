@@ -33,4 +33,8 @@ public class KeywordOfPost {
         this.userPostVO = userPostVO;
         this.keywordVO = keywordVO;
     }
+
+    public void  update (KeywordVO keywordVO) {
+        this.keywordVO = keywordVO;
+    }
 }

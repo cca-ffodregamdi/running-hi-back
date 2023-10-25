@@ -20,17 +20,17 @@ import java.util.stream.Collectors;
 public class KeywordOfPostCommandService {
 
     private final KeywordOfPostCommandRepository keywordOfPostCommandRepository;
+
     public List<Long> createKeywordOfAdminPost(List<KeywordOfPostCreateRequest> requests) {
 
-        List<KeywordOfPost> keywordOfPostList = requests.stream().map(
-           request -> KeywordOfPost.builder()
-                       .adminPostVO(new AdminPostVO(request.adminPostNo()))
-                       .userPostVO(new UserPostVO(request.userPostNo()))
-                       .keywordVO(new KeywordVO(request.keywordNo(), request.keywordName()))
-                       .build()
-        ).collect(Collectors.toList());
-
-        try {
+        try{
+            List<KeywordOfPost> keywordOfPostList = requests.stream().map(
+               request -> KeywordOfPost.builder()
+                           .adminPostVO(new AdminPostVO(request.adminPostNo()))
+                           .userPostVO(new UserPostVO(request.userPostNo()))
+                           .keywordVO(new KeywordVO(request.keywordNo()))
+                           .build()
+            ).collect(Collectors.toList());
             return keywordOfPostCommandRepository.saveAll(keywordOfPostList)
                     .stream().map( k -> k.getKeywordVO().getKeywordNo()
                     ).collect(Collectors.toList());
@@ -40,4 +40,14 @@ public class KeywordOfPostCommandService {
     }
 
 
+    public List<Long> updateKeywordOfAdminPost(List<KeywordOfPostCreateRequest> request) {
+
+        try {
+            Long adminPostNo = request.get(0).adminPostNo();
+            keywordOfPostCommandRepository.deleteKeywordOfPost(adminPostNo);
+            return createKeywordOfAdminPost(request);
+        } catch (RuntimeException e) {
+            throw new RuntimeException("수정에 실패하였습니다.");
+        }
+    }
 }

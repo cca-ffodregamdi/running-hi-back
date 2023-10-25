@@ -27,7 +27,6 @@ public class ApiAdminPostInfraService implements ApiAdminPostDomainService {
     }
 
     @Override
-    @Transactional
     public List<Long> createKeywordOfAdminPost(List<KeywordListRequest> keywordList, Long adminPostNo) {
         List<KeywordOfPostCreateRequest> request = keywordList.stream().map(
                 keyword -> KeywordOfPostCreateRequest.adminPostFrom(adminPostNo, keyword.keywordNo(), keyword.keywordName())
@@ -35,4 +34,11 @@ public class ApiAdminPostInfraService implements ApiAdminPostDomainService {
         return keywordOfPostCommandService.createKeywordOfAdminPost(request);
     }
 
+    @Override
+    public List<Long> updateKeywordOfAdminPost(List<KeywordListRequest> keywordList, Long adminPostNo) {
+        List<KeywordOfPostCreateRequest> request = keywordList.stream().map(
+                keyword -> KeywordOfPostCreateRequest.adminPostFrom(adminPostNo, keyword.keywordNo(), keyword.keywordName() )
+        ).toList();
+        return keywordOfPostCommandService.updateKeywordOfAdminPost(request);
+    }
 }

@@ -1,14 +1,12 @@
 package com.runninghi.adminpost.command.application.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 
 import java.util.List;
 import java.util.UUID;
 
-public record AdminPostCreateRequest(
+public record AdminPostRequest(
 
         @Schema(description = "작성자 고유 키" , example = "b583953c-cb27-43db-8e8d-d9cc230e2695")
         UUID userKey,
