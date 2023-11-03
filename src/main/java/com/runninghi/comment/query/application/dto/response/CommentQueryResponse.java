@@ -5,12 +5,15 @@ import com.runninghi.comment.command.domain.aggregate.vo.CommentUserVO;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 public record CommentQueryResponse(
         @Schema(description = "댓글 고유 번호", example = "1")
         Long commentNo,
         @Schema(description = "회원 고유키", example = "c0a80121-7aeb-4b4b-8b0a-6b1c032f0e4a")
-        CommentUserVO userNo,
+        UUID userNo,
 
         @Schema(description = "게시글 번호", example = "1")
         Long userPostNo,
@@ -31,12 +34,26 @@ public record CommentQueryResponse(
     public static CommentQueryResponse from (Comment comment) {
         return new CommentQueryResponse(
                 comment.getCommentNo(),
-                comment.getUserNoVO(),
+                comment.getUserNoVO().getUserNo(),
                 comment.getUserPostNo(),
                 comment.getCommentDate(),
                 comment.getCommentContent(),
                 comment.isCommentStatus(),
                 comment.getUpdateDate()
         );
+    }
+
+    public static List<CommentQueryResponse> from(List<Comment> comments) {
+        return comments.stream()
+                .map(comment -> new CommentQueryResponse(
+                        comment.getCommentNo(),
+                        comment.getUserNoVO().getUserNo(),
+                        comment.getUserPostNo(),
+                        comment.getCommentDate(),
+                        comment.getCommentContent(),
+                        comment.isCommentStatus(),
+                        comment.getUpdateDate()
+                ))
+                .collect(Collectors.toList());
     }
 }

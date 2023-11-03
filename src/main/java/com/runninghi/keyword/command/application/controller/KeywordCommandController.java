@@ -18,7 +18,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/keyword")
-
 public class KeywordCommandController {
 
     private final KeywordCommandService keywordCommandService;
