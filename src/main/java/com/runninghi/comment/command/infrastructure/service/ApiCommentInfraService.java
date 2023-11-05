@@ -1,18 +1,22 @@
 package com.runninghi.comment.command.infrastructure.service;
 
-import com.runninghi.comment.command.domain.service.CommentCommandDomainService;
+import com.runninghi.comment.command.domain.service.ApiCommentDomainService;
 import com.runninghi.comment.query.application.dto.request.FindCommentRequest;
 import com.runninghi.comment.query.application.service.CommentQueryService;
 import com.runninghi.common.annotation.InfraService;
+import com.runninghi.user.command.application.dto.user.response.UserInfoResponse;
+import com.runninghi.user.query.application.service.UserQueryService;
 import lombok.RequiredArgsConstructor;
 
+import java.util.NoSuchElementException;
 import java.util.UUID;
+
 
 @InfraService
 @RequiredArgsConstructor
-public class CommentCommandInfraService implements CommentCommandDomainService {
-
+public class ApiCommentInfraService implements ApiCommentDomainService {
     private final CommentQueryService commentQueryService;
+    private final UserQueryService userQueryService;
 
     @Override
     public void validateCommentContentNull(String commentContent) {
@@ -23,18 +27,21 @@ public class CommentCommandInfraService implements CommentCommandDomainService {
 
     @Override
     public void validateUser(UUID userNo) {
-        //회원 신고횟수에 따른 댓글 작성 여부 판단 로직
+
+        UserInfoResponse result = userQueryService.findUserInfo(userNo);
+
+        if(result == null) throw new NoSuchElementException("존재하지 않는 회원입니다.");
+
     }
 
     @Override
     public void validateUserPost(Long userPostNo) {
-        //존재하는 게시글 번호인지 확인
-        //사용자의 게시글인지 확인
+
+
     }
 
     @Override
     public void validateComment(Long commentNo) {
         commentQueryService.findComment(new FindCommentRequest((commentNo)));
     }
-
 }
