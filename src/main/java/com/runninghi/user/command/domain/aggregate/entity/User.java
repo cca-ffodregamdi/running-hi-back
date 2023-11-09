@@ -5,18 +5,16 @@ import com.runninghi.user.command.application.dto.sign_up.request.SignUpRequest;
 import com.runninghi.user.command.application.dto.user.request.UserUpdateRequest;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.UUID;
 
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
-@Getter
 @Table(name = "TBL_USER")
+@Builder
+@Getter
 public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -41,14 +39,22 @@ public class User extends BaseEntity {
     private boolean blacklistStatus; // 블랙리스트 상태
     private boolean status; // 회원 상태 (true = 회원, false = 삭제)
 
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Role role; // ADMIN or USER
+    private Role role = Role.GUEST; // ADMIN or USER
     private String provider; // 어떤 OAuth인지 (google, naver 등)
     private String provideId; // 해당 OAuth 의 key(id)
 
-    @Builder
-    public User(UUID id, String account, String password, String name, String nickname, String email, String kakaoId, String kakaoName, String location, String gender, String age, int reportCount, boolean blacklistStatus, boolean status, Role role, String provider, String provideId) {
+    protected User() {
+    }
+
+    private User(final UUID id, final String account, final String password,
+                 final String name, final String nickname, final String email,
+                 final String kakaoId, final String kakaoName, final String location,
+                 final String gender, final String age, final int reportCount,
+                 final boolean blacklistStatus, final boolean status, final Role role,
+                 final String provider, final String provideId) {
         this.id = id;
         this.account = account;
         this.password = password;
