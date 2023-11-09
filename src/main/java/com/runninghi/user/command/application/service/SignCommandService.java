@@ -37,15 +37,15 @@ public class SignCommandService {
 
     /* 아이디 중복 확인 */
     public VerifyDuplicationIdResponse verifyDuplicationId(VerifyDuplicationIdRequest request) {
-        try {
-            List<UserInfoResponse> allUsers = adminQueryService.findAllUsers();
-            for (UserInfoResponse userInfoResponse : allUsers) {
-                if (request.account().equals(userInfoResponse.account())) {
-                    return new VerifyDuplicationIdResponse(false);
-                }
+        List<UserInfoResponse> allUsers = adminQueryService.findAllUsers();
+        if (request.account().startsWith("admin")) {
+            return new VerifyDuplicationIdResponse(false);
+        }
+        for (UserInfoResponse userInfoResponse : allUsers) {
+            System.out.println("userInfoResponse = " + userInfoResponse);
+            if (request.account().equals(userInfoResponse.account())) {
+                return new VerifyDuplicationIdResponse(false);
             }
-        } catch (NullPointerException e) {
-            throw new NullPointerException("으악");
         }
         return new VerifyDuplicationIdResponse(true);
     }
