@@ -29,11 +29,14 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String name; // 일반 로그인 이름
     @Column(nullable = false)
-    private String nickname; // 일반 로그인 닉네임
-    @Column(nullable = false)
     private String email; // 일반 로그인 이메일
+    @Column(nullable = false)
+    private String nickname; // 일반 로그인 닉네임
     private String kakaoId; // 카카오 고유 아이디
     private String kakaoName; // 카카오 닉네임
+    private String location; // 위치
+    private String gender; // 성별
+    private String age; // 연령대
     private int reportCount; // 피신고 횟수
     private boolean blacklistStatus; // 블랙리스트 상태
     private boolean status; // 회원 상태 (true = 회원, false = 삭제)
@@ -45,7 +48,7 @@ public class User extends BaseEntity {
     private String provideId; // 해당 OAuth 의 key(id)
 
     @Builder
-    public User(UUID id, String account, String password, String name, String nickname, String email, String kakaoId, String kakaoName, int reportCount, boolean blacklistStatus, boolean status, Role role, String provider, String provideId) {
+    public User(UUID id, String account, String password, String name, String nickname, String email, String kakaoId, String kakaoName, String location, String gender, String age, int reportCount, boolean blacklistStatus, boolean status, Role role, String provider, String provideId) {
         this.id = id;
         this.account = account;
         this.password = password;
@@ -54,6 +57,9 @@ public class User extends BaseEntity {
         this.email = email;
         this.kakaoId = kakaoId;
         this.kakaoName = kakaoName;
+        this.location = location;
+        this.gender = gender;
+        this.age = age;
         this.reportCount = reportCount;
         this.blacklistStatus = blacklistStatus;
         this.status = status;

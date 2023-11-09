@@ -20,14 +20,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class SignCommandController {
     private final SignCommandService signCommandService;
 
-    // 회원 가입 - 조만제
+    /* 회원 가입 */
     @Operation(summary = "회원 가입")
     @PostMapping("/api/v1/sign-up")
     public ApiResponse signUp(@RequestBody SignUpRequest request) {
         return ApiResponse.success("성공적으로 가입되었습니다.", signCommandService.registUser(request));
     }
 
-    // 로그인 - 조만제
+    /* 로그인 */
     @Operation(summary = "로그인")
     @PostMapping("/api/v1/sign-in")
     public ApiResponse signIn(@RequestBody SignInRequest request) {

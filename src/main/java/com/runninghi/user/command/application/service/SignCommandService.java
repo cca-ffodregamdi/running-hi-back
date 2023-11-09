@@ -27,7 +27,12 @@ public class SignCommandService {
     private final TokenProvider tokenProvider;
     private final PasswordEncoder encoder;
 
-    // 회원가입
+    /* 아이디 중복 검증 */
+    public void verifyDuplicationId() {
+        
+    }
+
+    /* 회원가입 */
     @Transactional
     public SignUpResponse registUser(SignUpRequest request) {
         User user = userCommandRepository.save(User.from(request, encoder));
@@ -39,7 +44,7 @@ public class SignCommandService {
         return SignUpResponse.from(user);
     }
 
-    // 로그인
+    /* 로그인 */
     @Transactional
     public SignInResponse signIn(SignInRequest request) {
         User user = signQueryService.findUserInfoByAccount(request).getUserInfo()
