@@ -7,11 +7,11 @@ import com.runninghi.user.command.application.dto.sign_up.request.SignUpRequest;
 import com.runninghi.user.command.application.dto.sign_up.request.VerifyDuplicationIdRequest;
 import com.runninghi.user.command.application.dto.sign_up.response.SignUpResponse;
 import com.runninghi.user.command.application.dto.sign_up.response.VerifyDuplicationIdResponse;
-import com.runninghi.user.command.application.dto.user.response.UserInfoResponse;
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.UserRefreshToken;
 import com.runninghi.user.command.domain.repository.UserCommandRefreshTokenRepository;
 import com.runninghi.user.command.domain.repository.UserCommandRepository;
+import com.runninghi.user.query.application.dto.user.response.UserInfoResponse;
 import com.runninghi.user.query.application.service.AdminQueryService;
 import com.runninghi.user.query.application.service.SignQueryService;
 import com.runninghi.user.query.application.service.UserQueryService;
@@ -25,7 +25,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class SignCommandService {
     private final UserCommandRepository userCommandRepository;
     private final UserCommandRefreshTokenRepository userCommandRefreshTokenRepository;
@@ -37,11 +37,15 @@ public class SignCommandService {
 
     /* 아이디 중복 확인 */
     public VerifyDuplicationIdResponse verifyDuplicationId(VerifyDuplicationIdRequest request) {
-        List<UserInfoResponse> allUsers = adminQueryService.findAllUsers();
-        for (UserInfoResponse userInfoResponse : allUsers) {
-            if (request.account().equals(userInfoResponse.account())) {
-                return new VerifyDuplicationIdResponse(false);
+        try {
+            List<UserInfoResponse> allUsers = adminQueryService.findAllUsers();
+            for (UserInfoResponse userInfoResponse : allUsers) {
+                if (request.account().equals(userInfoResponse.account())) {
+                    return new VerifyDuplicationIdResponse(false);
+                }
             }
+        } catch (NullPointerException e) {
+            throw new NullPointerException("으악");
         }
         return new VerifyDuplicationIdResponse(true);
     }
