@@ -4,7 +4,7 @@ import com.runninghi.comment.command.domain.service.ApiCommentDomainService;
 import com.runninghi.comment.query.application.dto.request.FindCommentRequest;
 import com.runninghi.comment.query.application.service.CommentQueryService;
 import com.runninghi.common.annotation.InfraService;
-import com.runninghi.user.command.application.dto.user.response.UserInfoResponse;
+import com.runninghi.user.query.application.dto.user.response.UserInfoResponse;
 import com.runninghi.user.query.application.service.UserQueryService;
 import lombok.RequiredArgsConstructor;
 
@@ -30,7 +30,7 @@ public class ApiCommentInfraService implements ApiCommentDomainService {
 
         UserInfoResponse result = userQueryService.findUserInfo(userNo);
 
-        if(result == null) throw new NoSuchElementException("존재하지 않는 회원입니다.");
+        if (result == null) throw new NoSuchElementException("존재하지 않는 회원입니다.");
 
     }
 

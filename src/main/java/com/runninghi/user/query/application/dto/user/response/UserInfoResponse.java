@@ -1,4 +1,4 @@
-package com.runninghi.user.command.application.dto.user.response;
+package com.runninghi.user.query.application.dto.user.response;
 
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;

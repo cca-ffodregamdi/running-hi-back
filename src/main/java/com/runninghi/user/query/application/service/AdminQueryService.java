@@ -1,7 +1,7 @@
 package com.runninghi.user.query.application.service;
 
-import com.runninghi.user.command.application.dto.user.response.UserInfoResponse;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
+import com.runninghi.user.query.application.dto.user.response.UserInfoResponse;
 import com.runninghi.user.query.infrastructure.repository.UserQueryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -3,9 +3,10 @@ package com.runninghi.postreport.command.infrastructure.service;
 import com.runninghi.common.annotation.InfraService;
 import com.runninghi.postreport.command.application.dto.response.ReportedUserResponse;
 import com.runninghi.postreport.command.domain.service.PostReportCommandDomainService;
-import com.runninghi.user.command.application.dto.user.response.UserInfoResponse;
+import com.runninghi.user.query.application.dto.user.response.UserInfoResponse;
 import com.runninghi.user.query.application.service.UserQueryService;
 import lombok.RequiredArgsConstructor;
+
 import java.util.UUID;
 
 @InfraService

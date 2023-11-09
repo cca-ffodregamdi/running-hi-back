@@ -1,8 +1,8 @@
 package com.runninghi.adminpost.command.application.dto.response;
 
-import com.runninghi.user.command.application.dto.user.response.UserInfoResponse;
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
+import com.runninghi.user.query.application.dto.user.response.UserInfoResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.LocalDateTime;
@@ -23,6 +23,12 @@ public record AdminUserCheckResponse(
         String kakaoId,
         @Schema(description = "카카오 닉네임", example = "asd")
         String kakaoName,
+        @Schema(description = "위치", example = "서울특별시 성동구")
+        String location,
+        @Schema(description = "성별", example = "외계인")
+        String gender,
+        @Schema(description = "연령대", example = "20~29")
+        String age,
         @Schema(description = "피신고 횟수", example = "11")
         int reportCount,
         @Schema(description = "블랙리스트 상태", example = "false")
@@ -43,6 +49,9 @@ public record AdminUserCheckResponse(
                 user.getEmail(),
                 user.getKakaoId(),
                 user.getKakaoName(),
+                user.getLocation(),
+                user.getGender(),
+                user.getAge(),
                 user.getReportCount(),
                 user.isBlacklistStatus(),
                 user.isStatus(),
