@@ -42,6 +42,17 @@ jobs:
         run: echo "${{ secrets.APPLICATION_DEV }}" > ./src/main/resources/application.yml
         shell: bash
 
+      - name: create-json
+        id: create-json
+        uses: jsdaniell/create-json@1.1.2
+        with:
+          name: "runningHiFirebaseKey.json"
+          json: ${{ secrets.FIREBASE_KEY }}
+
+      - name: move-json-file
+        run: |
+          mv runningHiFirebaseKey.json ./src/main/resources/
+
       - name: make jwt.yml
         run:
           touch ./src/main/resources/jwt.yml
