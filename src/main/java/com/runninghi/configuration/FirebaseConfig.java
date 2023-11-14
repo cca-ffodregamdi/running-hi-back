@@ -15,7 +15,7 @@ public class FirebaseConfig {
     @Value("${firebase.credentials.path}")
     private String keyPath;
 
-    @Value("${firebase.project.id")
+    @Value("${firebase.project.id}")
     private String projectId;
 
     @PostConstruct
