@@ -43,6 +43,7 @@ public class ImageCommandService {
     @Value("${firebase.storage.bucket-url}")
     private String bucketUrl;
 
+
     private final ImageCommandDomainService imageCommandDomainService;
 
     private final ImageCommandRepository imageCommandRepository;

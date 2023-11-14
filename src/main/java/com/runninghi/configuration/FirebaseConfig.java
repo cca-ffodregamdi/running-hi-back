@@ -21,19 +21,23 @@ public class FirebaseConfig {
     @PostConstruct
     public void init() {
         try {
+            if (FirebaseApp.getApps().isEmpty()) {
+                FileInputStream serviceAccount = new FileInputStream(keyPath);
 
-            FileInputStream serviceAccount =
-                    new FileInputStream(keyPath);
+                FirebaseOptions options = new FirebaseOptions.Builder()
+                        .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                        .setProjectId(projectId)
+                        .build();
 
-            FirebaseOptions options = new FirebaseOptions.Builder()
-                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                    .setProjectId(projectId)
-                    .build();
-
-            FirebaseApp.initializeApp(options);
+                FirebaseApp.initializeApp(options);
+                System.out.println("Firebase 초기화 성공");
+            } else {
+                System.out.println("Firebase 앱이 이미 초기화되어 있습니다.");
+            }
 
         } catch (Exception e) {
-            throw new IllegalArgumentException("firebase config 오류");
+            System.err.println("Firebase 초기화 실패: " + e.getMessage());
+            throw new IllegalArgumentException("Firebase 설정 오류", e);
         }
     }
 }
