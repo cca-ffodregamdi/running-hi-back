@@ -42,7 +42,7 @@ jobs:
 
       ## github secret 환경변수로 적어둔 APPLICATION_PROD로 application.yml파일을 생성합니다.
       - name: make application.yml
-        if: contains(github.ref, 'dev')
+        #        if: contains(github.ref, 'dev')
         run: |
           cd ./src/main/resources
           touch ./application.yml
