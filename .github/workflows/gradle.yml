@@ -5,13 +5,19 @@
 # This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
 
-name: Java CI with Gradle
+name: Java CI/CD with Gradle and Docker
 
+# event trigger
 on:
+  push:
+    branches:
+      - master
   pull_request:
-    branches: [ "dev" ]
+    branches:
+      - dev
 
-permissions: write-all
+permissions:
+  contents: read
 
 jobs:
   build:
@@ -19,6 +25,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      ## jdk setting
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
@@ -33,13 +40,38 @@ jobs:
           mysql user: ${{ secrets.MYSQL_USERNAME }}
           mysql password: ${{ secrets.MYSQL_PASSWORD }}
 
-      - name: make application.yml
-        run:
-          touch ./src/main/resources/application.yml
+      ## github secret 환경변수로 적어둔 APPLICATION_PROD로 application-prod.yml파일을 생성합니다.
+      - name: make application-prod.yml
+        if: contains(github.ref, 'master')
+        run: |
+          cd ./src/main/resources
+          touch ./application-prod.yml
+          echo "${{ secrets.APPLICATION_DEV }}" > ./application-prod.yml
         shell: bash
 
-      - name: deliver application
-        run: echo "${{ secrets.APPLICATION_DEV }}" > ./src/main/resources/application.yml
+      ## github secret 환경변수로 적어둔 APPLICATION_DEV로 application-dev.yml파일을 생성합니다.
+      - name: make application-dev.yml
+        if: contains(github.ref, 'dev')
+        run: |
+          cd ./src/main/resources
+          touch ./application-dev.yml
+          echo "${{ secrets.APPLICATION_DEV }}" > ./application-dev.yml
+        shell: bash
+
+      ## github secret 환경변수로 적어둔 JWT로 jwt.yml파일을 생성합니다.
+      - name: make jwt.yml
+        run: |
+          cd ./src/main/resources
+          touch ./jwt.yml
+          echo "${{ secrets.JWT }}" > ./jwt.yml
+        shell: bash
+
+      ## github secret 환경변수로 적어둔 LOG4J2로 log4j2.yml파일을 생성합니다.
+      - name: make log4j2.yml
+        run: |
+          cd ./src/main/resources
+          touch ./log4j2.yml
+          echo "${{ secrets.LOG4J2 }}" > ./log4j2.yml
         shell: bash
 
       - name: create-json
@@ -53,25 +85,8 @@ jobs:
         run: |
           mv runningHiFirebaseKey.json ./src/main/resources/
 
-      - name: make jwt.yml
-        run:
-          touch ./src/main/resources/jwt.yml
-        shell: bash
-
-      - name: deliver jwt.yml
-        run: echo "${{ secrets.JWT }}" > ./src/main/resources/jwt.yml
-        shell: bash
-
-      - name: make log4j2.yml
-        run:
-          touch ./src/main/resources/log4j2.yml
-        shell: bash
-
-      - name: deliver log4j2.yml
-        run: echo "${{ secrets.LOG4J2 }}" > ./src/main/resources/log4j2.yml
-        shell: bash
-
-      - name: Add permission
+      ## gradlew 실행 권한 부여
+      - name: Grant execute permisson for gradlew
         run: chmod +x gradlew
 
       - name: Test with Gradle
@@ -87,3 +102,51 @@ jobs:
         if: always()
         with:
           junit_files: build/test-results/test/**/*.xml
+
+      ## docker hub에 로그인하고 runninghi-prod에 이미지를 빌드 & push 합니다.
+      - name: Docker build & push to prod repo
+        if: contains(github.ref, 'master')
+        run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker build -f Dockerfile-prod -t ${{ secrets.DOCKER_REPO }}/runninghi-prod .
+          docker push ${{ secrets.DOCKER_REPO }}/runninghi-prod
+
+      ## docker hub에 로그인하고 runninghi-dev에 이미지를 빌드 & push 합니다.
+      - name: Docker build & push to dev repo
+        if: contains(github.ref, 'dev')
+        run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker build -f Dockerfile-dev -t ${{ secrets.DOCKER_REPO }}/runninghi-dev .
+          docker push ${{ secrets.DOCKER_REPO }}/runninghi-dev
+
+      ## AWS EC2에 접속하고 production을 배포합니다.
+      - name: Deploy to Prod
+        uses: appleboy/ssh-action@master
+        id: deploy-prod
+        if: contains(github.ref, 'master')
+        with:
+          host: ${{ secrets.HOST_PROD }} # EC2 인스턴스 퍼블릭 DNS
+          username: ${{ secrets.USERNAME }} # IAM 사용자 이름
+          key: ${{ secrets.PRIVATE_KEY }} # 키 페어의 pem 키
+          port: ${{ secrets.PORT }} # EC2 인스턴스 포트 번호 22
+          script: |
+            sudo docker rm -f $(sudo docker ps -qa)
+            sudo docker pull ${{ secrets.DOCKER_REPO }}/runninghi-prod
+            sudo docker-compose up -d
+            sudo docker image prune -f
+
+      ## AWS EC2에 접속하고 develop을 배포합니다.
+      - name: Deploy to Dev
+        uses: appleboy/ssh-action@master
+        id: deploy-dev
+        if: contains(github.ref, 'dev')
+        with:
+          host: ${{ secrets.HOST_DEV }} # EC2 인스턴스 퍼블릭 DNS
+          username: ${{ secrets.USERNAME }} # IAM 사용자 이름
+          key: ${{ secrets.PRIVATE_KEY }} # 키 페어의 pem 키
+          port: ${{ secrets.PORT }} # EC2 인스턴스 포트 번호 22
+          script: |
+            sudo docker rm -f $(sudo docker ps -qa)
+            sudo docker pull ${{ secrets.DOCKER_REPO }}/runninghi-dev
+            sudo docker-compose up -d
+            sudo docker image prune -f
