@@ -46,7 +46,7 @@ jobs:
         run: |
           cd ./src/main/resources
           touch ./application.yml
-          echo "${{ secrets.APPLICATION }}" > ./application.yml
+          echo "${{ secrets.APPLICATION }}" >> ./application.yml
         shell: bash
 
       #      ## github secret 환경변수로 적어둔 APPLICATION_DEV로 application-dev.yml파일을 생성합니다.
