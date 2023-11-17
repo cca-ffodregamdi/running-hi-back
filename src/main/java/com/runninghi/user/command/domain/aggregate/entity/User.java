@@ -27,9 +27,9 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String name; // 일반 로그인 이름
     @Column(nullable = false)
-    private String email; // 일반 로그인 이메일
-    @Column(nullable = false)
     private String nickname; // 일반 로그인 닉네임
+    @Column(nullable = false)
+    private String email; // 일반 로그인 이메일
     private String kakaoId; // 카카오 고유 아이디
     private String kakaoName; // 카카오 닉네임
     private String location; // 위치
