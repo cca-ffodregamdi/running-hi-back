@@ -40,23 +40,23 @@ jobs:
           mysql user: ${{ secrets.MYSQL_USERNAME }}
           mysql password: ${{ secrets.MYSQL_PASSWORD }}
 
-      ## github secret 환경변수로 적어둔 APPLICATION_PROD로 application-prod.yml파일을 생성합니다.
+      ## github secret 환경변수로 적어둔 APPLICATION_PROD로 application.yml파일을 생성합니다.
       - name: make application-prod.yml
-        if: contains(github.ref, 'master')
-        run: |
-          cd ./src/main/resources
-          touch ./application-prod.yml
-          echo "${{ secrets.APPLICATION_DEV }}" > ./application-prod.yml
-        shell: bash
-
-      ## github secret 환경변수로 적어둔 APPLICATION_DEV로 application-dev.yml파일을 생성합니다.
-      - name: make application-dev.yml
         if: contains(github.ref, 'dev')
         run: |
           cd ./src/main/resources
-          touch ./application-dev.yml
-          echo "${{ secrets.APPLICATION_DEV }}" > ./application-dev.yml
+          touch ./application.yml
+          echo "${{ secrets.APPLICATION }}" > ./application.yml
         shell: bash
+
+      #      ## github secret 환경변수로 적어둔 APPLICATION_DEV로 application-dev.yml파일을 생성합니다.
+      #      - name: make application-dev.yml
+      #        if: contains(github.ref, 'dev')
+      #        run: |
+      #          cd ./src/main/resources
+      #          touch ./application-dev.yml
+      #          echo "${{ secrets.APPLICATION_DEV }}" > ./application-dev.yml
+      #        shell: bash
 
       ## github secret 환경변수로 적어둔 JWT로 jwt.yml파일을 생성합니다.
       - name: make jwt.yml
