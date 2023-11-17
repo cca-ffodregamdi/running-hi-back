@@ -97,11 +97,11 @@ jobs:
         with:
           arguments: build
 
-      - name: Publish Unit Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v2
-        if: always()
-        with:
-          junit_files: build/test-results/test/**/*.xml
+      #      - name: Publish Unit Test Results
+      #        uses: EnricoMi/publish-unit-test-result-action@v2
+      #        if: always()
+      #        with:
+      #          junit_files: build/test-results/test/**/*.xml
 
       ## docker hub에 로그인하고 runninghi-prod에 이미지를 빌드 & push 합니다.
       - name: Docker build & push to prod repo
