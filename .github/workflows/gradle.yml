@@ -41,12 +41,12 @@ jobs:
           mysql password: ${{ secrets.MYSQL_PASSWORD }}
 
       ## github secret 환경변수로 적어둔 APPLICATION_PROD로 application.yml파일을 생성합니다.
-      - name: make application-prod.yml
+      - name: make application.yml
         if: contains(github.ref, 'dev')
         run: |
           cd ./src/main/resources
           touch ./application.yml
-          echo "${{ secrets.APPLICATION }}" >> ./application.yml
+          echo "${{ secrets.APPLICATION }}" > ./application.yml
         shell: bash
 
       #      ## github secret 환경변수로 적어둔 APPLICATION_DEV로 application-dev.yml파일을 생성합니다.
@@ -93,7 +93,7 @@ jobs:
         run: ./gradlew --info -x test
 
       - name: Build with Gradle
-        uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
+        uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
         with:
           arguments: build
 
