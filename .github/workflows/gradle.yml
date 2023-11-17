@@ -113,7 +113,7 @@ jobs:
 
       ## docker hub에 로그인하고 runninghi-dev에 이미지를 빌드 & push 합니다.
       - name: Docker build & push to dev repo
-        if: contains(github.ref, 'dev')
+        #        if: contains(github.ref, 'dev')
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker build -f Dockerfile-dev -t ${{ secrets.DOCKER_REPO }}/runninghi-dev .
@@ -139,7 +139,7 @@ jobs:
       - name: Deploy to Dev
         uses: appleboy/ssh-action@master
         id: deploy-dev
-        if: contains(github.ref, 'dev')
+        #        if: contains(github.ref, 'dev')
         with:
           host: ${{ secrets.HOST_DEV }} # EC2 인스턴스 퍼블릭 DNS
           username: ${{ secrets.USERNAME }} # IAM 사용자 이름
