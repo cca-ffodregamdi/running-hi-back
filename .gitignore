@@ -5,6 +5,8 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+logs/
+
 ### STS ###
 .apt_generated
 .classpath
@@ -27,6 +29,7 @@ out/
 !**/src/test/**/out/
 application.yml
 jwt.yml
+log4j2.yml
 bootstrap.yml
 
 ### NetBeans ###
@@ -38,3 +41,6 @@ bootstrap.yml
 
 ### VS Code ###
 .vscode/
+
+### Firebase Key ###
+src/main/resources/runningHiFirebaseKey.json
