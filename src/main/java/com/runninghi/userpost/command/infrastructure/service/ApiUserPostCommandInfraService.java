@@ -28,6 +28,7 @@ private final UserQueryService userQueryService;
 private final KeywordOfPostCommandService keywordOfPostCommandService;
 private final KeywordOfPostCommandRepository keywordOfPostCommandRepository;
 
+    // 유저 정보 가져오기
     @Transactional
     public UserPostUserResponse checkUser(UUID userId) {
 
@@ -49,6 +50,7 @@ private final KeywordOfPostCommandRepository keywordOfPostCommandRepository;
         );
     }
 
+    // 유저 게시물 키워드 생성 ??
     @Transactional
     public List<Long> createKeywordOfUserPost(List<KeywordListRequest> keywordList, Long userPostNo) {
         List<KeywordOfPostCreateRequest> request = keywordList.stream().map(
@@ -57,6 +59,7 @@ private final KeywordOfPostCommandRepository keywordOfPostCommandRepository;
         return createKeywordOfUserPost(request);
     }
 
+    // 유저 게시물 키워드 생성 ??
     private List<Long> createKeywordOfUserPost(List<KeywordOfPostCreateRequest> requests) {
 
         List<KeywordOfPost> keywordOfPostList = requests.stream().map(

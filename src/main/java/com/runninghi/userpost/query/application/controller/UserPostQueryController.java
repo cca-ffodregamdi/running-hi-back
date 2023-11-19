@@ -27,7 +27,7 @@ public class UserPostQueryController {
 
         UserPostUserResponse user = apiUserPostQueryInfraService.checkUser(request.userId());
 
-        GetUserPostResponse response = userPostQueryService.getUserPost(request, user);
+        GetUserPostResponse response = userPostQueryService.getUserPost(request, user, postNo);
 
 
         return ResponseEntity.ok(ApiResponse.success("유저 게시물 조회 성공", null));

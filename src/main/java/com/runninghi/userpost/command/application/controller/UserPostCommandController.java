@@ -8,6 +8,7 @@ import com.runninghi.userpost.command.application.dto.response.UserPostResponse;
 import com.runninghi.userpost.command.application.dto.response.UserPostUserResponse;
 import com.runninghi.userpost.command.application.service.UserPostCommandService;
 import com.runninghi.userpost.command.infrastructure.service.ApiUserPostCommandInfraService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,18 +16,21 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+@Tag(name = "유저 게시물 API")
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/v1")
 public class UserPostCommandController {
 
     private final UserPostCommandService userPostCommandService;
     private final ApiUserPostCommandInfraService apiUserPostCommandInfraService;
 
     // 유저 게시물 생성
-    @PostMapping("api/v1/user-post")
+    @PostMapping("/user-post")
     public ResponseEntity<ApiResponse> createUserPost(@RequestBody UserPostCreateRequest request, List<MultipartFile> images) {
 
         UserPostUserResponse user = apiUserPostCommandInfraService.checkUser(request.userId());
+
         // 이미지 클라우드 스토리지에 저장 -> url 반환
 
         // 게시글 저장 -> 게시글 No 반환
@@ -38,7 +42,7 @@ public class UserPostCommandController {
     }
 
     // 유저 게시물 수정
-    @PutMapping("api/v1/user-post")
+    @PutMapping("/user-post")
     public ResponseEntity<ApiResponse> updateUserPost(@RequestBody UserPostUpdateRequest request,
                                                       @RequestBody List<String> deleteImages,
                                                       @RequestBody List<MultipartFile> createImages) {

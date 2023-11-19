@@ -17,4 +17,14 @@ public class UserVO {
 
     @Column
     private UUID userId;
+
+    @Column
+    private String nickname;
+
+    public UserVO userVo(UUID userId, String nickname) {
+        this.userId = userId;
+        this.nickname = nickname;
+
+        return this;
+    }
 }

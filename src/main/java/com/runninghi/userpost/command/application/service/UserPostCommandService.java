@@ -1,5 +1,6 @@
 package com.runninghi.userpost.command.application.service;
 
+import com.runninghi.common.handler.feedback.customException.IllegalArgumentException;
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
 import com.runninghi.common.handler.feedback.customException.NotMatchWriterException;
 import com.runninghi.userpost.command.application.dto.request.UserPostCreateRequest;
@@ -36,7 +37,7 @@ public class UserPostCommandService {
         userPostCommandDomainService.checkUserPostValidation(request.userPostTitle());
 
         // 작성자 vo 작성
-        UserVO userVO = new UserVO(user.id());
+        UserVO userVO = new UserVO(user.id(), user.nickname());
 
         UserPost userPost = new UserPost.Builder()
                 .userPostTitle(request.userPostTitle())
@@ -66,12 +67,13 @@ public class UserPostCommandService {
         userPostCommandDomainService.checkUserPostValidation(request.userPostTitle());
 
         // 유저 게시물이 존재하는지 확인
-
         UserPost userPost = userPostCommandRepository.findByUserPostNo(request.userPostNo())
                 .orElseThrow(() -> new NotFoundException("존재하지않는 게시물입니다."));
 
         // 요청자와 게시물 작성자가 일치하는지 확인
-        userPostCommandDomainService.isWriter(user, userPost);
+        if (!userPostCommandDomainService.isWriter(user, userPost)) {
+            throw new NotMatchWriterException("작성자와 일치하지않습니다.");
+        }
 
         UserPost updateUserPost = new UserPost.Builder()
                 .userPostNo(userPost.getUserPostNo())
