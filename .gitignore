@@ -41,3 +41,6 @@ bootstrap.yml
 
 ### VS Code ###
 .vscode/
+
+### Firebase Key ###
+src/main/resources/runningHiFirebaseKey.json

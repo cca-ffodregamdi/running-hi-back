@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface FeedbackCommandRepository extends JpaRepository<Feedback, Integer> {
+public interface FeedbackCommandRepository extends JpaRepository<Feedback, Long> {
 
     // FeedbackNo로 피드백 하나 조회
     Optional<Feedback> findByFeedbackNo(Long feedbackNo);
