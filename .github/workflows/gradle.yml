@@ -146,7 +146,7 @@ jobs:
           key: "${{ secrets.PRIVATE_KEY }}" # 키 페어의 pem 키
           #           sudo docker-compose up -d
           script: |
-            sudo docker login -u "${{ secrets.DOCKER_USERNAME }}" -p-stdin "${{ secrets.DOCKER_PASSWORD }}"
+            sudo docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_PASSWORD }}"
             sudo docker pull "${{ secrets.DOCKER_USERNAME }}"/"${{ secrets.DOCKER_REPO }}"
             sudo docker stop $(docker ps -a -q)
             sudo docker run -d --log-driver=syslog -p 8080:8080 -e SPRING_PROFILES_ACTIVE=dev "${{ secrets.DOCKER_USERNAME }}"/"${{ secrets.DOCKER_REPO }}"
