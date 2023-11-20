@@ -141,10 +141,10 @@ jobs:
         #        id: deploy-dev
         #        if: contains(github.ref, 'dev')
         with:
-          host: ${{ secrets.HOST_DEV }} # EC2 인스턴스 퍼블릭 DNS
-          username: ${{ secrets.USERNAME }} # IAM 사용자 이름
-          key: ${{ secrets.PRIVATE_KEY }} # 키 페어의 pem 키
-          port: ${{ secrets.PORT }} # EC2 인스턴스 포트 번호 22
+          host: "${{ secrets.HOST_DEV }}" # EC2 인스턴스 퍼블릭 DNS
+          username: "${{ secrets.USERNAME }}" # IAM 사용자 이름
+          key: "${{ secrets.PRIVATE_KEY }}" # 키 페어의 pem 키
+          port: "${{ secrets.PORT }}" # EC2 인스턴스 포트 번호 22
           script: |
             sudo docker rm -f $(sudo docker ps -qa)
             sudo docker pull "${{ secrets.DOCKER_USERNAME }}"/"${{ secrets.DOCKER_REPO }}"
