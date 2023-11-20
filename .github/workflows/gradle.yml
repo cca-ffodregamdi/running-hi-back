@@ -150,5 +150,5 @@ jobs:
             sudo docker pull "${{ secrets.DOCKER_USERNAME }}"/"${{ secrets.DOCKER_REPO }}"
             sudo docker stop $(docker ps -a -q)
             sudo docker run -d --log-driver=syslog -p 8080:8080 -e SPRING_PROFILES_ACTIVE=dev "${{ secrets.DOCKER_USERNAME }}"/"${{ secrets.DOCKER_REPO }}"
-            sudo docker rm -f $(sudo docker ps --filter 'status=exited' -a -q)
+            sudo docker rm -f $(sudo docker ps --filter 'status=Exited' -a -q)
             sudo docker image prune -a -f
