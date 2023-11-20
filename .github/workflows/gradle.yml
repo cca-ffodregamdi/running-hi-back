@@ -138,7 +138,7 @@ jobs:
       ## AWS EC2에 접속하고 develop을 배포합니다.
       - name: Deploy to Dev
         uses: appleboy/ssh-action@master
-        id: deploy-dev
+        #        id: deploy-dev
         #        if: contains(github.ref, 'dev')
         with:
           host: ${{ secrets.HOST_DEV }} # EC2 인스턴스 퍼블릭 DNS
