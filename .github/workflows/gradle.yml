@@ -103,13 +103,13 @@ jobs:
       #        with:
       #          junit_files: build/test-results/test/**/*.xml
 
-      ## docker hub에 로그인하고 runninghi-prod에 이미지를 빌드 & push 합니다.
-      - name: Docker build & push to prod repo
-        if: contains(github.ref, 'master')
-        run: |
-          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker build -f Dockerfile-prod -t ${{ secrets.DOCKER_REPO }}/runninghi-prod .
-          docker push ${{ secrets.DOCKER_REPO }}/runninghi-prod
+      #      ## docker hub에 로그인하고 runninghi-prod에 이미지를 빌드 & push 합니다.
+      #      - name: Docker build & push to prod repo
+      #        if: contains(github.ref, 'master')
+      #        run: |
+      #          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+      #          docker build -f Dockerfile-prod -t ${{ secrets.DOCKER_REPO }}/runninghi-prod .
+      #          docker push ${{ secrets.DOCKER_REPO }}/runninghi-prod
 
       ## docker hub에 로그인하고 runninghi-dev에 이미지를 빌드 & push 합니다.
       - name: Docker build & push to dev repo
@@ -119,21 +119,21 @@ jobs:
           docker build -f Dockerfile-dev -t ${{ secrets.DOCKER_REPO }}/runninghi-dev .
           docker push ${{ secrets.DOCKER_REPO }}/runninghi-dev
 
-      ## AWS EC2에 접속하고 production을 배포합니다.
-      - name: Deploy to Prod
-        uses: appleboy/ssh-action@master
-        id: deploy-prod
-        if: contains(github.ref, 'master')
-        with:
-          host: ${{ secrets.HOST_PROD }} # EC2 인스턴스 퍼블릭 DNS
-          username: ${{ secrets.USERNAME }} # IAM 사용자 이름
-          key: ${{ secrets.PRIVATE_KEY }} # 키 페어의 pem 키
-          port: ${{ secrets.PORT }} # EC2 인스턴스 포트 번호 22
-          script: |
-            sudo docker rm -f $(sudo docker ps -qa)
-            sudo docker pull ${{ secrets.DOCKER_REPO }}/runninghi-prod
-            sudo docker-compose up -d
-            sudo docker image prune -f
+      #      ## AWS EC2에 접속하고 production을 배포합니다.
+      #      - name: Deploy to Prod
+      #        uses: appleboy/ssh-action@master
+      #        id: deploy-prod
+      #        if: contains(github.ref, 'master')
+      #        with:
+      #          host: ${{ secrets.HOST_PROD }} # EC2 인스턴스 퍼블릭 DNS
+      #          username: ${{ secrets.USERNAME }} # IAM 사용자 이름
+      #          key: ${{ secrets.PRIVATE_KEY }} # 키 페어의 pem 키
+      #          port: ${{ secrets.PORT }} # EC2 인스턴스 포트 번호 22
+      #          script: |
+      #            sudo docker rm -f $(sudo docker ps -qa)
+      #            sudo docker pull ${{ secrets.DOCKER_REPO }}/runninghi-prod
+      #            sudo docker-compose up -d
+      #            sudo docker image prune -f
 
       ## AWS EC2에 접속하고 develop을 배포합니다.
       - name: Deploy to Dev
