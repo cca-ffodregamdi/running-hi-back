@@ -116,8 +116,8 @@ jobs:
         #        if: contains(github.ref, 'dev')
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker build -f Dockerfile-dev -t ${{ secrets.DOCKER_REPO }}/runninghi-dev .
-          docker push ${{ secrets.DOCKER_REPO }}/runninghi-dev
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }} .
+          docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}
 
       #      ## AWS EC2에 접속하고 production을 배포합니다.
       #      - name: Deploy to Prod
@@ -147,6 +147,6 @@ jobs:
           port: ${{ secrets.PORT }} # EC2 인스턴스 포트 번호 22
           script: |
             sudo docker rm -f $(sudo docker ps -qa)
-            sudo docker pull ${{ secrets.DOCKER_REPO }}/runninghi-dev
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}
             sudo docker-compose up -d
             sudo docker image prune -f
