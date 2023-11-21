@@ -111,4 +111,10 @@ class AdminPostCommandServiceTest {
         ).isInstanceOf(NullPointerException.class);
     }
 
+    @DisplayName("관리자 게시글 수정 테스트 : success")
+    @Test
+    void testupdateAdminPostSuccess() {
+
+        // giver
+    }
 }
