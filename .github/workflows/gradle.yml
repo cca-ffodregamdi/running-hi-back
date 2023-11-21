@@ -75,16 +75,23 @@ jobs:
           echo "${{ secrets.LOG4J2 }}" > ./log4j2.yml
         shell: bash
 
-      - name: create-json
-        id: create-json
-        uses: jsdaniell/create-json@1.1.2
-        with:
-          name: "runningHiFirebaseKey.json"
-          json: ${{ secrets.FIREBASE_KEY }}
-
-      - name: move-json-file
+      - name: make runningHiFirebaseKey.json
         run: |
-          mv runningHiFirebaseKey.json ./src/main/resources/
+          cd ./src/main/resources
+          touch ./runningHiFirebaseKey.json
+          echo "${{ secrets.FIREBASE_KEY }}" > ./runningHiFirebaseKey.json
+        shell: bash
+
+      #      - name: create-json
+      #        id: create-json
+      #        uses: jsdaniell/create-json@1.1.2
+      #        with:
+      #          name: "runningHiFirebaseKey.json"
+      #          json: ${{ secrets.FIREBASE_KEY }}
+      #
+      #      - name: move-json-file
+      #        run: |
+      #          mv runningHiFirebaseKey.json ./src/main/resources/
 
       ## gradlew 실행 권한 부여
       - name: Grant execute permisson for gradlew
