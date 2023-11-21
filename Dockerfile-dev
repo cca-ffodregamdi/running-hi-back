@@ -2,6 +2,6 @@ FROM openjdk:17
 WORKDIR /home
 ARG JAR_FILE=build/libs/runninghi-0.0.1-SNAPSHOT.jar
 ARG FIREBASE_KEY=src/main/resources/runningHiFirebaseKey.json
-COPY ${JAR_FILE} app/app.jar
+COPY ${JAR_FILE} app.jar
 COPY ${FIREBASE_KEY} app/runningHiFirebaseKey.json
 ENTRYPOINT ["java","-jar", "-Dspring.profiles.active=dev", "/app.jar"]
