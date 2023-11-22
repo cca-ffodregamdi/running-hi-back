@@ -32,25 +32,24 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      #      ## MySQL setting
-      #      - name: Setup MySQL
-      #        uses: samin/mysql-action@v1
-      #        with:
-      #          character set server: 'utf8'
-      #          mysql database: 'runninghi'
-      #          mysql user: ${{ secrets.MYSQL_USERNAME }}
-      #          mysql password: ${{ secrets.MYSQL_PASSWORD }}
+      ## MySQL setting
+      - name: Setup MySQL
+        uses: samin/mysql-action@v1
+        with:
+          character set server: 'utf8'
+          mysql database: 'runninghi'
+          mysql user: ${{ secrets.MYSQL_USERNAME }}
+          mysql password: ${{ secrets.MYSQL_PASSWORD }}
 
-      ## github secret 환경변수로 적어둔 APPLICATION_PROD로 application.yml파일을 생성합니다.
+      ## application.yml 파일을 생성합니다.
       - name: make application.yml
-        #        if: contains(github.ref, 'dev')
         run: |
           cd ./src/main/resources
           touch ./application.yml
           echo "${{ secrets.APPLICATION }}" > ./application.yml
         shell: bash
 
-      #      ## github secret 환경변수로 적어둔 APPLICATION_DEV로 application-dev.yml파일을 생성합니다.
+      #      ## application-dev.yml 파일을 생성합니다.
       #      - name: make application-dev.yml
       #        if: contains(github.ref, 'dev')
       #        run: |
@@ -59,7 +58,16 @@ jobs:
       #          echo "${{ secrets.APPLICATION_DEV }}" > ./application-dev.yml
       #        shell: bash
 
-      ## github secret 환경변수로 적어둔 JWT로 jwt.yml파일을 생성합니다.
+      ## application-prod.yml 파일을 생성합니다.
+      - name: make application-prod.yml
+        if: contains(github.ref, 'master')
+        run: |
+          cd ./src/main/resources
+          touch ./application-prod.yml
+          echo "${{ secrets.APPLICATION_PROD }}" > ./application-prod.yml
+        shell: bash
+
+      ## jwt.yml 파일을 생성합니다.
       - name: make jwt.yml
         run: |
           cd ./src/main/resources
@@ -67,7 +75,7 @@ jobs:
           echo "${{ secrets.JWT }}" > ./jwt.yml
         shell: bash
 
-      ## github secret 환경변수로 적어둔 LOG4J2로 log4j2.yml파일을 생성합니다.
+      ## log4j2.yml 파일을 생성합니다.
       - name: make log4j2.yml
         run: |
           cd ./src/main/resources
@@ -75,13 +83,7 @@ jobs:
           echo "${{ secrets.LOG4J2 }}" > ./log4j2.yml
         shell: bash
 
-          #      - name: make runningHiFirebaseKey.json
-          #        run: |
-          #          cd ./src/main/resources
-          #          touch ./runningHiFirebaseKey.json
-          #          echo "${{ secrets.FIREBASE_KEY }}" > ./runningHiFirebaseKey.json
-        #        shell: bash
-
+      ## runningHiFirebaseKey.json 파일을 생성합니다.
       - name: create-json
         id: create-json
         uses: jsdaniell/create-json@1.1.2
@@ -100,63 +102,55 @@ jobs:
       - name: Build with Gradle (without Test)
         run: ./gradlew clean build -x test --stacktrace
 
-      #      - name: Build with Gradle
-      #        uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
-      #        with:
-      #          arguments: build
-
-      #      - name: Publish Unit Test Results
-      #        uses: EnricoMi/publish-unit-test-result-action@v2
-      #        if: always()
-      #        with:
-      #          junit_files: build/test-results/test/**/*.xml
-
-      #      ## docker hub에 로그인하고 runninghi-prod에 이미지를 빌드 & push 합니다.
-      #      - name: Docker build & push to prod repo
-      #        if: contains(github.ref, 'master')
+      ########## CD(Continuous Delivery) ##########
+      #      ## docker hub에 로그인하고 runninghi-dev에 이미지를 빌드 & push 합니다.
+      #      - name: Docker build & push to dev repo
+      #        if: contains(github.ref, 'dev')
       #        run: |
-      #          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-      #          docker build -f Dockerfile-prod -t ${{ secrets.DOCKER_REPO }}/runninghi-prod .
-      #          docker push ${{ secrets.DOCKER_REPO }}/runninghi-prod
+      #          docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_PASSWORD }}"
+      #          docker build -f Dockerfile-dev -t "${{ secrets.DOCKER_USERNAME }}"/runninghi-dev .
+      #          docker push "${{ secrets.DOCKER_USERNAME }}"/runninghi-dev
 
-      ## docker hub에 로그인하고 runninghi-dev에 이미지를 빌드 & push 합니다.
-      - name: Docker build & push to dev repo
-        #        if: contains(github.ref, 'dev')
+      ## docker hub에 로그인하고 runninghi-prod에 이미지를 빌드 & push 합니다.
+      - name: Docker build & push to prod repo
+        if: contains(github.ref, 'master')
         run: |
           docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_PASSWORD }}"
-          docker build -f Dockerfile-dev -t "${{ secrets.DOCKER_USERNAME }}"/"${{ secrets.DOCKER_REPO }}" .
-          docker push "${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}"
+          docker build -f Dockerfile-prod -t "${{ secrets.DOCKER_USERNAME }}"/runninghi-prod .
+          docker push "${{ secrets.DOCKER_USERNAME }}"/runninghi-prod
 
-      #      ## AWS EC2에 접속하고 production을 배포합니다.
-      #      - name: Deploy to Prod
+      #      ## AWS EC2에 접속하고 develop을 배포합니다.
+      #      - name: Deploy to Dev
       #        uses: appleboy/ssh-action@master
-      #        id: deploy-prod
-      #        if: contains(github.ref, 'master')
+      #        id: deploy-dev
+      #        if: contains(github.ref, 'dev')
       #        with:
-      #          host: ${{ secrets.HOST_PROD }} # EC2 인스턴스 퍼블릭 DNS
-      #          username: ${{ secrets.USERNAME }} # IAM 사용자 이름
+      #          host: ${{ secrets.HOST_DEV }} # EC2 인스턴스 퍼블릭 DNS
+      #          username: ${{ secrets.USERNAME }} # 인스턴스를 시작하는 데 사용되는 AMI에 정의된 사용자 이름을 입력합니다. 사용자 지정 사용자 이름을 정의하지 않은 경우 기본 사용자 이름인 ubuntu을(를) 사용합니다.
       #          key: ${{ secrets.PRIVATE_KEY }} # 키 페어의 pem 키
-      #          port: ${{ secrets.PORT }} # EC2 인스턴스 포트 번호 22
+      #          #            sudo docker-compose up -d
       #          script: |
-      #            sudo docker rm -f $(sudo docker ps -qa)
-      #            sudo docker pull ${{ secrets.DOCKER_REPO }}/runninghi-prod
-      #            sudo docker-compose up -d
-      #            sudo docker image prune -f
+      #            sudo docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_PASSWORD }}"
+      #            sudo docker pull "${{ secrets.DOCKER_USERNAME }}"/runninghi-dev
+      #            sudo docker stop $(docker ps -a -q)
+      #            sudo docker run -d --log-driver=syslog -p 8080:8080 -e SPRING_PROFILES_ACTIVE=dev "${{ secrets.DOCKER_USERNAME }}"/runninghi-dev
+      #            sudo docker rm -f $(sudo docker ps --filter 'status=exited' -a -q)
+      #            sudo docker image prune -a -f
 
-      ## AWS EC2에 접속하고 develop을 배포합니다.
-      - name: Deploy to Dev
+      ## AWS EC2에 접속하고 production을 배포합니다.
+      - name: Deploy to Prod
         uses: appleboy/ssh-action@master
-        #        id: deploy-dev
-        #        if: contains(github.ref, 'dev')
+        id: deploy-prod
+        if: contains(github.ref, 'master')
         with:
-          host: ${{ secrets.HOST_DEV }} # EC2 인스턴스 퍼블릭 DNS
+          host: ${{ secrets.HOST_PROD }} # EC2 인스턴스 퍼블릭 DNS
           username: ${{ secrets.USERNAME }} # 인스턴스를 시작하는 데 사용되는 AMI에 정의된 사용자 이름을 입력합니다. 사용자 지정 사용자 이름을 정의하지 않은 경우 기본 사용자 이름인 ubuntu을(를) 사용합니다.
           key: ${{ secrets.PRIVATE_KEY }} # 키 페어의 pem 키
           #            sudo docker-compose up -d
           script: |
             sudo docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_PASSWORD }}"
-            sudo docker pull "${{ secrets.DOCKER_USERNAME }}"/"${{ secrets.DOCKER_REPO }}"
+            sudo docker pull "${{ secrets.DOCKER_USERNAME }}"/runninghi-prod
             sudo docker stop $(docker ps -a -q)
-            sudo docker run -d -p 8080:8080 -e SPRING_PROFILES_ACTIVE=dev "${{ secrets.DOCKER_USERNAME }}"/"${{ secrets.DOCKER_REPO }}"
+            sudo docker run -d --log-driver=syslog -p 8080:8080 -e SPRING_PROFILES_ACTIVE=prod "${{ secrets.DOCKER_USERNAME }}"/runninghi-prod
             sudo docker rm -f $(sudo docker ps --filter 'status=exited' -a -q)
-            sudo docker image prune -a -f
+            sudo docker image prune -f
