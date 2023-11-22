@@ -1,9 +1,9 @@
 package com.runninghi.user.query.application.service;
 
-import com.runninghi.user.command.application.dto.user.response.UserInfoResponse;
 import com.runninghi.user.command.domain.aggregate.entity.User;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
 import com.runninghi.user.command.domain.repository.UserCommandRepository;
+import com.runninghi.user.query.application.dto.user.response.UserInfoResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

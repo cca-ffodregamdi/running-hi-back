@@ -18,7 +18,7 @@ public class UserCommandService {
     private final PasswordEncoder encoder;
 
 
-    // 회원 정보 수정
+    /* 회원 정보 수정 */
     @Transactional
     public UserUpdateResponse updateUser(UUID id, UserUpdateRequest request) {
         return userCommandRepository.findById(id)
@@ -30,7 +30,7 @@ public class UserCommandService {
                 .orElseThrow(() -> new IllegalArgumentException("아이디 또는 비밀번호가 일치하지 않습니다."));
     }
 
-    // 회원 탈퇴
+    /* 회원 탈퇴 */
     @Transactional
     public UserDeleteResponse deleteUser(UUID id) {
         if (!userCommandRepository.existsById(id)) return new UserDeleteResponse(false);

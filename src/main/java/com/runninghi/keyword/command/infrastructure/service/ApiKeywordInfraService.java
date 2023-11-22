@@ -6,7 +6,7 @@ import com.runninghi.keyword.command.application.dto.response.UserCheckResponse;
 import com.runninghi.keyword.command.domain.service.ApiKeywordDomainService;
 import com.runninghi.keyword.query.application.dto.response.FindKeywordResponse;
 import com.runninghi.keyword.query.application.service.KeywordQueryService;
-import com.runninghi.user.command.application.dto.user.response.UserInfoResponse;
+import com.runninghi.user.query.application.dto.user.response.UserInfoResponse;
 import com.runninghi.user.query.application.service.UserQueryService;
 import lombok.RequiredArgsConstructor;
 

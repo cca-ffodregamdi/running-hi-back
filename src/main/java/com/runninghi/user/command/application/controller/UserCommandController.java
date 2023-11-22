@@ -17,7 +17,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @UserAuthorize
 @RestController
-@RequestMapping("/api/vi/user")
+@RequestMapping("/api/v1/user")
 public class UserCommandController {
     private final UserCommandService userCommandService;
 

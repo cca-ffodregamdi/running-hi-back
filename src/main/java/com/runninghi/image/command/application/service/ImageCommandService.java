@@ -37,16 +37,12 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ImageCommandService {
 
+    private final ImageCommandDomainService imageCommandDomainService;
+    private final ImageCommandRepository imageCommandRepository;
     @Value("${firebase.storage.bucket}")
     private String bucketName;
-
     @Value("${firebase.storage.bucket-url}")
     private String bucketUrl;
-
-
-    private final ImageCommandDomainService imageCommandDomainService;
-
-    private final ImageCommandRepository imageCommandRepository;
 
     // 여러 개의 이미지 Firebase Storage에 저장
     @Transactional
@@ -203,7 +199,7 @@ public class ImageCommandService {
     @Transactional
     public void deleteImageFile(ImageDeleteRequest imageDeleteRequest) {
         String imageName = imageDeleteRequest.imageUrl().replace(bucketUrl, "").replace("%2F", "/").replace("?alt=media", "");
-        BlobId blobId = BlobId.of(bucketName,  imageName);
+        BlobId blobId = BlobId.of(bucketName, imageName);
         Storage storage = StorageClient.getInstance().bucket(bucketName).getStorage();
         boolean deleted = storage.delete(blobId);
 
