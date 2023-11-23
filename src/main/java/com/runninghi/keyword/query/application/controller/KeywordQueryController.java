@@ -33,7 +33,7 @@ public class KeywordQueryController {
     @GetMapping("/{keywordNo}")
     public ResponseEntity<ApiResponse> findKeyword (@PathVariable(name = "keywordNo") Long keywordNo) {
         FindKeywordResponse response = keywordQueryService.findKeywordByKeywordNo(keywordNo);
-        return ResponseEntity.ok().body(ApiResponse.success("조회 성공", response));
+        return ResponseEntity.ok().body(ApiResponse.success("키워드 조회에 성공하였습니다.", response));
     }
 
 }

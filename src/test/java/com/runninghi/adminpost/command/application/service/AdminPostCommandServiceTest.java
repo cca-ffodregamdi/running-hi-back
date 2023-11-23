@@ -1,7 +1,7 @@
 package com.runninghi.adminpost.command.application.service;
 
 import com.runninghi.adminpost.command.application.controller.AdminPostCommandController;
-import com.runninghi.adminpost.command.application.dto.request.AdminPostRequest;
+import com.runninghi.adminpost.command.application.dto.request.AdminPostRequestDTO;
 import com.runninghi.adminpost.command.application.dto.request.KeywordListRequest;
 import com.runninghi.adminpost.command.domain.repository.AdminPostCommandRepository;
 import com.runninghi.keyword.command.domain.repository.KeywordCommandRepository;
@@ -58,8 +58,8 @@ class AdminPostCommandServiceTest {
                 .build());
     }
 
-    private AdminPostRequest createAdminPostRequest(User admin, List<KeywordListRequest> keywordList) {
-        return new AdminPostRequest(
+    private AdminPostRequestDTO createAdminPostRequest(User admin, List<KeywordListRequest> keywordList) {
+        return new AdminPostRequestDTO(
                 admin.getId(),
                 "asdfiasdnfo.jpg",
                 "테스트 제목",
@@ -83,7 +83,7 @@ class AdminPostCommandServiceTest {
         // given
         User admin = createAdmin();
         List<KeywordListRequest> keywordList = createKeywordList();
-        AdminPostRequest request = createAdminPostRequest(admin, keywordList);
+        AdminPostRequestDTO request = createAdminPostRequest(admin, keywordList);
 
 
         // when & then
@@ -98,7 +98,7 @@ class AdminPostCommandServiceTest {
 
         // given
         User admin = createAdmin();
-        AdminPostRequest request = new AdminPostRequest(
+        AdminPostRequestDTO request = new AdminPostRequestDTO(
                 admin.getId(),
                 "asdfiasdnfo.jpg",
                 "테스트 제목",
@@ -115,6 +115,7 @@ class AdminPostCommandServiceTest {
     @Test
     void testupdateAdminPostSuccess() {
 
-        // giver
+        // given
+
     }
 }
