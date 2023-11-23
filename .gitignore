@@ -20,6 +20,7 @@ bin/
 !**/src/test/**/bin/
 
 ### IntelliJ IDEA ###
+*.yml
 .idea
 *.iws
 *.iml
@@ -31,6 +32,8 @@ application.yml
 jwt.yml
 log4j2.yml
 bootstrap.yml
+application-dev.yml
+application-prod.yml
 
 ### NetBeans ###
 /nbproject/private/
