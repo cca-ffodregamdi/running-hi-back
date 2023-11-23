@@ -1,5 +1,6 @@
 package com.runninghi.common.gpx;
 
+import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -16,6 +17,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 
+@Component
 public class GpxParser {
 
     // 설명. GPX 파일 parser
@@ -23,7 +25,7 @@ public class GpxParser {
 
         List<GpxDataDTO> points = new ArrayList<>();
         GpxDataDTO prevPoint = null;
-        int settingTimeDiff = 5;
+        int settingTimeDiff = 1;
 
         Document doc = xmlParser(file);
         NodeList trkpts = doc.getElementsByTagName("trkpt");
@@ -62,7 +64,7 @@ public class GpxParser {
             return currentPoint;
         }
 
-        return null;
+        return null;    // 필기. 이전 포인트와 현재 포인트의 시간 차이가 설정한 초 이하라면 null
     }
 
     // 설명. xml parser build
@@ -87,10 +89,7 @@ public class GpxParser {
 
     // 설명. Double 형태인지 확인
     private boolean checkValidParseDouble(String str) {
-
-        boolean result = Pattern.matches("^[0-9]+(.)?[0-9]*$", str);
-
-        return result;
+        return Pattern.matches("^[0-9]+(.)?[0-9]*$", str);
     }
 
     // 설명. 위도 경도 추출
