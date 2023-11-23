@@ -13,7 +13,13 @@ import java.util.UUID;
 @Repository
 @Transactional
 public interface UserQueryRepository extends JpaRepository<User, UUID> {
+
+    Optional<User> findAccountByNameAndEmail(String name, String email);
+
+    Optional<User> findUserByAccountAndEmail(String account, String email);
+
     Optional<User> findUserByAccount(String account);
 
     List<User> findAllUserByRole(Role role);
+
 }
