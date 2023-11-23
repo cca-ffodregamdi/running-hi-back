@@ -17,27 +17,27 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "회원 가입 및 로그인 API")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping
+@RequestMapping("/api/v1")
 public class SignCommandController {
     private final SignCommandService signCommandService;
 
     /* 아이디 중복 확인 API */
     @Operation(summary = "아이디 중복 확인")
-    @PostMapping("/api/v1/verify-duplication-id")
+    @PostMapping("/verify-duplication-id")
     public ApiResponse verifyDuplicationId(@RequestBody VerifyDuplicationIdRequest request) {
         return ApiResponse.success("중복 확인 결과가 나왔습니다.", signCommandService.verifyDuplicationId(request));
     }
 
     /* 회원 가입 API */
     @Operation(summary = "회원 가입")
-    @PostMapping("/api/v1/sign-up")
+    @PostMapping("/sign-up")
     public ApiResponse signUp(@RequestBody SignUpRequest request) {
         return ApiResponse.success("성공적으로 가입되었습니다.", signCommandService.registUser(request));
     }
 
     /* 로그인 API */
     @Operation(summary = "로그인")
-    @PostMapping("/api/v1/sign-in")
+    @PostMapping("/sign-in")
     public ApiResponse signIn(@RequestBody SignInRequest request) {
         return ApiResponse.success("성공적으로 로그인되었습니다.", signCommandService.signIn(request));
     }
