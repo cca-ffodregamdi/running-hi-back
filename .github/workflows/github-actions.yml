@@ -11,6 +11,7 @@ name: Java CI/CD with Gradle and Docker
 on:
   push:
     branches:
+      - dev
       - master
   pull_request:
     branches:
@@ -107,17 +108,17 @@ jobs:
       - name: Docker build & push to dev repo
         if: contains(github.ref, 'dev')
         run: |
-          docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_PASSWORD }}"
-          docker build -f Dockerfile-dev -t "${{ secrets.DOCKER_USERNAME }}"/runninghi-dev .
-          docker push "${{ secrets.DOCKER_USERNAME }}"/runninghi-dev
+          docker login -u "${{ secrets.DOCKER_USERNAME_DEV }}" -p "${{ secrets.DOCKER_PASSWORD_DEV }}"
+          docker build -f Dockerfile-dev -t "${{ secrets.DOCKER_USERNAME_DEV }}"/runninghi-dev .
+          docker push "${{ secrets.DOCKER_USERNAME_DEV }}"/runninghi-dev
 
       ## docker hub에 로그인하고 runninghi-prod에 이미지를 빌드 & push 합니다.
       - name: Docker build & push to prod repo
         if: contains(github.ref, 'master')
         run: |
-          docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_PASSWORD }}"
-          docker build -f Dockerfile-prod -t "${{ secrets.DOCKER_USERNAME }}"/runninghi-prod .
-          docker push "${{ secrets.DOCKER_USERNAME }}"/runninghi-prod
+          docker login -u "${{ secrets.DOCKER_USERNAME_PROD }}" -p "${{ secrets.DOCKER_PASSWORD_PROD }}"
+          docker build -f Dockerfile-prod -t "${{ secrets.DOCKER_USERNAME_PROD }}"/runninghi-prod .
+          docker push "${{ secrets.DOCKER_USERNAME_PROD }}"/runninghi-prod
 
       ## AWS EC2에 접속하고 develop을 배포합니다.
       - name: Deploy to Dev
@@ -130,10 +131,10 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }} # 키 페어의 pem 키
           #            sudo docker-compose up -d
           script: |
-            sudo docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_PASSWORD }}"
-            sudo docker pull "${{ secrets.DOCKER_USERNAME }}"/runninghi-dev
+            sudo docker login -u "${{ secrets.DOCKER_USERNAME_DEV }}" -p "${{ secrets.DOCKER_PASSWORD_DEV }}"
+            sudo docker pull "${{ secrets.DOCKER_USERNAME_DEV }}"/runninghi-dev
             sudo docker stop $(docker ps -a -q)
-            sudo docker run -d --log-driver=syslog -p 8081:8081 -e SPRING_PROFILES_ACTIVE=dev "${{ secrets.DOCKER_USERNAME }}"/runninghi-dev
+            sudo docker run -d --log-driver=syslog -p 8081:8081 -e SPRING_PROFILES_ACTIVE=dev "${{ secrets.DOCKER_USERNAME_DEV }}"/runninghi-dev
             sudo docker rm -f $(sudo docker ps --filter 'status=exited' -a -q)
             sudo docker image prune -a -f
 
@@ -148,9 +149,9 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }} # 키 페어의 pem 키
           #            sudo docker-compose up -d
           script: |
-            sudo docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_PASSWORD }}"
-            sudo docker pull "${{ secrets.DOCKER_USERNAME }}"/runninghi-prod
+            sudo docker login -u "${{ secrets.DOCKER_USERNAME_PROD }}" -p "${{ secrets.DOCKER_PASSWORD_PROD }}"
+            sudo docker pull "${{ secrets.DOCKER_USERNAME_PROD }}"/runninghi-prod
             sudo docker stop $(docker ps -a -q)
-            sudo docker run -d --log-driver=syslog -p 8082:8082 -e SPRING_PROFILES_ACTIVE=prod "${{ secrets.DOCKER_USERNAME }}"/runninghi-prod
+            sudo docker run -d --log-driver=syslog -p 8082:8082 -e SPRING_PROFILES_ACTIVE=prod "${{ secrets.DOCKER_USERNAME_PROD }}"/runninghi-prod
             sudo docker rm -f $(sudo docker ps --filter 'status=exited' -a -q)
             sudo docker image prune -f
