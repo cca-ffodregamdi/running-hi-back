@@ -93,6 +93,8 @@ dependencies {
     // log4j2.yml 설정 관련 라이브러리
     implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.13.1'
 
+    // MongoDB
+    implementation "org.springframework.boot:spring-boot-starter-data-mongodb"
 }
 
 dependencyManagement {
