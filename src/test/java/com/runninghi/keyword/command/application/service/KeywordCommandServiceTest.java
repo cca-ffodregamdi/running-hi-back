@@ -5,9 +5,9 @@ import com.runninghi.keyword.command.application.dto.request.KeywordUpdateReques
 import com.runninghi.keyword.command.application.dto.response.KeywordResponse;
 import com.runninghi.keyword.command.domain.aggregate.entity.Keyword;
 import com.runninghi.keyword.command.domain.repository.KeywordCommandRepository;
-import com.runninghi.user.command.domain.aggregate.entity.User;
-import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
-import com.runninghi.user.command.domain.repository.UserCommandRepository;
+import com.runninghi.member.command.domain.aggregate.Member;
+import com.runninghi.member.command.domain.aggregate.entity.enumtype.Role;
+import com.runninghi.member.command.domain.repository.MemberCommandRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -26,7 +26,7 @@ class KeywordCommandServiceTest {
     @Autowired
     private KeywordCommandRepository keywordCommandRepository;
     @Autowired
-    private UserCommandRepository userCommandRepository;
+    private MemberCommandRepository userCommandRepository;
     @Autowired
     private PasswordEncoder encoder;
 
@@ -40,7 +40,7 @@ class KeywordCommandServiceTest {
     void testCheckAdminByAdminUserKey() {
 
         // given
-        User admin = userCommandRepository.save(User.builder()
+        Member admin = userCommandRepository.save(Member.builder()
                 .account("qwerty1234")
                 .password(encoder.encode("1234"))
                 .name("qweqwe")
@@ -58,7 +58,7 @@ class KeywordCommandServiceTest {
     void testCheckAdminByUserUserKey() {
 
         // given
-        User admin = userCommandRepository.save(User.builder()
+        Member admin = userCommandRepository.save(Member.builder()
                 .account("qwerty1234")
                 .password(encoder.encode("1234"))
                 .name("qweqwe")

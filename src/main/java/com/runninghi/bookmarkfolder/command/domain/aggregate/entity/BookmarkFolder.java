@@ -2,15 +2,12 @@ package com.runninghi.bookmarkfolder.command.domain.aggregate.entity;
 
 
 import com.runninghi.bookmarkfolder.command.application.dto.request.UpdateFolderRequest;
-import com.runninghi.bookmarkfolder.command.domain.aggregate.vo.FolderUserVO;
-import com.runninghi.comment.command.application.dto.request.UpdateCommentRequest;
+import com.runninghi.bookmarkfolder.command.domain.aggregate.vo.FolderMemberVO;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.UUID;
 
 
 @Entity
@@ -27,13 +24,13 @@ public class BookmarkFolder {
     private String folderName;
 
     @Embedded
-    private FolderUserVO userNoVO;
+    private FolderMemberVO memberNoVO;
 
     @Builder
-    public BookmarkFolder(Long folderNo, String folderName, FolderUserVO userNoVO) {
+    public BookmarkFolder(Long folderNo, String folderName, FolderMemberVO memberNoVO) {
         this.folderNo = folderNo;
         this.folderName = folderName;
-        this.userNoVO = userNoVO;
+        this.memberNoVO = memberNoVO;
     }
 
     public void update(UpdateFolderRequest folderRequest) {

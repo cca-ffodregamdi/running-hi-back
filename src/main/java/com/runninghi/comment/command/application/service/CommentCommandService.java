@@ -6,7 +6,7 @@ import com.runninghi.comment.command.application.dto.request.UpdateCommentReques
 import com.runninghi.comment.command.application.dto.response.CommentCommandResponse;
 import com.runninghi.comment.command.application.dto.response.CommentDeleteResponse;
 import com.runninghi.comment.command.domain.aggregate.entity.Comment;
-import com.runninghi.comment.command.domain.aggregate.vo.CommentUserVO;
+import com.runninghi.comment.command.domain.aggregate.vo.CommentMemberVO;
 import com.runninghi.comment.command.domain.repository.CommentCommandRepository;
 import com.runninghi.comment.command.domain.service.ApiCommentDomainService;
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
@@ -27,12 +27,12 @@ public class CommentCommandService {
     public CommentCommandResponse createComment(CreateCommentRequest commentDTO) {
 
         commentDomainService.validateCommentContentNull(commentDTO.commentContent());
-        commentDomainService.validateUser(commentDTO.userNo());
-//        domainService.validateUserPost(commentDTO.userPostNo());
+        commentDomainService.validateMember(commentDTO.memberNo());
+//        domainService.validateMemberPost(commentDTO.memberPostNo());
 
         Comment comment = commentRepository.save(Comment.builder()
-                .userNoVO(new CommentUserVO(commentDTO.userNo()))
-                .userPostNo(commentDTO.userPostNo())
+                .memberNoVO(new CommentMemberVO(commentDTO.memberNo()))
+                .memberPostNo(commentDTO.memberPostNo())
                 .commentContent(commentDTO.commentContent())
                 .commentDate(new Date())
                 .build());
@@ -54,8 +54,8 @@ public class CommentCommandService {
     @Transactional
     public CommentCommandResponse updateComment(UpdateCommentRequest commentDTO) {
         commentDomainService.validateCommentContentNull(commentDTO.commentContent());
-        Comment comment =  commentRepository.findById(commentDTO.commentNo())
-                    .orElseThrow(() -> new NotFoundException("존재하지 않는 댓글 입니다."));
+        Comment comment = commentRepository.findById(commentDTO.commentNo())
+                .orElseThrow(() -> new NotFoundException("존재하지 않는 댓글 입니다."));
         comment.update(commentDTO);
 
         return CommentCommandResponse.from(comment);

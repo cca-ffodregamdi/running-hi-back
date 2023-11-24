@@ -4,7 +4,7 @@ import com.runninghi.common.annotation.DomainService;
 import com.runninghi.common.handler.feedback.customException.IllegalArgumentException;
 import com.runninghi.feedback.command.application.dto.response.FeedbackUserResponse;
 import com.runninghi.feedback.command.domain.aggregate.entity.Feedback;
-import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
+import com.runninghi.member.command.domain.aggregate.entity.enumtype.Role;
 import lombok.RequiredArgsConstructor;
 
 @DomainService

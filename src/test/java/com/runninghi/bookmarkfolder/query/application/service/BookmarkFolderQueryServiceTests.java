@@ -2,7 +2,7 @@ package com.runninghi.bookmarkfolder.query.application.service;
 
 import com.runninghi.bookmarkfolder.command.application.dto.request.CreateFolderRequest;
 import com.runninghi.bookmarkfolder.command.domain.aggregate.entity.BookmarkFolder;
-import com.runninghi.bookmarkfolder.command.domain.aggregate.vo.FolderUserVO;
+import com.runninghi.bookmarkfolder.command.domain.aggregate.vo.FolderMemberVO;
 import com.runninghi.bookmarkfolder.command.domain.repository.FolderCommandRepository;
 import com.runninghi.bookmarkfolder.query.application.dto.request.FindFolderRequest;
 import com.runninghi.bookmarkfolder.query.application.dto.response.FolderQueryResponse;
@@ -39,7 +39,7 @@ public class BookmarkFolderQueryServiceTests {
 
         BookmarkFolder folder = folderRepository.save(BookmarkFolder.builder()
                 .folderName(folderDTO.folderName())
-                .userNoVO(new FolderUserVO(folderDTO.getUserNo()))
+                .memberNoVO(new FolderMemberVO(folderDTO.getUserNo()))
                 .folderNo(1L)
                 .build());
 
@@ -49,7 +49,7 @@ public class BookmarkFolderQueryServiceTests {
 
         Assertions.assertEquals(findFolder.folderName(), folder.getFolderName());
         Assertions.assertEquals(findFolder.folderNo(), folder.getFolderNo());
-        Assertions.assertEquals(findFolder.userNo(), folder.getUserNoVO());
+        Assertions.assertEquals(findFolder.memberNo(), folder.getMemberNoVO());
     }
 
     @Test

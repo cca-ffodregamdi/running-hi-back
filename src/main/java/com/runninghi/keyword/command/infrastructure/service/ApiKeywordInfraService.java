@@ -6,8 +6,8 @@ import com.runninghi.keyword.command.application.dto.response.UserCheckResponse;
 import com.runninghi.keyword.command.domain.service.ApiKeywordDomainService;
 import com.runninghi.keyword.query.application.dto.response.FindKeywordResponse;
 import com.runninghi.keyword.query.application.service.KeywordQueryService;
-import com.runninghi.user.query.application.dto.user.response.UserInfoResponse;
-import com.runninghi.user.query.application.service.UserQueryService;
+import com.runninghi.member.query.application.dto.member.response.MemberInfoResponse;
+import com.runninghi.member.query.application.service.MemberQueryService;
 import lombok.RequiredArgsConstructor;
 
 import java.util.UUID;
@@ -17,11 +17,11 @@ import java.util.UUID;
 public class ApiKeywordInfraService implements ApiKeywordDomainService {
 
     private final KeywordQueryService keywordQueryService;
-    private final UserQueryService userQueryService;
+    private final MemberQueryService userQueryService;
 
     @Override
     public UserCheckResponse checkUserByUserKey(UUID userKey) {
-        UserInfoResponse result = userQueryService.findUserInfo(userKey);
+        MemberInfoResponse result = userQueryService.findMemberInfo(userKey);
         return new UserCheckResponse(
                 result.id(),
                 result.account(),

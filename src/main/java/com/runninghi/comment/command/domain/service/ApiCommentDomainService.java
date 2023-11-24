@@ -4,7 +4,10 @@ import java.util.UUID;
 
 public interface ApiCommentDomainService {
     void validateCommentContentNull(String commentContent);
-    void validateUser(UUID userNo);
-    void validateUserPost(Long userPostNo);
+
+    void validateMember(UUID memberNo);
+
+    void validateMemberPost(Long memberPostNo);
+
     void validateComment(Long commentNo);
 }

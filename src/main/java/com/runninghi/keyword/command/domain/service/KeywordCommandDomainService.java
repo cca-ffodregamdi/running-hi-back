@@ -2,7 +2,7 @@ package com.runninghi.keyword.command.domain.service;
 
 import com.runninghi.common.annotation.DomainService;
 import com.runninghi.keyword.command.application.dto.response.UserCheckResponse;
-import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
+import com.runninghi.member.command.domain.aggregate.entity.enumtype.Role;
 
 @DomainService
 public class KeywordCommandDomainService {

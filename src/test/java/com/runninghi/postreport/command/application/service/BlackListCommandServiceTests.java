@@ -1,13 +1,13 @@
 package com.runninghi.postreport.command.application.service;
 
+import com.runninghi.member.command.domain.aggregate.Member;
+import com.runninghi.member.command.domain.aggregate.entity.enumtype.Role;
+import com.runninghi.member.command.domain.repository.MemberCommandRepository;
 import com.runninghi.postreport.command.application.dto.request.PostReportProcessingRequest;
 import com.runninghi.postreport.command.application.dto.request.PostReportSaveRequest;
 import com.runninghi.postreport.command.domain.aggregate.entity.PostReport;
 import com.runninghi.postreport.command.domain.aggregate.entity.enumtype.ProcessingStatus;
 import com.runninghi.postreport.command.domain.repository.PostReportCommandRepository;
-import com.runninghi.user.command.domain.aggregate.entity.User;
-import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
-import com.runninghi.user.command.domain.repository.UserCommandRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -27,7 +27,7 @@ public class BlackListCommandServiceTests {
     private PostReportCommandRepository postReportCommandRepository;
 
     @Autowired
-    private UserCommandRepository userCommandRepository;
+    private MemberCommandRepository userCommandRepository;
 
     @Autowired
     private BlackListCommandService blackListCommandService;
@@ -90,7 +90,7 @@ public class BlackListCommandServiceTests {
     void checkUserReportCount() {
 
         // given
-        User savedUser = userCommandRepository.save(User.builder()
+        Member savedMember = userCommandRepository.save(Member.builder()
                 .account("qwerty1234")
                 .password(encoder.encode("1234"))
                 .name("김철수")
@@ -102,7 +102,7 @@ public class BlackListCommandServiceTests {
                 .build());
 
         PostReport postReport = postReportCommandService.savePostReport(new PostReportSaveRequest(1, "욕설",
-                UUID.randomUUID(), savedUser.getId(), 11L));
+                UUID.randomUUID(), savedMember.getId(), 11L));
 
         PostReportProcessingRequest postReportProcessingDTO = new PostReportProcessingRequest(true, postReport.getPostReportNo());
 
@@ -124,7 +124,7 @@ public class BlackListCommandServiceTests {
     void checkSameUserReportCount() {
 
         // given
-        User savedUser = userCommandRepository.save(User.builder()
+        Member savedMember = userCommandRepository.save(Member.builder()
                 .account("qwerty1234")
                 .password(encoder.encode("1234"))
                 .name("김철수")
@@ -136,7 +136,7 @@ public class BlackListCommandServiceTests {
                 .build());
 
         PostReport postReport = postReportCommandService.savePostReport(new PostReportSaveRequest(1, "욕설",
-                UUID.randomUUID(), savedUser.getId(), 11L));
+                UUID.randomUUID(), savedMember.getId(), 11L));
 
         PostReportProcessingRequest postReportProcessingDTO = new PostReportProcessingRequest(false, postReport.getPostReportNo());
 
@@ -152,7 +152,7 @@ public class BlackListCommandServiceTests {
     void updateBlackListStatus() {
 
         // given
-        User savedUser = userCommandRepository.save(User.builder()
+        Member savedMember = userCommandRepository.save(Member.builder()
                 .account("qwerty1234")
                 .password(encoder.encode("1234"))
                 .name("김철수")
@@ -164,7 +164,7 @@ public class BlackListCommandServiceTests {
                 .build());
 
         // when
-        boolean blackListStatus = blackListCommandService.updateBlackListStatus(savedUser.getId());
+        boolean blackListStatus = blackListCommandService.updateBlackListStatus(savedMember.getId());
 
         // then
         Assertions.assertTrue(blackListStatus);

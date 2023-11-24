@@ -2,8 +2,8 @@ package com.runninghi.configuration.jwt;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.runninghi.user.command.domain.aggregate.entity.UserRefreshToken;
-import com.runninghi.user.query.infrastructure.repository.UserQueryRefreshTokenRepository;
+import com.runninghi.member.command.domain.aggregate.entity.MemberRefreshToken;
+import com.runninghi.member.query.infrastructure.repository.MemberQueryRefreshTokenRepository;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -29,7 +29,7 @@ public class TokenProvider {
     private final long refreshExpirationHours;
     private final String issuer;
     private final long reissueLimit;
-    private final UserQueryRefreshTokenRepository userQueryRefreshTokenRepository;
+    private final MemberQueryRefreshTokenRepository userQueryRefreshTokenRepository;
 
     // JWT 역직렬화를 위한 ObjectMapper
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -39,7 +39,7 @@ public class TokenProvider {
             @Value("${expiration-minutes}") long expirationMinutes,
             @Value("${refresh-expiration-hours}") long refreshExpirationHours,
             @Value("${issuer}") String issuer,
-            UserQueryRefreshTokenRepository userQueryRefreshTokenRepository) {
+            MemberQueryRefreshTokenRepository userQueryRefreshTokenRepository) {
         this.secretKey = secretKey;
         this.expirationMinutes = expirationMinutes;
         this.refreshExpirationHours = refreshExpirationHours;
@@ -72,7 +72,7 @@ public class TokenProvider {
         String subject = decodeJwtPayloadSubject(oldAccessToken);
         userQueryRefreshTokenRepository.findByUserIdAndReissueCountLessThan(UUID.fromString(subject.split(":")[0]), reissueLimit)
                 .ifPresentOrElse(
-                        UserRefreshToken::increaseReissueCount,
+                        MemberRefreshToken::increaseReissueCount,
                         () -> {
                             throw new ExpiredJwtException(null, null, "Refresh token expired.");
                         }

@@ -6,11 +6,11 @@ import com.runninghi.bookmarkfolder.command.application.dto.request.DeleteFolder
 import com.runninghi.bookmarkfolder.command.application.dto.request.UpdateFolderRequest;
 import com.runninghi.bookmarkfolder.command.application.service.BookmarkFolderCommandService;
 import com.runninghi.bookmarkfolder.command.domain.aggregate.entity.BookmarkFolder;
-import com.runninghi.bookmarkfolder.command.domain.aggregate.vo.FolderUserVO;
+import com.runninghi.bookmarkfolder.command.domain.aggregate.vo.FolderMemberVO;
 import com.runninghi.bookmarkfolder.command.domain.repository.FolderCommandRepository;
-import com.runninghi.user.command.domain.aggregate.entity.User;
-import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
-import com.runninghi.user.command.domain.repository.UserCommandRepository;
+import com.runninghi.member.command.domain.aggregate.Member;
+import com.runninghi.member.command.domain.aggregate.entity.enumtype.Role;
+import com.runninghi.member.command.domain.repository.MemberCommandRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -41,7 +41,7 @@ public class FolderCommandControllerTests {
     private FolderCommandRepository folderCommandRepository;
 
     @Autowired
-    private UserCommandRepository userCommandRepository;
+    private MemberCommandRepository userCommandRepository;
     @Autowired
     private PasswordEncoder encoder;
 
@@ -60,7 +60,7 @@ public class FolderCommandControllerTests {
     @Test
     @DisplayName("즐겨찾기 폴더 생성 컨트롤러 : success")
     void createFolderControllerTest() throws Exception {
-        User user = userCommandRepository.save(User.builder()
+        Member member = userCommandRepository.save(Member.builder()
                 .account("qwerty1234")
                 .password(encoder.encode("1234"))
                 .name("김철수")
@@ -70,7 +70,7 @@ public class FolderCommandControllerTests {
                 .status(true)
                 .build());
 
-        CreateFolderRequest request = new CreateFolderRequest("폴더 생성 컨트롤러", user.getId());
+        CreateFolderRequest request = new CreateFolderRequest("폴더 생성 컨트롤러", member.getId());
 
         mock.perform(post("/api/v1/bookmark-folders")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -85,10 +85,10 @@ public class FolderCommandControllerTests {
         BookmarkFolder folder = BookmarkFolder.builder()
                 .folderNo(999L)
                 .folderName("폴더 수정")
-                .userNoVO(new FolderUserVO(UUID.randomUUID()))
+                .memberNoVO(new FolderMemberVO(UUID.randomUUID()))
                 .build();
 
-        UpdateFolderRequest request = new UpdateFolderRequest(folder.getFolderNo(), "수정!!!", folder.getUserNoVO().getUserNo());
+        UpdateFolderRequest request = new UpdateFolderRequest(folder.getFolderNo(), "수정!!!", folder.getMemberNoVO().getMemberNo());
 
         mock.perform(put("/api/v1/bookmark-folders/" + request.folderNo())
                         .contentType(MediaType.APPLICATION_JSON)
@@ -103,7 +103,7 @@ public class FolderCommandControllerTests {
         BookmarkFolder folder = BookmarkFolder.builder()
                 .folderNo(999L)
                 .folderName("폴더 수정")
-                .userNoVO(new FolderUserVO(UUID.randomUUID()))
+                .memberNoVO(new FolderMemberVO(UUID.randomUUID()))
                 .build();
 
         DeleteFolderRequest request = new DeleteFolderRequest(folder.getFolderNo());
