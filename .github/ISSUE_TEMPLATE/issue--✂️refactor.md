@@ -1,7 +1,7 @@
 ---
 name: "[Refactor]"
 about: 코드 수정 및 리팩토링
-title: "[REFACTOR - Nov 1st/2nd/3rd/4th, 2023] -[도메인]제목"
+title: "[Refactor - Nov 1st/2nd/3rd/4th, 2023] -[도메인]제목"
 labels: ''
 assignees: ''
 
@@ -9,7 +9,8 @@ assignees: ''
 
 ✏️Description
 -
-<!-- 코드 수정 및 리팩토링에 관련된 이슈 설명 -->
+
+- <!-- 코드 수정 및 리팩토링에 관련된 이슈 설명 -->
 
 ✅TODO
 -
