@@ -1,5 +1,5 @@
 ---
-name: [ Feature ]
+name: "[Feature]"
 about: 새로운 기능
 title: "[Feature - Nov 1st/2nd/3rd/4th, 2023]  - [도메인] 제목"
 labels: ''
