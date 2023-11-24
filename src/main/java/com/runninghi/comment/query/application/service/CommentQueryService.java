@@ -9,7 +9,6 @@ import com.runninghi.comment.query.infrastructure.repository.CommentQueryReposit
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
 import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +29,7 @@ public class CommentQueryService {
 
         Specification<Comment> filter = (root, query, criteriaBuilder) -> {
             Predicate statusPredicate = criteriaBuilder.equal(root.get("commentStatus"), false);
-            Predicate postNoPredicate = criteriaBuilder.equal(root.get("userPostNo"), commentDTO.userPostNo());
+            Predicate postNoPredicate = criteriaBuilder.equal(root.get("memberPostNo"), commentDTO.memberPostNo());
             return criteriaBuilder.and(statusPredicate, postNoPredicate);
         };
 
@@ -47,9 +46,9 @@ public class CommentQueryService {
     @Transactional(readOnly = true)
     public CommentQueryResponse findComment(FindCommentRequest commentDTO) {
 
-       Comment comment = commentQueryRepository.findById(commentDTO.commentNo())
-               .orElseThrow(() -> new NotFoundException("존재하지 않는 댓글 입니다."));
+        Comment comment = commentQueryRepository.findById(commentDTO.commentNo())
+                .orElseThrow(() -> new NotFoundException("존재하지 않는 댓글 입니다."));
 
-       return CommentQueryResponse.from(comment);
+        return CommentQueryResponse.from(comment);
     }
 }

@@ -11,7 +11,7 @@ import com.runninghi.bookmarkfolder.command.application.dto.request.UpdateFolder
 import com.runninghi.bookmarkfolder.command.application.dto.response.FolderCommandResponse;
 import com.runninghi.bookmarkfolder.command.application.dto.response.FolderDeleteResponse;
 import com.runninghi.bookmarkfolder.command.domain.aggregate.entity.BookmarkFolder;
-import com.runninghi.bookmarkfolder.command.domain.aggregate.vo.FolderUserVO;
+import com.runninghi.bookmarkfolder.command.domain.aggregate.vo.FolderMemberVO;
 import com.runninghi.bookmarkfolder.command.domain.repository.FolderCommandRepository;
 import com.runninghi.bookmarkfolder.command.domain.service.FolderCommandDomainService;
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
@@ -30,6 +30,7 @@ public class BookmarkFolderCommandService {
     private final BookmarkQueryRepository bookmarkQueryRepository;
     private final BookmarkCommandService bookmarkCommandService;
     private final FolderCommandDomainService domainService;
+
     @Transactional
     public FolderCommandResponse createNewBookmarkFolder(CreateFolderRequest folderDTO) {
 
@@ -37,7 +38,7 @@ public class BookmarkFolderCommandService {
 
         BookmarkFolder folder = folderRepository.save(BookmarkFolder.builder().
                 folderName(folderDTO.folderName()).
-                userNoVO(new FolderUserVO(folderDTO.userNo())).
+                memberNoVO(new FolderMemberVO(folderDTO.userNo())).
                 build());
 
         return FolderCommandResponse.from(folder);
