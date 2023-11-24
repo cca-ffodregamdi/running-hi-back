@@ -2,6 +2,7 @@ package com.runninghi.user.command.domain.aggregate.entity;
 
 import com.runninghi.common.entity.BaseEntity;
 import com.runninghi.user.command.application.dto.sign_up.request.SignUpRequest;
+import com.runninghi.user.command.application.dto.user.request.UpdatePasswordRequest;
 import com.runninghi.user.command.application.dto.user.request.UserUpdateRequest;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
 import jakarta.persistence.*;
@@ -84,6 +85,10 @@ public class User extends BaseEntity {
                 .role(Role.USER)
                 .status(true)
                 .build();
+    }
+
+    public void updatePassword(UpdatePasswordRequest request, PasswordEncoder encoder) {
+        this.password = encoder.encode(request.password());
     }
 
     public void update(UserUpdateRequest newUser, PasswordEncoder encoder) {

@@ -9,9 +9,9 @@ public record SignUpRequest(
         String password,
         @Schema(description = "회원 이름", example = "김철수")
         String name,
-        @Schema(description = "회원 닉네임", example = "qwe")
-        String nickname,
         @Schema(description = "회원 이메일", example = "qwe@qwe.qw")
-        String email
+        String email,
+        @Schema(description = "회원 닉네임", example = "qwe")
+        String nickname
 ) {
 }
