@@ -1,7 +1,6 @@
 version: '3'
-
 services:
-  app:
+  webapp:
     image: rachaz/runninghi-dev
     restart: always
     container_name: runninghi_spring_boot_dev
