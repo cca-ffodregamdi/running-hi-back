@@ -4,6 +4,6 @@ services:
   app:
     image: rachaz/runninghi-dev
     restart: always
-    container_name: runninghi_spring boot_dev
+    container_name: runninghi_spring_boot_dev
     ports: # host - container 포트 매핑
-      - "8080:8080"
+      - "8081:8081"
