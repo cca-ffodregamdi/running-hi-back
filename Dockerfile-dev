@@ -1,5 +1,4 @@
 FROM openjdk:17-alpine
-WORKDIR /backend
 ARG JAR_FILE=build/libs/runninghi-0.0.1-SNAPSHOT.jar
 ARG FIREBASE_KEY=src/main/resources/runningHiFirebaseKey.json
 COPY ${JAR_FILE} app.jar
