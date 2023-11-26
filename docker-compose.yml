@@ -4,5 +4,6 @@ services:
   app:
     image: qweqwerty123/runninghi-dev
     restart: always
+    container_name: runninghi_spring boot_dev
     ports: # host - container 포트 매핑
       - "8080:8080"
