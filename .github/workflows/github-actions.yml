@@ -131,10 +131,10 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }} # 키 페어의 pem 키
           #            sudo docker-compose up -d
           script: |
-            cd /home/ubuntu/running-hi-back/
             sudo docker login -u "${{ secrets.DOCKER_USERNAME_DEV }}" -p "${{ secrets.DOCKER_PASSWORD_DEV }}"
             sudo docker stop $(docker ps -a -q)
             sudo docker rm -f $(sudo docker ps --filter 'status=exited' -a -q)
+            cd /
             sudo docker pull "${{ secrets.DOCKER_USERNAME_DEV }}"/runninghi-dev
             sudo docker run -d --log-driver=syslog -p 8081:8081 -e SPRING_PROFILES_ACTIVE=dev "${{ secrets.DOCKER_USERNAME_DEV }}"/runninghi-dev
             sudo docker image prune -a -f
