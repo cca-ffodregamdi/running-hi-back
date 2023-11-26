@@ -1,12 +1,12 @@
 package com.runninghi.adminpost.command.infrastructure.service;
 
 import com.runninghi.adminpost.command.application.dto.request.KeywordListRequest;
-import com.runninghi.keywordofpost.command.application.dto.request.KeywordOfPostCreateRequest;
 import com.runninghi.adminpost.command.domain.service.ApiAdminPostDomainService;
 import com.runninghi.common.annotation.InfraService;
+import com.runninghi.keywordofpost.command.application.dto.request.KeywordOfPostCreateRequest;
 import com.runninghi.keywordofpost.command.application.service.KeywordOfPostCommandService;
-import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
-import com.runninghi.user.query.application.service.UserQueryService;
+import com.runninghi.member.command.domain.aggregate.entity.enumtype.Role;
+import com.runninghi.member.query.application.service.MemberQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,12 +18,12 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ApiAdminPostInfraService implements ApiAdminPostDomainService {
 
-    private final UserQueryService userQueryService;
+    private final MemberQueryService memberQueryService;
     private final KeywordOfPostCommandService keywordOfPostCommandService;
 
     @Override
     public Role checkAdminByUserNo(UUID userKey) {
-        return userQueryService.findUserInfo(userKey).role();
+        return memberQueryService.findMemberInfo(userKey).role();
     }
 
     @Override

@@ -5,9 +5,9 @@ import com.runninghi.adminpost.command.application.dto.request.AdminPostCreateRe
 import com.runninghi.adminpost.command.application.dto.request.KeywordListRequest;
 import com.runninghi.adminpost.command.domain.repository.AdminPostCommandRepository;
 import com.runninghi.keyword.command.domain.repository.KeywordCommandRepository;
-import com.runninghi.user.command.domain.aggregate.entity.User;
-import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
-import com.runninghi.user.command.domain.repository.UserCommandRepository;
+import com.runninghi.member.command.domain.aggregate.Member;
+import com.runninghi.member.command.domain.aggregate.entity.enumtype.Role;
+import com.runninghi.member.command.domain.repository.MemberCommandRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,7 +28,7 @@ class AdminPostCommandServiceTest {
     @Autowired
     private AdminPostCommandController adminPostCommandController;
     @Autowired
-    private UserCommandRepository userCommandRepository;
+    private MemberCommandRepository memberCommandRepository;
     @Autowired
     private PasswordEncoder encoder;
     @Autowired
@@ -42,12 +42,13 @@ class AdminPostCommandServiceTest {
     @BeforeEach
     @AfterEach
     void clear() {
-        userCommandRepository.deleteAllInBatch();
+        memberCommandRepository.deleteAllInBatch();
         adminPostCommandRepository.deleteAllInBatch();
-        keywordCommandRepository.deleteAllInBatch();}
+        keywordCommandRepository.deleteAllInBatch();
+    }
 
-    private User createAdmin() {
-        return userCommandRepository.save(User.builder()
+    private Member createAdmin() {
+        return memberCommandRepository.save(Member.builder()
                 .account("qwerty1234")
                 .password(encoder.encode("1234"))
                 .name("김철수")
@@ -58,7 +59,7 @@ class AdminPostCommandServiceTest {
                 .build());
     }
 
-    private AdminPostCreateRequest createAdminPostRequest(User admin, List<KeywordListRequest> keywordList) {
+    private AdminPostCreateRequest createAdminPostRequest(Member admin, List<KeywordListRequest> keywordList) {
         return new AdminPostCreateRequest(
                 admin.getId(),
                 "asdfiasdnfo.jpg",
@@ -81,7 +82,7 @@ class AdminPostCommandServiceTest {
     void testCreateAdminPostSuccess() {
 
         // given
-        User admin = createAdmin();
+        Member admin = createAdmin();
         List<KeywordListRequest> keywordList = createKeywordList();
         AdminPostCreateRequest request = createAdminPostRequest(admin, keywordList);
 
@@ -97,7 +98,7 @@ class AdminPostCommandServiceTest {
     void testCreateAdminPostNPE() {
 
         // given
-        User admin = createAdmin();
+        Member admin = createAdmin();
         AdminPostCreateRequest request = new AdminPostCreateRequest(
                 admin.getId(),
                 "asdfiasdnfo.jpg",

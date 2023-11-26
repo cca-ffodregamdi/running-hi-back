@@ -4,20 +4,19 @@ import com.runninghi.comment.command.application.dto.request.CreateCommentReques
 import com.runninghi.comment.command.application.dto.response.CommentCommandResponse;
 import com.runninghi.comment.command.application.service.CommentCommandService;
 import com.runninghi.comment.command.domain.aggregate.entity.Comment;
-import com.runninghi.comment.command.domain.aggregate.vo.CommentUserVO;
+import com.runninghi.comment.command.domain.aggregate.vo.CommentMemberVO;
 import com.runninghi.comment.command.domain.repository.CommentCommandRepository;
 import com.runninghi.comment.query.application.dto.request.FindAllCommentsRequest;
 import com.runninghi.comment.query.application.dto.request.FindCommentRequest;
 import com.runninghi.comment.query.application.dto.response.CommentQueryResponse;
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
-import com.runninghi.user.command.domain.aggregate.entity.User;
-import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
-import com.runninghi.user.command.domain.repository.UserCommandRepository;
+import com.runninghi.member.command.domain.aggregate.Member;
+import com.runninghi.member.command.domain.aggregate.entity.enumtype.Role;
+import com.runninghi.member.command.domain.repository.MemberCommandRepository;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
@@ -38,15 +37,15 @@ public class CommentQueryServiceTests {
     private CommentCommandService createCommentService;
 
     @Autowired
-    private UserCommandRepository userCommandRepository;
+    private MemberCommandRepository memberCommandRepository;
 
-    private User user;
+    private Member member;
 
     @BeforeEach
     @AfterEach
     void clear() {
         commentCommandRepository.deleteAllInBatch();
-        userCommandRepository.deleteAllInBatch();
+        memberCommandRepository.deleteAllInBatch();
     }
 
     @BeforeEach
@@ -54,7 +53,7 @@ public class CommentQueryServiceTests {
 
         UUID userId = UUID.randomUUID();
 
-        user = userCommandRepository.save(User.builder()
+        member = memberCommandRepository.save(Member.builder()
                 .id(userId)
                 .account("qwerty1234")
                 .password("Test")
@@ -74,14 +73,14 @@ public class CommentQueryServiceTests {
         UUID userNo = UUID.randomUUID();
 
         commentCommandRepository.save(Comment.builder()
-                .userPostNo(userPostNo)
-                .userNoVO(new CommentUserVO(userNo))
+                .memberPostNo(userPostNo)
+                .memberNoVO(new CommentMemberVO(userNo))
                 .commentStatus(false)
                 .build());
 
         commentCommandRepository.save(Comment.builder()
-                .userPostNo(userPostNo)
-                .userNoVO(new CommentUserVO(userNo))
+                .memberPostNo(userPostNo)
+                .memberNoVO(new CommentMemberVO(userNo))
                 .commentStatus(false)
                 .build());
 
@@ -100,7 +99,7 @@ public class CommentQueryServiceTests {
         Long userPostNo = 999L;
 
         commentCommandRepository.save(Comment.builder()
-                .userPostNo(userPostNo)
+                .memberPostNo(userPostNo)
                 .commentStatus(true)
                 .build());
 
@@ -115,7 +114,7 @@ public class CommentQueryServiceTests {
     @DisplayName("특정 댓글 조회 테스트 : success")
     void testFindCommentByCommentNo() {
 
-        CreateCommentRequest commentRequest = new CreateCommentRequest(user.getId(), 1L, "댓글 생성 테스트");
+        CreateCommentRequest commentRequest = new CreateCommentRequest(member.getId(), 1L, "댓글 생성 테스트");
         CommentCommandResponse comment = createCommentService.createComment(commentRequest);
 
         CommentQueryResponse response = queryCommentService.findComment(new FindCommentRequest(comment.commentNo()));

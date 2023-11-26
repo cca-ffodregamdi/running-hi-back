@@ -5,11 +5,11 @@ import com.runninghi.comment.command.application.dto.request.DeleteCommentReques
 import com.runninghi.comment.command.application.dto.request.UpdateCommentRequest;
 import com.runninghi.comment.command.application.service.CommentCommandService;
 import com.runninghi.comment.command.domain.aggregate.entity.Comment;
-import com.runninghi.comment.command.domain.aggregate.vo.CommentUserVO;
+import com.runninghi.comment.command.domain.aggregate.vo.CommentMemberVO;
 import com.runninghi.comment.command.domain.repository.CommentCommandRepository;
-import com.runninghi.user.command.domain.aggregate.entity.User;
-import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
-import com.runninghi.user.command.domain.repository.UserCommandRepository;
+import com.runninghi.member.command.domain.aggregate.Member;
+import com.runninghi.member.command.domain.aggregate.entity.enumtype.Role;
+import com.runninghi.member.command.domain.repository.MemberCommandRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -41,7 +41,7 @@ public class CommentCommandControllerTests {
     private CommentCommandRepository commentRepository;
 
     @Autowired
-    private UserCommandRepository userCommandRepository;
+    private MemberCommandRepository memberCommandRepository;
     @Autowired
     private PasswordEncoder encoder;
 
@@ -49,7 +49,7 @@ public class CommentCommandControllerTests {
     @AfterEach
     void clear() {
         commentRepository.deleteAllInBatch();
-        userCommandRepository.deleteAllInBatch();
+        memberCommandRepository.deleteAllInBatch();
     }
 
     @BeforeEach
@@ -61,7 +61,7 @@ public class CommentCommandControllerTests {
     @Test
     @DisplayName("댓글 생성 컨트롤러 : success")
     void createCommentControllerTest() throws Exception {
-        User user = userCommandRepository.save(User.builder()
+        Member member = memberCommandRepository.save(Member.builder()
                 .account("qwerty1234")
                 .password(encoder.encode("1234"))
                 .name("김철수")
@@ -71,7 +71,7 @@ public class CommentCommandControllerTests {
                 .status(true)
                 .build());
 
-        CreateCommentRequest request = new CreateCommentRequest(user.getId(), 1L, "댓글 생성 컨트롤러 테스트");
+        CreateCommentRequest request = new CreateCommentRequest(member.getId(), 1L, "댓글 생성 컨트롤러 테스트");
 
         mock.perform(post("/api/v1/comments")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -86,8 +86,8 @@ public class CommentCommandControllerTests {
                 .commentNo(999L)
                 .commentDate(new Date())
                 .commentContent("댓글 수정 컨트롤러 테스트")
-                .userNoVO(new CommentUserVO(UUID.randomUUID()))
-                .userPostNo(111L)
+                .memberNoVO(new CommentMemberVO(UUID.randomUUID()))
+                .memberPostNo(111L)
                 .build();
 
         UpdateCommentRequest request = new UpdateCommentRequest(comment.getCommentNo(), "댓글 수정!!!");
@@ -105,8 +105,8 @@ public class CommentCommandControllerTests {
                 .commentNo(999L)
                 .commentDate(new Date())
                 .commentContent("댓글 수정 컨트롤러 테스트")
-                .userNoVO(new CommentUserVO(UUID.randomUUID()))
-                .userPostNo(111L)
+                .memberNoVO(new CommentMemberVO(UUID.randomUUID()))
+                .memberPostNo(111L)
                 .build();
 
         DeleteCommentRequest request = new DeleteCommentRequest(comment.getCommentNo());

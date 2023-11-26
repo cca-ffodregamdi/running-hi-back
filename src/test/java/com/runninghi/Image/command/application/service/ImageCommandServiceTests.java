@@ -6,7 +6,10 @@ import com.runninghi.image.command.application.dto.response.ImageResponse;
 import com.runninghi.image.command.application.service.ImageCommandService;
 import com.runninghi.image.command.domain.aggregate.entity.Image;
 import com.runninghi.image.command.domain.repository.ImageCommandRepository;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
@@ -126,7 +129,7 @@ public class ImageCommandServiceTests {
         long afterCnt = imageCommandRepository.count();
 
         Assertions.assertEquals(beforeCnt + 1, afterCnt);
-        Assertions.assertEquals(1L, images.get(0).getUserPostVO().getUserPostNo());
+        Assertions.assertEquals(1L, images.get(0).getMemberPostVO().getMemberPostNo());
 
     }
 
@@ -149,8 +152,8 @@ public class ImageCommandServiceTests {
         long afterCnt = imageCommandRepository.count();
 
         Assertions.assertEquals(beforeCnt + 2, afterCnt);
-        Assertions.assertEquals(1L, images.get(0).getUserPostVO().getUserPostNo());
-        Assertions.assertEquals(1L, images.get(1).getUserPostVO().getUserPostNo());
+        Assertions.assertEquals(1L, images.get(0).getMemberPostVO().getMemberPostNo());
+        Assertions.assertEquals(1L, images.get(1).getMemberPostVO().getMemberPostNo());
 
     }
 
@@ -171,7 +174,7 @@ public class ImageCommandServiceTests {
         long beforeCnt = imageCommandRepository.count();
 
         ImageDeletePostRequest request = new ImageDeletePostRequest(1L);
-        List<String> deletedImageUrls = imageCommandService.deleteUserPostImage(request);
+        List<String> deletedImageUrls = imageCommandService.deleteMemberPostImage(request);
 
         long afterCnt = imageCommandRepository.count();
 

@@ -3,8 +3,8 @@ package com.runninghi.feedback.query.infrastructure.service;
 import com.runninghi.common.annotation.InfraService;
 import com.runninghi.feedback.query.application.dto.response.FeedbackUserResponse;
 import com.runninghi.feedback.query.domain.service.ApiFeedbackQueryDomainService;
-import com.runninghi.user.query.application.dto.user.response.UserInfoResponse;
-import com.runninghi.user.query.application.service.UserQueryService;
+import com.runninghi.member.query.application.dto.member.response.MemberInfoResponse;
+import com.runninghi.member.query.application.service.MemberQueryService;
 import lombok.RequiredArgsConstructor;
 
 import java.util.UUID;
@@ -13,11 +13,11 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ApiFeedbackInfraQueryDomainService implements ApiFeedbackQueryDomainService {
 
-    private final UserQueryService userQueryService;
+    private final MemberQueryService userQueryService;
 
     public FeedbackUserResponse checkUser(UUID userId) {
 
-        UserInfoResponse result = userQueryService.findUserInfo(userId);
+        MemberInfoResponse result = userQueryService.findMemberInfo(userId);
 
         return new FeedbackUserResponse(
                 result.id(),

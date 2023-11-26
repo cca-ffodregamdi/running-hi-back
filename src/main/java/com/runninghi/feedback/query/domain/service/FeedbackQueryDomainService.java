@@ -1,10 +1,9 @@
 package com.runninghi.feedback.query.domain.service;
 
 import com.runninghi.common.annotation.DomainService;
-
 import com.runninghi.feedback.command.domain.aggregate.entity.Feedback;
 import com.runninghi.feedback.query.application.dto.response.FeedbackUserResponse;
-import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
+import com.runninghi.member.command.domain.aggregate.entity.enumtype.Role;
 import lombok.RequiredArgsConstructor;
 
 @DomainService

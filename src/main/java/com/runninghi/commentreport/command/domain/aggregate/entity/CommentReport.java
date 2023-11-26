@@ -1,12 +1,13 @@
 package com.runninghi.commentreport.command.domain.aggregate.entity;
 
-import com.runninghi.commentreport.command.domain.aggregate.vo.CommentReportUserVO;
-import com.runninghi.commentreport.command.domain.aggregate.vo.CommentReportedUserVO;
+import com.runninghi.commentreport.command.domain.aggregate.vo.CommentReportMemberVO;
+import com.runninghi.commentreport.command.domain.aggregate.vo.CommentReportedMemberVO;
 import com.runninghi.commentreport.command.domain.aggregate.vo.ReportedCommentVO;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 import java.sql.Timestamp;
 
 @Entity
@@ -25,9 +26,9 @@ public class CommentReport {
     @Column
     private Timestamp commentReportedDate;
     @Embedded
-    private CommentReportUserVO commentReportUserVO;
+    private CommentReportMemberVO commentReportUserVO;
     @Embedded
-    private CommentReportedUserVO commentReportedUserVO;
+    private CommentReportedMemberVO commentReportedUserVO;
     @Embedded
     private ReportedCommentVO reportedCommentVO;
 }
