@@ -136,7 +136,6 @@ jobs:
             sudo docker rm -f $(sudo docker ps --filter 'status=exited' -a -q)
             sudo docker pull "${{ secrets.DOCKER_USERNAME_DEV }}"/runninghi-dev
             ls -a
-            chmod u+rw docker-compose.yml
             sudo docker-compose up -d
             sudo docker image prune -a -f
 
