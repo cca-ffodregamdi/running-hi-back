@@ -154,4 +154,4 @@ jobs:
             sudo docker rm -f $(sudo docker ps --filter 'status=exited' -a -q)
             sudo docker pull "${{ secrets.DOCKER_USERNAME_PROD }}"/runninghi-prod
             sudo docker-compose up -d
-            sudo docker image prune -f
+            sudo docker image prune -a -f
