@@ -1,7 +1,7 @@
 version: '3'
 services:
   webapp:
-    image: rachaz/runninghi-prod
+    image: qweqwerty123/runninghi-prod
     restart: always
     container_name: runninghi_spring_boot_prod
     expose:
