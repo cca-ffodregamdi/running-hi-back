@@ -132,10 +132,9 @@ jobs:
           #            sudo docker run -d --log-driver=syslog -p 8081:8081 -e SPRING_PROFILES_ACTIVE=dev "${{ secrets.DOCKER_USERNAME_DEV }}"/runninghi-dev
           script: |
             sudo docker login -u "${{ secrets.DOCKER_USERNAME_DEV }}" -p "${{ secrets.DOCKER_PASSWORD_DEV }}"
-            sudo docker stop $(docker ps -a -q)
+            sudo docker stop runninghi_spring_boot_dev
             sudo docker rm -f $(sudo docker ps --filter 'status=exited' -a -q)
             sudo docker pull "${{ secrets.DOCKER_USERNAME_DEV }}"/runninghi-dev
-            ls -a
             sudo docker-compose up -d
             sudo docker image prune -a -f
 
