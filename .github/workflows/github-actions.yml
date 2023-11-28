@@ -33,14 +33,14 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      ## MySQL setting
-      - name: Setup MySQL
-        uses: samin/mysql-action@v1
-        with:
-          character set server: 'utf8'
-          mysql database: 'runninghi'
-          mysql user: ${{ secrets.MYSQL_USERNAME }}
-          mysql password: ${{ secrets.MYSQL_PASSWORD }}
+      #      ## MySQL setting
+      #      - name: Setup MySQL
+      #        uses: samin/mysql-action@v1
+      #        with:
+      #          character set server: 'utf8'
+      #          mysql database: 'runninghi'
+      #          mysql user: ${{ secrets.MYSQL_USERNAME }}
+      #          mysql password: ${{ secrets.MYSQL_PASSWORD }}
 
       ## application.yml 파일을 생성합니다.
       - name: make application.yml
@@ -150,7 +150,7 @@ jobs:
           #            sudo docker run -d --log-driver=syslog -p 8082:8082 -e SPRING_PROFILES_ACTIVE=prod "${{ secrets.DOCKER_USERNAME_PROD }}"/runninghi-prod
           script: |
             sudo docker login -u "${{ secrets.DOCKER_USERNAME_PROD }}" -p "${{ secrets.DOCKER_PASSWORD_PROD }}"
-            sudo docker stop runninghi_spring_boot_prod
+            sudo docker stop $(docker ps -a -q)
             sudo docker rm -f $(sudo docker ps --filter 'status=exited' -a -q)
             sudo docker pull "${{ secrets.DOCKER_USERNAME_PROD }}"/runninghi-prod
             sudo docker-compose up -d
