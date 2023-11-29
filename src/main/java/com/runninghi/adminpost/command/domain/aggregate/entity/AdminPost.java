@@ -1,6 +1,6 @@
 package com.runninghi.adminpost.command.domain.aggregate.entity;
 
-import com.runninghi.adminpost.command.domain.aggregate.vo.WriterNoVO;
+import com.runninghi.adminpost.command.domain.aggregate.vo.WriterKeyVO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,12 +17,13 @@ public class AdminPost {
     private Long adminPostNo;
 
     @Embedded
-    private WriterNoVO writerNoVO;
+    private WriterKeyVO writerKeyVO;
 
     @Column
     private String adminPostTitle;
 
-    @Column(columnDefinition = "LONGTEXT")
+//    @Column(columnDefinition = "LONGTEXT")
+    @Column
     private String adminPostContent;
 
     @Column
@@ -47,10 +48,10 @@ public class AdminPost {
     private String updateDate;
 
     @Builder
-    public AdminPost(Long adminPostNo, WriterNoVO writerNoVO, String adminPostTitle, String adminPostContent, String adminPostThumbnailUrl,
+    public AdminPost(Long adminPostNo, WriterKeyVO writerKeyVO, String adminPostTitle, String adminPostContent, String adminPostThumbnailUrl,
                      double totalDistance, double totalTime, double maxSlope, double kcal, String createDate, String updateDate) {
         this.adminPostNo = adminPostNo;
-        this.writerNoVO = writerNoVO;
+        this.writerKeyVO = writerKeyVO;
         this.adminPostTitle = adminPostTitle;
         this.adminPostContent = adminPostContent;
         this.adminPostThumbnailUrl = adminPostThumbnailUrl;

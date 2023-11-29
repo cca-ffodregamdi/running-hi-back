@@ -5,14 +5,13 @@ import com.runninghi.adminpost.command.application.dto.request.AdminPostRequestD
 import com.runninghi.adminpost.command.application.dto.response.AdminPostResponse;
 import com.runninghi.adminpost.command.domain.aggregate.document.AdminCourse;
 import com.runninghi.adminpost.command.domain.aggregate.entity.AdminPost;
-import com.runninghi.adminpost.command.domain.aggregate.vo.WriterNoVO;
+import com.runninghi.adminpost.command.domain.aggregate.vo.WriterKeyVO;
 import com.runninghi.adminpost.command.domain.mongo.AdminCourseCommandRepository;
 import com.runninghi.adminpost.command.domain.repository.AdminPostCommandRepository;
 import com.runninghi.adminpost.command.domain.service.AdminPostCommandDomainService;
 import com.runninghi.adminpost.command.domain.service.ApiAdminPostDomainService;
 import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
 import lombok.RequiredArgsConstructor;
-import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,7 +47,7 @@ public class AdminPostCommandService {
         // adminPost 저장
         AdminPost adminPost = adminPostCommandRepository.save(
                 AdminPost.builder()
-                        .writerNoVO(new WriterNoVO(request.getUserKey()))
+                        .writerKeyVO(new WriterKeyVO(request.getUserKey()))
                         .adminPostTitle(request.getAdminPostTitle())
                         .adminPostContent(request.getAdminPostContent())
                         .adminPostThumbnailUrl(thumbnailUrl)
@@ -75,7 +74,7 @@ public class AdminPostCommandService {
         );
 
         return AdminPostResponse.of(
-                adminPost.getWriterNoVO().getWriterNo(),
+                adminPost.getWriterKeyVO().getUserKey(),
                 adminPost.getAdminPostThumbnailUrl(),
                 adminPost.getAdminPostTitle(),
                 adminPost.getAdminPostContent(),
@@ -126,7 +125,7 @@ public class AdminPostCommandService {
         );
 
         return AdminPostResponse.of(
-                adminPost.getWriterNoVO().getWriterNo(),
+                adminPost.getWriterKeyVO().getUserKey(),
                 adminPost.getAdminPostThumbnailUrl(),
                 adminPost.getAdminPostTitle(),
                 adminPost.getAdminPostContent(),
@@ -147,6 +146,8 @@ public class AdminPostCommandService {
         AdminCourse adminCourse = adminCourseCommandRepository.findByAdminPostNo(adminPostNo)
                 .orElseThrow( () -> new IllegalArgumentException("일치하는 코스가 존재하지 않습니다."));
 
+        // 게시글 키워드 삭제
+        apiAdminPostDomainService.deleteKeywordOfPost(adminPostNo);
         // 기존 엔티티 삭제
         adminPostCommandRepository.deleteById(adminPostNo);
     }

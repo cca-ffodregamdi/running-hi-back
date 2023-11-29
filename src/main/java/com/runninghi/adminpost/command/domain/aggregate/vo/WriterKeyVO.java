@@ -13,8 +13,8 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 @AllArgsConstructor
 @Embeddable
-public class WriterNoVO {
+public class WriterKeyVO {
 
     @Column
-    private UUID writerNo;
+    private UUID userKey;
 }
