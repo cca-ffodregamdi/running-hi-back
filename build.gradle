@@ -95,6 +95,9 @@ dependencies {
 
     // MongoDB
     implementation "org.springframework.boot:spring-boot-starter-data-mongodb"
+
+    // mybatis
+    implementation "org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.2"
 }
 
 dependencyManagement {

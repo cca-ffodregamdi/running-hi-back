@@ -39,7 +39,8 @@ public class AdminPostCommandService {
 
         checkAdminByUserNo(request.getUserKey());   // 관리자인지 체크
 
-        String thumbnailUrl = apiAdminPostDomainService.uploadThumbnail(request.getThumbnail()); // 썸네일 클라우드에 업로드
+        // 썸네일 클라우드에 업로드
+        String thumbnailUrl = apiAdminPostDomainService.uploadThumbnail(request.getThumbnail());
 
         // gpx 파일 내에서 기록 추출
         CourseRecordDTO courseRecord = adminPostCommandDomainService.extractGPX(request.getGpxFile());
