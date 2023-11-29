@@ -7,7 +7,7 @@ import com.runninghi.adminpost.command.domain.aggregate.vo.WriterNoVO;
 import com.runninghi.adminpost.command.domain.repository.AdminPostCommandRepository;
 import com.runninghi.adminpost.command.domain.service.AdminPostCommandDomainService;
 import com.runninghi.adminpost.command.domain.service.ApiAdminPostDomainService;
-import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
+import com.runninghi.member.command.domain.aggregate.entity.enumtype.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

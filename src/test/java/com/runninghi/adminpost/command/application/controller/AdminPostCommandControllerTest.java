@@ -2,19 +2,23 @@ package com.runninghi.adminpost.command.application.controller;
 
 import com.runninghi.adminpost.command.application.dto.request.AdminPostCreateRequest;
 import com.runninghi.adminpost.command.application.dto.request.KeywordListRequest;
-import com.runninghi.user.command.domain.aggregate.entity.User;
-import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
-import com.runninghi.user.command.domain.repository.UserCommandRepository;
-import jakarta.validation.*;
+import com.runninghi.member.command.domain.aggregate.Member;
+import com.runninghi.member.command.domain.aggregate.entity.enumtype.Role;
+import com.runninghi.member.command.domain.repository.MemberCommandRepository;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 
 import java.util.Arrays;
 import java.util.List;
@@ -28,7 +32,7 @@ class AdminPostCommandControllerTest {
     @Autowired
     private AdminPostCommandController adminPostCommandController;
     @Autowired
-    private UserCommandRepository userCommandRepository;
+    private MemberCommandRepository memberCommandRepository;
     @Autowired
     private PasswordEncoder encoder;
     @Autowired
@@ -45,11 +49,11 @@ class AdminPostCommandControllerTest {
     @BeforeEach
     @AfterEach
     void clear() {
-        userCommandRepository.deleteAllInBatch();
+        memberCommandRepository.deleteAllInBatch();
     }
 
-    private User createAdmin() {
-        return userCommandRepository.save(User.builder()
+    private Member createAdmin() {
+        return memberCommandRepository.save(Member.builder()
                 .account("qwerty1234")
                 .password(encoder.encode("1234"))
                 .name("김철수")
@@ -60,7 +64,7 @@ class AdminPostCommandControllerTest {
                 .build());
     }
 
-    private AdminPostCreateRequest createAdminPostRequest(User admin, List<KeywordListRequest> keywordList) {
+    private AdminPostCreateRequest createAdminPostRequest(Member admin, List<KeywordListRequest> keywordList) {
         return new AdminPostCreateRequest(
                 admin.getId(),
                 "asdfiasdnfo.jpg",
@@ -103,10 +107,10 @@ class AdminPostCommandControllerTest {
 
     @DisplayName("관리자 게시글 생성 요청 유효성 테스트 : 썸네일 null 값일 시 메세지 반환하는 지 확인")
     @Test
-    void testCreateAdminPostNullThumbnail () {
+    void testCreateAdminPostNullThumbnail() {
 
         // given
-        User admin = createAdmin();
+        Member admin = createAdmin();
         List<KeywordListRequest> keywordList = createKeywordList();
         AdminPostCreateRequest request = new AdminPostCreateRequest(
                 admin.getId(),
@@ -127,10 +131,10 @@ class AdminPostCommandControllerTest {
 
     @DisplayName("관리자 게시글 생성 요청 유효성 테스트 : 썸네일 \"\"일 시 메세지 반환하는 지 학인")
     @Test
-    void testCreateAdminPostNoThumbnail () {
+    void testCreateAdminPostNoThumbnail() {
 
         // given
-        User admin = createAdmin();
+        Member admin = createAdmin();
         List<KeywordListRequest> keywordList = createKeywordList();
         AdminPostCreateRequest request = new AdminPostCreateRequest(
                 admin.getId(),
@@ -151,10 +155,10 @@ class AdminPostCommandControllerTest {
 
     @DisplayName("관리자 게시글 생성 요청 유효성 테스트 : 썸네일 \" \"일 시 메세지 반환하는 지 학인")
     @Test
-    void testCreateAdminPostSapceBarThumbnail () {
+    void testCreateAdminPostSapceBarThumbnail() {
 
         // given
-        User admin = createAdmin();
+        Member admin = createAdmin();
         List<KeywordListRequest> keywordList = createKeywordList();
         AdminPostCreateRequest request = new AdminPostCreateRequest(
                 admin.getId(),
@@ -176,10 +180,10 @@ class AdminPostCommandControllerTest {
 
     @DisplayName("관리자 게시글 생성 요청 유효성 테스트 : 제목 값 null 일 시 예외 메세지 반환하는지 확인")
     @Test
-    void testAdminPostRequestTitleValid () {
+    void testAdminPostRequestTitleValid() {
 
         // given
-        User admin = createAdmin();
+        Member admin = createAdmin();
         List<KeywordListRequest> keywordList = createKeywordList();
         AdminPostCreateRequest request = new AdminPostCreateRequest(
                 admin.getId(),
@@ -200,10 +204,10 @@ class AdminPostCommandControllerTest {
 
     @DisplayName("관리자 게시글 생성 요청 유효성 테스트 : 제목 값 \"\"일 시 예외 메세지 반환하는지 확인")
     @Test
-    void testAdminPostRequestNoTitleValid () {
+    void testAdminPostRequestNoTitleValid() {
 
         // given
-        User admin = createAdmin();
+        Member admin = createAdmin();
         List<KeywordListRequest> keywordList = createKeywordList();
         AdminPostCreateRequest request = new AdminPostCreateRequest(
                 admin.getId(),
@@ -224,10 +228,10 @@ class AdminPostCommandControllerTest {
 
     @DisplayName("관리자 게시글 생성 요청 유효성 테스트 : 제목 값 \" \" 일 시 예외 메세지 반환하는지 확인")
     @Test
-    void testAdminPostRequestSapceTitleValid () {
+    void testAdminPostRequestSapceTitleValid() {
 
         // given
-        User admin = createAdmin();
+        Member admin = createAdmin();
         List<KeywordListRequest> keywordList = createKeywordList();
         AdminPostCreateRequest request = new AdminPostCreateRequest(
                 admin.getId(),
@@ -248,10 +252,10 @@ class AdminPostCommandControllerTest {
 
     @DisplayName("관리자 게시글 생성 요청 유효성 테스트 : 내용 null 일 시 예외 메세지 반환하는지 확인")
     @Test
-    void testAdminPostRequestContentNull () {
+    void testAdminPostRequestContentNull() {
 
         // given
-        User admin = createAdmin();
+        Member admin = createAdmin();
         List<KeywordListRequest> keywordList = createKeywordList();
         AdminPostCreateRequest request = new AdminPostCreateRequest(
                 admin.getId(),
@@ -272,10 +276,10 @@ class AdminPostCommandControllerTest {
 
     @DisplayName("관리자 게시글 생성 요청 유효성 테스트 : 내용 \"\"일 시 예외 메세지 반환하는지 확인")
     @Test
-    void testAdminPostRequestNoContent () {
+    void testAdminPostRequestNoContent() {
 
         // given
-        User admin = createAdmin();
+        Member admin = createAdmin();
         List<KeywordListRequest> keywordList = createKeywordList();
         AdminPostCreateRequest request = new AdminPostCreateRequest(
                 admin.getId(),
@@ -296,10 +300,10 @@ class AdminPostCommandControllerTest {
 
     @DisplayName("관리자 게시글 생성 요청 유효성 테스트 : 내용 \" \" 시 예외 메세지 반환하는지 확인")
     @Test
-    void testAdminPostRequestSpaceContent () {
+    void testAdminPostRequestSpaceContent() {
 
         // given
-        User admin = createAdmin();
+        Member admin = createAdmin();
         List<KeywordListRequest> keywordList = createKeywordList();
         AdminPostCreateRequest request = new AdminPostCreateRequest(
                 admin.getId(),

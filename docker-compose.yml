@@ -1,0 +1,19 @@
+version: '3'
+services:
+  webapp:
+    image: rachaz/runninghi-dev
+    restart: always
+    container_name: runninghi_spring_boot_dev
+    expose:
+      - "8081"
+    ports: # host - container 포트 매핑
+      - "8081:8081"
+
+  react:
+    image: rachaz/runninghi-front-dev
+    restart: always
+    container_name: runninghi_react_dev
+    expose:
+      - "3000"
+    ports:
+      - "3000:3000"

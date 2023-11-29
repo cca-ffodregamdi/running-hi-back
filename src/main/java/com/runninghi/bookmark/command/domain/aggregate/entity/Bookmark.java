@@ -1,13 +1,15 @@
 package com.runninghi.bookmark.command.domain.aggregate.entity;
 
-import com.runninghi.bookmark.command.domain.aggregate.vo.BookmarkUserVO;
+import com.runninghi.bookmark.command.domain.aggregate.vo.BookmarkMemberVO;
 import com.runninghi.bookmark.command.domain.aggregate.vo.BookmarkVO;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Entity
 @Getter
@@ -19,15 +21,15 @@ public class Bookmark implements Serializable {
     private BookmarkVO bookmarkVO;
 
     @Embedded
-    private BookmarkUserVO userNoVO;
+    private BookmarkMemberVO memberNoVO;
 
     @Column
     private LocalDate addDate;
 
     @Builder
-    public Bookmark(BookmarkVO bookmarkVO, BookmarkUserVO userNoVO, LocalDate addDate) {
+    public Bookmark(BookmarkVO bookmarkVO, BookmarkMemberVO memberNoVO, LocalDate addDate) {
         this.bookmarkVO = bookmarkVO;
-        this.userNoVO = userNoVO;
+        this.memberNoVO = memberNoVO;
         this.addDate = addDate;
     }
 }

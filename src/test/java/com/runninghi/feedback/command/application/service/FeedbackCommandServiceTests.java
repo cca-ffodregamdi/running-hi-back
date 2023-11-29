@@ -10,9 +10,9 @@ import com.runninghi.feedback.command.domain.aggregate.entity.FeedbackCategory;
 import com.runninghi.feedback.command.domain.aggregate.vo.FeedbackWriterVO;
 import com.runninghi.feedback.command.domain.repository.FeedbackCommandRepository;
 import com.runninghi.feedback.command.infrastructure.service.ApiFeedbackCommandInfraService;
-import com.runninghi.user.command.domain.aggregate.entity.User;
-import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
-import com.runninghi.user.command.domain.repository.UserCommandRepository;
+import com.runninghi.member.command.domain.aggregate.Member;
+import com.runninghi.member.command.domain.aggregate.entity.enumtype.Role;
+import com.runninghi.member.command.domain.repository.MemberCommandRepository;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,14 +35,14 @@ public class FeedbackCommandServiceTests {
     private FeedbackCommandRepository feedbackCommandRepository;
 
     @Autowired
-    private UserCommandRepository userCommandRepository;
+    private MemberCommandRepository userCommandRepository;
 
     @Autowired
     private PasswordEncoder encoder;
 
-    private User user1;
+    private Member user1;
 
-    private User user2;
+    private Member user2;
 
     private Feedback setUpFeedback1;
 
@@ -58,7 +58,7 @@ public class FeedbackCommandServiceTests {
     @BeforeEach
     public void setUp() {
 
-        user1 = userCommandRepository.saveAndFlush(User.builder()
+        user1 = userCommandRepository.saveAndFlush(Member.builder()
                 .account("qwerty1234")
                 .password(encoder.encode("1234"))
                 .name("김철수")
@@ -68,7 +68,7 @@ public class FeedbackCommandServiceTests {
                 .status(true)
                 .build());
 
-        user2 = userCommandRepository.saveAndFlush(User.builder()
+        user2 = userCommandRepository.saveAndFlush(Member.builder()
                 .account("testUser")
                 .password(encoder.encode("1111"))
                 .name("testUUUUser")

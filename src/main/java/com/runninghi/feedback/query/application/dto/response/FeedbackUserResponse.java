@@ -1,6 +1,6 @@
 package com.runninghi.feedback.query.application.dto.response;
 
-import com.runninghi.user.command.domain.aggregate.entity.enumtype.Role;
+import com.runninghi.member.command.domain.aggregate.entity.enumtype.Role;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -20,4 +20,5 @@ public record FeedbackUserResponse(
         Role role,
         LocalDateTime createdAt
 
-) { }
+) {
+}

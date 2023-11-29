@@ -4,7 +4,6 @@ import com.runninghi.bookmark.command.application.dto.request.CreateBookmarkRequ
 import com.runninghi.bookmark.command.application.dto.response.BookmarkCommandResponse;
 import com.runninghi.bookmark.command.application.service.BookmarkCommandService;
 import com.runninghi.bookmark.command.domain.aggregate.entity.Bookmark;
-import com.runninghi.bookmark.command.domain.aggregate.vo.BookmarkUserVO;
 import com.runninghi.bookmark.command.domain.aggregate.vo.BookmarkVO;
 import com.runninghi.bookmark.command.domain.repository.BookmarkCommandRepository;
 import com.runninghi.bookmark.query.application.dto.FindBookmarkListRequest;
@@ -84,7 +83,6 @@ public class BookmarkQueryServiceTests {
             queryBookmarkService.findBookmark(findRequest);
         });
     }
-
 
 
 }

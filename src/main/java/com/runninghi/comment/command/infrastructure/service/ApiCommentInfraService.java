@@ -4,8 +4,8 @@ import com.runninghi.comment.command.domain.service.ApiCommentDomainService;
 import com.runninghi.comment.query.application.dto.request.FindCommentRequest;
 import com.runninghi.comment.query.application.service.CommentQueryService;
 import com.runninghi.common.annotation.InfraService;
-import com.runninghi.user.command.application.dto.user.response.UserInfoResponse;
-import com.runninghi.user.query.application.service.UserQueryService;
+import com.runninghi.member.query.application.dto.member.response.MemberInfoResponse;
+import com.runninghi.member.query.application.service.MemberQueryService;
 import lombok.RequiredArgsConstructor;
 
 import java.util.NoSuchElementException;
@@ -16,7 +16,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ApiCommentInfraService implements ApiCommentDomainService {
     private final CommentQueryService commentQueryService;
-    private final UserQueryService userQueryService;
+    private final MemberQueryService userQueryService;
 
     @Override
     public void validateCommentContentNull(String commentContent) {
@@ -26,16 +26,16 @@ public class ApiCommentInfraService implements ApiCommentDomainService {
     }
 
     @Override
-    public void validateUser(UUID userNo) {
+    public void validateMember(UUID userNo) {
 
-        UserInfoResponse result = userQueryService.findUserInfo(userNo);
+        MemberInfoResponse result = userQueryService.findMemberInfo(userNo);
 
-        if(result == null) throw new NoSuchElementException("존재하지 않는 회원입니다.");
+        if (result == null) throw new NoSuchElementException("존재하지 않는 회원입니다.");
 
     }
 
     @Override
-    public void validateUserPost(Long userPostNo) {
+    public void validateMemberPost(Long memberPostNo) {
 
 
     }

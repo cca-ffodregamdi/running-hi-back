@@ -9,7 +9,7 @@ import com.runninghi.image.command.application.dto.response.ImageCreateResponse;
 import com.runninghi.image.command.application.dto.response.ImageResponse;
 import com.runninghi.image.command.domain.aggregate.entity.Image;
 import com.runninghi.image.command.domain.aggregate.vo.AdminPostVO;
-import com.runninghi.image.command.domain.aggregate.vo.UserPostVO;
+import com.runninghi.image.command.domain.aggregate.vo.MemberPostVO;
 import com.runninghi.image.command.domain.repository.ImageCommandRepository;
 import com.runninghi.image.command.domain.service.ImageCommandDomainService;
 import lombok.RequiredArgsConstructor;
@@ -37,16 +37,12 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ImageCommandService {
 
+    private final ImageCommandDomainService imageCommandDomainService;
+    private final ImageCommandRepository imageCommandRepository;
     @Value("${firebase.storage.bucket}")
     private String bucketName;
-
     @Value("${firebase.storage.bucket-url}")
     private String bucketUrl;
-
-
-    private final ImageCommandDomainService imageCommandDomainService;
-
-    private final ImageCommandRepository imageCommandRepository;
 
     // 여러 개의 이미지 Firebase Storage에 저장
     @Transactional
@@ -60,7 +56,7 @@ public class ImageCommandService {
         for (MultipartFile multipartFile : multipartFileList) {
             // 이미지 이름 새로 생성
             String fileName = createFileName(multipartFile.getOriginalFilename());
-            String folder = (board.equals("admin")) ? "admin_post/" : "user_post/";
+            String folder = (board.equals("admin")) ? "admin_post/" : "Member_post/";
 
             try (InputStream inputStream = multipartFile.getInputStream()) {
                 // 이미지 압축
@@ -93,7 +89,7 @@ public class ImageCommandService {
 
         // 이미지 파일 이름 새로 만들기
         String fileName = createFileName(multipartFile.getOriginalFilename());
-        String folder = (board.equals("admin")) ? "admin_post/" : "user_post/";
+        String folder = (board.equals("admin")) ? "admin_post/" : "Member_post/";
 
         try (InputStream inputStream = multipartFile.getInputStream()) {
             // 이미지 압축
@@ -117,14 +113,14 @@ public class ImageCommandService {
 
     // 유저 게시판: 특정 게시물과 관련된 이미지 entity 생성
     public ImageResponse createUserPostImage(ImageRequest imageRequest) {
-        UserPostVO userPostVO = new UserPostVO(imageRequest.postNo());
+        MemberPostVO memberPostVO = new MemberPostVO(imageRequest.postNo());
 
         // 이미지 entity 저장
         List<Image> imageEntities = imageRequest.imageUrls().stream()
                 .map(imageUrl -> {
                     Image image = new Image.Builder()
                             .imageUrl(imageUrl)
-                            .userPostVO(userPostVO)
+                            .memberPostVO(memberPostVO)
                             .build();
                     return imageCommandRepository.save(image);
                 })
@@ -140,12 +136,12 @@ public class ImageCommandService {
 
     // 유저 게시판: 특정 게시물과 관련된 이미지 entity 전부 삭제하고 imageUrl을 반환
     @Transactional
-    public List<String> deleteUserPostImage(ImageDeletePostRequest imageDeletePostRequest) {
+    public List<String> deleteMemberPostImage(ImageDeletePostRequest imageDeletePostRequest) {
 
-        List<String> imageUrls = imageCommandRepository.getImagesByUserPostNo(imageDeletePostRequest.postNo());
+        List<String> imageUrls = imageCommandRepository.getImagesByMemberPostNo(imageDeletePostRequest.postNo());
 
         // 이미지 entity 전부 삭제
-        imageCommandRepository.deleteImagesByUserPostVO_UserPostNo(imageDeletePostRequest.postNo());
+        imageCommandRepository.deleteImagesByMemberPostVO_MemberPostNo(imageDeletePostRequest.postNo());
 
         return imageUrls;
     }
@@ -203,7 +199,7 @@ public class ImageCommandService {
     @Transactional
     public void deleteImageFile(ImageDeleteRequest imageDeleteRequest) {
         String imageName = imageDeleteRequest.imageUrl().replace(bucketUrl, "").replace("%2F", "/").replace("?alt=media", "");
-        BlobId blobId = BlobId.of(bucketName,  imageName);
+        BlobId blobId = BlobId.of(bucketName, imageName);
         Storage storage = StorageClient.getInstance().bucket(bucketName).getStorage();
         boolean deleted = storage.delete(blobId);
 

@@ -1,7 +1,7 @@
 package com.runninghi.bookmarkfolder.command.application.service;
 
 import com.runninghi.bookmark.command.domain.aggregate.entity.Bookmark;
-import com.runninghi.bookmark.command.domain.aggregate.vo.BookmarkUserVO;
+import com.runninghi.bookmark.command.domain.aggregate.vo.BookmarkMemberVO;
 import com.runninghi.bookmark.command.domain.aggregate.vo.BookmarkVO;
 import com.runninghi.bookmark.command.domain.repository.BookmarkCommandRepository;
 import com.runninghi.bookmark.query.application.dto.FindBookmarkRequest;
@@ -11,7 +11,7 @@ import com.runninghi.bookmarkfolder.command.application.dto.request.DeleteFolder
 import com.runninghi.bookmarkfolder.command.application.dto.request.UpdateFolderRequest;
 import com.runninghi.bookmarkfolder.command.application.dto.response.FolderDeleteResponse;
 import com.runninghi.bookmarkfolder.command.domain.aggregate.entity.BookmarkFolder;
-import com.runninghi.bookmarkfolder.command.domain.aggregate.vo.FolderUserVO;
+import com.runninghi.bookmarkfolder.command.domain.aggregate.vo.FolderMemberVO;
 import com.runninghi.bookmarkfolder.command.domain.repository.FolderCommandRepository;
 import com.runninghi.bookmarkfolder.query.application.dto.request.FindFolderRequest;
 import com.runninghi.bookmarkfolder.query.application.dto.response.FolderQueryResponse;
@@ -24,11 +24,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.time.LocalDate;
 import java.util.UUID;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @SpringBootTest
@@ -55,6 +56,7 @@ public class BookmarkFolderCommandServiceTests {
     void clear() {
         bookmarkFolderRepository.deleteAllInBatch();
     }
+
     @Test
     @DisplayName("즐겨찾기 폴더 추가 테스트 : success")
     void testCreateNewBookmarkFolder() {
@@ -93,7 +95,7 @@ public class BookmarkFolderCommandServiceTests {
     private BookmarkFolder createBookmarkFolder() {
         return bookmarkFolderRepository.save(BookmarkFolder.builder()
                 .folderName("updateTestFolder")
-                .userNoVO(new FolderUserVO(UUID.randomUUID()))
+                .memberNoVO(new FolderMemberVO(UUID.randomUUID()))
                 .folderNo(1L)
                 .build());
     }
@@ -104,7 +106,7 @@ public class BookmarkFolderCommandServiceTests {
 
         BookmarkFolder folder = createBookmarkFolder();
 
-        UpdateFolderRequest updateFolder = new UpdateFolderRequest(folder.getFolderNo(), "updated",folder.getUserNoVO().getUserNo());
+        UpdateFolderRequest updateFolder = new UpdateFolderRequest(folder.getFolderNo(), "updated", folder.getMemberNoVO().getMemberNo());
 
         commandBookmarkFolderService.updateBookmarkFolder(updateFolder);
 
@@ -117,7 +119,7 @@ public class BookmarkFolderCommandServiceTests {
     @DisplayName("즐겨찾기 폴더 수정 테스트: 즐겨찾기 폴더번호 없을 시 예외처리")
     void testUpdateFolderDoesntExist() {
 
-        UpdateFolderRequest updateFolder = new UpdateFolderRequest(0L, "NotFound",UUID.randomUUID());
+        UpdateFolderRequest updateFolder = new UpdateFolderRequest(0L, "NotFound", UUID.randomUUID());
 
         assertThatThrownBy(() -> commandBookmarkFolderService.updateBookmarkFolder(updateFolder))
                 .isInstanceOf(NotFoundException.class)
@@ -132,7 +134,7 @@ public class BookmarkFolderCommandServiceTests {
 
         BookmarkFolder folder = createBookmarkFolder();
 
-        UpdateFolderRequest updateFolder = new UpdateFolderRequest(folder.getFolderNo(), "",folder.getUserNoVO().getUserNo());
+        UpdateFolderRequest updateFolder = new UpdateFolderRequest(folder.getFolderNo(), "", folder.getMemberNoVO().getMemberNo());
 
         assertThatThrownBy(() -> commandBookmarkFolderService.updateBookmarkFolder(updateFolder))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -145,7 +147,7 @@ public class BookmarkFolderCommandServiceTests {
 
         BookmarkFolder folder = createBookmarkFolder();
 
-        UpdateFolderRequest updateFolder = new UpdateFolderRequest(folder.getFolderNo(), "testFoldertestFoldertestFoldertestFoldertestFolder",folder.getUserNoVO().getUserNo());
+        UpdateFolderRequest updateFolder = new UpdateFolderRequest(folder.getFolderNo(), "testFoldertestFoldertestFoldertestFoldertestFolder", folder.getMemberNoVO().getMemberNo());
 
         assertThatThrownBy(() -> commandBookmarkFolderService.updateBookmarkFolder(updateFolder))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -158,7 +160,7 @@ public class BookmarkFolderCommandServiceTests {
 
         BookmarkFolder folder = createBookmarkFolder();
 
-        UpdateFolderRequest updateFolder = new UpdateFolderRequest(folder.getFolderNo(), "             ",folder.getUserNoVO().getUserNo());
+        UpdateFolderRequest updateFolder = new UpdateFolderRequest(folder.getFolderNo(), "             ", folder.getMemberNoVO().getMemberNo());
 
         assertThatThrownBy(() -> commandBookmarkFolderService.updateBookmarkFolder(updateFolder))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -171,7 +173,7 @@ public class BookmarkFolderCommandServiceTests {
 
         BookmarkFolder folder = bookmarkFolderRepository.save(BookmarkFolder.builder()
                 .folderName("deleteTestFolder")
-                .userNoVO(new FolderUserVO(UUID.randomUUID()))
+                .memberNoVO(new FolderMemberVO(UUID.randomUUID()))
                 .folderNo(1L)
                 .build());
 
@@ -193,13 +195,13 @@ public class BookmarkFolderCommandServiceTests {
 
         BookmarkFolder folder = bookmarkFolderRepository.save(BookmarkFolder.builder()
                 .folderName("deleteTestFolder")
-                .userNoVO(new FolderUserVO(UUID.randomUUID()))
+                .memberNoVO(new FolderMemberVO(UUID.randomUUID()))
                 .folderNo(1L)
                 .build());
 
         Bookmark bookmark = bookmarkRepository.save(Bookmark.builder()
                 .bookmarkVO(new BookmarkVO(folder.getFolderNo(), 3L))
-                .userNoVO(new BookmarkUserVO(UUID.randomUUID()))
+                .memberNoVO(new BookmarkMemberVO(UUID.randomUUID()))
                 .addDate(LocalDate.now())
                 .build());
 

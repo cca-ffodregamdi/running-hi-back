@@ -2,12 +2,10 @@ package com.runninghi.bookmark.command.application.service;
 
 import com.runninghi.bookmark.command.application.dto.request.CreateBookmarkRequest;
 import com.runninghi.bookmark.command.application.dto.request.DeleteBookmarkRequest;
-import com.runninghi.bookmark.command.domain.aggregate.vo.BookmarkUserVO;
 import com.runninghi.bookmark.command.domain.aggregate.vo.BookmarkVO;
 import com.runninghi.bookmark.command.domain.repository.BookmarkCommandRepository;
 import com.runninghi.bookmark.query.application.dto.FindBookmarkRequest;
 import com.runninghi.bookmark.query.application.service.BookmarkQueryService;
-import com.runninghi.bookmark.query.infrastructure.repository.BookmarkQueryRepository;
 import com.runninghi.common.handler.feedback.customException.IllegalArgumentException;
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
 import jakarta.transaction.Transactional;
@@ -117,11 +115,11 @@ public class BookmarkCommandServiceTests {
     public void testSavedBookmarkException() {
 
         BookmarkVO bookmarkVO1 = new BookmarkVO(1L, 2L);
-        CreateBookmarkRequest bookmarkRequest1 = new CreateBookmarkRequest(bookmarkVO1,UUID.randomUUID());
+        CreateBookmarkRequest bookmarkRequest1 = new CreateBookmarkRequest(bookmarkVO1, UUID.randomUUID());
         commandBookmarkService.createBookmark(bookmarkRequest1);
 
         BookmarkVO bookmarkVO2 = new BookmarkVO(1L, 2L);
-        CreateBookmarkRequest bookmarkRequest2 = new CreateBookmarkRequest(bookmarkVO2, bookmarkRequest1.userNo());
+        CreateBookmarkRequest bookmarkRequest2 = new CreateBookmarkRequest(bookmarkVO2, bookmarkRequest1.memberNo());
 
         org.assertj.core.api.Assertions.assertThatThrownBy(() -> commandBookmarkService.createBookmark(bookmarkRequest2))
                 .isInstanceOf(IllegalArgumentException.class)
