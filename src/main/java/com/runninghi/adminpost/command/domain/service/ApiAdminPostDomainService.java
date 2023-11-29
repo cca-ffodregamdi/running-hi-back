@@ -16,4 +16,6 @@ public interface ApiAdminPostDomainService {
     String uploadThumbnail(MultipartFile thumbnail);
 
     void deleteOldThumbnail(String adminPostThumbnailUrl);
+
+    void deleteKeywordOfPost(Long adminPostNo);
 }

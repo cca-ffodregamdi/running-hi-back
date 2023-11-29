@@ -44,10 +44,18 @@ public class KeywordOfPostCommandService {
 
         try {
             Long adminPostNo = request.get(0).adminPostNo();
-            keywordOfPostCommandRepository.deleteKeywordOfPost(adminPostNo);
+            keywordOfPostCommandRepository.deleteKeywordOfPostByAdminPostNo(adminPostNo);
             return createKeywordOfAdminPost(request);
         } catch (RuntimeException e) {
             throw new RuntimeException("수정에 실패하였습니다.");
+        }
+    }
+
+    public void deleteKeywordOfAdminPost(Long adminPostNo) {
+        try {
+            keywordOfPostCommandRepository.deleteKeywordOfPostByAdminPostNo(adminPostNo);
+        } catch (RuntimeException e) {
+            throw new RuntimeException("삭제에 실패하였습니다.");
         }
     }
 }

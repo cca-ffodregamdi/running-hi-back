@@ -15,7 +15,7 @@ public interface KeywordOfPostCommandRepository extends JpaRepository<KeywordOfP
     @Query(value = "delete " +
                      "from tbl_keyword_of_post " +
                     "where admin_post_no = :adminPostNo", nativeQuery = true)
-    List<KeywordOfPost> deleteKeywordOfPost(@Param("adminPostNo") Long adminPostNo);
+    void deleteKeywordOfPostByAdminPostNo(@Param("adminPostNo") Long adminPostNo);
 
 
 }

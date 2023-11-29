@@ -55,4 +55,9 @@ public class ApiAdminPostInfraService implements ApiAdminPostDomainService {
         ImageDeleteRequest imageDeleteRequest = new ImageDeleteRequest(adminPostThumbnailUrl, "admin");
         imageCommandService.deleteImageFile(imageDeleteRequest);
     }
+
+    @Override
+    public void deleteKeywordOfPost(Long adminPostNo) {
+        keywordOfPostCommandService.deleteKeywordOfAdminPost(adminPostNo);
+    }
 }
