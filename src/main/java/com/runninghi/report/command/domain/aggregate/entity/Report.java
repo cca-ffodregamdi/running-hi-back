@@ -3,6 +3,7 @@ package com.runninghi.report.command.domain.aggregate.entity;
 import com.runninghi.report.command.application.dto.request.ReportUpdateRequest;
 import com.runninghi.report.command.domain.aggregate.entity.enumtype.ProcessingStatus;
 import com.runninghi.report.command.domain.aggregate.entity.enumtype.ReportType;
+import com.runninghi.report.command.domain.aggregate.vo.ReportedContentVO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -32,8 +33,8 @@ public class Report {
 //    private ReportUserVO reportUserVO;      // 신고자 번호
 //    @Embedded
 //    private ReportedUserVO reportedUserVO;      // 피신고자 번호
-//    @Embedded
-//    private ReportedPostVO reportedPostVO;      // 신고된 게시글 번호
+    @Embedded
+    private ReportedContentVO reportedContentVO;      // 신고된 게시글 번호 -> 댓글 컬럼 추가하거나 같이쓰기
 
     @Builder
     public Report(ReportType reportType, int reportCategoryCode, String reportContent, String reportedDate, ProcessingStatus processingStatus) {
@@ -44,14 +45,14 @@ public class Report {
         this.processingStatus = processingStatus;
     }
 
-//    public Report(int reportCategoryCode, String reportContent, LocalDateTime reportedDate, ProcessingStatus processingStatus, ReportUserVO reportUserVO, ReportedUserVO reportedUserVO, ReportedPostVO reportedPostVO) {
+//    public Report(int reportCategoryCode, String reportContent, LocalDateTime reportedDate, ProcessingStatus processingStatus, ReportUserVO reportUserVO, ReportedUserVO reportedUserVO, ReportedContentVO reportedContentVO) {
 //        this.reportCategoryCode = reportCategoryCode;
 //        this.reportContent = reportContent;
 //        this.reportedDate = reportedDate;
 //        this.processingStatus = processingStatus;
 //        this.reportUserVO = reportUserVO;
 //        this.reportedUserVO = reportedUserVO;
-//        this.reportedPostVO = reportedPostVO;
+//        this.reportedContentVO = reportedContentVO;
 //    }
 
 
