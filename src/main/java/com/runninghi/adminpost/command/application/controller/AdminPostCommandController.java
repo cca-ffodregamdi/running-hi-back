@@ -26,7 +26,6 @@ import java.util.Optional;
 public class AdminPostCommandController {
 
     private final AdminPostCommandService adminPostCommandService;
-    private final Validator validator;
 
     /**
      * 관리자 권한으로 관리자 코스 추천 게시글 작성
