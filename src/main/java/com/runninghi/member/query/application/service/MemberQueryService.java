@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
@@ -24,7 +25,14 @@ public class MemberQueryService {
     private final MemberQueryRepository userQueryRepository;
     private final MemberQueryRefreshTokenRepository userQueryRefreshTokenRepository;
 
-    // 회원 정보 조회
+    // 모든 회원 정보 조회
+    public List<MemberInfoResponse> findAllMembers() {
+        return userQueryRepository.findAll().stream()
+                .map(MemberInfoResponse::from)
+                .toList();
+    }
+
+    // 특정 회원 정보 조회
     public MemberInfoResponse findMemberInfo(UUID id) {
         return userQueryRepository.findById(id)
                 .map(MemberInfoResponse::from)
