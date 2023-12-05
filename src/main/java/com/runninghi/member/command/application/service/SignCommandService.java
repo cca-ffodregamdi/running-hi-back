@@ -65,7 +65,7 @@ public class SignCommandService {
     }
 
     /* 회원가입 */
-    public SignUpResponse registUser(SignUpRequest request) {
+    public SignUpResponse registMember(SignUpRequest request) {
         Member member = memberCommandRepository.save(Member.from(request, encoder));
         try {
             memberCommandRepository.flush();
@@ -77,17 +77,17 @@ public class SignCommandService {
 
     /* 로그인 */
     public SignInResponse signIn(SignInRequest request) {
-        Member member = signQueryService.findUserInfoByAccount(request).getUserInfo()
+        Member member = signQueryService.findMemberInfoByAccount(request).getMemberInfo()
                 .filter(it -> encoder.matches(request.password(), it.getPassword()))
                 .orElseThrow(() -> new IllegalArgumentException("아이디 또는 비밀번호가 일치하지 않습니다."));
         String accessToken = tokenProvider.createAccessToken(String.format("%s:%s", member.getId(), member.getRole()));
         String refreshToken = tokenProvider.createRefreshToken();
 
         // 리프레쉬 토큰 있으면 갱신, 없으면 추가
-        memberQueryService.findRefreshTokenById(member).getUserRefreshToken()
+        memberQueryService.findRefreshTokenById(member).getMemberRefreshToken()
                 .ifPresentOrElse(
                         it -> it.updateRefreshToken(refreshToken),
-                        () -> memberCommandRefreshTokenRepository.save(new MemberRefreshToken(member, refreshToken))
+                        () -> memberCommandRefreshTokenRepository.save(MemberRefreshToken.from(member, refreshToken))
                 );
         return new SignInResponse(member.getName(), member.getNickname(), member.getEmail(), member.getRole(), accessToken, refreshToken);
     }

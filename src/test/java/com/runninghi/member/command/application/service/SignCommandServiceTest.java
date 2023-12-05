@@ -4,8 +4,10 @@ import com.runninghi.member.command.application.dto.sign_in.request.SignInReques
 import com.runninghi.member.command.application.dto.sign_in.response.SignInResponse;
 import com.runninghi.member.command.application.dto.sign_up.request.SignUpRequest;
 import com.runninghi.member.command.application.dto.sign_up.request.VerifyDuplicationIdRequest;
+import com.runninghi.member.command.application.dto.sign_up.request.VerifyDuplicationNicknameRequest;
 import com.runninghi.member.command.application.dto.sign_up.response.SignUpResponse;
 import com.runninghi.member.command.application.dto.sign_up.response.VerifyDuplicationIdResponse;
+import com.runninghi.member.command.application.dto.sign_up.response.VerifyDuplicationNicknameResponse;
 import com.runninghi.member.command.domain.aggregate.entity.Member;
 import com.runninghi.member.command.domain.aggregate.entity.enumtype.Role;
 import com.runninghi.member.command.domain.repository.MemberCommandRepository;
@@ -79,6 +81,46 @@ class SignCommandServiceTest {
         assertThat(response.result()).isFalse();
     }
 
+    @Test
+    @DisplayName("회원가입 테스트 : 닉네임 중복 아닐 경우")
+    void verifyDuplicationNicknameTrue() {
+        // given
+        memberCommandRepository.save(Member.builder()
+                .account("qwerty1234")
+                .password(encoder.encode("1234"))
+                .name("김철수")
+                .nickname("qwe")
+                .email("qwe@qwe.qw")
+                .role(Role.USER)
+                .status(true)
+                .build());
+        // when
+        VerifyDuplicationNicknameRequest request = new VerifyDuplicationNicknameRequest("qwe1");
+        VerifyDuplicationNicknameResponse response = signCommandService.verifyDuplicationNickname(request);
+        // then
+        assertThat(response.result()).isTrue();
+    }
+
+    @Test
+    @DisplayName("회원가입 테스트 : 닉네임 중복일 경우")
+    void verifyDuplicationNicknameFalse() {
+        // given
+        memberCommandRepository.save(Member.builder()
+                .account("qwerty1234")
+                .password(encoder.encode("1234"))
+                .name("김철수")
+                .nickname("qwe")
+                .email("qwe@qwe.qw")
+                .role(Role.USER)
+                .status(true)
+                .build());
+        // when
+        VerifyDuplicationNicknameRequest request = new VerifyDuplicationNicknameRequest("qwe");
+        VerifyDuplicationNicknameResponse response = signCommandService.verifyDuplicationNickname(request);
+        // then
+        assertThat(response.result()).isFalse();
+    }
+
 
     @Test
     @DisplayName("회원가입 테스트 : success")
@@ -86,7 +128,7 @@ class SignCommandServiceTest {
         // given
         SignUpRequest request = new SignUpRequest("qwerty1234", "1234", "김철수", "qwe", "qwe@qwe.qw");
         // when
-        SignUpResponse response = signCommandService.registUser(request);
+        SignUpResponse response = signCommandService.registMember(request);
         // then
         assertAll(
                 () -> assertThat(response.account()).isEqualTo("qwerty1234"),
@@ -110,7 +152,7 @@ class SignCommandServiceTest {
         // when
         SignUpRequest request = new SignUpRequest("qwerty1234", "1234", "김철수", "qwe", "qwe@qwe.qw");
         // then
-        assertThatThrownBy(() -> signCommandService.registUser(request))
+        assertThatThrownBy(() -> signCommandService.registMember(request))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이미 사용중인 아이디입니다.");
     }

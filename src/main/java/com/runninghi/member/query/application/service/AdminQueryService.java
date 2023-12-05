@@ -13,18 +13,18 @@ import java.util.List;
 @Service
 @Transactional(readOnly = true)
 public class AdminQueryService {
-    private final MemberQueryRepository userQueryRepository;
+    private final MemberQueryRepository memberQueryRepository;
 
     // 전체 유저 정보 조회
-    public List<MemberInfoResponse> findAllUsers() {
-        return userQueryRepository.findAllUserByRole(Role.USER).stream()
+    public List<MemberInfoResponse> findAllMembers() {
+        return memberQueryRepository.findAllMemberByRole(Role.USER).stream()
                 .map(MemberInfoResponse::from)
                 .toList();
     }
 
     // 전체 관리자 정보 조회
     public List<MemberInfoResponse> findAllAdmins() {
-        return userQueryRepository.findAllUserByRole(Role.ADMIN).stream()
+        return memberQueryRepository.findAllMemberByRole(Role.ADMIN).stream()
                 .map(MemberInfoResponse::from)
                 .toList();
     }

@@ -35,7 +35,7 @@ public class AdminQueryServiceTest {
 
     @Test
     @DisplayName("모든 회원 정보 조회 테스트 : success")
-    void findAllUserTest() {
+    void findAllMembersTest() {
         // given
         memberCommandRepository.save(Member.builder()
                 .account("qwerty1234")
@@ -65,26 +65,26 @@ public class AdminQueryServiceTest {
                 .status(true)
                 .build());
         // when
-        List<MemberInfoResponse> users = adminQueryService.findAllUsers();
+        List<MemberInfoResponse> members = adminQueryService.findAllMembers();
         // then
-        Assertions.assertThat(users).hasSize(3);
-        for (MemberInfoResponse user : users) {
-            if (user.account().equals("qwerty1234")) {
-                Assertions.assertThat(user.account()).isEqualTo("qwerty1234");
-                Assertions.assertThat(user.name()).isEqualTo("김철수");
-                Assertions.assertThat(user.nickname()).isEqualTo("qwe");
+        Assertions.assertThat(members).hasSize(3);
+        for (MemberInfoResponse member : members) {
+            if (member.account().equals("qwerty1234")) {
+                Assertions.assertThat(member.account()).isEqualTo("qwerty1234");
+                Assertions.assertThat(member.name()).isEqualTo("김철수");
+                Assertions.assertThat(member.nickname()).isEqualTo("qwe");
             }
-            if (user.account().equals("asdfg1234")) {
-                Assertions.assertThat(user.account()).isEqualTo("asdfg1234");
-                Assertions.assertThat(user.name()).isEqualTo("나철수");
-                Assertions.assertThat(user.nickname()).isEqualTo("asd");
+            if (member.account().equals("asdfg1234")) {
+                Assertions.assertThat(member.account()).isEqualTo("asdfg1234");
+                Assertions.assertThat(member.name()).isEqualTo("나철수");
+                Assertions.assertThat(member.nickname()).isEqualTo("asd");
             }
-            if (user.account().equals("zxcvb1234")) {
-                Assertions.assertThat(user.account()).isEqualTo("zxcvb1234");
-                Assertions.assertThat(user.name()).isEqualTo("박철수");
-                Assertions.assertThat(user.nickname()).isEqualTo("zxc");
+            if (member.account().equals("zxcvb1234")) {
+                Assertions.assertThat(member.account()).isEqualTo("zxcvb1234");
+                Assertions.assertThat(member.name()).isEqualTo("박철수");
+                Assertions.assertThat(member.nickname()).isEqualTo("zxc");
             }
-            Assertions.assertThat(user.role()).isEqualTo(Role.USER);
+            Assertions.assertThat(member.role()).isEqualTo(Role.USER);
         }
     }
 

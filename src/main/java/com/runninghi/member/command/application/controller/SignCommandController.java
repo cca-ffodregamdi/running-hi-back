@@ -40,7 +40,7 @@ public class SignCommandController {
     @Operation(summary = "회원 가입 API")
     @PostMapping("/sign-up")
     public ApiResponse signUp(@RequestBody SignUpRequest request) {
-        return ApiResponse.success("성공적으로 가입되었습니다.", signCommandService.registUser(request));
+        return ApiResponse.success("성공적으로 가입되었습니다.", signCommandService.registMember(request));
     }
 
     /* 로그인 API */

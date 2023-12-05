@@ -33,7 +33,7 @@ public class MemberCommandController {
     @UserAuthorize
     @PutMapping
     public ApiResponse updateUser(@AuthenticationPrincipal User user, @RequestBody MemberUpdateRequest request) {
-        return ApiResponse.success("성공적으로 수정되었습니다.", memberCommandService.updateUser(UUID.fromString(user.getUsername()), request));
+        return ApiResponse.success("성공적으로 수정되었습니다.", memberCommandService.updateMember(UUID.fromString(user.getUsername()), request));
     }
 
     /* 회원 탈퇴 API */
@@ -41,6 +41,6 @@ public class MemberCommandController {
     @UserAuthorize
     @DeleteMapping
     public ApiResponse deleteUser(@AuthenticationPrincipal User user) {
-        return ApiResponse.success("성공적으로 탈퇴되었습니다.", memberCommandService.deleteUser(UUID.fromString(user.getUsername())));
+        return ApiResponse.success("성공적으로 탈퇴되었습니다.", memberCommandService.deleteMember(UUID.fromString(user.getUsername())));
     }
 }

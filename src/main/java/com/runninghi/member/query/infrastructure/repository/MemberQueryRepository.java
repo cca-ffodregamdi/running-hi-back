@@ -16,10 +16,10 @@ public interface MemberQueryRepository extends JpaRepository<Member, UUID> {
 
     Optional<Member> findAccountByNameAndEmail(String name, String email);
 
-    Optional<Member> findUserByAccountAndEmail(String account, String email);
+    Optional<Member> findMemberByAccountAndEmail(String account, String email);
 
-    Optional<Member> findUserByAccount(String account);
+    Optional<Member> findMemberByAccount(String account);
 
-    List<Member> findAllUserByRole(Role role);
+    List<Member> findAllMemberByRole(Role role);
 
 }

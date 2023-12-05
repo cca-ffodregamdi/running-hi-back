@@ -19,9 +19,9 @@ public class AdminQueryController {
     private final AdminQueryService adminQueryService;
 
     @Operation(summary = "회원 목록 조회")
-    @GetMapping("/users")
-    public ApiResponse getAllUsers() {
-        return ApiResponse.success("조회 성공", adminQueryService.findAllUsers());
+    @GetMapping("/members")
+    public ApiResponse getAllMembers() {
+        return ApiResponse.success("조회 성공", adminQueryService.findAllMembers());
     }
 
     @Operation(summary = "관리자 목록 조회")

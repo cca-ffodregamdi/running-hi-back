@@ -13,5 +13,5 @@ import java.util.Optional;
 @Getter
 @Setter
 public class MemberInfoDTO {
-    private Optional<Member> userInfo;
+    private Optional<Member> memberInfo;
 }

@@ -46,7 +46,7 @@ public class MemberCommandServiceTest {
 
     @Test
     @DisplayName("회원 조회 테스트 : 존재하지 않는 회원 예외처리")
-    void doesNotExistUserTest() {
+    void doesNotExistMemberTest() {
         // given
         // when
         // then
@@ -57,7 +57,7 @@ public class MemberCommandServiceTest {
 
     @Test
     @DisplayName("회원 탈퇴 테스트 : success")
-    void deleteUserTest() {
+    void deleteMemberTest() {
         // given
         Member savedUser = memberCommandRepository.save(Member.builder()
                 .account("qwerty1234")
@@ -69,7 +69,7 @@ public class MemberCommandServiceTest {
                 .status(true)
                 .build());
         // when
-        MemberDeleteResponse result = memberCommandService.deleteUser(savedUser.getId());
+        MemberDeleteResponse result = memberCommandService.deleteMember(savedUser.getId());
         // then
         List<Member> members = memberQueryRepository.findAll();
         assertThat(members).isEmpty();
@@ -78,7 +78,7 @@ public class MemberCommandServiceTest {
 
     @Test
     @DisplayName("회원 정보 수정 테스트 : success")
-    void updateUserTest() {
+    void updateMemberTest() {
         // given
         Member savedMember = memberCommandRepository.save(Member.builder()
                 .account("qwerty1234")
@@ -91,7 +91,7 @@ public class MemberCommandServiceTest {
                 .build());
         // when
         MemberUpdateRequest request = new MemberUpdateRequest("1234", "5678", "qwe");
-        MemberUpdateResponse result = memberCommandService.updateUser(savedMember.getId(), request);
+        MemberUpdateResponse result = memberCommandService.updateMember(savedMember.getId(), request);
         // then
         assertThat(result.result()).isEqualTo(true);
         assertThat(result.nickname()).isEqualTo("qwe");

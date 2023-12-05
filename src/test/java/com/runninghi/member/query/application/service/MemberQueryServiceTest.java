@@ -25,7 +25,7 @@ public class MemberQueryServiceTest {
 
     @Test
     @DisplayName("회원 조회 테스트 : success")
-    void findUserTest() {
+    void findMemberTest() {
         // given
         Member savedMember = memberCommandRepository.save(Member.builder()
                 .account("qwerty1234")
