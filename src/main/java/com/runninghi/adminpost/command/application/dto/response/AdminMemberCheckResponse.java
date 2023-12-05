@@ -1,6 +1,6 @@
 package com.runninghi.adminpost.command.application.dto.response;
 
-import com.runninghi.member.command.domain.aggregate.Member;
+import com.runninghi.member.command.domain.aggregate.entity.Member;
 import com.runninghi.member.command.domain.aggregate.entity.enumtype.Role;
 import com.runninghi.member.query.application.dto.member.response.MemberInfoResponse;
 import io.swagger.v3.oas.annotations.media.Schema;

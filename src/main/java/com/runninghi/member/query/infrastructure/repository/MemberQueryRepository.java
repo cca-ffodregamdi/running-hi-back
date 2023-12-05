@@ -1,6 +1,6 @@
 package com.runninghi.member.query.infrastructure.repository;
 
-import com.runninghi.member.command.domain.aggregate.Member;
+import com.runninghi.member.command.domain.aggregate.entity.Member;
 import com.runninghi.member.command.domain.aggregate.entity.enumtype.Role;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;

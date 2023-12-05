@@ -8,7 +8,7 @@ import com.runninghi.bookmarkfolder.command.application.service.BookmarkFolderCo
 import com.runninghi.bookmarkfolder.command.domain.aggregate.entity.BookmarkFolder;
 import com.runninghi.bookmarkfolder.command.domain.aggregate.vo.FolderMemberVO;
 import com.runninghi.bookmarkfolder.command.domain.repository.FolderCommandRepository;
-import com.runninghi.member.command.domain.aggregate.Member;
+import com.runninghi.member.command.domain.aggregate.entity.Member;
 import com.runninghi.member.command.domain.aggregate.entity.enumtype.Role;
 import com.runninghi.member.command.domain.repository.MemberCommandRepository;
 import org.junit.jupiter.api.AfterEach;

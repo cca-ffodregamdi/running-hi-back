@@ -1,6 +1,6 @@
 package com.runninghi.postreport.command.application.service;
 
-import com.runninghi.member.command.domain.aggregate.Member;
+import com.runninghi.member.command.domain.aggregate.entity.Member;
 import com.runninghi.member.command.domain.aggregate.entity.enumtype.Role;
 import com.runninghi.member.command.domain.repository.MemberCommandRepository;
 import com.runninghi.postreport.command.application.dto.request.PostReportProcessingRequest;

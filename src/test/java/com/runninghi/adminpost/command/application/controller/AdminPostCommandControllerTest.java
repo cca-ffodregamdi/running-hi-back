@@ -2,7 +2,7 @@ package com.runninghi.adminpost.command.application.controller;
 
 import com.runninghi.adminpost.command.application.dto.request.AdminPostCreateRequest;
 import com.runninghi.adminpost.command.application.dto.request.KeywordListRequest;
-import com.runninghi.member.command.domain.aggregate.Member;
+import com.runninghi.member.command.domain.aggregate.entity.Member;
 import com.runninghi.member.command.domain.aggregate.entity.enumtype.Role;
 import com.runninghi.member.command.domain.repository.MemberCommandRepository;
 import jakarta.validation.ConstraintViolation;

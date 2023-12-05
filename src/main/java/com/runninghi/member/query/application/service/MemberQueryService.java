@@ -4,7 +4,7 @@ import com.runninghi.member.command.application.dto.member.RefreshTokenDTO;
 import com.runninghi.member.command.application.dto.member.request.FindAccountRequest;
 import com.runninghi.member.command.application.dto.member.request.FindPasswordRequest;
 import com.runninghi.member.command.application.dto.sign_in.request.SignInRequest;
-import com.runninghi.member.command.domain.aggregate.Member;
+import com.runninghi.member.command.domain.aggregate.entity.Member;
 import com.runninghi.member.query.application.dto.member.response.FindAccountResponse;
 import com.runninghi.member.query.application.dto.member.response.FindPasswordResponse;
 import com.runninghi.member.query.application.dto.member.response.MemberInfoResponse;

@@ -3,7 +3,7 @@ package com.runninghi.member.command.application.service;
 import com.runninghi.member.command.application.dto.member.request.MemberUpdateRequest;
 import com.runninghi.member.command.application.dto.member.response.MemberDeleteResponse;
 import com.runninghi.member.command.application.dto.member.response.MemberUpdateResponse;
-import com.runninghi.member.command.domain.aggregate.Member;
+import com.runninghi.member.command.domain.aggregate.entity.Member;
 import com.runninghi.member.command.domain.aggregate.entity.enumtype.Role;
 import com.runninghi.member.command.domain.repository.MemberCommandRepository;
 import com.runninghi.member.query.application.service.MemberQueryService;

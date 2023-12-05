@@ -1,6 +1,6 @@
 package com.runninghi.member.command.application.dto.member.response;
 
-import com.runninghi.member.command.domain.aggregate.Member;
+import com.runninghi.member.command.domain.aggregate.entity.Member;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 public record MemberUpdateResponse(

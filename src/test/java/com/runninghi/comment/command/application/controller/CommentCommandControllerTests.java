@@ -7,7 +7,7 @@ import com.runninghi.comment.command.application.service.CommentCommandService;
 import com.runninghi.comment.command.domain.aggregate.entity.Comment;
 import com.runninghi.comment.command.domain.aggregate.vo.CommentMemberVO;
 import com.runninghi.comment.command.domain.repository.CommentCommandRepository;
-import com.runninghi.member.command.domain.aggregate.Member;
+import com.runninghi.member.command.domain.aggregate.entity.Member;
 import com.runninghi.member.command.domain.aggregate.entity.enumtype.Role;
 import com.runninghi.member.command.domain.repository.MemberCommandRepository;
 import org.junit.jupiter.api.AfterEach;

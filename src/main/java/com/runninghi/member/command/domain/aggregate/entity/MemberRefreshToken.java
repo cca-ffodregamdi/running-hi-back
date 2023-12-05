@@ -1,6 +1,5 @@
 package com.runninghi.member.command.domain.aggregate.entity;
 
-import com.runninghi.member.command.domain.aggregate.Member;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -11,13 +10,13 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-@Table(name = "TBL_USER_REFRESH_TOKEN")
+@Table(name = "tbl_member_refresh_token")
 public class MemberRefreshToken {
     @Id
-    private UUID userId;
+    private UUID memberId;
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "member_id")
     private Member member;
     private String refreshToken;
     private int reissueCount = 0;

@@ -9,7 +9,7 @@ import com.runninghi.member.command.application.dto.sign_up.request.VerifyDuplic
 import com.runninghi.member.command.application.dto.sign_up.response.SignUpResponse;
 import com.runninghi.member.command.application.dto.sign_up.response.VerifyDuplicationIdResponse;
 import com.runninghi.member.command.application.dto.sign_up.response.VerifyDuplicationNicknameResponse;
-import com.runninghi.member.command.domain.aggregate.Member;
+import com.runninghi.member.command.domain.aggregate.entity.Member;
 import com.runninghi.member.command.domain.aggregate.entity.MemberRefreshToken;
 import com.runninghi.member.command.domain.repository.MemberCommandRefreshTokenRepository;
 import com.runninghi.member.command.domain.repository.MemberCommandRepository;

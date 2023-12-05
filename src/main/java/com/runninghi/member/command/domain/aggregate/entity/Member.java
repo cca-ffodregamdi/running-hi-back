@@ -1,4 +1,4 @@
-package com.runninghi.member.command.domain.aggregate;
+package com.runninghi.member.command.domain.aggregate.entity;
 
 import com.runninghi.common.entity.BaseEntity;
 import com.runninghi.member.command.application.dto.member.request.MemberUpdateRequest;

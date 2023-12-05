@@ -5,7 +5,7 @@ import com.runninghi.adminpost.command.application.dto.request.AdminPostCreateRe
 import com.runninghi.adminpost.command.application.dto.request.KeywordListRequest;
 import com.runninghi.adminpost.command.domain.repository.AdminPostCommandRepository;
 import com.runninghi.keyword.command.domain.repository.KeywordCommandRepository;
-import com.runninghi.member.command.domain.aggregate.Member;
+import com.runninghi.member.command.domain.aggregate.entity.Member;
 import com.runninghi.member.command.domain.aggregate.entity.enumtype.Role;
 import com.runninghi.member.command.domain.repository.MemberCommandRepository;
 import org.assertj.core.api.Assertions;

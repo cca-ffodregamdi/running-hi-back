@@ -6,7 +6,7 @@ import com.runninghi.member.command.application.dto.sign_up.request.SignUpReques
 import com.runninghi.member.command.application.dto.sign_up.request.VerifyDuplicationIdRequest;
 import com.runninghi.member.command.application.dto.sign_up.response.SignUpResponse;
 import com.runninghi.member.command.application.dto.sign_up.response.VerifyDuplicationIdResponse;
-import com.runninghi.member.command.domain.aggregate.Member;
+import com.runninghi.member.command.domain.aggregate.entity.Member;
 import com.runninghi.member.command.domain.aggregate.entity.enumtype.Role;
 import com.runninghi.member.command.domain.repository.MemberCommandRepository;
 import com.runninghi.member.query.infrastructure.repository.MemberQueryRefreshTokenRepository;
