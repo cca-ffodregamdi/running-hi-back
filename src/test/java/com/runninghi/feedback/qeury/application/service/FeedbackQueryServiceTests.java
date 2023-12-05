@@ -11,7 +11,7 @@ import com.runninghi.feedback.query.application.dto.response.FeedbackStatusRespo
 import com.runninghi.feedback.query.application.dto.response.FeedbackUserResponse;
 import com.runninghi.feedback.query.application.service.FeedbackQueryService;
 import com.runninghi.feedback.query.domain.service.ApiFeedbackQueryDomainService;
-import com.runninghi.member.command.domain.aggregate.Member;
+import com.runninghi.member.command.domain.aggregate.entity.Member;
 import com.runninghi.member.command.domain.aggregate.entity.enumtype.Role;
 import com.runninghi.member.command.domain.repository.MemberCommandRepository;
 import jakarta.transaction.Transactional;

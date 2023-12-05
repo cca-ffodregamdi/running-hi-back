@@ -5,6 +5,7 @@ import com.runninghi.common.response.ApiResponse;
 import com.runninghi.member.command.application.dto.sign_in.request.SignInRequest;
 import com.runninghi.member.command.application.dto.sign_up.request.SignUpRequest;
 import com.runninghi.member.command.application.dto.sign_up.request.VerifyDuplicationIdRequest;
+import com.runninghi.member.command.application.dto.sign_up.request.VerifyDuplicationNicknameRequest;
 import com.runninghi.member.command.application.service.SignCommandService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,11 +29,18 @@ public class SignCommandController {
         return ApiResponse.success("중복 확인 결과가 나왔습니다.", signCommandService.verifyDuplicationId(request));
     }
 
+    /* 닉네임 중복 확인 API */
+    @Operation(summary = "닉네임 중복 확인 API")
+    @PostMapping("/verify-duplication-nickname")
+    public ApiResponse verifyDuplicationNickname(@RequestBody VerifyDuplicationNicknameRequest request) {
+        return ApiResponse.success("중복 확인 결과가 나왔습니다.", signCommandService.verifyDuplicationNickname(request));
+    }
+
     /* 회원 가입 API */
     @Operation(summary = "회원 가입 API")
     @PostMapping("/sign-up")
     public ApiResponse signUp(@RequestBody SignUpRequest request) {
-        return ApiResponse.success("성공적으로 가입되었습니다.", signCommandService.registUser(request));
+        return ApiResponse.success("성공적으로 가입되었습니다.", signCommandService.registMember(request));
     }
 
     /* 로그인 API */

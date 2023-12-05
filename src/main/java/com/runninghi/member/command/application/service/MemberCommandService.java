@@ -24,7 +24,7 @@ public class MemberCommandService {
     /* 비밀번호 변경 */
     @Transactional
     public UpdatePasswordResponse updatePassword(UpdatePasswordRequest request) {
-        return memberQueryRepository.findUserByAccount(request.account())
+        return memberQueryRepository.findMemberByAccount(request.account())
                 .map(member -> {
                     member.updatePassword(request, encoder);
                     return UpdatePasswordResponse.from(true);
@@ -34,7 +34,7 @@ public class MemberCommandService {
 
     /* 회원 정보 수정 */
     @Transactional
-    public MemberUpdateResponse updateUser(UUID id, MemberUpdateRequest request) {
+    public MemberUpdateResponse updateMember(UUID id, MemberUpdateRequest request) {
         return memberCommandRepository.findById(id)
                 .filter(member -> encoder.matches(request.password(), member.getPassword()))
                 .map(member -> {
@@ -46,7 +46,7 @@ public class MemberCommandService {
 
     /* 회원 탈퇴 */
     @Transactional
-    public MemberDeleteResponse deleteUser(UUID id) {
+    public MemberDeleteResponse deleteMember(UUID id) {
         if (!memberCommandRepository.existsById(id)) return new MemberDeleteResponse(false);
         memberCommandRepository.deleteById(id);
         return new MemberDeleteResponse(true);

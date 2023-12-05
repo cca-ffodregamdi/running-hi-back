@@ -1,4 +1,4 @@
-package com.runninghi.member.command.domain.aggregate;
+package com.runninghi.member.command.domain.aggregate.entity;
 
 import com.runninghi.common.entity.BaseEntity;
 import com.runninghi.member.command.application.dto.member.request.MemberUpdateRequest;
@@ -20,7 +20,6 @@ public class Member extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id; // 회원 고유 값
-
     @Column(nullable = false, scale = 20, unique = true)
     private String account; // 일반 로그인 아이디
     @Column(nullable = false)

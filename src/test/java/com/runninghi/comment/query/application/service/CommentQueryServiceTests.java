@@ -10,7 +10,7 @@ import com.runninghi.comment.query.application.dto.request.FindAllCommentsReques
 import com.runninghi.comment.query.application.dto.request.FindCommentRequest;
 import com.runninghi.comment.query.application.dto.response.CommentQueryResponse;
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
-import com.runninghi.member.command.domain.aggregate.Member;
+import com.runninghi.member.command.domain.aggregate.entity.Member;
 import com.runninghi.member.command.domain.aggregate.entity.enumtype.Role;
 import com.runninghi.member.command.domain.repository.MemberCommandRepository;
 import jakarta.transaction.Transactional;

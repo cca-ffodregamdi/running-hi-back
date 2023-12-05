@@ -11,5 +11,5 @@ import java.util.UUID;
 @Repository
 @Transactional
 public interface MemberQueryRefreshTokenRepository extends JpaRepository<MemberRefreshToken, UUID> {
-    Optional<MemberRefreshToken> findByUserIdAndReissueCountLessThan(UUID id, long count);
+    Optional<MemberRefreshToken> findByMemberIdAndReissueCountLessThan(UUID id, long count);
 }

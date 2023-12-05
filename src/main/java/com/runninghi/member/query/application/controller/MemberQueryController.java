@@ -28,7 +28,7 @@ public class MemberQueryController {
     @Operation(summary = "회원 정보 조회 API")
     @AdminAuthorize
     @GetMapping
-    public ApiResponse getUserInfo(@AuthenticationPrincipal User user) {
+    public ApiResponse getMemberInfo(@AuthenticationPrincipal User user) {
         return ApiResponse.success("조회 성공", userQueryService.findMemberInfo(UUID.fromString(user.getUsername())));
     }
 

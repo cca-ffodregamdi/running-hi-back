@@ -10,11 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Service
 public class SignQueryService {
-    private final MemberQueryRepository userQueryRepository;
+    private final MemberQueryRepository memberQueryRepository;
 
     // 아이디로 회원 정보 조회
     @Transactional(readOnly = true)
-    public MemberInfoDTO findUserInfoByAccount(SignInRequest request) {
-        return new MemberInfoDTO(userQueryRepository.findUserByAccount(request.account()));
+    public MemberInfoDTO findMemberInfoByAccount(SignInRequest request) {
+        return new MemberInfoDTO(memberQueryRepository.findMemberByAccount(request.account()));
     }
 }

@@ -1,6 +1,6 @@
 package com.runninghi.member.command.application.dto.member;
 
-import com.runninghi.member.command.domain.aggregate.Member;
+import com.runninghi.member.command.domain.aggregate.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,5 +13,5 @@ import java.util.Optional;
 @Getter
 @Setter
 public class MemberInfoDTO {
-    private Optional<Member> userInfo;
+    private Optional<Member> memberInfo;
 }

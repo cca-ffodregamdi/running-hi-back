@@ -13,5 +13,5 @@ import java.util.Optional;
 @Getter
 @Setter
 public class RefreshTokenDTO {
-    private Optional<MemberRefreshToken> userRefreshToken;
+    private Optional<MemberRefreshToken> memberRefreshToken;
 }
