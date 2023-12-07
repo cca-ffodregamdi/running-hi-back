@@ -21,7 +21,7 @@
 ![IntelliJ](https://img.shields.io/badge/InteliiJ-000000?style=flat&logo=intellijidea&logoColor=white)
 
 ### Language
-![Java](https://img.shields.io/badge/Java-007396style=flat&logo=java&logoColor=white)
+![Java](https://img.shields.io/badge/Java-e75253?style=flat&logo=java&logoColor=white)
 
 ### Library & Framework
 ![Spring Boot](https://img.shields.io/badge/SpringBoot-6DB33F?style=flat&logo=springboot&logoColor=white)
