@@ -17,7 +17,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @RequiredArgsConstructor
 @Configuration
 public class SecurityConfig {
-    private static final String[] ALLOWED_URIS = {"/api/v1/sign-up", "/api/v1/sign-in", "/api/v1/verify-duplication-id"
+    private static final String[] ALLOWED_URIS = {"/api/v1/sign-up", "/api/v1/sign-in", "/api/v1/verifyDuplicationId"
             , "/api/v1/verify-duplication-nickname", "/api/v1/member/find-account", "/api/v1/member/find-password"
             , "/api/v1/member/update-password"};
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
