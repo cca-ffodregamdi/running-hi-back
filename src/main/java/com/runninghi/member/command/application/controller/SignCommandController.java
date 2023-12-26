@@ -24,7 +24,7 @@ public class SignCommandController {
 
     /* 아이디 중복 확인 API */
     @Operation(summary = "아이디 중복 확인 API")
-    @PostMapping("/verify-duplication-id")
+    @PostMapping("/verifyDuplicationId")
     public ApiResponse verifyDuplicationId(@RequestBody VerifyDuplicationIdRequest request) {
         return ApiResponse.success("중복 확인 결과가 나왔습니다.", signCommandService.verifyDuplicationId(request));
     }
