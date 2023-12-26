@@ -11,8 +11,8 @@ import java.util.UUID;
 @Builder
 @Getter
 public class MemberRefreshToken {
-    @Id
-    private UUID id;
+    // @Id
+    // private UUID id;
 
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
@@ -25,8 +25,8 @@ public class MemberRefreshToken {
 
     }
 
-    private MemberRefreshToken(final UUID id, final Member member, final String refreshToken, final int reissueCount) {
-        this.id = id;
+    private MemberRefreshToken(final Member member, final String refreshToken, final int reissueCount) {
+        // this.id = id;
         this.member = member;
         this.refreshToken = refreshToken;
         this.reissueCount = reissueCount;
@@ -38,7 +38,6 @@ public class MemberRefreshToken {
                 .refreshToken(refreshToken)
                 .build();
     }
-
 
     public void updateRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
