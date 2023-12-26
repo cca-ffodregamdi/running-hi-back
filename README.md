@@ -14,6 +14,8 @@
 ## 🧱 프로젝트 아키텍처
 ![image](https://github.com/cca-ffodregamdi/running-hi-back/assets/98208452/085bb740-bcbf-4054-9043-3ed0b1c106a0)
 
+<br>
+
 ## ⚒️ 기술 스택
 ### Tool
 ![IntelliJ](https://img.shields.io/badge/InteliiJ-000000?style=flat&logo=intellijidea&logoColor=white)
