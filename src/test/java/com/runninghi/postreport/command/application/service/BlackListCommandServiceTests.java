@@ -8,10 +8,7 @@ import com.runninghi.postreport.command.application.dto.request.PostReportSaveRe
 import com.runninghi.postreport.command.domain.aggregate.entity.PostReport;
 import com.runninghi.postreport.command.domain.aggregate.entity.enumtype.ProcessingStatus;
 import com.runninghi.postreport.command.domain.repository.PostReportCommandRepository;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -38,9 +35,11 @@ public class BlackListCommandServiceTests {
     @Autowired
     private PasswordEncoder encoder;
 
+    @BeforeEach
     @AfterEach
     void clear() {
         postReportCommandRepository.deleteAllInBatch();
+        userCommandRepository.deleteAllInBatch();
     }
 
     @Test
