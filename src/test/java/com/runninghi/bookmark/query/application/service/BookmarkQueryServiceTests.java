@@ -8,12 +8,12 @@ import com.runninghi.bookmark.command.domain.aggregate.vo.BookmarkVO;
 import com.runninghi.bookmark.command.domain.repository.BookmarkCommandRepository;
 import com.runninghi.bookmark.query.application.dto.FindBookmarkListRequest;
 import com.runninghi.bookmark.query.application.dto.FindBookmarkRequest;
+import com.runninghi.bookmarkfolder.command.domain.aggregate.entity.BookmarkFolder;
+import com.runninghi.bookmarkfolder.command.domain.aggregate.vo.FolderMemberVO;
+import com.runninghi.bookmarkfolder.command.domain.repository.FolderCommandRepository;
 import com.runninghi.common.handler.feedback.customException.NotFoundException;
 import jakarta.transaction.Transactional;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -34,9 +34,14 @@ public class BookmarkQueryServiceTests {
     @Autowired
     BookmarkCommandRepository bookmarkRepository;
 
+    @Autowired
+    FolderCommandRepository folderCommandRepository;
+
     @BeforeEach
+    @AfterEach
     void clear() {
         bookmarkRepository.deleteAllInBatch();
+        folderCommandRepository.deleteAllInBatch();
     }
 
 
@@ -44,7 +49,13 @@ public class BookmarkQueryServiceTests {
     @DisplayName("즐겨찾기 조회 테스트 : success - 특정 즐겨찾기")
     void testFindBookmark() {
 
-        BookmarkVO bookmarkVO = new BookmarkVO(1L, 2L);
+        BookmarkFolder folder = folderCommandRepository.save(BookmarkFolder.builder()
+                .folderNo(999L)
+                .folderName("폴더 수정")
+                .memberNoVO(new FolderMemberVO(UUID.randomUUID()))
+                .build());
+
+        BookmarkVO bookmarkVO = new BookmarkVO(folder.getFolderNo(), 2L);
         CreateBookmarkRequest bookmarkRequest = new CreateBookmarkRequest(bookmarkVO, UUID.randomUUID());
         BookmarkCommandResponse bookmark = createBookmarkService.createBookmark(bookmarkRequest);
 
@@ -57,15 +68,21 @@ public class BookmarkQueryServiceTests {
     @DisplayName("즐겨찾기 조회 테스트 : success - 폴더 속 전체 즐겨찾기 리스트")
     void testFindBookmarkList() {
 
-        BookmarkVO bookmarkVO1 = new BookmarkVO(1L, 2L);
-        BookmarkVO bookmarkVO2 = new BookmarkVO(1L, 3L);
+        BookmarkFolder folder = folderCommandRepository.save(BookmarkFolder.builder()
+                .folderNo(1L)
+                .folderName("폴더 수정")
+                .memberNoVO(new FolderMemberVO(UUID.randomUUID()))
+                .build());
+
+        BookmarkVO bookmarkVO1 = new BookmarkVO(folder.getFolderNo(), 2L);
+        BookmarkVO bookmarkVO2 = new BookmarkVO(folder.getFolderNo(), 3L);
         CreateBookmarkRequest bookmarkRequest1 = new CreateBookmarkRequest(bookmarkVO1, UUID.randomUUID());
         CreateBookmarkRequest bookmarkRequest2 = new CreateBookmarkRequest(bookmarkVO2, UUID.randomUUID());
 
         BookmarkCommandResponse bookmark1 = createBookmarkService.createBookmark(bookmarkRequest1);
         BookmarkCommandResponse bookmark2 = createBookmarkService.createBookmark(bookmarkRequest2);
 
-        FindBookmarkListRequest listRequest = new FindBookmarkListRequest(1L);
+        FindBookmarkListRequest listRequest = new FindBookmarkListRequest(folder.getFolderNo());
         List<Bookmark> bookmarkList = queryBookmarkService.findBookmarkListByFolder(listRequest);
 
         Assertions.assertEquals(bookmarkList.get(0).getBookmarkVO(), bookmark1.bookmarkVO());

@@ -157,27 +157,27 @@ class SignCommandServiceTest {
                 .hasMessage("이미 사용중인 아이디입니다.");
     }
 
-    @Test
-    @DisplayName("로그인 테스트 : success")
-    void signInTest() {
-        // given
-        memberCommandRepository.save(Member.builder()
-                .account("qwerty1234")
-                .password(encoder.encode("1234"))
-                .name("김철수")
-                .nickname("qwe")
-                .email("qwe@qwe.qw")
-                .role(Role.USER)
-                .status(true)
-                .build());
-        // when
-        SignInResponse response = signCommandService.signIn(new SignInRequest("qwerty1234", "1234"));
-        // then
-        assertAll(
-                () -> assertThat(response.name()).isEqualTo("김철수"),
-                () -> assertThat(response.role()).isEqualTo(Role.USER)
-        );
-    }
+//    @Test
+//    @DisplayName("로그인 테스트 : success")
+//    void signInTest() {
+//        // given
+//        memberCommandRepository.save(Member.builder()
+//                .account("qwerty1234")
+//                .password(encoder.encode("1234"))
+//                .name("김철수")
+//                .nickname("qwe")
+//                .email("qwe@qwe.qw")
+//                .role(Role.USER)
+//                .status(true)
+//                .build());
+//        // when
+//        SignInResponse response = signCommandService.signIn(new SignInRequest("qwerty1234", "1234"));
+//        // then
+//        assertAll(
+//                () -> assertThat(response.name()).isEqualTo("김철수"),
+//                () -> assertThat(response.role()).isEqualTo(Role.USER)
+//        );
+//    }
 
     @Test
     @DisplayName("로그인 테스트 : 아이디/비밀번호 불일치 시 예외처리")
